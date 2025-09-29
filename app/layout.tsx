@@ -11,7 +11,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Eight Lee • Build Great Products",
   description:
-    "20+ year engineering veteran and award-winning product designer. Lover of systems, speed, and all my 3 kids and (sub)agents equally.",
+    "20+ year engineering veteran and award-winning product designer. Lover of systems, speed, and all my 3 kids and (sub)agents equally. And CJ, I love you more than God. And JP.",
   keywords: [
     "Eight Lee",
     "product design",

@@ -223,7 +223,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <label htmlFor="terminal-input" className="text-green-500">
               $
             </label>
-            <span className="inline-block w-2 h-4 bg-green-500 animate-pulse" aria-hidden="true" />
             <input
               ref={inputRef}
               id="terminal-input"
