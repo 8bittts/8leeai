@@ -1,0 +1,13 @@
+.next/
+node_modules/
+bun.lockb
+.turbo/
+out/
+dist/
+build/
+coverage/
+*.min.js
+*.min.css
+public/
+.cache/
+tmp/
