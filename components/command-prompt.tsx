@@ -98,12 +98,10 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               openExternalLink(volunteer[volIndex].url)
             }
           } else {
-            // Invalid number - trigger global flash
             triggerFlash()
           }
           setCommand("")
         } else {
-          // Invalid command - trigger global flash for any unrecognized text
           triggerFlash()
           setCommand("")
         }

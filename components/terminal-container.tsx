@@ -27,9 +27,7 @@ export function TerminalContainer() {
 
       const audio = new Audio("/cj.m4a")
       audio.volume = 0.05
-      audio.play().catch(() => {
-        // Handle autoplay restrictions gracefully
-      })
+      audio.play().catch(() => {})
     }
   }, [bootComplete, showContent])
 
@@ -113,7 +111,7 @@ export function TerminalContainer() {
       </div>
 
       {showContent && (
-        <div className="sticky bottom-0 bg-black p-4 sm:p-6 lg:p-8 pt-0 sm:pt-0 lg:pt-0">
+        <div className="sticky bottom-0 bg-black p-4 sm:p-6 lg:p-8 pt-0">
           <CommandPrompt
             ref={commandPromptRef}
             showMoreProjects={showMoreProjects}

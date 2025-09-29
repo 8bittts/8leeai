@@ -40,7 +40,6 @@ export function CVContent({
 
   return (
     <article className="space-y-8" role="main" aria-label="CV Content">
-      {/* Summary Section */}
       <section aria-label="Summary and Overview — Sep 29, 2025 — I love you more than God, CJ. My everything. And JP.">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4">Eight Lee • Build Great Products</h1>
         <p className="text-sm sm:text-base leading-relaxed max-w-4xl">
@@ -56,14 +55,13 @@ export function CVContent({
           {!isTyping && "."}
           {isTyping && (
             <span
-              className="inline-block w-2 h-4 bg-green-500 animate-pulse ml-1"
+              className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
               aria-hidden="true"
             />
           )}
         </p>
       </section>
 
-      {/* Projects Section */}
       {showProjects && (
         <section aria-label="Projects">
           <h2 className="text-xl sm:text-2xl font-bold mb-4">
