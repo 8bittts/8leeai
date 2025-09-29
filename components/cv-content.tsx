@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
 import { ANIMATION_DELAYS, formatIndex, openExternalLink } from "@/lib/utils"
@@ -19,6 +19,7 @@ export function CVContent({
   showMoreProjects: _showMoreProjects,
   setCommand,
 }: CVContentProps) {
+  const projectsEndRef = useRef<HTMLDivElement>(null)
   const [showProjects, setShowProjects] = useState(false)
 
   const handleTypewriterComplete = useCallback(() => {
@@ -30,6 +31,12 @@ export function CVContent({
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: handleTypewriterComplete,
   })
+
+  useEffect(() => {
+    if (visibleProjects > 10) {
+      projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+    }
+  }, [visibleProjects])
 
   return (
     <article className="space-y-8" role="main" aria-label="CV Content">
@@ -96,6 +103,7 @@ export function CVContent({
               </div>
             ))}
           </div>
+          <div ref={projectsEndRef} />
         </section>
       )}
     </article>

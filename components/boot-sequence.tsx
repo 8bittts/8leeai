@@ -34,13 +34,12 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       <div className="mb-4 space-y-1">
         <p>Eight Lee • Build Great Products</p>
         <p>Version 42.90 (C)Copyright RAO Labs</p>
-        <p>Awaiting Boot Command...</p>
+        <p>Booting CJ in the Shell...</p>
       </div>
 
       {showPrompt && (
-        <div className="flex items-center gap-1" aria-label="Command prompt">
-          <span>/CJ-in-the-Shell:</span>
-          <span className="inline-block w-2 h-4 bg-green-500 animate-pulse" aria-hidden="true" />
+        <div className="flex items-center" aria-label="Command prompt">
+          <span>/:_</span>
         </div>
       )}
     </div>
