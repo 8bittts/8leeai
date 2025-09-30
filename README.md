@@ -66,13 +66,14 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
 Once the terminal loads, you can use these commands:
 
-- `enter` - Show more projects (pagination)
+- `enter` - Show more projects (pagination is 15 by default)
 - `01-71` - Open specific project, education, or volunteer item by number
-- `email` - Display contact information
-- `github` - Open GitHub project
+- `email` - Display contact email info
+- `github` - Open this GitHub project
 - `wellfound` - Open Wellfound profile
 - `education` - Show education background
 - `volunteer` - Display volunteer experience
+- `deathnote` - Open deathnote.ai website
 - `clear` - Reset terminal display
 
 ## 🛠️ Development
@@ -145,14 +146,11 @@ Production-ready security implementation:
 
 ## Contributing
 
-This is a personal portfolio project. While not open for contributions, feel free to fork and adapt for your own use.
+This is a personal portfolio project. Feel free to make suggestions!
 
 ## Contact
 
-For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai)
-
-Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai)
-
+For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai). Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai).
 ## License
 
 MIT and all that good jazz.
