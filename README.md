@@ -103,6 +103,7 @@ bun run clean
 - **Runtime**: [Bun](https://bun.sh) for optimal performance
 - **Code Quality**: [Biome](https://biomejs.dev) for linting and formatting
 - **Security**: Production-grade middleware with CSP and CORS
+- **Analytics**: [Vercel Analytics](https://vercel.com/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## 📂 Project Structure
