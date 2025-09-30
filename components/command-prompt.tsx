@@ -118,6 +118,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       const links: Record<string, string> = {
         github: "https://github.com/8bittts/8leeai",
         wellfound: "https://wellfound.com/u/eightlee",
+        deathnote: "https://deathnote.ai",
       }
       const url = links[cmdLower]
       if (url) {
@@ -332,7 +333,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Type: email, education, volunteer, github, wellfound, clear
+            Type: email, education, volunteer, github, wellfound, deathnote, clear
           </p>
         </nav>
 
