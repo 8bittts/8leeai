@@ -30,19 +30,19 @@ const ALLOWED_ORIGINS = [
 export function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
-  // Set the strictest robot headers
+  // Ultra-private mode: Block all search engines and web crawlers
   response.headers.set(
     "X-Robots-Tag",
     "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate, noimageindex"
   )
 
-  // Security headers
+  // Security: Prevent clickjacking, MIME sniffing, XSS attacks
   response.headers.set("X-Frame-Options", "DENY")
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   response.headers.set("X-XSS-Protection", "1; mode=block")
 
-  // Permissions Policy - Disable unnecessary browser features
+  // Permissions Policy: Disable all browser features not needed for terminal UI
   response.headers.set(
     "Permissions-Policy",
     "camera=(), " +
@@ -62,7 +62,7 @@ export function middleware(request: NextRequest) {
       "web-share=()"
   )
 
-  // Content Security Policy
+  // CSP: Restrict resource loading, allow only Vercel analytics/live
   const cspDirectives = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
@@ -81,7 +81,7 @@ export function middleware(request: NextRequest) {
 
   response.headers.set("Content-Security-Policy", cspDirectives)
 
-  // CORS headers - allow multiple domains
+  // CORS: Allow requests from approved domains only
   const origin = request.headers.get("origin")
   if (origin && ALLOWED_ORIGINS.includes(origin)) {
     response.headers.set("Access-Control-Allow-Origin", origin)
@@ -91,10 +91,10 @@ export function middleware(request: NextRequest) {
     response.headers.set("Access-Control-Allow-Credentials", "true")
   }
 
-  // Strict Transport Security (HSTS) - enforce HTTPS
+  // HSTS: Force HTTPS for 1 year, include subdomains, enable browser preload
   response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 
-  // Additional security headers
+  // Additional hardening: Disable DNS prefetch, download execution, cross-domain policies
   response.headers.set("X-DNS-Prefetch-Control", "off")
   response.headers.set("X-Download-Options", "noopen")
   response.headers.set("X-Permitted-Cross-Domain-Policies", "none")

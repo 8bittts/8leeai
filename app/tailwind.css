@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @layer utilities {
+  /* Screen reader only: Hides element visually but keeps it accessible to assistive tech */
   .sr-only {
     position: absolute;
     width: 1px;

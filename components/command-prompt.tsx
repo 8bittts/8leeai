@@ -41,93 +41,129 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const handleCommand = (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
-        const cmd = command.trim()
-        const cmdLower = cmd.toLowerCase()
-
-        if (cmdLower === "education" || cmdLower === "ed") {
-          setShowEducation(true)
-          setShowVolunteer(false)
-          setCommand("")
-          setStatusMessage("Education section displayed")
-        } else if (cmdLower === "volunteer" || cmdLower === "vol") {
-          setShowVolunteer(true)
-          setShowEducation(false)
-          setCommand("")
-          setStatusMessage("Volunteer experience section displayed")
-        } else if (cmdLower === "clear") {
-          setShowEducation(false)
-          setShowVolunteer(false)
-          setShowEmail(false)
-          clearToStart()
-          setStatusMessage("Terminal cleared")
-        } else if (cmdLower === "email") {
-          setShowEmail(true)
-          setShowEducation(false)
-          setShowVolunteer(false)
-          setCommand("")
-          setStatusMessage("Contact email displayed")
-        } else if (cmdLower === "github") {
-          openExternalLink("https://github.com/8bittts")
-          setCommand("")
-          setStatusMessage("Opening GitHub profile in new tab")
-        } else if (cmdLower === "wellfound") {
-          openExternalLink("https://wellfound.com/u/eightlee")
-          setCommand("")
-          setStatusMessage("Opening Wellfound profile in new tab")
-        } else if (cmdLower === "download") {
-          openExternalLink("https://github.com/8bittts/8leeai")
-          setCommand("")
-          setStatusMessage("Opening GitHub repository in new tab")
-        } else if (cmd === "") {
-          if (visibleProjects < totalProjects) {
-            showMoreProjects()
-            const newVisible = Math.min(visibleProjects + 10, totalProjects)
-            setStatusMessage(`Loaded ${newVisible} of ${totalProjects} projects`)
-          } else {
-            setStatusMessage("All projects loaded")
-          }
-          setCommand("")
-        } else if (/^\d+$/.test(cmd)) {
-          const number = parseInt(cmd, 10)
-          if (number >= DATA_OFFSETS.projects.start && number <= DATA_OFFSETS.projects.end) {
-            openProject(number)
-            setStatusMessage(`Opening project ${number} in new tab`)
-          } else if (
-            number >= DATA_OFFSETS.education.start &&
-            number <= DATA_OFFSETS.education.end
-          ) {
-            const eduIndex = number - DATA_OFFSETS.education.start
-            if (education[eduIndex]?.url) {
-              openExternalLink(education[eduIndex].url)
-              setStatusMessage(`Opening education entry ${number} in new tab`)
-            }
-          } else if (
-            number >= DATA_OFFSETS.volunteer.start &&
-            number <= DATA_OFFSETS.volunteer.end
-          ) {
-            const volIndex = number - DATA_OFFSETS.volunteer.start
-            if (volunteer[volIndex]?.url) {
-              openExternalLink(volunteer[volIndex].url)
-              setStatusMessage(`Opening volunteer entry ${number} in new tab`)
-            }
-          } else {
-            triggerFlash()
-            setStatusMessage("")
-          }
-          setCommand("")
-        } else {
-          triggerFlash()
-          setCommand("")
-          setStatusMessage("")
-        }
-
-        // Keep focus on input after handling command
-        setTimeout(() => {
-          inputRef.current?.focus()
-        }, 0)
+    // Extract command handlers to reduce complexity
+    const handleSectionCommand = (cmdLower: string) => {
+      if (cmdLower === "education" || cmdLower === "ed") {
+        setShowEducation(true)
+        setShowVolunteer(false)
+        setCommand("")
+        setStatusMessage("Education section displayed")
+        return true
       }
+      if (cmdLower === "volunteer" || cmdLower === "vol") {
+        setShowVolunteer(true)
+        setShowEducation(false)
+        setCommand("")
+        setStatusMessage("Volunteer experience section displayed")
+        return true
+      }
+      return false
+    }
+
+    const handleTerminalCommand = (cmdLower: string) => {
+      if (cmdLower === "clear") {
+        setShowEducation(false)
+        setShowVolunteer(false)
+        setShowEmail(false)
+        clearToStart()
+        setStatusMessage("Terminal cleared")
+        return true
+      }
+      if (cmdLower === "email") {
+        setShowEmail(true)
+        setShowEducation(false)
+        setShowVolunteer(false)
+        setCommand("")
+        setStatusMessage("Contact email displayed")
+        return true
+      }
+      return false
+    }
+
+    const handleExternalLinkCommand = (cmdLower: string) => {
+      const links: Record<string, string> = {
+        github: "https://github.com/8bittts",
+        wellfound: "https://wellfound.com/u/eightlee",
+        download: "https://github.com/8bittts/8leeai",
+      }
+      const url = links[cmdLower]
+      if (url) {
+        openExternalLink(url)
+        setCommand("")
+        setStatusMessage(`Opening ${cmdLower} in new tab`)
+        return true
+      }
+      return false
+    }
+
+    const handleEmptyCommand = () => {
+      if (visibleProjects < totalProjects) {
+        showMoreProjects()
+        const newVisible = Math.min(visibleProjects + 10, totalProjects)
+        setStatusMessage(`Loaded ${newVisible} of ${totalProjects} projects`)
+      } else {
+        setStatusMessage("All projects loaded")
+      }
+      setCommand("")
+    }
+
+    const openNumberedItem = (
+      number: number,
+      offset: number,
+      items: ReadonlyArray<{ readonly url: string; readonly [key: string]: unknown }>
+    ) => {
+      const index = number - offset
+      if (items[index]?.url) {
+        openExternalLink(items[index].url)
+        setStatusMessage(`Opening entry ${number} in new tab`)
+      }
+    }
+
+    const handleNumericCommand = (cmd: string) => {
+      const number = Number.parseInt(cmd, 10)
+
+      if (number >= DATA_OFFSETS.projects.start && number <= DATA_OFFSETS.projects.end) {
+        openProject(number)
+        setStatusMessage(`Opening project ${number} in new tab`)
+      } else if (number >= DATA_OFFSETS.education.start && number <= DATA_OFFSETS.education.end) {
+        openNumberedItem(number, DATA_OFFSETS.education.start, education)
+      } else if (number >= DATA_OFFSETS.volunteer.start && number <= DATA_OFFSETS.volunteer.end) {
+        openNumberedItem(number, DATA_OFFSETS.volunteer.start, volunteer)
+      } else {
+        triggerFlash()
+        setStatusMessage("")
+      }
+      setCommand("")
+    }
+
+    const handleCommand = (e: React.KeyboardEvent) => {
+      if (e.key !== "Enter") return
+
+      const cmd = command.trim()
+      const cmdLower = cmd.toLowerCase()
+
+      // Dispatch to appropriate handler
+      if (handleSectionCommand(cmdLower)) {
+        // Handled
+      } else if (handleTerminalCommand(cmdLower)) {
+        // Handled
+      } else if (handleExternalLinkCommand(cmdLower)) {
+        // Handled
+      } else if (cmd === "") {
+        handleEmptyCommand()
+      } else if (/^\d+$/.test(cmd)) {
+        handleNumericCommand(cmd)
+      } else {
+        // Invalid command: Flash screen and clear
+        triggerFlash()
+        setCommand("")
+        setStatusMessage("")
+      }
+
+      // Keep focus on input after handling command (critical for mobile)
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 0)
     }
 
     useImperativeHandle(ref, () => ({

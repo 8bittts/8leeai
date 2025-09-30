@@ -1,23 +1,28 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  // Enable Turbopack for faster dev builds
   turbopack: {
     root: __dirname,
   },
 
+  // Disable ISR disk flushing for faster builds
   experimental: {
     isrFlushToDisk: false,
   },
 
   cleanDistDir: true,
 
-  generateBuildId: async () => {
+  // Generate unique build ID to prevent stale cache issues
+  generateBuildId: () => {
     return `dev-${Date.now()}`
   },
 
   reactStrictMode: true,
   poweredByHeader: false,
 
+  // Aggressive no-cache headers to prevent stale terminal state
+  // biome-ignore lint/suspicious/useAwait: Next.js requires async signature
   async headers() {
     return [
       {
