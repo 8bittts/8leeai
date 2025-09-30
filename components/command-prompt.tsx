@@ -228,7 +228,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               ref={inputRef}
               id="terminal-input"
               type="text"
-              className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+              className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
               placeholder="Enter to load more, # to open project, or command name"
               value={command}
               onChange={(e) => setCommand(e.target.value)}
