@@ -41,10 +41,10 @@ export function CVContent({
   return (
     <article className="space-y-8" id="main-content" aria-labelledby="page-title">
       <section aria-label="Summary and Overview — Sep 29, 2025 — I love you more than God, CJ. My everything. And JP.">
-        <h1 id="page-title" className="text-2xl sm:text-3xl font-bold mb-4">
+        <h1 id="page-title" className="text-3xl font-bold mb-4">
           Eight Lee • Build Great Products
         </h1>
-        <p className="text-sm sm:text-base leading-relaxed max-w-4xl">
+        <p className="text-sm leading-relaxed max-w-4xl">
           {displayedText}
           {!isTyping && (
             <button
@@ -68,10 +68,10 @@ export function CVContent({
 
       {showProjects && (
         <section aria-label="Projects">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4">
+          <h2 className="text-xl font-bold mb-4">
             Projects ({visibleProjects} of {projects.length})
           </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-xs sm:text-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
             {projects.slice(0, visibleProjects).map((project, index) => (
               <div key={project.id} className="flex">
                 <span className="mr-3 text-gray-500">{formatIndex(index)}.</span>

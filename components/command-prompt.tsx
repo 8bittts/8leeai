@@ -181,8 +181,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         {/* Email Section */}
         {showEmail && (
           <section className="mb-8" aria-label="Contact Email">
-            <h2 className="text-xl sm:text-2xl font-bold mb-4">Contact</h2>
-            <div className="text-sm sm:text-base">
+            <h2 className="text-xl font-bold mb-4">Contact</h2>
+            <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
                 className="hover:text-green-400 transition-colors underline"
@@ -196,8 +196,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         {/* Education Section */}
         {showEducation && (
           <section className="mb-8" aria-label="Education">
-            <h2 className="text-xl sm:text-2xl font-bold mb-4">Education</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-xs sm:text-sm">
+            <h2 className="text-xl font-bold mb-4">Education</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
               {education.map((item, index) => (
                 <div key={item.id} className="flex">
                   <span className="mr-3 text-gray-500">
@@ -239,8 +239,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         {/* Volunteer Section */}
         {showVolunteer && (
           <section className="mb-8" aria-label="Volunteer Experience">
-            <h2 className="text-xl sm:text-2xl font-bold mb-4">Volunteer Experience</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-xs sm:text-sm">
+            <h2 className="text-xl font-bold mb-4">Volunteer Experience</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
               {volunteer.map((item, index) => (
                 <div key={item.id} className="flex">
                   <span className="mr-3 text-gray-500">
@@ -300,7 +300,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               aria-describedby="command-instructions"
             />
           </form>
-          <p id="command-instructions" className="text-xs sm:text-sm text-gray-500 mt-2">
+          <p id="command-instructions" className="text-xs text-gray-500 mt-2">
             Available commands: {visibleProjects < totalProjects && "Enter (load more projects), "}
             1-{visibleProjects} (open project by number), email, github, wellfound, education,
             volunteer, download, clear
