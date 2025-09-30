@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { education, volunteer } from "@/lib/data"
 import { DATA_OFFSETS, formatIndex, openExternalLink } from "@/lib/utils"
 
@@ -40,39 +40,101 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showEmail, setShowEmail] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
+    const keyboardReleaseRef = useRef<(() => void) | null>(null)
 
-    const restoreFocusAfterCommand = () => {
+    const releaseKeyboardSuppression = useCallback(() => {
+      keyboardReleaseRef.current?.()
+      keyboardReleaseRef.current = null
+    }, [])
+
+    const suppressVirtualKeyboard = () => {
       const input = inputRef.current
       if (!input) return
 
-      const isMobile = globalThis?.matchMedia?.("(pointer: coarse)")?.matches ?? false
-
-      if (isMobile) {
-        const previousInputMode = input.getAttribute("inputmode")
-        input.setAttribute("inputmode", "none")
-        input.blur()
-
+      const prefersTouch = globalThis?.matchMedia?.("(pointer: coarse)")?.matches ?? false
+      if (!prefersTouch) {
         requestAnimationFrame(() => {
           try {
             input.focus({ preventScroll: true })
           } catch {
             input.focus()
           }
-          input.setSelectionRange?.(input.value.length, input.value.length)
-
-          setTimeout(() => {
-            if (previousInputMode) {
-              input.setAttribute("inputmode", previousInputMode)
-            } else {
-              input.removeAttribute("inputmode")
-            }
-          }, 64)
         })
-
         return
       }
 
-      input.focus()
+      releaseKeyboardSuppression()
+
+      const virtualKeyboard = (
+        navigator as unknown as {
+          readonly virtualKeyboard?: { hide?: () => Promise<void> }
+        }
+      ).virtualKeyboard
+
+      const fallbackSuppress = () => {
+        const previousInputMode = input.getAttribute("inputmode")
+        const wasReadOnly = input.hasAttribute("readonly")
+
+        input.setAttribute("inputmode", "none")
+        input.setAttribute("readonly", "true")
+
+        const cleanup = () => {
+          if (!wasReadOnly) {
+            input.removeAttribute("readonly")
+          }
+          if (previousInputMode) {
+            input.setAttribute("inputmode", previousInputMode)
+          } else {
+            input.removeAttribute("inputmode")
+          }
+          keyboardReleaseRef.current = null
+        }
+
+        const allowInput = () => {
+          cleanup()
+          requestAnimationFrame(() => {
+            try {
+              input.focus({ preventScroll: true })
+            } catch {
+              input.focus()
+            }
+            input.setSelectionRange?.(input.value.length, input.value.length)
+          })
+        }
+
+        input.addEventListener("pointerdown", allowInput, { once: true })
+        input.addEventListener("keydown", allowInput, { once: true })
+
+        keyboardReleaseRef.current = () => {
+          input.removeEventListener("pointerdown", allowInput)
+          input.removeEventListener("keydown", allowInput)
+          cleanup()
+        }
+
+        requestAnimationFrame(() => {
+          input.blur()
+          requestAnimationFrame(() => {
+            try {
+              input.focus({ preventScroll: true })
+            } catch {
+              input.focus()
+            }
+            input.setSelectionRange?.(input.value.length, input.value.length)
+          })
+        })
+      }
+
+      if (virtualKeyboard?.hide) {
+        virtualKeyboard.hide().catch(() => {
+          fallbackSuppress()
+        })
+        requestAnimationFrame(() => {
+          input.setSelectionRange?.(input.value.length, input.value.length)
+        })
+        return
+      }
+
+      fallbackSuppress()
     }
 
     // Extract command handlers to reduce complexity
@@ -176,36 +238,40 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       const cmd = command.trim()
       const cmdLower = cmd.toLowerCase()
 
-      // Dispatch to appropriate handler
-      if (handleSectionCommand(cmdLower)) {
-        // Handled
-      } else if (handleTerminalCommand(cmdLower)) {
-        // Handled
-      } else if (handleExternalLinkCommand(cmdLower)) {
-        // Handled
-      } else if (cmd === "") {
-        handleEmptyCommand()
-      } else if (/^\d+$/.test(cmd)) {
-        handleNumericCommand(cmd)
-      } else {
-        // Invalid command: Flash screen and clear
-        triggerFlash()
-        setCommand("")
-        setStatusMessage("")
+      const handled =
+        handleSectionCommand(cmdLower) ||
+        handleTerminalCommand(cmdLower) ||
+        handleExternalLinkCommand(cmdLower)
+
+      if (!handled) {
+        if (cmd === "") {
+          handleEmptyCommand()
+        } else if (/^\d+$/.test(cmd)) {
+          handleNumericCommand(cmd)
+        } else {
+          // Invalid command: Flash screen and clear
+          triggerFlash()
+          setCommand("")
+          setStatusMessage("")
+        }
       }
 
-      restoreFocusAfterCommand()
+      suppressVirtualKeyboard()
     }
 
     useImperativeHandle(ref, () => ({
       focus: () => {
+        releaseKeyboardSuppression()
         inputRef.current?.focus()
       },
     }))
 
     useEffect(() => {
       inputRef.current?.focus()
-    }, [])
+      return () => {
+        releaseKeyboardSuppression()
+      }
+    }, [releaseKeyboardSuppression])
 
     return (
       <>
