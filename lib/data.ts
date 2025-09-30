@@ -223,7 +223,7 @@ export const projects = [
   },
   {
     id: "church-analytics",
-    name: "Church Analytics • Real-Time Analytics (Acquired)",
+    name: "Church Analytics • Real-Time Reporting (Acquired)",
     url: "https://x.com/8BIT/status/1816929914643448152",
     linkWord: "analytics",
   },
