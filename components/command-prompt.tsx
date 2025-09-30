@@ -41,6 +41,40 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
 
+    const restoreFocusAfterCommand = () => {
+      const input = inputRef.current
+      if (!input) return
+
+      const isMobile = globalThis?.matchMedia?.("(pointer: coarse)")?.matches ?? false
+
+      if (isMobile) {
+        const previousInputMode = input.getAttribute("inputmode")
+        input.setAttribute("inputmode", "none")
+        input.blur()
+
+        requestAnimationFrame(() => {
+          try {
+            input.focus({ preventScroll: true })
+          } catch {
+            input.focus()
+          }
+          input.setSelectionRange?.(input.value.length, input.value.length)
+
+          setTimeout(() => {
+            if (previousInputMode) {
+              input.setAttribute("inputmode", previousInputMode)
+            } else {
+              input.removeAttribute("inputmode")
+            }
+          }, 64)
+        })
+
+        return
+      }
+
+      input.focus()
+    }
+
     // Extract command handlers to reduce complexity
     const handleSectionCommand = (cmdLower: string) => {
       if (cmdLower === "education" || cmdLower === "ed") {
@@ -82,9 +116,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
     const handleExternalLinkCommand = (cmdLower: string) => {
       const links: Record<string, string> = {
-        github: "https://github.com/8bittts",
+        github: "https://github.com/8bittts/8leeai",
         wellfound: "https://wellfound.com/u/eightlee",
-        download: "https://github.com/8bittts/8leeai",
       }
       const url = links[cmdLower]
       if (url) {
@@ -160,10 +193,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setStatusMessage("")
       }
 
-      // Keep focus on input after handling command (critical for mobile)
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 0)
+      restoreFocusAfterCommand()
     }
 
     useImperativeHandle(ref, () => ({
@@ -289,8 +319,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               ref={inputRef}
               id="terminal-input"
               type="text"
+              inputMode="text"
               className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
-              placeholder="Enter to load more, # to open project, or command name"
+              placeholder="Load more (enter), open project (##), or commands below"
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
@@ -301,9 +332,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Available commands: {visibleProjects < totalProjects && "Enter (load more projects), "}
-            1-{visibleProjects} (open project by number), email, github, wellfound, education,
-            volunteer, download, clear
+            Type: email, education, volunteer, github, wellfound, clear
           </p>
         </nav>
 
