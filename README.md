@@ -2,11 +2,7 @@
 
 > A retro terminal-style portfolio experience built with modern web technologies
 
-## License & Usage
-
-This project is available under the **MIT License** - you're free to fork, modify, and use it for your own portfolio!
-
-⚠️ **Important Privacy Notice**: This codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
+⚠️ **Please Note**: This codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
 - `robots.txt` blocks all search engines and crawlers
 - Security headers prevent indexing and archiving
 - Metadata includes `noindex, nofollow` directives
@@ -143,16 +139,16 @@ Production-ready security implementation:
 - **Audio Integration**: Subtle sound effects for enhanced immersion
 - **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, and keyboard navigation
 
-## 🤝 Contributing
+## Contributing
 
 This is a personal portfolio project. While not open for contributions, feel free to fork and adapt for your own use.
 
-## 📧 Contact
+## Contact
 
-For inquiries, use the `email` command in the terminal or visit [8lee.ai](https://8lee.ai)
+For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai)
 
----
+Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai)
 
-License: MIT
+## License
 
-Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai)!
+MIT and all that good jazz.
