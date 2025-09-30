@@ -35,6 +35,8 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
 - **Responsive Design**: Fully responsive terminal interface for all devices
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal performance
+- **Audio Integration**: Subtle interaction sound effects at 2% volume on first user interaction
+- **PWA Ready**: Includes favicon set and Apple Touch icons for mobile home screen installation
 - **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, and reduced motion support
 
 ## Quick Start
@@ -67,7 +69,9 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 Once the terminal loads, you can use these commands:
 
 - `enter` - Show more projects (pagination is 15 by default)
-- `01-71` - Open specific project, education, or volunteer item by number
+- `1-60` - Open specific project by number (e.g., `42`)
+- `61-65` - Open education item by number
+- `66-71` - Open volunteer experience by number
 - `email` - Display contact email info
 - `github` - Open this GitHub project
 - `wellfound` - Open Wellfound profile
@@ -135,7 +139,7 @@ Production-ready security implementation:
 
 ## Version History
 
-v1.0 - September 29, 2025:
+v1.0 - September 30, 2025:
 - **Production Release**: Terminal interface with authentic boot sequence
 - **Interactive Commands**: Full command system with 60+ projects
 - **Security Hardened**: Production-grade middleware and secure link handling

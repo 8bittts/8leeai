@@ -27,7 +27,7 @@ export function TerminalContainer() {
       setShowContent(true)
 
       const audio = new Audio("/cj.m4a")
-      audio.volume = 0.05
+      audio.volume = 0.02
       // Ignore audio play errors (e.g., autoplay policy)
       audio.play().catch(() => {
         // Intentionally empty - audio is optional enhancement
