@@ -1,8 +1,8 @@
-# 8lee.ai
+# Retro Terminal Homepage - Focused on Privacy
 
 > A retro terminal-style portfolio experience built with modern web technologies
 
-## 📄 License & Usage
+## License & Usage
 
 This project is available under the **MIT License** - you're free to fork, modify, and use it for your own portfolio!
 
@@ -24,11 +24,11 @@ The current settings are designed for a completely private portfolio that won't 
 [![React](https://img.shields.io/badge/React-19.1.1-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC)](https://tailwindcss.com)
 
-## 🖥️ Demo
+## Demo
 
 Experience the live terminal at [8lee.ai](https://8lee.ai)
 
-## ✨ Features
+## Features
 
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience
@@ -39,7 +39,7 @@ Experience the live terminal at [8lee.ai](https://8lee.ai)
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal performance
 - **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, and reduced motion support
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -62,14 +62,14 @@ bun run dev
 
 Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
-## 📝 Available Commands
+## Available Commands
 
 Once the terminal loads, you can use these commands:
 
-- `Enter` - Show more projects (pagination)
-- `1-71` - Open specific project, education, or volunteer item by number
+- `enter` - Show more projects (pagination)
+- `01-71` - Open specific project, education, or volunteer item by number
 - `email` - Display contact information
-- `github` - Open GitHub profile
+- `github` - Open GitHub project
 - `wellfound` - Open Wellfound profile
 - `education` - Show education background
 - `volunteer` - Display volunteer experience
@@ -94,7 +94,7 @@ bun run check
 bun run clean
 ```
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **Framework**: [Next.js 15.5.4](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.1.1](https://react.dev) with modern hooks
@@ -106,7 +106,7 @@ bun run clean
 - **Analytics**: [Vercel Analytics](https://vercel.com/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 8leeai/
@@ -122,7 +122,7 @@ bun run clean
 └── middleware.ts       # Security headers
 ```
 
-## 🔒 Security
+## Security
 
 Production-ready security implementation:
 - **Content Security Policy**: Strict CSP with minimal external allowlist
@@ -132,7 +132,7 @@ Production-ready security implementation:
 - **Anti-Crawling**: Comprehensive robot blocking configuration
 - **Headers**: XSS protection, frame options, content type options
 
-## 📦 Version History
+## Version History
 
 ### v1.0 (September 29, 2025)
 - **Production Release**: Terminal interface with authentic boot sequence
@@ -142,10 +142,6 @@ Production-ready security implementation:
 - **Comprehensive Data**: Complete portfolio with projects, education, and volunteer experience
 - **Audio Integration**: Subtle sound effects for enhanced immersion
 - **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, and keyboard navigation
-
-## 📄 License
-
-© 2025 Eight Lee. All rights reserved.
 
 ## 🤝 Contributing
 
@@ -157,8 +153,6 @@ For inquiries, use the `email` command in the terminal or visit [8lee.ai](https:
 
 ---
 
-Built with ❤️ using modern web technologies for a retro experience
+License: MIT
 
-Follow [@8BIT](https://x.com/8BIT) on X
-
-Check out [DeathNote](https://deathnote.ai) - 8BIT's latest project
+Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai)!
