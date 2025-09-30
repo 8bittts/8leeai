@@ -8,6 +8,27 @@ interface BootSequenceProps {
   onComplete: () => void
 }
 
+const BIRTH_YEAR = 1982
+const BIRTH_MONTH = 10 // November (0-indexed)
+const BIRTH_DAY = 9
+
+const calculateAgeInYears = (date: Date) => {
+  const year = date.getFullYear()
+  const birthdayThisYear = new Date(year, BIRTH_MONTH, BIRTH_DAY)
+  const hasHadBirthday = date >= birthdayThisYear
+
+  const baseAge = year - BIRTH_YEAR - (hasHadBirthday ? 0 : 1)
+  const lastBirthdayYear = hasHadBirthday ? year : year - 1
+  const lastBirthday = new Date(lastBirthdayYear, BIRTH_MONTH, BIRTH_DAY)
+  const nextBirthday = new Date(lastBirthdayYear + 1, BIRTH_MONTH, BIRTH_DAY)
+
+  const elapsed = date.getTime() - lastBirthday.getTime()
+  const span = nextBirthday.getTime() - lastBirthday.getTime()
+  const progress = Math.min(Math.max(elapsed / span, 0), 1)
+
+  return baseAge + progress
+}
+
 export function BootSequence({ onComplete }: BootSequenceProps) {
   const [showLine1, setShowLine1] = useState(false)
   const [showLine2, setShowLine2] = useState(false)
@@ -15,6 +36,14 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   const [showLine4, setShowLine4] = useState(false)
   const [showLine5, setShowLine5] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
+  const [versionLabel, setVersionLabel] = useState(() => calculateAgeInYears(new Date()).toFixed(2))
+
+  const formatVersionLabel = useCallback(() => calculateAgeInYears(new Date()).toFixed(2), [])
+
+  const updateVersionLabel = useCallback(() => {
+    const formatted = formatVersionLabel()
+    setVersionLabel((current) => (current === formatted ? current : formatted))
+  }, [formatVersionLabel])
 
   const line1 = useTypewriter({
     text: "MS-DOS version 1.08",
@@ -35,7 +64,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   })
 
   const line4 = useTypewriter({
-    text: showLine4 ? "Version 42.90 (C)Copyright RAO Labs" : "",
+    text: showLine4 ? `Version ${versionLabel} (C) r0aRoL Labs` : "",
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: useCallback(() => setShowLine5(true), []),
   })
@@ -54,6 +83,14 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   useEffect(() => {
     setShowLine1(true)
   }, [])
+
+  useEffect(() => {
+    updateVersionLabel()
+    const intervalId = window.setInterval(updateVersionLabel, 60 * 60 * 1000)
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [updateVersionLabel])
 
   return (
     <div
