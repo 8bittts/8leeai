@@ -388,7 +388,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               type="text"
               inputMode="text"
               className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
-              placeholder="Load more (enter), open project (##), or commands below"
+              placeholder="Load more (enter), open project (e.g. '01'), or commands below"
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
@@ -399,7 +399,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Type: email, education, volunteer, github, wellfound, deathnote, clear
+            Commands: email, education, volunteer, github, wellfound, deathnote, clear
           </p>
         </nav>
 
