@@ -1,7 +1,33 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
-export function middleware(_request: NextRequest) {
+const ALLOWED_ORIGINS = [
+  "https://8lee.ai",
+  "https://www.8lee.ai",
+  "https://8bit.io",
+  "https://www.8bit.io",
+  "https://john.do",
+  "https://www.john.do",
+  "https://btc.jobs",
+  "https://www.btc.jobs",
+  "https://yen.chat",
+  "https://www.yen.chat",
+  "https://btc.email",
+  "https://www.btc.email",
+  "https://eightlee.com",
+  "https://www.eightlee.com",
+  "https://particular.ly",
+  "https://www.particular.ly",
+  "https://johnsaddington.com",
+  "https://www.johnsaddington.com",
+  "https://deathnote.ai",
+  "https://www.deathnote.ai",
+  "https://8leeai.vercel.app",
+  "https://8leeai-death-note.vercel.app",
+  "https://8leeai-git-main-death-note.vercel.app",
+]
+
+export function middleware(request: NextRequest) {
   const response = NextResponse.next()
 
   // Set the strictest robot headers
@@ -55,12 +81,15 @@ export function middleware(_request: NextRequest) {
 
   response.headers.set("Content-Security-Policy", cspDirectives)
 
-  // CORS headers - restrictive for production
-  response.headers.set("Access-Control-Allow-Origin", "https://8lee.ai")
-  response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-  response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-  response.headers.set("Access-Control-Max-Age", "86400")
-  response.headers.set("Access-Control-Allow-Credentials", "true")
+  // CORS headers - allow multiple domains
+  const origin = request.headers.get("origin")
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    response.headers.set("Access-Control-Allow-Origin", origin)
+    response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    response.headers.set("Access-Control-Max-Age", "86400")
+    response.headers.set("Access-Control-Allow-Credentials", "true")
+  }
 
   // Strict Transport Security (HSTS) - enforce HTTPS
   response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")

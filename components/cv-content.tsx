@@ -88,15 +88,17 @@ export function CVContent({
                     aria-label={`${project.name} (opens in new tab)`}
                   >
                     {project.linkWord && project.linkWord.trim() !== ""
-                      ? project.name.split(new RegExp(`(${project.linkWord})`, "i")).map((part, i) =>
-                          part.toLowerCase() === project.linkWord?.toLowerCase() ? (
-                            <span key={i} className="underline">
-                              {part}
-                            </span>
-                          ) : (
-                            <span key={i}>{part}</span>
+                      ? project.name
+                          .split(new RegExp(`(${project.linkWord})`, "i"))
+                          .map((part, i) =>
+                            part.toLowerCase() === project.linkWord?.toLowerCase() ? (
+                              <span key={i} className="underline">
+                                {part}
+                              </span>
+                            ) : (
+                              <span key={i}>{part}</span>
+                            )
                           )
-                        )
                       : project.name}
                   </a>
                 ) : (
