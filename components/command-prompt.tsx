@@ -122,6 +122,11 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
           setCommand("")
           setStatusMessage("")
         }
+
+        // Keep focus on input after handling command
+        setTimeout(() => {
+          inputRef.current?.focus()
+        }, 0)
       }
     }
 
