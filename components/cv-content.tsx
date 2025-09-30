@@ -33,7 +33,7 @@ export function CVContent({
   })
 
   useEffect(() => {
-    if (visibleProjects > 10) {
+    if (visibleProjects > 15) {
       projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
     }
   }, [visibleProjects])
