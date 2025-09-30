@@ -171,10 +171,20 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                         e.preventDefault()
                         openExternalLink(item.url)
                       }}
-                      className="hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+                      className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.name}
+                      {item.linkWord
+                        ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
+                            part.toLowerCase() === item.linkWord.toLowerCase() ? (
+                              <span key={i} className="underline">
+                                {part}
+                              </span>
+                            ) : (
+                              <span key={i}>{part}</span>
+                            )
+                          )
+                        : item.name}
                     </a>
                   ) : (
                     <span>{item.name}</span>
@@ -204,10 +214,20 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                         e.preventDefault()
                         openExternalLink(item.url)
                       }}
-                      className="hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+                      className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.name}
+                      {item.linkWord
+                        ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
+                            part.toLowerCase() === item.linkWord.toLowerCase() ? (
+                              <span key={i} className="underline">
+                                {part}
+                              </span>
+                            ) : (
+                              <span key={i}>{part}</span>
+                            )
+                          )
+                        : item.name}
                     </a>
                   ) : (
                     <span>{item.name}</span>

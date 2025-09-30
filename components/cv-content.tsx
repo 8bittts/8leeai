@@ -84,10 +84,20 @@ export function CVContent({
                       e.preventDefault()
                       openExternalLink(project.url)
                     }}
-                    className="truncate hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+                    className="truncate hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                     aria-label={`${project.name} (opens in new tab)`}
                   >
-                    {project.name}
+                    {project.linkWord
+                      ? project.name.split(new RegExp(`(${project.linkWord})`, "i")).map((part, i) =>
+                          part.toLowerCase() === project.linkWord.toLowerCase() ? (
+                            <span key={i} className="underline">
+                              {part}
+                            </span>
+                          ) : (
+                            <span key={i}>{part}</span>
+                          )
+                        )
+                      : project.name}
                   </a>
                 ) : (
                   <span className="truncate">{project.name}</span>
