@@ -7,7 +7,7 @@ import { CVContent } from "@/components/cv-content"
 import { projects } from "@/lib/data"
 import { openExternalLink } from "@/lib/utils"
 
-const PROJECTS_PER_PAGE = 10
+const PROJECTS_PER_PAGE = 15
 
 export function TerminalContainer() {
   const [bootComplete, setBootComplete] = useState(false)
