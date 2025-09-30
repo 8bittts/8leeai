@@ -1,6 +1,6 @@
+import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next"
 import { IBM_Plex_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -99,6 +99,12 @@ export default function RootLayout({
       <body
         className={`${ibmPlexMono.variable} h-full bg-black text-green-500 font-mono antialiased`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-black focus:text-green-500 focus:px-4 focus:py-2 focus:border focus:border-green-500"
+        >
+          Skip to main content
+        </a>
         {children}
         <Analytics />
       </body>

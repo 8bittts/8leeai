@@ -15,6 +15,7 @@ export function TerminalContainer() {
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
   const [command, setCommand] = useState("")
   const [isFlashing, setIsFlashing] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const commandPromptRef = useRef<CommandPromptRef>(null)
 
   const handleBootComplete = () => {
@@ -62,7 +63,11 @@ export function TerminalContainer() {
 
   const triggerFlash = useCallback(() => {
     setIsFlashing(true)
-    setTimeout(() => setIsFlashing(false), 150)
+    setErrorMessage("Invalid command")
+    setTimeout(() => {
+      setIsFlashing(false)
+      setErrorMessage("")
+    }, 150)
   }, [])
 
   const openProject = useCallback((projectNumber: number) => {
@@ -78,28 +83,63 @@ export function TerminalContainer() {
     }
   }, [showContent])
 
+  const handleContainerKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (showContent && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault()
+        commandPromptRef.current?.focus()
+      }
+    },
+    [showContent]
+  )
+
   return (
     <div
       className={`h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse bg-red-900/20" : ""} transition-colors duration-150`}
       onClick={handleContainerClick}
+      onKeyDown={handleContainerKeyDown}
+      tabIndex={showContent ? 0 : -1}
+      role={showContent ? "button" : undefined}
+      aria-label={showContent ? "Click or press Enter to focus command input" : undefined}
     >
       {/* ASCII Brand Mark */}
-      <div
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20"
-        aria-label="8 logo"
-      >
-        <pre>
-          {` ░▒▓██████▓▒░
+      <header>
+        {/* Mobile: Large centered background logo */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-green-500 text-6xl font-mono opacity-5 z-0 md:hidden pointer-events-none select-none"
+          role="img"
+          aria-label="Eight Lee logo"
+        >
+          <pre aria-hidden="true">
+            {` ░▒▓██████▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
  ░▒▓██████▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
  ░▒▓██████▓▒░  `}
-        </pre>
-      </div>
+          </pre>
+        </div>
 
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        {/* Desktop: Small top-right logo */}
+        <div
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20"
+          role="img"
+          aria-label="Eight Lee logo"
+        >
+          <pre aria-hidden="true">
+            {` ░▒▓██████▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+ ░▒▓██████▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+ ░▒▓██████▓▒░  `}
+          </pre>
+        </div>
+      </header>
+
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {!showContent && <BootSequence onComplete={handleBootComplete} />}
         {showContent && (
           <CVContent
@@ -108,7 +148,7 @@ export function TerminalContainer() {
             setCommand={setCommand}
           />
         )}
-      </div>
+      </main>
 
       {showContent && (
         <div className="sticky bottom-0 bg-black p-4 sm:p-6 lg:p-8 pt-0">
@@ -126,6 +166,11 @@ export function TerminalContainer() {
           />
         </div>
       )}
+
+      {/* Error announcements for screen readers */}
+      <div role="alert" aria-live="assertive" className="sr-only">
+        {errorMessage}
+      </div>
     </div>
   )
 }

@@ -39,18 +39,22 @@ export function CVContent({
   }, [visibleProjects])
 
   return (
-    <article className="space-y-8" role="main" aria-label="CV Content">
+    <article className="space-y-8" id="main-content" aria-labelledby="page-title">
       <section aria-label="Summary and Overview — Sep 29, 2025 — I love you more than God, CJ. My everything. And JP.">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">Eight Lee • Build Great Products</h1>
+        <h1 id="page-title" className="text-2xl sm:text-3xl font-bold mb-4">
+          Eight Lee • Build Great Products
+        </h1>
         <p className="text-sm sm:text-base leading-relaxed max-w-4xl">
           {displayedText}
           {!isTyping && (
-            <span
-              className="underline hover:text-green-400 transition-colors cursor-pointer"
+            <button
+              type="button"
+              className="underline hover:text-green-400 transition-colors cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
               onClick={() => setCommand?.("email")}
+              aria-label="Show contact email"
             >
               chat
-            </span>
+            </button>
           )}
           {!isTyping && "."}
           {isTyping && (
@@ -69,35 +73,25 @@ export function CVContent({
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-xs sm:text-sm">
             {projects.slice(0, visibleProjects).map((project, index) => (
-              <div
-                key={project.id}
-                className={`flex ${
-                  project.url ? "hover:text-green-400 transition-colors cursor-pointer" : ""
-                }`}
-                onClick={() => openExternalLink(project.url)}
-                role={project.url ? "link" : "text"}
-                tabIndex={project.url ? 0 : -1}
-                onKeyDown={(e) => {
-                  if (project.url && (e.key === "Enter" || e.key === " ")) {
-                    openExternalLink(project.url)
-                  }
-                }}
-                aria-label={`Project ${index + 1}: ${project.name}`}
-              >
+              <div key={project.id} className="flex">
                 <span className="mr-3 text-gray-500">{formatIndex(index)}.</span>
-                <span className="truncate">
-                  {project.url && project.linkWord
-                    ? project.name.split(new RegExp(`(${project.linkWord})`, "i")).map((part, i) =>
-                        part.toLowerCase() === project.linkWord.toLowerCase() ? (
-                          <span key={i} className="underline">
-                            {part}
-                          </span>
-                        ) : (
-                          <span key={i}>{part}</span>
-                        )
-                      )
-                    : project.name}
-                </span>
+                {project.url ? (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      openExternalLink(project.url)
+                    }}
+                    className="truncate hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+                    aria-label={`${project.name} (opens in new tab)`}
+                  >
+                    {project.name}
+                  </a>
+                ) : (
+                  <span className="truncate">{project.name}</span>
+                )}
               </div>
             ))}
           </div>
