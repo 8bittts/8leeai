@@ -20,6 +20,8 @@ The current settings are designed for a completely private portfolio that won't 
 [![React](https://img.shields.io/badge/React-19.1.1-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC)](https://tailwindcss.com)
 
+![8lee.ai Terminal Screenshot](public/8lee-screenshot.png)
+
 ## Demo
 
 Experience the live terminal at [8lee.ai](https://8lee.ai)
