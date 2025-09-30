@@ -22,7 +22,7 @@ The current settings are designed for a completely private portfolio that won't 
 
 ## Live Demo
 
-Experience the live terminal at [8lee.ai](https://8lee.ai).
+Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 ![8lee.ai Terminal Screenshot](public/8lee-screenshot.png)
 
