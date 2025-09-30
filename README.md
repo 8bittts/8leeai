@@ -160,4 +160,4 @@ Built with ❤️ using modern web technologies for a retro experience
 
 Follow [@8BIT](https://x.com/8BIT) on X
 
-Check out [Death Note](https://deathnote.ai) - 8BIT's latest project
+Check out [DeathNote](https://deathnote.ai) - 8BIT's latest project
