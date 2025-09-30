@@ -2,7 +2,7 @@
 
 > A retro terminal-style portfolio experience built with modern web technologies
 
-⚠️ - **Please Note**: This codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
+⚠️ - **FYI**: The codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
 - `robots.txt` blocks all search engines and crawlers
 - Security headers prevent indexing and archiving
 - Metadata includes `noindex, nofollow` directives
