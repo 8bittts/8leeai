@@ -1,6 +1,6 @@
 # Retro Terminal Homepage - Focused on Privacy
 
-> A retro terminal-style portfolio experience built with modern web technologies
+An original, retro terminal-style portfolio experience built with modern web technologies.
 
 ⚠️ - **FYI**: The codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
 - `robots.txt` blocks all search engines and crawlers
