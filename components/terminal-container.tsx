@@ -109,11 +109,14 @@ export function TerminalContainer() {
       <header>
         {/* Mobile: Large centered background logo */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-green-500 text-6xl font-mono opacity-5 z-0 md:hidden pointer-events-none select-none"
+          className="absolute inset-0 flex items-center justify-center overflow-visible z-0 md:hidden pointer-events-none select-none"
           role="img"
           aria-label="Eight Lee logo"
         >
-          <pre aria-hidden="true">
+          <pre
+            aria-hidden="true"
+            className="text-green-500 text-6xl font-mono opacity-5 leading-none origin-center scale-[1.6]"
+          >
             {` ░▒▓██████▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
 ░▒▓█▓▒░░▒▓█▓▒░
