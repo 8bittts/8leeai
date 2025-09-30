@@ -33,10 +33,11 @@ Experience the live terminal at [8lee.ai](https://8lee.ai)
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel
-- **Comprehensive Portfolio**: 20+ years of professional work and achievements
+- **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
 - **Responsive Design**: Fully responsive terminal interface for all devices
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal performance
+- **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, and reduced motion support
 
 ## 🚀 Quick Start
 
@@ -137,8 +138,9 @@ Production-ready security implementation:
 - **Interactive Commands**: Full command system with 60+ projects
 - **Security Hardened**: Production-grade middleware and secure link handling
 - **Performance Optimized**: Minimal dependencies, Turbopack, zero custom CSS
-- **Comprehensive Data**: Complete portfolio spanning 20+ years
+- **Comprehensive Data**: Complete portfolio with projects, education, and volunteer experience
 - **Audio Integration**: Subtle sound effects for enhanced immersion
+- **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, and keyboard navigation
 
 ## 📄 License
 
