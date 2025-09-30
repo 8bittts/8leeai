@@ -22,9 +22,9 @@ The current settings are designed for a completely private portfolio that won't 
 
 ![8lee.ai Terminal Screenshot](public/8lee-screenshot.png)
 
-## Demo
+## Live Demo
 
-Experience the live terminal at [8lee.ai](https://8lee.ai)
+Experience the live terminal at [8lee.ai](https://8lee.ai).
 
 ## Features
 
@@ -135,7 +135,7 @@ Production-ready security implementation:
 
 ## Version History
 
-### v1.0 (September 29, 2025)
+v1.0 - September 29, 2025:
 - **Production Release**: Terminal interface with authentic boot sequence
 - **Interactive Commands**: Full command system with 60+ projects
 - **Security Hardened**: Production-grade middleware and secure link handling
