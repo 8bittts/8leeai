@@ -46,7 +46,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   }, [formatVersionLabel])
 
   const line1 = useTypewriter({
-    text: "MS-DOS version 1.08",
+    text: "MS-DOS v3.08",
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: useCallback(() => setShowLine2(true), []),
   })
@@ -64,7 +64,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   })
 
   const line4 = useTypewriter({
-    text: showLine4 ? `Version ${versionLabel} (C) r0aRoL Labs` : "",
+    text: showLine4 ? `Writing to ${versionLabel}.r0aR0L.md` : "",
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: useCallback(() => setShowLine5(true), []),
   })
