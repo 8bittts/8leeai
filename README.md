@@ -150,7 +150,7 @@ This is a personal portfolio project. Feel free to make suggestions!
 
 ## Contact
 
-For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai). Follow [@8BIT](https://x.com/8BIT) on X, check out [DeathNote](https://deathnote.ai).
+For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai), [@8BIT](https://x.com/8BIT) on X, and check out [DeathNote](https://deathnote.ai). x⸑x
 ## License
 
 MIT and all that good jazz.
