@@ -6,7 +6,7 @@ import { projects } from "@/lib/data"
 import { ANIMATION_DELAYS, formatIndex, openExternalLink } from "@/lib/utils"
 
 const summaryText =
-  "20+ year engineering veteran and award-winning product designer. Lover of systems, speed, and all my 3 kids and (sub)agents equally. Need help building something great? Let's "
+  "20+ year engineering veteran and award-winning product designer.\n\nObsessed with systems, speed, and my 3 kids and (sub)agents equally. Need help building something great? Let's "
 
 interface CVContentProps {
   visibleProjects: number
