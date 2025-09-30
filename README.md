@@ -60,6 +60,8 @@ bun run dev
 
 Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
+![8lee.ai Boot Sequence](public/8lee-boot-sequence.png)
+
 ## Available Commands
 
 Once the terminal loads, you can use these commands:
