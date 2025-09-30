@@ -179,9 +179,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                       className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.linkWord
+                      {item.linkWord && item.linkWord.trim() !== ""
                         ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
-                            part.toLowerCase() === item.linkWord.toLowerCase() ? (
+                            part.toLowerCase() === item.linkWord?.toLowerCase() ? (
                               <span key={i} className="underline">
                                 {part}
                               </span>
@@ -222,9 +222,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                       className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.linkWord
+                      {item.linkWord && item.linkWord.trim() !== ""
                         ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
-                            part.toLowerCase() === item.linkWord.toLowerCase() ? (
+                            part.toLowerCase() === item.linkWord?.toLowerCase() ? (
                               <span key={i} className="underline">
                                 {part}
                               </span>
