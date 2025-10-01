@@ -82,6 +82,10 @@ Once the terminal loads, you can use these commands:
 
 ## 🛠️ Development
 
+### Recommended Terminal Setup
+
+For optimal development experience on macOS, use [Ghostty](https://ghostty.org) with the custom 8LEE Terminal Theme. Configuration details available in `ghostty.md`.
+
 ```bash
 # Development with Turbopack
 bun run dev
