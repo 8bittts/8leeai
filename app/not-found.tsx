@@ -52,7 +52,7 @@ export default function NotFound() {
         style={{ backgroundImage: "url(/mario.jpg)" }}
         aria-hidden="true"
       />
-      <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-4 py-6 mx-4 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
+      <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
         <h1 className="text-6xl font-bold">
           {heading.displayedText}
           {heading.isTyping && (
