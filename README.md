@@ -2,7 +2,7 @@
 
 An original, retro terminal-style portfolio experience built with modern web technologies.
 
-⚠️ - **FYI**: The codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
+**FYI**: The codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
 - `robots.txt` blocks all search engines and crawlers
 - Security headers prevent indexing and archiving
 - Metadata includes `noindex, nofollow` directives
@@ -80,7 +80,7 @@ Once the terminal loads, you can use these commands:
 - `deathnote` - Open deathnote.ai website
 - `clear` - Reset terminal display
 
-## 🛠️ Development
+## Development
 
 ### Recommended Terminal Setup
 
@@ -158,7 +158,7 @@ This is a personal portfolio project. Feel free to make suggestions!
 
 ## Contact
 
-For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai), [@8BIT](https://x.com/8BIT) on X, and check out [DeathNote](https://deathnote.ai). x⸑x
+For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai), [@8BIT](https://x.com/8BIT) on X, and check out [DeathNote](https://deathnote.ai).
 ## License
 
 MIT and all that good jazz.
