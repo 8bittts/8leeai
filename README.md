@@ -17,7 +17,7 @@ The current settings are designed for a completely private portfolio that won't 
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19.1.1-blue)](https://react.dev)
+[![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC)](https://tailwindcss.com)
 
 ## Live Demo
@@ -106,11 +106,11 @@ bun run clean
 ## Tech Stack
 
 - **Framework**: [Next.js 15.5.4](https://nextjs.org) with App Router & Turbopack
-- **UI**: [React 19.1.1](https://react.dev) with modern hooks
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) pure utilities
-- **Language**: [TypeScript](https://www.typescriptlang.org) with strict configuration
+- **UI**: [React 19.2.0](https://react.dev) with modern hooks
+- **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
+- **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration
 - **Runtime**: [Bun](https://bun.sh) for optimal performance
-- **Code Quality**: [Biome](https://biomejs.dev) for linting and formatting
+- **Code Quality**: [Biome 2.2.5](https://biomejs.dev) for linting and formatting
 - **Security**: Production-grade middleware with CSP and CORS
 - **Analytics**: [Vercel Analytics](https://vercel.com/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
