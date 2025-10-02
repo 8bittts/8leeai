@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "Eight Lee",
     images: [
       {
-        url: "/eight.jpeg",
+        url: "/8-social.jpeg",
         width: 1200,
         height: 630,
         alt: "Eight Lee",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Eight Lee • Build Great Products",
     description: "20+ year engineering veteran and award-winning product designer.",
     creator: "@8BIT",
-    images: ["/eight.jpeg"],
+    images: ["/8-social.jpeg"],
   },
   icons: {
     icon: [
