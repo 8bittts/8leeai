@@ -22,7 +22,7 @@ export default function NotFound() {
 
   // Typewriter animation for instruction text (shows after heading completes)
   const subtext = useTypewriter({
-    text: showSubtext ? "Wrong portal; try again. Press anything to continue." : "",
+    text: showSubtext ? "Wrong warp pipe. You have 1 continue left." : "",
     speed: ANIMATION_DELAYS.typewriter,
   })
 
