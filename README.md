@@ -31,6 +31,7 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel
+- **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
 - **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
 - **Responsive Design**: Fully responsive terminal interface for all devices
@@ -120,6 +121,9 @@ bun run clean
 ```
 8leeai/
 ├── app/                 # Next.js app router
+│   ├── layout.tsx       # Root layout with metadata
+│   ├── page.tsx         # Main terminal page
+│   └── not-found.tsx    # Custom 404 page
 ├── components/          # React components
 │   ├── boot-sequence.tsx
 │   ├── command-prompt.tsx
@@ -128,8 +132,17 @@ bun run clean
 ├── hooks/              # Custom React hooks
 ├── lib/                # Utilities and data
 ├── public/             # Static assets
+│   ├── mario.jpg       # 404 background
+│   └── 8-social.jpeg   # Social share image
 └── middleware.ts       # Security headers
 ```
+
+## Code Quality
+
+All code includes concise, useful comments following these guidelines:
+- **Component-level**: JSDoc describing purpose and behavior
+- **Inline comments**: Explain complex logic, state management, and non-obvious patterns
+- **No redundant comments**: Code clarity over stating the obvious
 
 ## Security
 
