@@ -5,21 +5,28 @@ import { useCallback, useEffect, useState } from "react"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { ANIMATION_DELAYS } from "@/lib/utils"
 
+/**
+ * Custom 404 page with Mario background and typewriter effect
+ * Returns to home page on any keypress or click
+ */
 export default function NotFound() {
   const router = useRouter()
   const [showSubtext, setShowSubtext] = useState(false)
 
+  // Typewriter animation for "404" heading
   const heading = useTypewriter({
     text: "404",
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: useCallback(() => setShowSubtext(true), []),
   })
 
+  // Typewriter animation for instruction text (shows after heading completes)
   const subtext = useTypewriter({
     text: showSubtext ? "Wrong portal; try again. Press anything to continue." : "",
     speed: ANIMATION_DELAYS.typewriter,
   })
 
+  // Navigate to home on any interaction
   useEffect(() => {
     const handleInteraction = () => {
       router.push("/")
@@ -46,11 +53,11 @@ export default function NotFound() {
         aria-hidden="true"
       />
       <div className="relative z-10 text-center space-y-4">
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-6xl font-bold">
           {heading.displayedText}
           {heading.isTyping && (
             <span
-              className="inline-block w-px h-8 bg-green-500 animate-pulse ml-0.5"
+              className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
               aria-hidden="true"
             />
           )}
