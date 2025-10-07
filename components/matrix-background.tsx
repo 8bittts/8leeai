@@ -52,11 +52,16 @@ export function MatrixBackground() {
 
       // Draw characters
       for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)]
+        const charIndex = Math.floor(Math.random() * chars.length)
+        const char = chars[charIndex]
+        const dropY = drops[i]
+
+        if (char === undefined || dropY === undefined) continue
+
         ctx.fillStyle = getMatrixColor(Math.random())
 
         const x = i * fontSize
-        const y = drops[i] * fontSize
+        const y = dropY * fontSize
         ctx.fillText(char, x, y)
 
         // Reset drop to top randomly or when it reaches bottom
@@ -64,7 +69,7 @@ export function MatrixBackground() {
           drops[i] = 0
         }
 
-        drops[i]++
+        drops[i] = (drops[i] ?? 0) + 1
       }
     }
 
