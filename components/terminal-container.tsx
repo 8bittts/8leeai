@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { BootSequence } from "@/components/boot-sequence"
 import { CommandPrompt, type CommandPromptRef } from "@/components/command-prompt"
 import { CVContent } from "@/components/cv-content"
+import { MatrixBackground } from "@/components/matrix-background"
 import { projects } from "@/lib/data"
 import { openExternalLink } from "@/lib/utils"
 
@@ -105,27 +106,10 @@ export function TerminalContainer() {
       role={showContent ? "button" : undefined}
       aria-label={showContent ? "Click or press Enter to focus command input" : undefined}
     >
-      {/* ASCII Brand Mark */}
+      {/* Background branding */}
       <header>
-        {/* Mobile: Large centered background logo */}
-        <div
-          className="absolute inset-0 flex items-center justify-center overflow-visible z-0 md:hidden pointer-events-none select-none"
-          role="img"
-          aria-label="Eight Lee logo"
-        >
-          <pre
-            aria-hidden="true"
-            className="text-green-500 text-6xl font-mono opacity-5 leading-none origin-center scale-[1.6]"
-          >
-            {` ░▒▓██████▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
- ░▒▓██████▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
- ░▒▓██████▓▒░  `}
-          </pre>
-        </div>
+        {/* Mobile: Matrix-style background effect */}
+        <MatrixBackground />
 
         {/* Desktop: Small top-right logo */}
         <div
