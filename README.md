@@ -29,6 +29,7 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 ## Features
 
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
+- **Matrix Background Effect**: Subtle falling characters animation on mobile (replaces static ASCII watermark)
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel
 - **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
@@ -128,6 +129,7 @@ bun run clean
 │   ├── boot-sequence.tsx
 │   ├── command-prompt.tsx
 │   ├── cv-content.tsx
+│   ├── matrix-background.tsx
 │   └── terminal-container.tsx
 ├── hooks/              # Custom React hooks
 ├── lib/                # Utilities and data
