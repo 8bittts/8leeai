@@ -37,17 +37,17 @@ export function TerminalContainer() {
   }, [bootComplete, showContent])
 
   useEffect(() => {
-    if (bootComplete) {
-      const handleClick = () => handleUserInteraction()
-      const handleKeyDown = () => handleUserInteraction()
+    if (!bootComplete) return
 
-      document.addEventListener("click", handleClick)
-      document.addEventListener("keydown", handleKeyDown)
+    const handleClick = () => handleUserInteraction()
+    const handleKeyDown = () => handleUserInteraction()
 
-      return () => {
-        document.removeEventListener("click", handleClick)
-        document.removeEventListener("keydown", handleKeyDown)
-      }
+    document.addEventListener("click", handleClick)
+    document.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      document.removeEventListener("click", handleClick)
+      document.removeEventListener("keydown", handleKeyDown)
     }
   }, [bootComplete, handleUserInteraction])
 
