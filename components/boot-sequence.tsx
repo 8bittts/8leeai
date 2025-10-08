@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { ANIMATION_DELAYS } from "@/lib/utils"
 
@@ -103,23 +104,13 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
         {showLine1 && (
           <p>
             {line1.displayedText}
-            {line1.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {line1.isTyping && <Cursor />}
           </p>
         )}
         {showLine2 && (
           <p>
             {line2.displayedText}
-            {line2.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {line2.isTyping && <Cursor />}
           </p>
         )}
       </div>
@@ -128,34 +119,19 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
         {showLine3 && (
           <p>
             {line3.displayedText}
-            {line3.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {line3.isTyping && <Cursor />}
           </p>
         )}
         {showLine4 && (
           <p>
             {line4.displayedText}
-            {line4.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {line4.isTyping && <Cursor />}
           </p>
         )}
         {showLine5 && (
           <p>
             {line5.displayedText}
-            {line5.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {line5.isTyping && <Cursor />}
           </p>
         )}
       </div>
@@ -163,10 +139,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       {showPrompt && (
         <div className="flex items-center" aria-label="Command prompt">
           <span>$:</span>
-          <span
-            className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-            aria-hidden="true"
-          />
+          <Cursor />
         </div>
       )}
     </div>

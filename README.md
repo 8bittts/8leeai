@@ -137,6 +137,7 @@ bun run clean
 ├── components/          # React components
 │   ├── boot-sequence.tsx
 │   ├── command-prompt.tsx
+│   ├── cursor.tsx
 │   ├── cv-content.tsx
 │   ├── matrix-background.tsx
 │   └── terminal-container.tsx
