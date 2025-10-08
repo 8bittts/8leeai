@@ -15,6 +15,12 @@ export function useTypewriter({
   const [displayedText, setDisplayedText] = useState("")
   const [isTyping, setIsTyping] = useState(true)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const onCompleteRef = useRef(onComplete)
+
+  // Keep onCompleteRef up to date without triggering effect re-run
+  useEffect(() => {
+    onCompleteRef.current = onComplete
+  })
 
   useEffect(() => {
     if (intervalRef.current) {
@@ -28,7 +34,7 @@ export function useTypewriter({
       // Show full text immediately without animation
       setDisplayedText(text)
       setIsTyping(false)
-      onComplete?.()
+      onCompleteRef.current?.()
       return
     }
 
@@ -46,7 +52,7 @@ export function useTypewriter({
           intervalRef.current = null
         }
         setIsTyping(false)
-        onComplete?.()
+        onCompleteRef.current?.()
       }
     }, speed)
 
@@ -56,7 +62,7 @@ export function useTypewriter({
         intervalRef.current = null
       }
     }
-  }, [text, speed, onComplete])
+  }, [text, speed])
 
   return { displayedText, isTyping }
 }

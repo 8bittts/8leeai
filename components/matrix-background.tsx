@@ -43,41 +43,56 @@ export function MatrixBackground() {
       return "#00ff00" // Standard green (most common)
     }
 
-    // Animation loop
-    const draw = () => {
-      // Fade effect - black background with low alpha for trail effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      ctx.font = `${fontSize}px monospace`
+    // Time-based animation for consistent speed regardless of frame rate
+    let lastUpdateTime = 0
+    let animationFrameId: number
 
-      // Draw characters
-      for (let i = 0; i < drops.length; i++) {
-        const charIndex = Math.floor(Math.random() * chars.length)
-        const char = chars[charIndex]
-        const dropY = drops[i]
+    // Animation loop using requestAnimationFrame for better performance
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Canvas animation requires iteration and conditional logic
+    const draw = (timestamp: number) => {
+      // Update drops every ~50ms to maintain consistent speed
+      const shouldUpdate = timestamp - lastUpdateTime >= 50
 
-        if (char === undefined || dropY === undefined) continue
+      if (shouldUpdate) {
+        lastUpdateTime = timestamp
 
-        ctx.fillStyle = getMatrixColor(Math.random())
+        // Fade effect - black background with low alpha for trail effect
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.font = `${fontSize}px monospace`
 
-        const x = i * fontSize
-        const y = dropY * fontSize
-        ctx.fillText(char, x, y)
+        // Draw characters
+        for (let i = 0; i < drops.length; i++) {
+          const charIndex = Math.floor(Math.random() * chars.length)
+          const char = chars[charIndex]
+          const dropY = drops[i]
 
-        // Reset drop to top randomly or when it reaches bottom
-        if (y > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0
+          if (char === undefined || dropY === undefined) continue
+
+          ctx.fillStyle = getMatrixColor(Math.random())
+
+          const x = i * fontSize
+          const y = dropY * fontSize
+          ctx.fillText(char, x, y)
+
+          // Reset drop to top randomly or when it reaches bottom
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0
+          }
+
+          drops[i] = (drops[i] ?? 0) + 1
         }
-
-        drops[i] = (drops[i] ?? 0) + 1
       }
+
+      // Continue animation loop
+      animationFrameId = requestAnimationFrame(draw)
     }
 
-    // Run animation at ~30fps
-    const interval = setInterval(draw, 50)
+    // Start animation
+    animationFrameId = requestAnimationFrame(draw)
 
     return () => {
-      clearInterval(interval)
+      cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", resizeCanvas)
     }
   }, [])
