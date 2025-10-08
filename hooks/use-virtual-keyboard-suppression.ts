@@ -17,6 +17,7 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
     const input = inputRef.current
     if (!input) return
 
+    // Desktop: just focus the input normally
     const prefersTouch = globalThis?.matchMedia?.("(pointer: coarse)")?.matches ?? false
     if (!prefersTouch) {
       requestAnimationFrame(() => {
@@ -31,12 +32,14 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
 
     releaseKeyboardSuppression()
 
+    // Try modern Virtual Keyboard API first (Chrome 94+)
     const virtualKeyboard = (
       navigator as unknown as {
         readonly virtualKeyboard?: { hide?: () => Promise<void> }
       }
     ).virtualKeyboard
 
+    // Fallback: manipulate input attributes to prevent keyboard popup
     const fallbackSuppress = () => {
       const previousInputMode = input.getAttribute("inputmode")
       const wasReadOnly = input.hasAttribute("readonly")
@@ -56,6 +59,7 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
         keyboardReleaseRef.current = null
       }
 
+      // Re-enable input when user taps/types
       const allowInput = () => {
         cleanup()
         requestAnimationFrame(() => {
@@ -77,6 +81,7 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
         cleanup()
       }
 
+      // Blur then refocus to apply readonly/inputmode changes
       requestAnimationFrame(() => {
         input.blur()
         requestAnimationFrame(() => {
@@ -90,6 +95,7 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
       })
     }
 
+    // Use modern API if available, otherwise fallback
     if (virtualKeyboard?.hide) {
       virtualKeyboard.hide().catch(() => {
         fallbackSuppress()
