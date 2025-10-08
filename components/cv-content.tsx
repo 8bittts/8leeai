@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
 import {
@@ -62,12 +63,7 @@ export function CVContent({
             </button>
           )}
           {!isTyping && "."}
-          {isTyping && (
-            <span
-              className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
-              aria-hidden="true"
-            />
-          )}
+          {isTyping && <Cursor />}
         </p>
       </section>
 

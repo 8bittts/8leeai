@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
+import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { ANIMATION_DELAYS } from "@/lib/utils"
 
@@ -55,22 +56,12 @@ export default function NotFound() {
       <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
         <h1 className="text-6xl font-bold">
           {heading.displayedText}
-          {heading.isTyping && (
-            <span
-              className="inline-block w-px h-4 bg-black animate-pulse ml-0.5"
-              aria-hidden="true"
-            />
-          )}
+          {heading.isTyping && <Cursor variant="black" />}
         </h1>
         {showSubtext && (
           <p className="text-sm">
             {subtext.displayedText}
-            {subtext.isTyping && (
-              <span
-                className="inline-block w-px h-4 bg-black animate-pulse ml-0.5"
-                aria-hidden="true"
-              />
-            )}
+            {subtext.isTyping && <Cursor variant="black" />}
           </p>
         )}
       </div>
