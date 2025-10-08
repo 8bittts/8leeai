@@ -40,6 +40,10 @@ const nextConfig: NextConfig = {
             key: "Expires",
             value: "0",
           },
+          {
+            key: "Link",
+            value: "</cj.m4a>; rel=preload; as=audio",
+          },
         ],
       },
     ]

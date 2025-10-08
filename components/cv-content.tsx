@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, formatIndex, openExternalLink } from "@/lib/utils"
+import {
+  ANIMATION_DELAYS,
+  formatIndex,
+  openExternalLink,
+  renderTextWithUnderlinedWord,
+} from "@/lib/utils"
 
 const summaryText =
   "20+ year engineering veteran and award-winning product designer. Obsessed with systems, speed, and my 3 kids and (sub)agents equally. Need help building something great? Let's "
@@ -87,19 +92,7 @@ export function CVContent({
                     className="truncate hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                     aria-label={`${project.name} (opens in new tab)`}
                   >
-                    {project.linkWord && project.linkWord.trim() !== ""
-                      ? project.name
-                          .split(new RegExp(`(${project.linkWord})`, "i"))
-                          .map((part, i) =>
-                            part.toLowerCase() === project.linkWord?.toLowerCase() ? (
-                              <span key={i} className="underline">
-                                {part}
-                              </span>
-                            ) : (
-                              <span key={i}>{part}</span>
-                            )
-                          )
-                      : project.name}
+                    {renderTextWithUnderlinedWord(project.name, project.linkWord)}
                   </a>
                 ) : (
                   <span className="truncate">{project.name}</span>

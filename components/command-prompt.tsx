@@ -1,8 +1,15 @@
 "use client"
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
-import { DATA_OFFSETS, formatIndex, openExternalLink } from "@/lib/utils"
+import {
+  DATA_OFFSETS,
+  formatIndex,
+  openExternalLink,
+  renderTextWithUnderlinedWord,
+  VALID_COMMANDS,
+} from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
@@ -40,102 +47,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showEmail, setShowEmail] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
-    const keyboardReleaseRef = useRef<(() => void) | null>(null)
-
-    const releaseKeyboardSuppression = useCallback(() => {
-      keyboardReleaseRef.current?.()
-      keyboardReleaseRef.current = null
-    }, [])
-
-    const suppressVirtualKeyboard = () => {
-      const input = inputRef.current
-      if (!input) return
-
-      const prefersTouch = globalThis?.matchMedia?.("(pointer: coarse)")?.matches ?? false
-      if (!prefersTouch) {
-        requestAnimationFrame(() => {
-          try {
-            input.focus({ preventScroll: true })
-          } catch {
-            input.focus()
-          }
-        })
-        return
-      }
-
-      releaseKeyboardSuppression()
-
-      const virtualKeyboard = (
-        navigator as unknown as {
-          readonly virtualKeyboard?: { hide?: () => Promise<void> }
-        }
-      ).virtualKeyboard
-
-      const fallbackSuppress = () => {
-        const previousInputMode = input.getAttribute("inputmode")
-        const wasReadOnly = input.hasAttribute("readonly")
-
-        input.setAttribute("inputmode", "none")
-        input.setAttribute("readonly", "true")
-
-        const cleanup = () => {
-          if (!wasReadOnly) {
-            input.removeAttribute("readonly")
-          }
-          if (previousInputMode) {
-            input.setAttribute("inputmode", previousInputMode)
-          } else {
-            input.removeAttribute("inputmode")
-          }
-          keyboardReleaseRef.current = null
-        }
-
-        const allowInput = () => {
-          cleanup()
-          requestAnimationFrame(() => {
-            try {
-              input.focus({ preventScroll: true })
-            } catch {
-              input.focus()
-            }
-            input.setSelectionRange?.(input.value.length, input.value.length)
-          })
-        }
-
-        input.addEventListener("pointerdown", allowInput, { once: true })
-        input.addEventListener("keydown", allowInput, { once: true })
-
-        keyboardReleaseRef.current = () => {
-          input.removeEventListener("pointerdown", allowInput)
-          input.removeEventListener("keydown", allowInput)
-          cleanup()
-        }
-
-        requestAnimationFrame(() => {
-          input.blur()
-          requestAnimationFrame(() => {
-            try {
-              input.focus({ preventScroll: true })
-            } catch {
-              input.focus()
-            }
-            input.setSelectionRange?.(input.value.length, input.value.length)
-          })
-        })
-      }
-
-      if (virtualKeyboard?.hide) {
-        virtualKeyboard.hide().catch(() => {
-          fallbackSuppress()
-        })
-        requestAnimationFrame(() => {
-          input.setSelectionRange?.(input.value.length, input.value.length)
-        })
-        return
-      }
-
-      fallbackSuppress()
-    }
+    const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
+      useVirtualKeyboardSuppression(inputRef)
 
     // Extract command handlers to reduce complexity
     const handleSectionCommand = (cmdLower: string) => {
@@ -312,17 +225,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                       className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.linkWord && item.linkWord.trim() !== ""
-                        ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
-                            part.toLowerCase() === item.linkWord?.toLowerCase() ? (
-                              <span key={i} className="underline">
-                                {part}
-                              </span>
-                            ) : (
-                              <span key={i}>{part}</span>
-                            )
-                          )
-                        : item.name}
+                      {renderTextWithUnderlinedWord(item.name, item.linkWord)}
                     </a>
                   ) : (
                     <span>{item.name}</span>
@@ -355,17 +258,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
                       className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
                       aria-label={`${item.name} (opens in new tab)`}
                     >
-                      {item.linkWord && item.linkWord.trim() !== ""
-                        ? item.name.split(new RegExp(`(${item.linkWord})`, "i")).map((part, i) =>
-                            part.toLowerCase() === item.linkWord?.toLowerCase() ? (
-                              <span key={i} className="underline">
-                                {part}
-                              </span>
-                            ) : (
-                              <span key={i}>{part}</span>
-                            )
-                          )
-                        : item.name}
+                      {renderTextWithUnderlinedWord(item.name, item.linkWord)}
                     </a>
                   ) : (
                     <span>{item.name}</span>
@@ -399,7 +292,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Commands: email, education, volunteer, github, wellfound, deathnote, clear
+            Commands: {VALID_COMMANDS.join(", ")}
           </p>
         </nav>
 
