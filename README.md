@@ -150,7 +150,8 @@ bun run clean
 ├── public/             # Static assets
 │   ├── mario.jpg       # 404 background
 │   └── 8-social.jpeg   # Social share image
-└── middleware.ts       # Security headers
+├── middleware.ts       # Security headers
+└── release-notes.md    # Comprehensive commit changelog
 ```
 
 ## Code Quality
