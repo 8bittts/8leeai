@@ -17,7 +17,7 @@ export function useTypewriter({
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const onCompleteRef = useRef(onComplete)
 
-  // Keep onCompleteRef up to date without triggering effect re-run
+  // Keep onCompleteRef current without adding to dependencies (prevents unnecessary re-renders)
   useEffect(() => {
     onCompleteRef.current = onComplete
   })

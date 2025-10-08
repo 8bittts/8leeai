@@ -162,7 +162,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
 
       {showPrompt && (
         <div className="flex items-center" aria-label="Command prompt">
-          <span>/:</span>
+          <span>$:</span>
           <span
             className="inline-block w-px h-4 bg-green-500 animate-pulse ml-0.5"
             aria-hidden="true"
