@@ -18,7 +18,9 @@ The current settings are designed for a completely private portfolio that won't 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC)](https://tailwindcss.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.14-38B2AC)](https://tailwindcss.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
+[![Bun](https://img.shields.io/badge/Bun-1.2.23-fbf0df)](https://bun.sh)
 
 ## Live Demo
 
@@ -29,17 +31,19 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 ## Features
 
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
-- **Matrix Background Effect**: Subtle falling characters animation on mobile (replaces static ASCII watermark)
-- **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience
-- **Typewriter Effects**: Smooth text animations with nostalgic terminal feel
+- **Matrix Background Effect**: Subtle falling characters animation on mobile using `requestAnimationFrame` for optimal performance
+- **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`)
+- **Typewriter Effects**: Smooth text animations with nostalgic terminal feel and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
 - **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
 - **Responsive Design**: Fully responsive terminal interface for all devices
-- **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal performance
-- **Audio Integration**: Subtle interaction sound effects at 2% volume on first user interaction
+- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`, extracted shared rendering utilities
+- **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
+- **Audio Integration**: Preloaded interaction sound effects at 2% volume on first user interaction
 - **PWA Ready**: Includes favicon set and Apple Touch icons for mobile home screen installation
-- **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, and reduced motion support
+- **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links, and reduced motion support
+- **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, zero tolerance for code smells
 
 ## Quick Start
 
@@ -75,10 +79,10 @@ Once the terminal loads, you can use these commands:
 - `61-65` - Open education item by number
 - `66-71` - Open volunteer experience by number
 - `email` - Display contact email info
+- `education` or `ed` - Show education background
+- `volunteer` or `vol` - Display volunteer experience
 - `github` - Open this GitHub project
 - `wellfound` - Open Wellfound profile
-- `education` - Show education background
-- `volunteer` - Display volunteer experience
 - `deathnote` - Open deathnote.ai website
 - `clear` - Reset terminal display
 
@@ -137,7 +141,11 @@ bun run clean
 │   ├── matrix-background.tsx
 │   └── terminal-container.tsx
 ├── hooks/              # Custom React hooks
+│   ├── use-typewriter.ts            # Optimized typewriter effect
+│   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard control
 ├── lib/                # Utilities and data
+│   ├── data.ts         # Portfolio data (projects, education, volunteer)
+│   └── utils.ts        # Utilities, constants, command types, rendering logic
 ├── public/             # Static assets
 │   ├── mario.jpg       # 404 background
 │   └── 8-social.jpeg   # Social share image
@@ -163,14 +171,16 @@ Production-ready security implementation:
 
 ## Version History
 
-v1.0 - September 30, 2025:
+v1.0 - October 2025:
 - **Production Release**: Terminal interface with authentic boot sequence
-- **Interactive Commands**: Full command system with 60+ projects
+- **Interactive Commands**: Full command system with 60+ projects, command aliases (`ed`, `vol`)
 - **Security Hardened**: Production-grade middleware and secure link handling
-- **Performance Optimized**: Minimal dependencies, Turbopack, zero custom CSS
+- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks, minimal dependencies, Turbopack, zero custom CSS
 - **Comprehensive Data**: Complete portfolio with projects, education, and volunteer experience
-- **Audio Integration**: Subtle sound effects for enhanced immersion
-- **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, and keyboard navigation
+- **Audio Integration**: Preloaded sound effects for enhanced immersion
+- **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, keyboard navigation, skip links, and reduced motion
+- **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, all packages on latest stable versions
+- **Shared Utilities**: Extracted rendering logic (`renderTextWithUnderlinedWord`), custom hooks (`useVirtualKeyboardSuppression`), typed command constants
 
 ## Contributing
 
