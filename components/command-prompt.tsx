@@ -273,7 +273,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         <nav className="relative z-10" aria-label="Terminal commands">
           <form className="flex items-center gap-1" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="terminal-input" className="text-green-500">
-              $
+              $:
             </label>
             <input
               ref={inputRef}
