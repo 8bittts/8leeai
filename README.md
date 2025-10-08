@@ -107,14 +107,19 @@ bun run clean
 
 ## Tech Stack
 
+### Core Dependencies
 - **Framework**: [Next.js 15.5.4](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev) with modern hooks
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration
-- **Runtime**: [Bun](https://bun.sh) for optimal performance
-- **Code Quality**: [Biome 2.2.5](https://biomejs.dev) for linting and formatting
+- **Runtime**: [Bun 1.2.23](https://bun.sh) for optimal performance
+- **Code Quality**: [Biome 2.2.5](https://biomejs.dev) for ultra-aggressive linting
+- **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
+
+### Development Tools
+- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.0
+- **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
 - **Security**: Production-grade middleware with CSP and CORS
-- **Analytics**: [Vercel Analytics](https://vercel.com/analytics) and [Speed Insights](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## Project Structure

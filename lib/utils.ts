@@ -70,3 +70,14 @@ export type Command = (typeof VALID_COMMANDS)[number]
 export function isValidCommand(cmd: string): cmd is Command {
   return VALID_COMMANDS.includes(cmd as Command)
 }
+
+// Formatted command list for display (groups aliases with main commands)
+export const COMMAND_DISPLAY_LIST = [
+  "email",
+  "education (ed)",
+  "volunteer (vol)",
+  "github",
+  "wellfound",
+  "deathnote",
+  "clear",
+] as const

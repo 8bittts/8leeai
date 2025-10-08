@@ -4,11 +4,11 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
 import {
+  COMMAND_DISPLAY_LIST,
   DATA_OFFSETS,
   formatIndex,
   openExternalLink,
   renderTextWithUnderlinedWord,
-  VALID_COMMANDS,
 } from "@/lib/utils"
 
 interface CommandPromptProps {
@@ -292,7 +292,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Commands: {VALID_COMMANDS.join(", ")}
+            Commands: {COMMAND_DISPLAY_LIST.join(", ")}
           </p>
         </nav>
 
