@@ -6,6 +6,92 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 8, 2025
 
+### 16:00 PST - TypeScript configuration fix for test exclusion
+**Commit:** TBD by 8BIT
+
+**Fixed Next.js build issue:**
+- Updated `tsconfig.json` to exclude test files from Next.js compilation
+- Added exclusions: `**/*.test.ts`, `**/*.test.tsx`, `test-setup.ts`
+- Resolved type conflict between happy-dom and Next.js Window types
+- Production build now passes without test file interference
+
+**Enhanced README.md documentation:**
+- Expanded Testing section with coverage details (36 tests, 107 assertions)
+- Added execution time (~900ms) and test breakdown by file
+- Documented important testing notes (tsconfig exclusions, Biome compliance, DOM polyfills)
+- Added reference to `release-notes.md` in Version History section
+- Updated v1.0 release notes to include test coverage
+
+**Files Changed:** 3 files (tsconfig.json, README.md, release-notes.md)
+
+---
+
+### 15:30 PST - Comprehensive test infrastructure implementation
+**Commit:** TBD by 8BIT
+
+**Added lightweight testing setup with Bun's native test runner:**
+
+**Testing Dependencies Added:**
+- `@testing-library/react@16.3.0` - Component testing utilities
+- `@testing-library/jest-dom@6.9.1` - DOM-specific matchers
+- `happy-dom@19.0.2` - Lightweight DOM environment for tests
+
+**Test Configuration:**
+- Created `test-setup.ts` with happy-dom global registration
+- Added `bunfig.toml` for Bun test preloading
+- Configured `requestAnimationFrame` and `matchMedia` polyfills for test environment
+- Added `test` and `test:watch` npm scripts
+
+**Test Coverage (36 tests, 107 assertions - all passing):**
+
+1. **`lib/utils.test.ts`** (19 tests)
+   - `formatIndex()` - Zero-padded index formatting
+   - `isValidCommand()` - Command validation with type guards
+   - `renderTextWithUnderlinedWord()` - Case-insensitive word highlighting
+   - `openExternalLink()` - Secure URL opening behavior
+   - Constants validation (VALID_COMMANDS, COMMAND_DISPLAY_LIST, DATA_OFFSETS)
+
+2. **`hooks/use-typewriter.test.tsx`** (6 tests)
+   - Initial state and typing behavior
+   - Character-by-character animation
+   - Completion callback handling
+   - Empty text edge cases
+   - Text prop change behavior
+
+3. **`hooks/use-virtual-keyboard-suppression.test.tsx`** (5 tests)
+   - Touch device detection with matchMedia mocking
+   - Readonly attribute manipulation on mobile
+   - Keyboard suppression release behavior
+   - Null ref handling
+   - Component unmount cleanup
+
+4. **`components/cursor.test.tsx`** (6 tests)
+   - Default green variant rendering
+   - Black variant for 404 page
+   - ARIA attributes validation
+   - CSS class assertions (dimensions, styling)
+
+**Documentation Updates:**
+- Enhanced README.md with Testing section and test command documentation
+- Updated CLAUDE.md Development Commands with test scripts
+- Updated AGENTS.md Testing Guidelines with comprehensive coverage details
+- Added test files to file structure documentation across all docs
+
+**Package Audit:**
+- Verified all 18 packages are at latest stable versions
+- No updates needed - dependency tree fully current
+
+**Impact:**
+- Established robust testing foundation without Playwright overhead
+- Targeted coverage for business logic (hooks, utilities, components)
+- Fast execution (~850ms for 36 tests)
+- Co-located tests beside source files for maintainability
+- All tests pass Biome linting rules
+
+**Files Changed:** 13 files (+~600 lines of test code and configuration)
+
+---
+
 ### 13:33 PST - Refactoring cursor into single component
 **Commit:** `f7e503c` by 8BIT
 
