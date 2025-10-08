@@ -102,12 +102,41 @@ bun run build
 # Start production server
 bun run start
 
+# Run tests
+bun test
+
+# Run tests in watch mode
+bun run test:watch
+
 # Lint and format code
 bun run check
 
 # Clean all caches
 bun run clean
 ```
+
+### Testing
+
+Lightweight unit and component testing with Bun's native test runner and React Testing Library:
+
+- **Test Framework**: Bun test (native)
+- **Component Testing**: @testing-library/react 16.3.0
+- **DOM Environment**: happy-dom 19.0.2
+- **Test Utilities**: @testing-library/jest-dom 6.9.1
+- **Coverage**: 36 tests, 107 assertions across 4 files
+- **Execution Time**: ~900ms for full test suite
+
+Run `bun test` to execute all tests. Tests are co-located with source files:
+- `lib/utils.test.ts` - Utility function tests (19 tests)
+- `hooks/use-typewriter.test.tsx` - Typewriter hook tests (6 tests)
+- `hooks/use-virtual-keyboard-suppression.test.tsx` - Keyboard suppression tests (5 tests)
+- `components/cursor.test.tsx` - Cursor component tests (6 tests)
+
+**Important Notes:**
+- Test files are excluded from Next.js builds via `tsconfig.json`
+- All tests pass Biome's strict linting rules
+- DOM environment configured with `requestAnimationFrame` and `matchMedia` polyfills for comprehensive browser API coverage
+- Tests focus on business logic and critical user interactions
 
 ## Tech Stack
 
@@ -146,12 +175,15 @@ bun run clean
 │   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard control
 ├── lib/                # Utilities and data
 │   ├── data.ts         # Portfolio data (projects, education, volunteer)
-│   └── utils.ts        # Utilities, constants, command types, rendering logic
+│   ├── utils.ts        # Utilities, constants, command types, rendering logic
+│   └── utils.test.ts   # Utility function tests
 ├── public/             # Static assets
 │   ├── mario.jpg       # 404 background
 │   └── 8-social.jpeg   # Social share image
 ├── middleware.ts       # Security headers
-└── release-notes.md    # Comprehensive commit changelog
+├── release-notes.md    # Comprehensive commit changelog
+├── test-setup.ts       # Bun test configuration with happy-dom
+└── bunfig.toml         # Bun configuration for tests
 ```
 
 ## Code Quality
@@ -173,6 +205,8 @@ Production-ready security implementation:
 
 ## Version History
 
+For detailed commit history and comprehensive changelog, see [release-notes.md](release-notes.md).
+
 v1.0 - October 2025:
 - **Production Release**: Terminal interface with authentic boot sequence
 - **Interactive Commands**: Full command system with 60+ projects, command aliases (`ed`, `vol`)
@@ -183,6 +217,7 @@ v1.0 - October 2025:
 - **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, keyboard navigation, skip links, and reduced motion
 - **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, all packages on latest stable versions
 - **Shared Utilities**: Extracted rendering logic (`renderTextWithUnderlinedWord`), custom hooks (`useVirtualKeyboardSuppression`), typed command constants
+- **Test Coverage**: Comprehensive testing with Bun native test runner (36 tests, 107 assertions)
 
 ## Contributing
 
