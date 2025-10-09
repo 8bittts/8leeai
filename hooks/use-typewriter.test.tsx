@@ -1,25 +1,28 @@
 /**
- * Tests for useTypewriter hook
+ * Tests for useTypewriter hook - focusing on content reveal intent
+ * Intent: Create authentic terminal experience by gradually revealing text
  */
 
 import { describe, expect, test, vi } from "bun:test"
 import { renderHook, waitFor } from "@testing-library/react"
 import { useTypewriter } from "./use-typewriter"
 
-describe("useTypewriter hook", () => {
-  test("initially returns empty string", () => {
+describe("useTypewriter - Authentic terminal content reveal", () => {
+  test("begins with no content visible to build anticipation", () => {
+    // Intent: Users see blank screen before typing starts (like real terminal)
     const { result } = renderHook(() => useTypewriter({ text: "Hello", speed: 50 }))
 
     expect(result.current.displayedText).toBe("")
     expect(result.current.isTyping).toBe(true)
   })
 
-  test("types out text character by character", async () => {
+  test("gradually reveals text character by character for terminal aesthetic", async () => {
+    // Intent: Typing animation creates authentic retro computing experience
     const { result } = renderHook(() => useTypewriter({ text: "Hi", speed: 50 }))
 
     expect(result.current.displayedText).toBe("")
 
-    // Wait for typing to complete
+    // Eventually reveals full content
     await waitFor(
       () => {
         expect(result.current.displayedText).toBe("Hi")
@@ -29,7 +32,8 @@ describe("useTypewriter hook", () => {
     )
   })
 
-  test("calls onComplete callback when typing finishes", async () => {
+  test("signals when content is fully revealed for workflow coordination", async () => {
+    // Intent: Allow chaining animations (boot → CV → prompt) by signaling completion
     const onComplete = vi.fn()
 
     renderHook(() => useTypewriter({ text: "Test", speed: 10, onComplete }))
@@ -42,17 +46,18 @@ describe("useTypewriter hook", () => {
     )
   })
 
-  test("handles empty text", async () => {
+  test("handles empty content without breaking the experience", async () => {
+    // Intent: Graceful handling when there's nothing to type
     const { result } = renderHook(() => useTypewriter({ text: "", speed: 50 }))
 
-    // Wait for hook to settle
     await waitFor(() => {
       expect(result.current.displayedText).toBe("")
       expect(result.current.isTyping).toBe(false)
     })
   })
 
-  test("does not call onComplete if not provided", async () => {
+  test("works without completion callback for simple use cases", async () => {
+    // Intent: onComplete is optional - not all typing needs follow-up actions
     const { result } = renderHook(() => useTypewriter({ text: "Test", speed: 10 }))
 
     await waitFor(
@@ -62,15 +67,16 @@ describe("useTypewriter hook", () => {
       { timeout: 200 }
     )
 
-    // Should not throw
     expect(result.current.displayedText).toBe("Test")
   })
 
-  test("resets when text prop changes", async () => {
+  test("resets typing when content changes to support dynamic updates", async () => {
+    // Intent: Allow changing displayed content (e.g., switching between sections)
     const { result, rerender } = renderHook(({ text }) => useTypewriter({ text, speed: 10 }), {
       initialProps: { text: "First" },
     })
 
+    // First content types out
     await waitFor(
       () => {
         expect(result.current.displayedText).toBe("First")
@@ -78,6 +84,7 @@ describe("useTypewriter hook", () => {
       { timeout: 200 }
     )
 
+    // Changing content resets and types new text
     rerender({ text: "Second" })
 
     await waitFor(

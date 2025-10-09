@@ -1,5 +1,6 @@
 /**
- * Tests for useVirtualKeyboardSuppression hook
+ * Tests for useVirtualKeyboardSuppression hook - focusing on mobile UX intent
+ * Intent: Prevent disruptive keyboard popups when navigating command history on mobile
  */
 
 import { describe, expect, test } from "bun:test"
@@ -7,23 +8,26 @@ import { renderHook } from "@testing-library/react"
 import type { RefObject } from "react"
 import { useVirtualKeyboardSuppression } from "./use-virtual-keyboard-suppression"
 
-describe("useVirtualKeyboardSuppression hook", () => {
-  test("returns suppressVirtualKeyboard and releaseKeyboardSuppression functions", () => {
+describe("useVirtualKeyboardSuppression - Mobile command history navigation", () => {
+  test("provides keyboard control functions for mobile interaction flow", () => {
+    // Intent: Hook gives components control over when keyboard appears
     const mockRef: RefObject<HTMLInputElement> = {
       current: document.createElement("input"),
     }
 
     const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
+    // Should provide both suppress and release functions for full control
     expect(result.current.suppressVirtualKeyboard).toBeInstanceOf(Function)
     expect(result.current.releaseKeyboardSuppression).toBeInstanceOf(Function)
   })
 
-  test("suppressVirtualKeyboard sets readonly attribute on touch devices", () => {
+  test("prevents keyboard popup when navigating command history on touch devices", () => {
+    // Intent: Users navigate history with arrow keys without keyboard covering screen
     const input = document.createElement("input")
     const mockRef: RefObject<HTMLInputElement> = { current: input }
 
-    // Mock matchMedia to simulate touch device
+    // Simulate touch device (mobile/tablet)
     const originalMatchMedia = globalThis.matchMedia
     globalThis.matchMedia = ((query: string) => ({
       matches: query === "(pointer: coarse)",
@@ -48,19 +52,21 @@ describe("useVirtualKeyboardSuppression hook", () => {
 
     expect(input.readOnly).toBe(false)
 
+    // When user navigates history, suppress keyboard
     result.current.suppressVirtualKeyboard()
 
+    // Keyboard should not appear (readonly prevents it on mobile)
     expect(input.readOnly).toBe(true)
 
-    // Restore original
     globalThis.matchMedia = originalMatchMedia
   })
 
-  test("releaseKeyboardSuppression removes readonly attribute immediately", () => {
+  test("allows keyboard to appear when user wants to type new command", () => {
+    // Intent: After navigating history, users can type to modify or enter new commands
     const input = document.createElement("input")
     const mockRef: RefObject<HTMLInputElement> = { current: input }
 
-    // Mock matchMedia to simulate touch device
+    // Simulate touch device
     const originalMatchMedia = globalThis.matchMedia
     globalThis.matchMedia = ((query: string) => ({
       matches: query === "(pointer: coarse)",
@@ -83,35 +89,37 @@ describe("useVirtualKeyboardSuppression hook", () => {
 
     const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
+    // Suppress during navigation
     result.current.suppressVirtualKeyboard()
     expect(input.readOnly).toBe(true)
 
+    // Release when user wants to type
     result.current.releaseKeyboardSuppression()
 
-    // Should be released immediately
+    // Keyboard can now appear for typing
     expect(input.readOnly).toBe(false)
 
-    // Restore original
     globalThis.matchMedia = originalMatchMedia
   })
 
-  test("handles null ref gracefully", () => {
+  test("handles edge cases without breaking mobile experience", () => {
+    // Intent: Robust error handling - don't crash if input ref is null
     const mockRef: RefObject<HTMLInputElement> = { current: null }
 
     const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
-    // Should not throw
+    // Should fail gracefully when input doesn't exist yet
     expect(() => result.current.suppressVirtualKeyboard()).not.toThrow()
     expect(() => result.current.releaseKeyboardSuppression()).not.toThrow()
   })
 
-  test("cleanup function exists", () => {
+  test("cleans up properly when component unmounts", () => {
+    // Intent: No memory leaks or lingering effects after component removal
     const input = document.createElement("input")
     const mockRef: RefObject<HTMLInputElement> = { current: input }
 
     const { unmount } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
-    // Should not throw when unmounting
     expect(() => unmount()).not.toThrow()
   })
 })

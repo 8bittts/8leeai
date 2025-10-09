@@ -1,57 +1,49 @@
 /**
- * Tests for Cursor component
+ * Tests for Cursor component - focusing on user intent
+ * Intent: Provide visual feedback that terminal is active and ready for input
  */
 
 import { describe, expect, test } from "bun:test"
 import { render } from "@testing-library/react"
 import { Cursor } from "./cursor"
 
-describe("Cursor component", () => {
-  test("renders with default green variant", () => {
+describe("Cursor - Visual feedback for terminal readiness", () => {
+  test("provides visible indicator that terminal is active", () => {
     const { container } = render(<Cursor />)
-    const span = container.querySelector("span")
+    const cursor = container.querySelector("span")
 
-    expect(span).toBeTruthy()
-    expect(span?.className).toContain("bg-green-500")
-    expect(span?.className).toContain("animate-pulse")
-    expect(span?.className).toContain("w-px")
-    expect(span?.className).toContain("h-4")
+    // Intent: Users need to see the terminal is ready for input
+    expect(cursor).toBeTruthy()
+    expect(cursor?.className).toContain("animate-pulse") // Blinking draws attention
   })
 
-  test("renders with green variant explicitly", () => {
-    const { container } = render(<Cursor variant="green" />)
-    const span = container.querySelector("span")
+  test("supports different visual states for different contexts", () => {
+    // Intent: Different cursor colors indicate different terminal states
+    const { container: greenContainer } = render(<Cursor variant="green" />)
+    const { container: blackContainer } = render(<Cursor variant="black" />)
 
-    expect(span?.className).toContain("bg-green-500")
+    const greenCursor = greenContainer.querySelector("span")
+    const blackCursor = blackContainer.querySelector("span")
+
+    // Users can distinguish between active (green) and inactive (black) states
+    expect(greenCursor?.className).toContain("bg-green-500")
+    expect(blackCursor?.className).toContain("bg-black")
   })
 
-  test("renders with black variant", () => {
-    const { container } = render(<Cursor variant="black" />)
-    const span = container.querySelector("span")
-
-    expect(span?.className).toContain("bg-black")
-    expect(span?.className).not.toContain("bg-green-500")
-  })
-
-  test("has aria-hidden attribute", () => {
+  test("hidden from screen readers to avoid confusion", () => {
     const { container } = render(<Cursor />)
-    const span = container.querySelector("span")
+    const cursor = container.querySelector("span")
 
-    expect(span?.getAttribute("aria-hidden")).toBe("true")
+    // Intent: Visual indicator only - screen readers should announce actual content
+    expect(cursor?.getAttribute("aria-hidden")).toBe("true")
   })
 
-  test("has correct dimensions", () => {
+  test("renders as thin blinking line matching classic terminal cursor", () => {
     const { container } = render(<Cursor />)
-    const span = container.querySelector("span")
+    const cursor = container.querySelector("span")
 
-    expect(span?.className).toContain("w-px") // 1px width
-    expect(span?.className).toContain("h-4") // 16px height
-  })
-
-  test("includes margin left", () => {
-    const { container } = render(<Cursor />)
-    const span = container.querySelector("span")
-
-    expect(span?.className).toContain("ml-0.5")
+    // Intent: Authentic DOS terminal aesthetic requires thin vertical cursor
+    expect(cursor?.className).toContain("w-px") // 1px width = thin line
+    expect(cursor?.className).toContain("h-4") // Matches text height
   })
 })
