@@ -123,20 +123,26 @@ Lightweight unit and component testing with Bun's native test runner and React T
 - **Component Testing**: @testing-library/react 16.3.0
 - **DOM Environment**: happy-dom 19.0.2
 - **Test Utilities**: @testing-library/jest-dom 6.9.1
-- **Coverage**: 36 tests, 107 assertions across 4 files
+- **Coverage**: 33 tests, 97 assertions across 4 files
 - **Execution Time**: ~900ms for full test suite
 
 Run `bun test` to execute all tests. Tests are co-located with source files:
-- `lib/utils.test.ts` - Utility function tests (19 tests)
-- `hooks/use-typewriter.test.tsx` - Typewriter hook tests (6 tests)
-- `hooks/use-virtual-keyboard-suppression.test.tsx` - Keyboard suppression tests (5 tests)
-- `components/cursor.test.tsx` - Cursor component tests (6 tests)
+- `lib/utils.test.ts` - Data integrity and user input validation
+- `hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
+- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile UX for command history
+- `components/cursor.test.tsx` - Visual feedback for terminal readiness
+
+**Testing Philosophy:**
+- Tests focus on **user intent and business logic**, not implementation details
+- Test names read like requirements (e.g., "prevents keyboard popup when navigating command history")
+- Every assertion includes comments explaining the business reason
+- Tests document WHY features exist, making them resilient to refactoring
+- Observable behavior over internal mechanisms
 
 **Important Notes:**
 - Test files are excluded from Next.js builds via `tsconfig.json`
 - All tests pass Biome's strict linting rules
 - DOM environment configured with `requestAnimationFrame` and `matchMedia` polyfills for comprehensive browser API coverage
-- Tests focus on business logic and critical user interactions
 
 ## Tech Stack
 
@@ -217,7 +223,7 @@ v1.0 - October 2025:
 - **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, keyboard navigation, skip links, and reduced motion
 - **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, all packages on latest stable versions
 - **Shared Utilities**: Extracted rendering logic (`renderTextWithUnderlinedWord`), custom hooks (`useVirtualKeyboardSuppression`), typed command constants
-- **Test Coverage**: Comprehensive testing with Bun native test runner (36 tests, 107 assertions)
+- **Test Coverage**: Intent-focused testing with Bun native test runner (33 tests, 97 assertions) - tests document user needs and business logic
 
 ## Contributing
 
