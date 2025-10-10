@@ -121,7 +121,7 @@ Lightweight unit and component testing with Bun's native test runner and React T
 
 - **Test Framework**: Bun test (native)
 - **Component Testing**: @testing-library/react 16.3.0
-- **DOM Environment**: happy-dom 19.0.2
+- **DOM Environment**: happy-dom 20.0.0
 - **Test Utilities**: @testing-library/jest-dom 6.9.1
 - **Coverage**: 33 tests, 97 assertions across 4 files
 - **Execution Time**: ~900ms for full test suite
@@ -156,7 +156,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 
 ### Development Tools
-- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.0
+- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.1
 - **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
 - **Security**: Production-grade middleware with CSP and CORS
 - **Deployment**: [Vercel](https://vercel.com)
