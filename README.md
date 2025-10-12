@@ -156,7 +156,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 
 ### Development Tools
-- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.1
+- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.2
 - **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
 - **Security**: Production-grade middleware with CSP and CORS
 - **Deployment**: [Vercel](https://vercel.com)
