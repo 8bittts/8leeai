@@ -6,6 +6,33 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 12, 2025
 
+### TBD PST - Slash command support for all terminal commands
+**Commit:** TBD by 8BIT
+
+**Added slash command syntax to command prompt:**
+- All existing commands now accept a leading `/` prefix (e.g., `/education`, `/github`, `/clear`)
+- Implemented automatic slash stripping in `handleCommand` function
+- Non-breaking change - existing commands still work exactly as before
+- Supports all command aliases (e.g., `/ed` and `/vol` work alongside `/education` and `/volunteer`)
+
+**Technical Implementation:**
+- Modified `command-prompt.tsx:152` to strip leading slash with `.replace(/^\//, "")`
+- Maintains backward compatibility with all existing command formats
+- No changes to command display labels or user-facing documentation
+
+**Supported Slash Commands:**
+- `/email`, `/education` (or `/ed`), `/volunteer` (or `/vol`)
+- `/github`, `/wellfound`, `/deathnote`, `/clear`
+
+**Verification:**
+- All 33 tests passed with 97 assertions
+- Biome linting passed with no issues
+- Production build successful
+
+**Files Changed:** 1 file (command-prompt.tsx)
+
+---
+
 ### TBD PST - Package dependency patch update
 **Commit:** TBD by 8BIT
 

@@ -148,7 +148,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const handleCommand = (e: React.KeyboardEvent) => {
       if (e.key !== "Enter") return
 
-      const cmd = command.trim()
+      // Strip leading slash to support slash command syntax (e.g., "/education", "/github")
+      const cmd = command.trim().replace(/^\//, "")
       const cmdLower = cmd.toLowerCase()
 
       const handled =
