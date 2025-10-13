@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+import { isSemanticUrl } from "./lib/utils"
 
 const ALLOWED_ORIGINS = [
   "https://8lee.ai",
@@ -28,6 +29,20 @@ const ALLOWED_ORIGINS = [
 ]
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Legacy URL redirect strategy: Redirect semantic-looking 404s to homepage
+  // Skip redirect for homepage, Next.js internals, and API routes
+  const isHomepage = pathname === "/"
+  const isNextInternal = pathname.startsWith("/_next") || pathname.startsWith("/__next")
+  const isApiRoute = pathname.startsWith("/api")
+  const isPublicAsset = pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|m4a|mp3|wav)$/i)
+
+  // If path looks semantic (legitimate URL slug) and isn't a known valid route, redirect to homepage
+  if (!(isHomepage || isNextInternal || isApiRoute || isPublicAsset) && isSemanticUrl(pathname)) {
+    return NextResponse.redirect(new URL("/", request.url), 301)
+  }
+
   const response = NextResponse.next()
 
   // Ultra-private mode: Block all search engines and web crawlers

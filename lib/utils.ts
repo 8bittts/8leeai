@@ -37,6 +37,53 @@ export function renderTextWithUnderlinedWord(name: string, linkWord?: string): R
   })
 }
 
+/**
+ * Detects malformed/malicious URL patterns for security filtering
+ * Returns true if URL contains suspicious patterns (SQL injection, path traversal, etc.)
+ */
+export function isMalformedUrl(pathname: string): boolean {
+  // SQL injection patterns
+  const sqlPatterns =
+    /select|union|insert|update|delete|drop|create|alter|exec|script|javascript|--|\/\*|\*\/|;|'|"|xp_|sp_/i
+
+  // Path traversal patterns
+  const pathTraversal = /\.\.|%2e%2e|%252e|%c0%ae|%c1%9c/i
+
+  // PHP/WordPress probing
+  const phpProbing = /\.php|wp-admin|wp-content|wp-includes|phpmyadmin|xmlrpc/i
+
+  // Suspicious characters or patterns
+  const suspiciousChars = /[<>{}[\]\\^`|"]/
+
+  // Check for any malicious pattern
+  return (
+    sqlPatterns.test(pathname) ||
+    pathTraversal.test(pathname) ||
+    phpProbing.test(pathname) ||
+    suspiciousChars.test(pathname)
+  )
+}
+
+/**
+ * Validates if URL looks like semantic content (legitimate slugified URLs)
+ * Requirements: ≤30 chars, only lowercase/numbers/hyphens/slashes, no malicious patterns
+ */
+export function isSemanticUrl(pathname: string): boolean {
+  // Must be ≤30 characters
+  if (pathname.length > 30) {
+    return false
+  }
+
+  // Must not contain malicious patterns
+  if (isMalformedUrl(pathname)) {
+    return false
+  }
+
+  // Must match semantic URL pattern: lowercase letters, numbers, hyphens, slashes only
+  const semanticPattern = /^\/[a-z0-9\-/]*$/
+  return semanticPattern.test(pathname)
+}
+
 export const ANIMATION_DELAYS = {
   typewriter: 15,
   showProjects: 500,

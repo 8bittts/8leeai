@@ -7,6 +7,8 @@ import {
   COMMAND_DISPLAY_LIST,
   DATA_OFFSETS,
   formatIndex,
+  isMalformedUrl,
+  isSemanticUrl,
   isValidCommand,
   openExternalLink,
   renderTextWithUnderlinedWord,
@@ -185,5 +187,89 @@ describe("DATA_OFFSETS - Portfolio data organization and integrity", () => {
     // If ranges overlap, typing "61" could mean both education and projects
     expect(DATA_OFFSETS.projects.end).toBeLessThan(DATA_OFFSETS.education.start)
     expect(DATA_OFFSETS.education.end).toBeLessThan(DATA_OFFSETS.volunteer.start)
+  })
+})
+
+describe("isMalformedUrl - Security filtering for malicious requests", () => {
+  test("detects SQL injection attempts to protect from attacks", () => {
+    // Intent: Block SQL injection probes from accessing or manipulating data
+    expect(isMalformedUrl("/blog?id=1' OR '1'='1")).toBe(true)
+    expect(isMalformedUrl("/post?id=1 UNION SELECT")).toBe(true)
+    expect(isMalformedUrl("/admin'; DROP TABLE users--")).toBe(true)
+    expect(isMalformedUrl("/page?q=test/**/SELECT")).toBe(true)
+  })
+
+  test("detects path traversal attempts to protect filesystem", () => {
+    // Intent: Prevent attackers from accessing sensitive files outside web root
+    expect(isMalformedUrl("/../../../etc/passwd")).toBe(true)
+    expect(isMalformedUrl("/blog/../../config")).toBe(true)
+    expect(isMalformedUrl("/page%2e%2e%2fpasswd")).toBe(true)
+    expect(isMalformedUrl("/test%252e%252e/secret")).toBe(true)
+  })
+
+  test("detects PHP/WordPress probing to identify scanning attempts", () => {
+    // Intent: Block automated scanners looking for vulnerable CMS installations
+    expect(isMalformedUrl("/wp-admin.php")).toBe(true)
+    expect(isMalformedUrl("/wp-content/plugins/evil")).toBe(true)
+    expect(isMalformedUrl("/phpmyadmin/index.php")).toBe(true)
+    expect(isMalformedUrl("/xmlrpc.php")).toBe(true)
+  })
+
+  test("detects suspicious characters that indicate injection attempts", () => {
+    // Intent: Catch XSS and other injection vectors using special characters
+    expect(isMalformedUrl("/blog/<script>alert(1)</script>")).toBe(true)
+    expect(isMalformedUrl("/page?q=test{cmd}")).toBe(true)
+    expect(isMalformedUrl("/post?id=[1,2,3]")).toBe(true)
+    expect(isMalformedUrl("/test\\admin\\config")).toBe(true)
+  })
+
+  test("allows legitimate URLs with normal characters through filter", () => {
+    // Intent: Don't block real users with valid content URLs
+    expect(isMalformedUrl("/blog-post")).toBe(false)
+    expect(isMalformedUrl("/about/team")).toBe(false)
+    expect(isMalformedUrl("/projects/2024")).toBe(false)
+  })
+})
+
+describe("isSemanticUrl - Legacy URL redirect for better UX", () => {
+  test("accepts legacy blog URLs from previous site versions", () => {
+    // Intent: 20+ years of external links should redirect to homepage, not 404
+    // These are real legacy URLs from the screenshot that users still visit
+    expect(isSemanticUrl("/blog-content")).toBe(true)
+    expect(isSemanticUrl("/jung")).toBe(true)
+    expect(isSemanticUrl("/1-percent")).toBe(true)
+    expect(isSemanticUrl("/1-year-apart")).toBe(true)
+    expect(isSemanticUrl("/404-page")).toBe(true)
+  })
+
+  test("accepts URLs with hyphens and numbers matching slug format", () => {
+    // Intent: Legitimate content URLs should redirect, preserving link equity
+    expect(isSemanticUrl("/post-title-123")).toBe(true)
+    expect(isSemanticUrl("/category/item")).toBe(true)
+    expect(isSemanticUrl("/2024/01/article")).toBe(true)
+  })
+
+  test("rejects URLs over 30 characters as likely spam", () => {
+    // Intent: Very long URLs are typically automated attacks, let them 404
+    expect(isSemanticUrl("/this-is-a-very-long-url-path-exceeding-thirty-characters")).toBe(false)
+  })
+
+  test("rejects URLs with uppercase letters not matching slug convention", () => {
+    // Intent: Slugified URLs are always lowercase, uppercase suggests typo or probe
+    expect(isSemanticUrl("/BlogPost")).toBe(false)
+    expect(isSemanticUrl("/ADMIN")).toBe(false)
+  })
+
+  test("rejects malicious patterns even if they look semantic", () => {
+    // Intent: Security takes priority - block attacks regardless of length
+    expect(isSemanticUrl("/blog?id=1'or'1'='1")).toBe(false)
+    expect(isSemanticUrl("/wp-admin")).toBe(false)
+    expect(isSemanticUrl("/../etc/passwd")).toBe(false)
+  })
+
+  test("requires leading slash to match route format", () => {
+    // Intent: Valid paths must start with slash (Next.js route convention)
+    expect(isSemanticUrl("blog-post")).toBe(false)
+    expect(isSemanticUrl("/blog-post")).toBe(true)
   })
 })
