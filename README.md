@@ -152,11 +152,11 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration
 - **Runtime**: [Bun 1.2.23](https://bun.sh) for optimal performance
-- **Code Quality**: [Biome 2.2.5](https://biomejs.dev) for ultra-aggressive linting
+- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) for ultra-aggressive linting
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 
 ### Development Tools
-- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.1, @types/node 24.7.2
+- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.2, @types/node 24.7.2
 - **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
 - **Security**: Production-grade middleware with CSP and CORS
 - **Deployment**: [Vercel](https://vercel.com)

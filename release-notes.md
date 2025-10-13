@@ -6,6 +6,34 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 12, 2025
 
+### TBD PST - Package dependency updates (Biome 2.2.6, type definitions)
+**Commit:** TBD by 8BIT
+
+**Updated development dependencies to latest patch versions:**
+- `@biomejs/biome`: 2.2.5 → 2.2.6 (patch update for linter/formatter)
+- `@types/node`: 24.7.1 → 24.7.2 (patch update for TypeScript Node.js type definitions)
+- `@types/react-dom`: 19.2.1 → 19.2.2 (patch update for TypeScript React DOM type definitions)
+
+**Biome Configuration:**
+- Updated `biome.json` schema to 2.2.6
+- All linting rules remain compatible with new version
+
+**Verification:**
+- All 33 tests passed with 97 assertions
+- Biome linting passed with no issues
+- Production build successful
+- No breaking changes in patch updates
+
+**Documentation Updates:**
+- Updated version references in CLAUDE.md (lines 7, 125)
+- Updated version references in AGENTS.md (line 31)
+- Updated version references in README.md (lines 155, 159)
+- Added release notes entry
+
+**Files Changed:** 6 files (package.json, bun.lock, biome.json, CLAUDE.md, AGENTS.md, README.md, release-notes.md)
+
+---
+
 ### TBD PST - Slash command support for all terminal commands
 **Commit:** TBD by 8BIT
 
@@ -30,26 +58,6 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 - Production build successful
 
 **Files Changed:** 1 file (command-prompt.tsx)
-
----
-
-### TBD PST - Package dependency patch update
-**Commit:** TBD by 8BIT
-
-**Updated development dependency to latest patch version:**
-- `@types/node`: 24.7.1 → 24.7.2 (patch update for TypeScript Node.js type definitions)
-
-**Verification:**
-- No breaking changes in patch update
-- Type definitions remain compatible with existing codebase
-
-**Documentation Updates:**
-- Updated version references in CLAUDE.md (line 125)
-- Updated version references in AGENTS.md (line 31)
-- Updated version references in README.md (line 159)
-- Added release notes entry
-
-**Files Changed:** 5 files (package.json, bun.lock, CLAUDE.md, AGENTS.md, README.md)
 
 ---
 
