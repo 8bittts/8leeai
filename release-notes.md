@@ -4,10 +4,82 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
+## ⚠️ IMPORTANT - DO NOT MODIFY THIS FILE
+
+**This file is manually curated by the project maintainer and should NEVER be modified unless explicitly requested.**
+
+If you are asked to update this file, follow these rules:
+- Use **date-based organization only** (e.g., "## October 12, 2025")
+- **No timestamps** - all entries for a given day go under the same date heading
+- Multiple updates on the same day are added as additional `###` entries under that date
+- Format: `### Feature/update title` (no timestamps like "14:30 PST")
+- Entries within a date are ordered most recent first (new entries added at top of date section)
+
+---
+
 ## October 12, 2025
 
-### TBD PST - Package dependency updates (Biome 2.2.6, type definitions)
-**Commit:** TBD by 8BIT
+### Semantic URL redirect strategy for legacy content
+
+**Implemented intelligent URL redirect system to preserve link equity from 20+ years of external links:**
+
+**Feature Overview:**
+- Semantic-looking 404s (≤30 chars, lowercase/numbers/hyphens) automatically redirect to homepage with 301 status
+- Malformed/malicious URLs (SQL injection, path traversal, PHP probing) correctly hit 404 page
+- Preserves SEO value and provides better UX for visitors from old blog posts, forums, and bookmarks
+
+**Implementation Details:**
+1. **URL Validation Utilities (`lib/utils.ts`):**
+   - `isMalformedUrl()` - Detects SQL injection, path traversal, PHP/WordPress probing, XSS patterns
+   - `isSemanticUrl()` - Validates legitimate slug-style URLs (30 char limit, lowercase/numbers/hyphens only)
+
+2. **Middleware Integration (`middleware.ts`):**
+   - Added redirect logic before security headers
+   - Preserves Next.js internals, API routes, and static assets
+   - Returns 301 permanent redirect for semantic URLs
+   - Lets malicious patterns through to 404 page
+
+3. **Comprehensive Test Coverage:**
+   - Added 14 new intent-focused tests (44 total tests, 132 assertions)
+   - Tests validate both security (blocks attacks) and usability (allows legitimate users)
+   - All tests include WHY comments explaining business reasoning
+   - Real-world examples from production analytics
+
+**Security Patterns Detected:**
+- SQL injection: `SELECT`, `UNION`, `DROP TABLE`, quotes, comments
+- Path traversal: `../`, encoded variants (`%2e%2e`)
+- CMS probing: `wp-admin`, `phpmyadmin`, `xmlrpc.php`
+- XSS vectors: `<script>`, suspicious brackets/braces
+
+**Example Redirects:**
+- `/blog-content` → homepage (semantic)
+- `/jung` → homepage (semantic)
+- `/1-percent` → homepage (semantic)
+- `/wp-admin.php` → 404 (malicious)
+- `/../../etc/passwd` → 404 (path traversal)
+
+**Documentation Updates:**
+- Updated CLAUDE.md with redirect behavior in Security Configuration section
+- Enhanced AGENTS.md Testing Guidelines with security validation principles
+- Updated README.md test coverage statistics (44 tests, 132 assertions)
+
+**Verification:**
+- All 44 tests passing with 132 assertions
+- Biome linting passed with no issues
+- Production build successful (middleware: 34.9 kB)
+- Tested with real legacy URLs from production analytics
+
+**Impact:**
+- Better SEO: Preserves link authority from decades of external backlinks
+- Improved UX: Visitors from old links reach homepage instead of 404
+- Enhanced Security: Blocks automated scanners and injection attempts
+- Future-proof: Handles all legacy URLs without maintaining massive redirect list
+
+**Files Changed:** 4 files (+147 lines: lib/utils.ts, middleware.ts, lib/utils.test.ts, CLAUDE.md, AGENTS.md, README.md)
+
+---
+
+### Package dependency updates (Biome 2.2.6, type definitions)
 
 **Updated development dependencies to latest patch versions:**
 - `@biomejs/biome`: 2.2.5 → 2.2.6 (patch update for linter/formatter)
@@ -34,8 +106,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### TBD PST - Slash command support for all terminal commands
-**Commit:** TBD by 8BIT
+### Slash command support for all terminal commands
 
 **Added slash command syntax to command prompt:**
 - All existing commands now accept a leading `/` prefix (e.g., `/education`, `/github`, `/clear`)
@@ -63,8 +134,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 10, 2025
 
-### 10:30 PST - Package dependency updates
-**Commit:** TBD by 8BIT
+### Package dependency updates
 
 **Updated development dependencies to latest versions:**
 - `@types/node`: 24.7.0 → 24.7.1 (patch update for TypeScript Node.js type definitions)
@@ -87,8 +157,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 9, 2025
 
-### 14:45 PST - Remove all emojis from markdown documentation
-**Commit:** TBD by 8BIT
+### Remove all emojis from markdown documentation
 
 **Removed emoji characters from documentation files:**
 - Replaced checkmark/X emojis in CLAUDE.md with text labels (Good/Bad)
@@ -99,8 +168,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 14:30 PST - Comprehensive test refactoring to focus on intent over implementation
-**Commit:** TBD by 8BIT
+### Comprehensive test refactoring to focus on intent over implementation
 
 **Refactored all test suites to document user intent and business logic:**
 
@@ -145,8 +213,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 8, 2025
 
-### 16:00 PST - TypeScript configuration fix for test exclusion
-**Commit:** TBD by 8BIT
+### TypeScript configuration fix for test exclusion
 
 **Fixed Next.js build issue:**
 - Updated `tsconfig.json` to exclude test files from Next.js compilation
@@ -165,8 +232,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:30 PST - Comprehensive test infrastructure implementation
-**Commit:** TBD by 8BIT
+### Comprehensive test infrastructure implementation
 
 **Added lightweight testing setup with Bun's native test runner:**
 
@@ -231,7 +297,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 13:33 PST - Refactoring cursor into single component
+### Refactoring cursor into single component
 **Commit:** `f7e503c` by 8BIT
 
 - Created reusable `<Cursor />` component to eliminate code duplication
@@ -245,7 +311,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:17 PST - Update README.md
+### Update README.md
 **Commit:** `1995089` by 8BIT
 
 - Enhanced README documentation with latest feature descriptions
@@ -256,7 +322,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:15 PST - Same same
+### Same same
 **Commit:** `86e8c86` by 8BIT
 
 - Minor text adjustment in command-prompt.tsx
@@ -265,7 +331,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:15 PST - Lint and Command Prompt consolidation. Docs
+### Lint and Command Prompt consolidation. Docs
 **Commit:** `565a58f` by 8BIT
 
 - Enhanced Biome configuration with additional complexity and style rules
@@ -278,7 +344,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:05 PST - Documentation for new hook
+### Documentation for new hook
 **Commit:** `5a2b727` by 8BIT
 
 - Added comprehensive JSDoc comments to `use-virtual-keyboard-suppression.ts`
@@ -289,7 +355,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:41 PST - Optimizations for matrix, audio preload, typewriter effect, link rendering, virtual keyboard suppression, stricter command types
+### Optimizations for matrix, audio preload, typewriter effect, link rendering, virtual keyboard suppression, stricter command types
 **Commit:** `7559c5a` by 8BIT
 
 **Major performance and code quality improvements:**
@@ -330,7 +396,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 7, 2025
 
-### 07:06 PST - Adding to gitignore, conflict with bun.lock and package-lock.json
+### Adding to gitignore, conflict with bun.lock and package-lock.json
 **Commit:** `44db52b` by 8BIT
 
 - Updated .gitignore to handle package-lock.json conflicts
@@ -342,7 +408,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:03 PST - Tighter types
+### Tighter types
 **Commit:** `6e7bd21` by 8BIT
 
 - Enhanced TypeScript strict mode configuration
@@ -354,7 +420,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 06:58 PST - Matrix background on mobile only
+### Matrix background on mobile only
 **Commit:** `437db12` by 8BIT
 
 - Created new `matrix-background.tsx` component with falling Matrix rain effect
@@ -369,7 +435,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 6, 2025
 
-### 16:41 PST - Version updates
+### Version updates
 **Commit:** `d632afd` by 8BIT
 
 - Updated package dependencies to latest stable versions
@@ -381,7 +447,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 3, 2025
 
-### 13:11 CST - Update .gitignore
+### Update .gitignore
 **Commit:** `83e0b0f` by 8BIT
 
 - Added build artifacts to .gitignore
@@ -392,7 +458,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 2, 2025
 
-### 15:58 CST - Update not-found.tsx
+### Update not-found.tsx
 **Commit:** `37e25a5` by 8BIT
 
 - Final 404 page text refinements
@@ -401,7 +467,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:53 CST - Update not-found.tsx
+### Update not-found.tsx
 **Commit:** `359fdf3` by 8BIT
 
 - Adjusted 404 page styling
@@ -410,7 +476,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:45 CST - Update not-found.tsx
+### Update not-found.tsx
 **Commit:** `1e18f7c` by 8BIT
 
 - 404 page color scheme adjustments
@@ -419,7 +485,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:42 CST - Update not-found.tsx
+### Update not-found.tsx
 **Commit:** `87d8b10` by 8BIT
 
 - 404 page layout improvements
@@ -428,7 +494,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:29 CST - Update not-found.tsx
+### Update not-found.tsx
 **Commit:** `b1adb3b` by 8BIT
 
 - Minor 404 page text fix
@@ -437,7 +503,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:00 CST - Docs
+### Docs
 **Commit:** `1e7ad1d` by 8BIT
 
 - Added 404 page documentation to README
@@ -448,7 +514,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 14:50 CST - Custom 404 page
+### Custom 404 page
 **Commit:** `d75eee8` by 8BIT
 
 - Created custom 404 error page with Mario background
@@ -461,7 +527,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:28 CST - Emojis...
+### Emojis...
 **Commit:** `2d35a88` by 8BIT
 
 - Updated README emoji styling
@@ -470,7 +536,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:16 CST - Packages Update
+### Packages Update
 **Commit:** `fb6b105` by 8BIT
 
 - Updated all dependencies to latest versions:
@@ -488,7 +554,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## October 1, 2025
 
-### 10:10 CST - Adding Ghostty Terminal Setup
+### Adding Ghostty Terminal Setup
 **Commit:** `b109bca` by 8BIT
 
 - Created comprehensive ghostty.md configuration guide
@@ -502,7 +568,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## September 30, 2025
 
-### 17:42 CST - Reducing sound, slightly. Documentation
+### Reducing sound, slightly. Documentation
 **Commit:** `46e9573` by 8BIT
 
 - Reduced audio volume from 5% to 2% for less intrusive experience
@@ -513,7 +579,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 16:54 CST - Update boot-sequence.tsx
+### Update boot-sequence.tsx
 **Commit:** `f5dedae` by 8BIT
 
 - Refined boot sequence timing
@@ -522,7 +588,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:52 PST - Update README.md
+### Update README.md
 **Commit:** `810901e` by 8BIT
 
 - README formatting improvements
@@ -531,7 +597,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:51 PST - Update README.md
+### Update README.md
 **Commit:** `ccb51b8` by 8BIT
 
 - README content refinements
@@ -540,7 +606,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:50 PST - Update README.md
+### Update README.md
 **Commit:** `51718bd` by 8BIT
 
 - README documentation updates
@@ -549,7 +615,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:50 PST - Update README.md
+### Update README.md
 **Commit:** `6aeb17b` by 8BIT
 
 - README improvements
@@ -558,7 +624,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:48 PST - Update README.md
+### Update README.md
 **Commit:** `4213a67` by 8BIT
 
 - README adjustments
@@ -567,7 +633,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:48 PST - Update README.md
+### Update README.md
 **Commit:** `9bc8819` by 8BIT
 
 - README fixes
@@ -576,7 +642,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:47 PST - Update README.md
+### Update README.md
 **Commit:** `ce63319` by 8BIT
 
 - README updates
@@ -585,7 +651,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:46 PST - Update README.md
+### Update README.md
 **Commit:** `b162462` by 8BIT
 
 - README restructuring
@@ -594,7 +660,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:44 PST - Update LICENSE
+### Update LICENSE
 **Commit:** `0a9633d` by 8BIT
 
 - Updated license copyright year and details
@@ -603,7 +669,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:37 CST - Update 8lee-screenshot.png
+### Update 8lee-screenshot.png
 **Commit:** `80900af` by 8BIT
 
 - Optimized screenshot file size (1.35MB → 1.05MB)
@@ -612,7 +678,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:36 CST - One more screenshot
+### One more screenshot
 **Commit:** `912adaf` by 8BIT
 
 - Added boot sequence screenshot (8lee-boot-sequence.png)
@@ -622,7 +688,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:33 CST - Screenshot!
+### Screenshot!
 **Commit:** `fd79fa4` by 8BIT
 
 - Added main terminal screenshot (8lee-screenshot.png)
@@ -632,7 +698,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 11:22 CST - Load 15, not 10
+### Load 15, not 10
 **Commit:** `9af88e0` by 8BIT
 
 - Changed project pagination from 10 to 15 items per page
@@ -642,7 +708,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:13 PST - Update README.md
+### Update README.md
 **Commit:** `e6fe254` by 8BIT
 
 - README content cleanup
@@ -651,7 +717,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 09:12 PST - Update README.md
+### Update README.md
 **Commit:** `e179fcf` by 8BIT
 
 - README formatting improvements
@@ -660,7 +726,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:44 CST - Update terminal-container.tsx
+### Update terminal-container.tsx
 **Commit:** `e978a2a` by 8BIT
 
 - Enhanced flash animation for invalid commands
@@ -670,7 +736,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:38 CST - Dynamic versioning based on birthday
+### Dynamic versioning based on birthday
 **Commit:** `4540463` by 8BIT
 
 - Implemented dynamic age calculation in boot sequence
@@ -682,7 +748,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:10 CST - Update command-prompt.tsx
+### Update command-prompt.tsx
 **Commit:** `232472e` by 8BIT
 
 - Improved command prompt placeholder text
@@ -692,7 +758,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:02 CST - Update README.md
+### Update README.md
 **Commit:** `e8fb36e` by 8BIT
 
 - Added Vercel Speed Insights to README features
@@ -701,7 +767,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:00 CST - Update layout.tsx
+### Update layout.tsx
 **Commit:** `605cc29` by 8BIT
 
 - Integrated Vercel SpeedInsights component
@@ -711,7 +777,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 08:00 CST - Vercel speed insights package
+### Vercel speed insights package
 **Commit:** `7459474` by 8BIT
 
 - Added @vercel/speed-insights dependency
@@ -721,7 +787,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:57 CST - Test input focus on mobile, soft suppression
+### Test input focus on mobile, soft suppression
 **Commit:** `226ab85` by 8BIT
 
 - Implemented virtual keyboard suppression for better mobile UX
@@ -733,7 +799,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:47 CST - Adding DeathNote command
+### Adding DeathNote command
 **Commit:** `578c000` by 8BIT
 
 - Added "deathnote" command to open deathnote.ai website
@@ -743,7 +809,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:45 CST - Update cv-content.tsx
+### Update cv-content.tsx
 **Commit:** `1921816` by 8BIT
 
 - Updated CV content summary text
@@ -752,7 +818,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:39 CST - Updating commands and text
+### Updating commands and text
 **Commit:** `c023cf6` by 8BIT
 
 - Expanded command system with education and volunteer sections
@@ -764,7 +830,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:25 CST - Standardizing fonts. 7 to 5
+### Standardizing fonts. 7 to 5
 **Commit:** `59040cc` by 8BIT
 
 - Consolidated font size scale from 7 to 5 sizes
@@ -779,7 +845,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 07:21 CST - Dupe CSS. Nice
+### Dupe CSS. Nice
 **Commit:** `d2294ff` by 8BIT
 
 - Removed 26 lines of duplicate CSS from tailwind.css
@@ -791,7 +857,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ## September 29, 2025
 
-### 19:59 CST - Update data.ts
+### Update data.ts
 **Commit:** `7355808` by 8BIT
 
 - Updated project data entry
@@ -800,7 +866,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 17:57 PST - Update README.md
+### Update README.md
 **Commit:** `834fb11` by 8BIT
 
 - README typo fix
@@ -809,7 +875,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:50 CST - Code comments for future cause I'm stupid
+### Code comments for future cause I'm stupid
 **Commit:** `c10da06` by 8BIT
 
 - Added comprehensive JSDoc comments across all components
@@ -828,7 +894,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:42 CST - Caps. Love caps
+### Caps. Love caps
 **Commit:** `bef715c` by 8BIT
 
 - Reformatted all project data entries with proper capitalization
@@ -839,7 +905,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:27 CST - Updating CORs / CSP middleware. Readme. Lint
+### Updating CORs / CSP middleware. Readme. Lint
 **Commit:** `c8e1950` by 8BIT
 
 - Enhanced middleware with production-grade security headers:
@@ -856,7 +922,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:17 CST - Type issue
+### Type issue
 **Commit:** `8b405a2` by 8BIT
 
 - Fixed TypeScript type errors in command-prompt and cv-content
@@ -866,7 +932,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:14 CST - Small mobile responsive optimization
+### Small mobile responsive optimization
 **Commit:** `6182153` by 8BIT
 
 - Added mobile-specific layout improvements
@@ -876,7 +942,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:11 CST - Fixing keyword links. ARIA...
+### Fixing keyword links. ARIA...
 **Commit:** `d264f86` by 8BIT
 
 - Implemented selective word underlining for project links
@@ -888,7 +954,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:09 CST - Outline on Command Prompt fixed. ARIA...
+### Outline on Command Prompt fixed. ARIA...
 **Commit:** `77de61c` by 8BIT
 
 - Fixed input outline styling for command prompt
@@ -898,7 +964,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:07 CST - Updating Readme. Lint fixes
+### Updating Readme. Lint fixes
 **Commit:** `0e217f8` by 8BIT
 
 - Enhanced README with additional features
@@ -909,7 +975,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 19:04 CST - Adding typewriter to boot sequence. Fixing ARIA. Adding background logo on mobile
+### Adding typewriter to boot sequence. Fixing ARIA. Adding background logo on mobile
 **Commit:** `3d1edae` by 8BIT
 
 - Implemented typewriter effect for boot sequence
@@ -927,7 +993,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 18:52 CST - Refinements
+### Refinements
 **Commit:** `345fb27` by 8BIT
 
 - Code cleanup and optimization
@@ -938,7 +1004,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 18:44 CST - Like the Command Prompt cursor now
+### Like the Command Prompt cursor now
 **Commit:** `a062eb1` by 8BIT
 
 - Refined cursor styling in boot sequence
@@ -948,7 +1014,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 18:42 CST - Updating animation to cursor on boot sequence
+### Updating animation to cursor on boot sequence
 **Commit:** `5bc599a` by 8BIT
 
 - Enhanced boot sequence cursor animation
@@ -958,7 +1024,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 18:38 CST - Better scroll on "enter"
+### Better scroll on "enter"
 **Commit:** `9843515` by 8BIT
 
 - Implemented auto-scroll functionality when loading more projects
@@ -970,7 +1036,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 18:18 CST - b/c bitcoin
+### b/c bitcoin
 **Commit:** `3a93c58` by 8BIT
 
 - Added Bitcoin whitepaper (bitcoin.pdf) to public assets
@@ -980,7 +1046,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:29 CST - vercel analytics
+### vercel analytics
 **Commit:** `6069310` by 8BIT
 
 - Integrated Vercel Analytics
@@ -991,7 +1057,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:18 CST - Fixing blinking cursor. Personal note to CJ and JPJPJP
+### Fixing blinking cursor. Personal note to CJ and JPJPJP
 **Commit:** `fa9c603` by 8BIT
 
 - Fixed cursor blinking animation
@@ -1002,7 +1068,7 @@ Comprehensive changelog for the 8lee.ai terminal portfolio project, organized in
 
 ---
 
-### 15:00 CST - v1.0 Release
+### v1.0 Release
 **Commit:** `f2059b4` by 8BIT
 
 **Initial Production Release - Complete Terminal Portfolio**
