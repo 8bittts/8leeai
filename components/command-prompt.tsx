@@ -88,14 +88,17 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     }
 
     const handleExternalLinkCommand = (cmdLower: string) => {
-      const links: Record<string, string> = {
+      const links = {
         github: "https://github.com/8bittts/8leeai",
         wellfound: "https://wellfound.com/u/eightlee",
         deathnote: "https://deathnote.ai",
-      }
-      const url = links[cmdLower]
-      if (url) {
-        openExternalLink(url)
+      } as const
+
+      type LinkKey = keyof typeof links
+      const isValidLinkKey = (key: string): key is LinkKey => key in links
+
+      if (isValidLinkKey(cmdLower)) {
+        openExternalLink(links[cmdLower])
         setCommand("")
         setStatusMessage(`Opening ${cmdLower} in new tab`)
         return true
@@ -120,8 +123,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       items: ReadonlyArray<{ readonly url: string; readonly [key: string]: unknown }>
     ) => {
       const index = number - offset
-      if (items[index]?.url) {
-        openExternalLink(items[index].url)
+      const item = items[index]
+      if (item?.url) {
+        openExternalLink(item.url)
         setStatusMessage(`Opening entry ${number} in new tab`)
       }
     }
