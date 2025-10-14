@@ -122,7 +122,7 @@ export type Command = (typeof VALID_COMMANDS)[number]
  * Type guard to check if a string is a valid command
  */
 export function isValidCommand(cmd: string): cmd is Command {
-  return VALID_COMMANDS.includes(cmd as Command)
+  return (VALID_COMMANDS as readonly string[]).includes(cmd)
 }
 
 // Formatted command list for display (groups aliases with main commands)
