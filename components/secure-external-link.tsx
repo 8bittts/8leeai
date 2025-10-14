@@ -8,7 +8,7 @@ import { openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
 interface SecureExternalLinkProps {
   url: string
   name: string
-  linkWord?: string
+  linkWord?: string | undefined
   className?: string
 }
 
