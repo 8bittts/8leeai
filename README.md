@@ -49,8 +49,10 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 ### Prerequisites
 
-- [Bun](https://bun.sh) v1.2.23 or higher
-- Node.js 18+ (for compatibility)
+**This project uses Bun exclusively as its package manager and runtime.**
+
+- **Required**: [Bun](https://bun.sh) v1.2.23 or higher
+- **Do NOT use**: npm, yarn, or pnpm - only Bun is supported
 
 ### Installation
 
@@ -59,12 +61,14 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 git clone https://github.com/8bittts/8leeai.git
 cd 8leeai
 
-# Install dependencies
+# Install dependencies with Bun
 bun install
 
-# Run development server
+# Run development server with Bun
 bun run dev
 ```
+
+**Note**: All commands in this project use `bun` or `bunx`. The `package.json` has `"packageManager": "bun@1.2.23"` to enforce this.
 
 Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
@@ -88,30 +92,34 @@ Once the terminal loads, you can use these commands:
 
 ## Development
 
+**⚠️ Important**: All development commands use Bun exclusively. Do not use npm, yarn, or pnpm.
+
 ### Recommended Terminal Setup
 
 For optimal development experience on macOS, use [Ghostty](https://ghostty.org) with the custom 8LEE Terminal Theme. Configuration details available in `ghostty.md`.
 
+### Available Commands (Bun Only)
+
 ```bash
-# Development with Turbopack
+# Development with Turbopack (auto-kills port 1333, clears caches)
 bun run dev
 
-# Build for production
+# Build for production (clears .next before build)
 bun run build
 
 # Start production server
 bun run start
 
-# Run tests
+# Run tests with Bun's native test runner
 bun test
 
 # Run tests in watch mode
 bun run test:watch
 
-# Lint and format code
+# Lint and format code with Biome (via bunx)
 bun run check
 
-# Clean all caches
+# Clean all caches (.next, .turbo, node_modules/.cache)
 bun run clean
 ```
 
@@ -147,12 +155,15 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ## Tech Stack
 
 ### Core Dependencies
+
+**Package Manager & Runtime**: [Bun 1.2.23](https://bun.sh) - **Exclusively used for all operations**
+
 - **Framework**: [Next.js 15.5.5](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev) with modern hooks
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
-- **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration
-- **Runtime**: [Bun 1.2.23](https://bun.sh) for optimal performance
-- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) for ultra-aggressive linting
+- **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration + 4 ultra-strict flags
+- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) for ultra-aggressive linting (100+ error rules + 5 nursery rules)
+- **Test Runner**: Bun native test runner with happy-dom (not Jest/Vitest)
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 
 ### Development Tools

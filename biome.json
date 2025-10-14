@@ -183,6 +183,14 @@
         "noDangerouslySetInnerHtml": "error",
         "noDangerouslySetInnerHtmlWithChildren": "error",
         "noGlobalEval": "error"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "noUnusedExpressions": "error",
+        "noUselessUndefined": "error",
+        "useConsistentTypeDefinitions": "error",
+        "useExhaustiveSwitchCases": "error",
+        "useSortedClasses": "off"
       }
     }
   },
