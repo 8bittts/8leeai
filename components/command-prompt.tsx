@@ -27,7 +27,7 @@ export interface CommandPromptRef {
 }
 
 export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
-  function CommandPrompt(
+  function CommandPromptComponent(
     {
       showMoreProjects,
       openProject,

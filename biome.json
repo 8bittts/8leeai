@@ -190,6 +190,9 @@
         "noUselessUndefined": "error",
         "useConsistentTypeDefinitions": "error",
         "useExhaustiveSwitchCases": "error",
+        "noUnnecessaryConditions": "error",
+        "noShadow": "error",
+        "noSecrets": "off",
         "useSortedClasses": "off"
       }
     }
