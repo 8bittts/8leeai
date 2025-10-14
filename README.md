@@ -123,8 +123,8 @@ Lightweight unit and component testing with Bun's native test runner and React T
 - **Component Testing**: @testing-library/react 16.3.0
 - **DOM Environment**: happy-dom 20.0.0
 - **Test Utilities**: @testing-library/jest-dom 6.9.1
-- **Coverage**: 44 tests, 132 assertions across 4 files
-- **Execution Time**: ~900ms for full test suite
+- **Coverage**: 32 tests, 99 assertions across 4 files
+- **Execution Time**: ~850ms for full test suite
 
 Run `bun test` to execute all tests. Tests are co-located with source files:
 - `lib/utils.test.ts` - Data integrity, user input validation, and security filtering (URL validation, malicious pattern detection)
