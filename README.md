@@ -16,7 +16,7 @@ An original, retro terminal-style portfolio experience built with modern web tec
 The current settings are designed for a completely private portfolio that won't appear in search results.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5.5-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.14-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
@@ -147,7 +147,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ## Tech Stack
 
 ### Core Dependencies
-- **Framework**: [Next.js 15.5.4](https://nextjs.org) with App Router & Turbopack
+- **Framework**: [Next.js 15.5.5](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev) with modern hooks
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration
@@ -174,7 +174,9 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   ├── command-prompt.tsx
 │   ├── cursor.tsx
 │   ├── cv-content.tsx
+│   ├── data-grid-section.tsx       # Reusable grid for Education/Volunteer
 │   ├── matrix-background.tsx
+│   ├── secure-external-link.tsx    # Secure link with opener protection
 │   └── terminal-container.tsx
 ├── hooks/              # Custom React hooks
 │   ├── use-typewriter.ts            # Optimized typewriter effect
@@ -223,7 +225,9 @@ v1.0 - October 2025:
 - **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, keyboard navigation, skip links, and reduced motion
 - **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, all packages on latest stable versions
 - **Shared Utilities**: Extracted rendering logic (`renderTextWithUnderlinedWord`), custom hooks (`useVirtualKeyboardSuppression`), typed command constants
-- **Test Coverage**: Intent-focused testing with Bun native test runner (33 tests, 97 assertions) - tests document user needs and business logic
+- **Test Coverage**: Intent-focused testing with Bun native test runner (44 tests, 132 assertions) - tests document user needs and business logic
+- **Component Architecture**: Reusable components (`SecureExternalLink`, `DataGridSection`) eliminate duplication and improve maintainability
+- **Type Safety**: Elite-level TypeScript with strict null checks, proper type guards, and zero unsafe patterns
 
 ## Contributing
 
