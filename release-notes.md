@@ -17,6 +17,28 @@ If you are asked to update this file, follow these rules:
 
 ---
 
+## October 14, 2025
+
+### Package dependency update (Next.js 15.5.5)
+
+**Updated Next.js to latest patch version:**
+- `next`: 15.5.4 → 15.5.5 (patch update)
+
+**Verification:**
+- All 44 tests passed with 132 assertions
+- Biome linting passed with no issues
+- Production build successful
+- No breaking changes in patch update
+
+**Documentation Updates:**
+- Updated version reference in CLAUDE.md (line 7)
+- Removed AGENTS.md file and all references to it
+- Added release notes entry
+
+**Files Changed:** 3 files (package.json, bun.lock, CLAUDE.md, release-notes.md)
+
+---
+
 ## October 12, 2025
 
 ### Semantic URL redirect strategy for legacy content
