@@ -18,7 +18,6 @@ export function TerminalContainer() {
   const commandPromptRef = useRef<CommandPromptRef>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
-  // Initialize audio once
   useEffect(() => {
     audioRef.current = new Audio("/cj.m4a")
     audioRef.current.volume = 0.02

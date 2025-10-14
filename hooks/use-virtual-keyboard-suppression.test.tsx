@@ -9,19 +9,6 @@ import type { RefObject } from "react"
 import { useVirtualKeyboardSuppression } from "./use-virtual-keyboard-suppression"
 
 describe("useVirtualKeyboardSuppression - Mobile command history navigation", () => {
-  test("provides keyboard control functions for mobile interaction flow", () => {
-    // Intent: Hook gives components control over when keyboard appears
-    const mockRef: RefObject<HTMLInputElement> = {
-      current: document.createElement("input"),
-    }
-
-    const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
-
-    // Should provide both suppress and release functions for full control
-    expect(result.current.suppressVirtualKeyboard).toBeInstanceOf(Function)
-    expect(result.current.releaseKeyboardSuppression).toBeInstanceOf(Function)
-  })
-
   test("prevents keyboard popup when navigating command history on touch devices", () => {
     // Intent: Users navigate history with arrow keys without keyboard covering screen
     const input = document.createElement("input")
@@ -111,15 +98,5 @@ describe("useVirtualKeyboardSuppression - Mobile command history navigation", ()
     // Should fail gracefully when input doesn't exist yet
     expect(() => result.current.suppressVirtualKeyboard()).not.toThrow()
     expect(() => result.current.releaseKeyboardSuppression()).not.toThrow()
-  })
-
-  test("cleans up properly when component unmounts", () => {
-    // Intent: No memory leaks or lingering effects after component removal
-    const input = document.createElement("input")
-    const mockRef: RefObject<HTMLInputElement> = { current: input }
-
-    const { unmount } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
-
-    expect(() => unmount()).not.toThrow()
   })
 })

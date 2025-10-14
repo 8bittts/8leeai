@@ -32,14 +32,14 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
 
     releaseKeyboardSuppression()
 
-    // Try modern Virtual Keyboard API first (Chrome 94+)
+    // Modern Virtual Keyboard API (Chrome 94+)
     const virtualKeyboard = (
       navigator as unknown as {
         readonly virtualKeyboard?: { hide?: () => Promise<void> }
       }
     ).virtualKeyboard
 
-    // Fallback: manipulate input attributes to prevent keyboard popup
+    // Fallback: manipulate readonly and inputmode attributes
     const fallbackSuppress = () => {
       const previousInputMode = input.getAttribute("inputmode")
       const wasReadOnly = input.hasAttribute("readonly")
@@ -95,7 +95,6 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
       })
     }
 
-    // Use modern API if available, otherwise fallback
     if (virtualKeyboard?.hide) {
       virtualKeyboard.hide().catch(() => {
         fallbackSuppress()
