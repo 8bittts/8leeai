@@ -19,6 +19,48 @@ If you are asked to update this file, follow these rules:
 
 ## October 14, 2025
 
+### Test suite optimization and code comment cleanup
+
+**Comprehensive review and cleanup of test suite and code comments for open source contributors:**
+
+**Test Suite Refactoring (27% reduction):**
+- Removed 12 superficial/useless tests that provided no real value
+- Eliminated tests that checked TypeScript types, obvious behavior, or implementation details
+- Improved tests to focus on user intent and observable behavior over implementation
+- Enhanced security test for `openExternalLink` to actually verify `opener` is nullified
+
+**Tests Removed:**
+1. **cursor.test.tsx (2)** - CSS class verification tests (`bg-green-500`, `w-px`, `animate-pulse`)
+2. **use-virtual-keyboard-suppression.test.tsx (2)** - Function existence check, empty unmount test
+3. **utils.test.ts (8)** - Constant array content tests, redundant coverage
+
+**Tests Improved:**
+- `openExternalLink` - Now verifies actual security property (opener = null) instead of just no-throw
+- `renderTextWithUnderlinedWord` - Streamlined to 3 essential tests vs 4 with redundant coverage
+- All tests now have clear intent-focused comments explaining business value
+
+**Code Comment Cleanup (9 comments removed):**
+- Removed redundant comments that stated the obvious (e.g., "Initialize audio once", "Continue animation loop")
+- Made complex comments more concise while preserving meaning
+- Kept all high-value comments: JSDoc, security explanations, browser compatibility notes, business logic
+- Applied principle: Remove "what" comments, keep "why" comments
+
+**Results:**
+- Before: 44 tests, 132 assertions
+- After: 32 tests, 99 assertions (27% fewer tests, 25% fewer assertions)
+- All tests passing with zero linting errors
+- Cleaner codebase with useful comments for open source contributors
+
+**Impact:**
+- **Test Quality:** Every remaining test documents real user intent and business logic
+- **Maintainability:** Tests resilient to refactoring, focused on observable behavior
+- **Code Clarity:** Comments explain non-obvious decisions without stating the obvious
+- **Open Source Ready:** New contributors can understand WHY through concise, meaningful comments
+
+**Files Changed:** 6 files (4 test files, 6 component/hook files for comment cleanup)
+
+---
+
 ### Comprehensive codebase refactoring and type safety improvements
 
 **Major refactoring initiative to eliminate duplication and improve code quality:**
