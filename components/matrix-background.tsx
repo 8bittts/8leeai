@@ -7,6 +7,12 @@ import { useEffect, useRef } from "react"
  * Renders animated digital rain with green terminal aesthetics
  * Only visible on mobile views with very low opacity
  */
+
+// Matrix animation constants
+const MATRIX_FONT_SIZE = 14
+const MATRIX_UPDATE_INTERVAL = 50 // milliseconds between updates (20fps)
+const MATRIX_DROP_RESET_PROBABILITY = 0.975 // Higher = longer drops before reset
+
 export function MatrixBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -26,7 +32,7 @@ export function MatrixBackground() {
     window.addEventListener("resize", resizeCanvas)
 
     // Matrix configuration
-    const fontSize = 14
+    const fontSize = MATRIX_FONT_SIZE
     const columns = Math.floor(canvas.width / fontSize)
     const drops: number[] = Array(columns).fill(1)
 
@@ -50,8 +56,8 @@ export function MatrixBackground() {
     // Animation loop using requestAnimationFrame for better performance
     // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Canvas animation requires iteration and conditional logic
     const draw = (timestamp: number) => {
-      // Update drops every ~50ms to maintain consistent speed
-      const shouldUpdate = timestamp - lastUpdateTime >= 50
+      // Update drops at configured interval to maintain consistent speed
+      const shouldUpdate = timestamp - lastUpdateTime >= MATRIX_UPDATE_INTERVAL
 
       if (shouldUpdate) {
         lastUpdateTime = timestamp
@@ -76,7 +82,7 @@ export function MatrixBackground() {
           ctx.fillText(char, x, y)
 
           // Reset drop to top randomly or when it reaches bottom
-          if (y > canvas.height && Math.random() > 0.975) {
+          if (y > canvas.height && Math.random() > MATRIX_DROP_RESET_PROBABILITY) {
             drops[i] = 0
           }
 

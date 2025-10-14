@@ -1,20 +1,19 @@
 "use client"
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
 import {
   COMMAND_DISPLAY_LIST,
   DATA_OFFSETS,
-  formatIndex,
   openExternalLink,
-  renderTextWithUnderlinedWord,
+  PROJECTS_PER_PAGE,
 } from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
   openProject: (projectNumber: number) => void
-  resetProjects: () => void
   clearToStart: () => void
   triggerFlash: () => void
   visibleProjects: number
@@ -32,7 +31,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     {
       showMoreProjects,
       openProject,
-      resetProjects: _resetProjects,
       clearToStart,
       triggerFlash,
       visibleProjects,
@@ -108,7 +106,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const handleEmptyCommand = () => {
       if (visibleProjects < totalProjects) {
         showMoreProjects()
-        const newVisible = Math.min(visibleProjects + 10, totalProjects)
+        const newVisible = Math.min(visibleProjects + PROJECTS_PER_PAGE, totalProjects)
         setStatusMessage(`Loaded ${newVisible} of ${totalProjects} projects`)
       } else {
         setStatusMessage("All projects loaded")
@@ -206,68 +204,22 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
         {/* Education Section */}
         {showEducation && (
-          <section className="mb-8" aria-label="Education">
-            <h2 className="text-xl font-bold mb-4">Education</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
-              {education.map((item, index) => (
-                <div key={item.id} className="flex">
-                  <span className="mr-3 text-gray-500">
-                    {formatIndex(index + DATA_OFFSETS.education.start - 1)}.
-                  </span>
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        openExternalLink(item.url)
-                      }}
-                      className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
-                      aria-label={`${item.name} (opens in new tab)`}
-                    >
-                      {renderTextWithUnderlinedWord(item.name, item.linkWord)}
-                    </a>
-                  ) : (
-                    <span>{item.name}</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
+          <DataGridSection
+            title="Education"
+            items={education}
+            startOffset={DATA_OFFSETS.education.start}
+            ariaLabel="Education"
+          />
         )}
 
         {/* Volunteer Section */}
         {showVolunteer && (
-          <section className="mb-8" aria-label="Volunteer Experience">
-            <h2 className="text-xl font-bold mb-4">Volunteer Experience</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
-              {volunteer.map((item, index) => (
-                <div key={item.id} className="flex">
-                  <span className="mr-3 text-gray-500">
-                    {formatIndex(index + DATA_OFFSETS.volunteer.start - 1)}.
-                  </span>
-                  {item.url ? (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        openExternalLink(item.url)
-                      }}
-                      className="hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
-                      aria-label={`${item.name} (opens in new tab)`}
-                    >
-                      {renderTextWithUnderlinedWord(item.name, item.linkWord)}
-                    </a>
-                  ) : (
-                    <span>{item.name}</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
+          <DataGridSection
+            title="Volunteer Experience"
+            items={volunteer}
+            startOffset={DATA_OFFSETS.volunteer.start}
+            ariaLabel="Volunteer Experience"
+          />
         )}
 
         {/* Command Prompt */}

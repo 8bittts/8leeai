@@ -2,29 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Cursor } from "@/components/cursor"
+import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import {
-  ANIMATION_DELAYS,
-  formatIndex,
-  openExternalLink,
-  renderTextWithUnderlinedWord,
-} from "@/lib/utils"
+import { ANIMATION_DELAYS, formatIndex } from "@/lib/utils"
 
 const summaryText =
   "20+ year engineering veteran and award-winning product designer. Obsessed with systems, speed, and my 3 kids and (sub)agents equally. Need help building something great? Let's "
 
 interface CVContentProps {
   visibleProjects: number
-  showMoreProjects: () => void
   setCommand?: (command: string) => void
 }
 
-export function CVContent({
-  visibleProjects,
-  showMoreProjects: _showMoreProjects,
-  setCommand,
-}: CVContentProps) {
+export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
   const [showProjects, setShowProjects] = useState(false)
 
@@ -77,19 +68,12 @@ export function CVContent({
               <div key={project.id} className="flex">
                 <span className="mr-3 text-gray-500">{formatIndex(index)}.</span>
                 {project.url ? (
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      openExternalLink(project.url)
-                    }}
-                    className="truncate hover:text-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
-                    aria-label={`${project.name} (opens in new tab)`}
-                  >
-                    {renderTextWithUnderlinedWord(project.name, project.linkWord)}
-                  </a>
+                  <SecureExternalLink
+                    url={project.url}
+                    name={project.name}
+                    linkWord={project.linkWord}
+                    className="truncate"
+                  />
                 ) : (
                   <span className="truncate">{project.name}</span>
                 )}
