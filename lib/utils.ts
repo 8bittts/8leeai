@@ -5,6 +5,11 @@ export function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0")
 }
 
+/** Formats array index with offset to zero-padded display number */
+export function formatIndexWithOffset(index: number, offset: number): string {
+  return String(index + offset).padStart(2, "0")
+}
+
 /** Opens URL in new tab with security: prevents window.opener exploits */
 export function openExternalLink(url: string): void {
   if (!url) return
@@ -95,6 +100,8 @@ export const DATA_OFFSETS = {
   education: { start: 61, end: 65 },
   volunteer: { start: 66, end: 71 },
 } as const
+
+export const PROJECTS_PER_PAGE = 15
 
 // Valid terminal commands with strict typing
 export const VALID_COMMANDS = [

@@ -13,11 +13,6 @@ const nextConfig: NextConfig = {
 
   cleanDistDir: true,
 
-  // Generate unique build ID to prevent stale cache issues
-  generateBuildId: () => {
-    return `dev-${Date.now()}`
-  },
-
   reactStrictMode: true,
   poweredByHeader: false,
 

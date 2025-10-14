@@ -6,9 +6,7 @@ import { CommandPrompt, type CommandPromptRef } from "@/components/command-promp
 import { CVContent } from "@/components/cv-content"
 import { MatrixBackground } from "@/components/matrix-background"
 import { projects } from "@/lib/data"
-import { openExternalLink } from "@/lib/utils"
-
-const PROJECTS_PER_PAGE = 15
+import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 export function TerminalContainer() {
   const [bootComplete, setBootComplete] = useState(false)
@@ -18,6 +16,19 @@ export function TerminalContainer() {
   const [isFlashing, setIsFlashing] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const commandPromptRef = useRef<CommandPromptRef>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  // Initialize audio once
+  useEffect(() => {
+    audioRef.current = new Audio("/cj.m4a")
+    audioRef.current.volume = 0.02
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
+    }
+  }, [])
 
   const handleBootComplete = () => {
     setBootComplete(true)
@@ -27,10 +38,8 @@ export function TerminalContainer() {
     if (bootComplete && !showContent) {
       setShowContent(true)
 
-      const audio = new Audio("/cj.m4a")
-      audio.volume = 0.02
-      // Ignore audio play errors (e.g., autoplay policy)
-      audio.play().catch(() => {
+      // Play audio (ignore errors from autoplay policy)
+      audioRef.current?.play().catch(() => {
         // Intentionally empty - audio is optional enhancement
       })
     }
@@ -53,10 +62,6 @@ export function TerminalContainer() {
 
   const showMoreProjects = useCallback(() => {
     setVisibleProjects((prev) => Math.min(prev + PROJECTS_PER_PAGE, projects.length))
-  }, [])
-
-  const resetProjects = useCallback(() => {
-    setVisibleProjects(PROJECTS_PER_PAGE)
   }, [])
 
   const clearToStart = useCallback(() => {
@@ -131,13 +136,7 @@ export function TerminalContainer() {
 
       <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {!showContent && <BootSequence onComplete={handleBootComplete} />}
-        {showContent && (
-          <CVContent
-            visibleProjects={visibleProjects}
-            showMoreProjects={showMoreProjects}
-            setCommand={setCommand}
-          />
-        )}
+        {showContent && <CVContent visibleProjects={visibleProjects} setCommand={setCommand} />}
       </main>
 
       {showContent && (
@@ -146,7 +145,6 @@ export function TerminalContainer() {
             ref={commandPromptRef}
             showMoreProjects={showMoreProjects}
             openProject={openProject}
-            resetProjects={resetProjects}
             clearToStart={clearToStart}
             triggerFlash={triggerFlash}
             visibleProjects={visibleProjects}
