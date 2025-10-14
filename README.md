@@ -92,7 +92,7 @@ Once the terminal loads, you can use these commands:
 
 ## Development
 
-**⚠️ Important**: All development commands use Bun exclusively. Do not use npm, yarn, or pnpm.
+**IMPORTANT**: All development commands use Bun exclusively. Do not use npm, yarn, or pnpm.
 
 ### Recommended Terminal Setup
 
