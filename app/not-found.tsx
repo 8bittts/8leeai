@@ -14,20 +14,17 @@ export default function NotFound() {
   const router = useRouter()
   const [showSubtext, setShowSubtext] = useState(false)
 
-  // Typewriter animation for "404" heading
   const heading = useTypewriter({
     text: "404",
     speed: ANIMATION_DELAYS.typewriter,
     onComplete: useCallback(() => setShowSubtext(true), []),
   })
 
-  // Typewriter animation for instruction text (shows after heading completes)
   const subtext = useTypewriter({
     text: showSubtext ? "Wrong warp pipe. You have 1 continue left." : "",
     speed: ANIMATION_DELAYS.typewriter,
   })
 
-  // Navigate to home on any interaction
   useEffect(() => {
     const handleInteraction = () => {
       router.push("/")

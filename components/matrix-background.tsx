@@ -90,11 +90,9 @@ export function MatrixBackground() {
         }
       }
 
-      // Continue animation loop
       animationFrameId = requestAnimationFrame(draw)
     }
 
-    // Start animation
     animationFrameId = requestAnimationFrame(draw)
 
     return () => {

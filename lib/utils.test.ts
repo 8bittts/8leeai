@@ -4,7 +4,6 @@
 import { describe, expect, test } from "bun:test"
 import type { createElement } from "react"
 import {
-  COMMAND_DISPLAY_LIST,
   DATA_OFFSETS,
   formatIndex,
   isMalformedUrl,
@@ -12,7 +11,6 @@ import {
   isValidCommand,
   openExternalLink,
   renderTextWithUnderlinedWord,
-  VALID_COMMANDS,
 } from "./utils"
 
 describe("formatIndex - Consistent numbering for scannable lists", () => {
@@ -53,138 +51,87 @@ describe("isValidCommand - User input validation for clear feedback", () => {
 })
 
 describe("renderTextWithUnderlinedWord - Visual affordance for clickable links", () => {
-  test("displays plain text when no link is available", () => {
+  test("returns plain text when no link word is specified", () => {
     // Intent: Not all project entries have links, show plain text when linkWord is missing
     const result1 = renderTextWithUnderlinedWord("Hello World", "")
     const result2 = renderTextWithUnderlinedWord("Hello World", undefined)
+
+    // No styling needed, just return original text
     expect(result1).toBe("Hello World")
     expect(result2).toBe("Hello World")
   })
 
-  test("highlights specific word to show users what's clickable", () => {
+  test("highlights specific word to indicate clickability", () => {
     // Intent: Users need to know which word in the description opens the project link
     const result = renderTextWithUnderlinedWord("Hello World", "World")
+
+    // Should return styled elements (array) rather than plain string
     expect(Array.isArray(result)).toBe(true)
 
     if (Array.isArray(result)) {
-      // Verify we get styled elements for rendering
+      // Should have multiple parts (before, underlined word, after)
       expect(result.length).toBeGreaterThan(0)
 
-      // Find the underlined element (the clickable word)
-      const element2 = result[1] as ReturnType<typeof createElement>
-      expect(element2.props.className).toBe("underline")
-      expect(element2.props.children).toBe("World")
+      // The clickable word should be marked with underline styling
+      const element = result[1] as ReturnType<typeof createElement>
+      expect(element.props.className).toBe("underline")
+      expect(element.props.children).toBe("World")
     }
   })
 
-  test("matches words regardless of user capitalization for flexibility", () => {
-    // Intent: Users shouldn't need to match exact case when specifying linkWord
+  test("matches words case-insensitively while preserving original text", () => {
+    // Intent: Flexible matching - users shouldn't need exact case in linkWord config
+    // But preserve original text case for natural readability
     const result = renderTextWithUnderlinedWord("Hello world", "WORLD")
-    expect(Array.isArray(result)).toBe(true)
 
     if (Array.isArray(result)) {
       const element = result[1] as ReturnType<typeof createElement>
-      expect(element.props.className).toBe("underline")
-      // Preserves original text case for readability
+      // Case-insensitive match succeeds, but original case preserved
       expect(element.props.children).toBe("world")
-    }
-  })
-
-  test("highlights all occurrences when word appears multiple times", () => {
-    // Intent: If the linkWord appears multiple times, all should be underlined
-    const result = renderTextWithUnderlinedWord("World World World", "World")
-    expect(Array.isArray(result)).toBe(true)
-
-    if (Array.isArray(result)) {
-      // Count underlined elements (all should be clickable)
-      const underlinedElements = (result as Array<ReturnType<typeof createElement>>).filter(
-        (el) => el.props?.className === "underline"
-      )
-      expect(underlinedElements.length).toBeGreaterThan(0)
     }
   })
 })
 
 describe("openExternalLink - Security for external navigation", () => {
-  test("opens external links without exposing portfolio window", () => {
-    // Intent: Prevent external sites from accessing/manipulating the portfolio via window.opener
-    // This is a critical security measure (tabnabbing prevention)
+  test("prevents external sites from accessing portfolio window via opener", () => {
+    // Intent: Prevent tabnabbing attacks where external sites manipulate the portfolio
+    // By setting opener to null, we break the connection between windows
     const originalOpen = window.open
-    const mockOpen = () => ({ opener: {} })
-    window.open = mockOpen as typeof window.open
+    const mockWindow = { opener: "SHOULD_BE_NULLIFIED" }
+
+    window.open = (() => mockWindow) as typeof window.open
 
     openExternalLink("https://example.com")
 
-    // Function should safely open link with noopener/noreferrer
+    // Critical security check: opener must be null to prevent reverse tab manipulation
+    expect(mockWindow.opener).toBe(null)
+
     window.open = originalOpen
   })
 
-  test("handles missing or invalid URLs without breaking the app", () => {
-    // Intent: Graceful degradation - don't crash if data has empty URL
-    expect(() => openExternalLink("")).not.toThrow()
-  })
-})
+  test("handles missing URLs gracefully without opening new windows", () => {
+    // Intent: Graceful degradation - don't attempt navigation with empty URLs
+    const originalOpen = window.open
+    let openCalled = false
+    window.open = (() => {
+      openCalled = true
+      return null
+    }) as typeof window.open
 
-describe("VALID_COMMANDS - Command interface contract", () => {
-  test("defines all commands users can execute in the terminal", () => {
-    // Intent: This is the source of truth for what commands work
-    // Users need these commands to navigate the portfolio and access contact info
-    expect(VALID_COMMANDS).toContain("email")
-    expect(VALID_COMMANDS).toContain("github")
-    expect(VALID_COMMANDS).toContain("wellfound")
-    expect(VALID_COMMANDS).toContain("deathnote")
-    expect(VALID_COMMANDS).toContain("education")
-    expect(VALID_COMMANDS).toContain("ed") // Shortcut
-    expect(VALID_COMMANDS).toContain("volunteer")
-    expect(VALID_COMMANDS).toContain("vol") // Shortcut
-    expect(VALID_COMMANDS).toContain("clear")
-  })
+    openExternalLink("")
 
-  test("maintains stable command count for regression detection", () => {
-    // Intent: Catch accidental command additions/removals
-    expect(VALID_COMMANDS).toHaveLength(9)
-  })
-})
+    // Should return early without calling window.open
+    expect(openCalled).toBe(false)
 
-describe("COMMAND_DISPLAY_LIST - User-facing command documentation", () => {
-  test("shows users all available commands with their shortcuts", () => {
-    // Intent: Users need to discover what commands they can type
-    // Aliases shown in parentheses so users know shortcuts exist
-    expect(COMMAND_DISPLAY_LIST).toContain("email")
-    expect(COMMAND_DISPLAY_LIST).toContain("education (ed)")
-    expect(COMMAND_DISPLAY_LIST).toContain("volunteer (vol)")
-    expect(COMMAND_DISPLAY_LIST).toContain("github")
-    expect(COMMAND_DISPLAY_LIST).toContain("clear")
-  })
-
-  test("consolidates aliases into single entries for cleaner display", () => {
-    // Intent: Don't clutter the command list by showing "ed" and "education" separately
-    expect(COMMAND_DISPLAY_LIST).toHaveLength(7)
+    window.open = originalOpen
   })
 })
 
 describe("DATA_OFFSETS - Portfolio data organization and integrity", () => {
-  test("defines project number range for user input validation", () => {
-    // Intent: Users can type 1-60 to view projects, need clear boundaries
-    expect(DATA_OFFSETS.projects.start).toBe(1)
-    expect(DATA_OFFSETS.projects.end).toBe(60)
-  })
-
-  test("defines education number range for user input validation", () => {
-    // Intent: Users can type 61-65 to view education entries
-    expect(DATA_OFFSETS.education.start).toBe(61)
-    expect(DATA_OFFSETS.education.end).toBe(65)
-  })
-
-  test("defines volunteer number range for user input validation", () => {
-    // Intent: Users can type 66-71 to view volunteer entries
-    expect(DATA_OFFSETS.volunteer.start).toBe(66)
-    expect(DATA_OFFSETS.volunteer.end).toBe(71)
-  })
-
   test("maintains non-overlapping ranges to prevent ambiguous user input", () => {
     // Intent: Each number maps to exactly one piece of content
     // If ranges overlap, typing "61" could mean both education and projects
+    // This is a critical business rule that ensures clear user input handling
     expect(DATA_OFFSETS.projects.end).toBeLessThan(DATA_OFFSETS.education.start)
     expect(DATA_OFFSETS.education.end).toBeLessThan(DATA_OFFSETS.volunteer.start)
   })

@@ -27,11 +27,9 @@ export function useTypewriter({
       clearInterval(intervalRef.current)
     }
 
-    // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     if (prefersReducedMotion) {
-      // Show full text immediately without animation
       setDisplayedText(text)
       setIsTyping(false)
       onCompleteRef.current?.()

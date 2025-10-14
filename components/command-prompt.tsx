@@ -48,7 +48,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
       useVirtualKeyboardSuppression(inputRef)
 
-    // Extract command handlers to reduce complexity
     const handleSectionCommand = (cmdLower: string) => {
       if (cmdLower === "education" || cmdLower === "ed") {
         setShowEducation(true)
@@ -165,7 +164,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         } else if (/^\d+$/.test(cmd)) {
           handleNumericCommand(cmd)
         } else {
-          // Invalid command: Flash screen and clear
           triggerFlash()
           setCommand("")
           setStatusMessage("")
