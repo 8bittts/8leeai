@@ -32,12 +32,12 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 - **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface with visible cursor (2px mobile, 1px desktop)
 - **Matrix Background Effect**: Subtle falling characters animation on mobile using `requestAnimationFrame` for optimal performance
-- **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`)
+- **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`, `li`)
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
 - **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
-- **Mobile-First UX**: Natural browser behavior, visible cursor, no auto-focus traps, keyboard hides after Enter (user taps to reopen)
+- **Mobile-First UX**: Natural browser behavior, 2px visible cursor on mobile, immediate content display after boot, user-controlled focus, keyboard hides after Enter
 - **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`, extracted shared rendering utilities
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **Audio Integration**: Preloaded interaction sound effects at 2% volume on first user interaction
@@ -87,6 +87,7 @@ Once the terminal loads, you can use these commands:
 - `volunteer` or `vol` - Display volunteer experience
 - `github` - Open this GitHub project
 - `wellfound` - Open Wellfound profile
+- `linkedin` or `li` - Open LinkedIn profile
 - `deathnote` - Open deathnote.ai website
 - `clear` - Reset terminal display
 
@@ -239,7 +240,7 @@ v1.0 - October 2025:
 - **Test Coverage**: Intent-focused testing with Bun native test runner (32 tests, 99 assertions) - tests document user needs and business logic, not implementation details
 - **Component Architecture**: Reusable components (`SecureExternalLink`, `DataGridSection`) eliminate duplication and improve maintainability
 - **Type Safety**: Elite-level TypeScript with strict null checks, proper type guards, and zero unsafe patterns
-- **Mobile-First UX**: Natural browser behavior, 2px cursor visibility on mobile, no click-to-reveal or auto-focus traps, simplified keyboard suppression (32 lines, 73% reduction), immediate content display after boot
+- **Mobile-First UX**: Natural browser behavior, 2px cursor visibility on mobile, no click-to-reveal or auto-focus traps, simplified keyboard suppression, immediate content display after boot
 
 ## Contributing
 

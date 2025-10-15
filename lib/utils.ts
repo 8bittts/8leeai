@@ -112,6 +112,8 @@ export const VALID_COMMANDS = [
   "vol",
   "github",
   "wellfound",
+  "linkedin",
+  "li",
   "deathnote",
   "clear",
 ] as const
@@ -132,6 +134,7 @@ export const COMMAND_DISPLAY_LIST = [
   "volunteer (vol)",
   "github",
   "wellfound",
+  "linkedin (li)",
   "deathnote",
   "clear",
 ] as const
