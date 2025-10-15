@@ -30,14 +30,14 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 ## Features
 
-- **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface with visible cursor (2px mobile, 1px desktop)
+- **Authentic Terminal Experience**: Complete boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop)
 - **Matrix Background Effect**: Subtle falling characters animation on mobile using `requestAnimationFrame` for optimal performance
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`, `li`)
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
 - **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
-- **Mobile-First UX**: Natural browser behavior, 2px visible cursor on mobile, immediate content display after boot, user-controlled focus, keyboard hides after Enter
+- **Mobile-First UX**: Natural browser behavior, 2px visible cursor on mobile, boot sequence pauses for user interaction, user-controlled focus, keyboard hides after Enter
 - **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`, extracted shared rendering utilities
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **Audio Integration**: Preloaded interaction sound effects at 2% volume on first user interaction
