@@ -8,7 +8,7 @@ import { projects } from "@/lib/data"
 import { ANIMATION_DELAYS, formatIndex } from "@/lib/utils"
 
 const summaryText =
-  "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. And I love helping teams build great products. We should "
+  "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
 
 interface CVContentProps {
   visibleProjects: number
