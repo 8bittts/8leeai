@@ -12,7 +12,7 @@ export function Cursor({ variant = "green" }: CursorProps) {
 
   return (
     <span
-      className={`inline-block w-px h-4 ${colorClass} animate-pulse ml-0.5`}
+      className={`inline-block w-0.5 sm:w-px h-4 ${colorClass} animate-pulse ml-0.5`}
       aria-hidden="true"
     />
   )

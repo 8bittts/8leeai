@@ -1,6 +1,6 @@
 /**
  * Tests for useVirtualKeyboardSuppression hook - focusing on mobile UX intent
- * Intent: Prevent disruptive keyboard popups when navigating command history on mobile
+ * Intent: Hide keyboard on mobile after Enter key to prevent screen coverage
  */
 
 import { describe, expect, test } from "bun:test"
@@ -8,10 +8,12 @@ import { renderHook } from "@testing-library/react"
 import type { RefObject } from "react"
 import { useVirtualKeyboardSuppression } from "./use-virtual-keyboard-suppression"
 
-describe("useVirtualKeyboardSuppression - Mobile command history navigation", () => {
-  test("prevents keyboard popup when navigating command history on touch devices", () => {
-    // Intent: Users navigate history with arrow keys without keyboard covering screen
+describe("useVirtualKeyboardSuppression - Mobile keyboard control", () => {
+  test("hides keyboard after command submission on touch devices", () => {
+    // Intent: After pressing Enter, keyboard should hide so user can see terminal output
     const input = document.createElement("input")
+    document.body.appendChild(input)
+    input.focus()
     const mockRef: RefObject<HTMLInputElement> = { current: input }
 
     // Simulate touch device (mobile/tablet)
@@ -37,26 +39,30 @@ describe("useVirtualKeyboardSuppression - Mobile command history navigation", ()
 
     const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
-    expect(input.readOnly).toBe(false)
+    // Input should be focused initially
+    expect(document.activeElement).toBe(input)
 
-    // When user navigates history, suppress keyboard
+    // When user presses Enter, suppress keyboard
     result.current.suppressVirtualKeyboard()
 
-    // Keyboard should not appear (readonly prevents it on mobile)
-    expect(input.readOnly).toBe(true)
+    // Keyboard should hide (blur removes focus)
+    expect(document.activeElement).not.toBe(input)
 
+    document.body.removeChild(input)
     globalThis.matchMedia = originalMatchMedia
   })
 
-  test("allows keyboard to appear when user wants to type new command", () => {
-    // Intent: After navigating history, users can type to modify or enter new commands
+  test("keeps input focused on desktop devices", () => {
+    // Intent: Desktop users don't need keyboard suppression, focus should remain
     const input = document.createElement("input")
+    document.body.appendChild(input)
+    input.focus()
     const mockRef: RefObject<HTMLInputElement> = { current: input }
 
-    // Simulate touch device
+    // Simulate desktop device (mouse pointer)
     const originalMatchMedia = globalThis.matchMedia
     globalThis.matchMedia = ((query: string) => ({
-      matches: query === "(pointer: coarse)",
+      matches: query === "(pointer: fine)",
       media: query,
       onchange: null,
       addListener: () => {
@@ -76,16 +82,15 @@ describe("useVirtualKeyboardSuppression - Mobile command history navigation", ()
 
     const { result } = renderHook(() => useVirtualKeyboardSuppression(mockRef))
 
-    // Suppress during navigation
+    expect(document.activeElement).toBe(input)
+
+    // Desktop: suppress should do nothing
     result.current.suppressVirtualKeyboard()
-    expect(input.readOnly).toBe(true)
 
-    // Release when user wants to type
-    result.current.releaseKeyboardSuppression()
+    // Focus should remain on desktop
+    expect(document.activeElement).toBe(input)
 
-    // Keyboard can now appear for typing
-    expect(input.readOnly).toBe(false)
-
+    document.body.removeChild(input)
     globalThis.matchMedia = originalMatchMedia
   })
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
@@ -20,6 +20,7 @@ interface CommandPromptProps {
   totalProjects: number
   command: string
   setCommand: (command: string) => void
+  onFirstInteraction?: () => void
 }
 
 export interface CommandPromptRef {
@@ -37,6 +38,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       totalProjects,
       command,
       setCommand,
+      onFirstInteraction,
     },
     ref
   ) {
@@ -180,12 +182,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       },
     }))
 
-    useEffect(() => {
-      inputRef.current?.focus()
-      return () => {
-        releaseKeyboardSuppression()
-      }
-    }, [releaseKeyboardSuppression])
+    const handleInputFocus = () => {
+      onFirstInteraction?.()
+    }
 
     return (
       <>
@@ -240,6 +239,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
+              onFocus={handleInputFocus}
               autoComplete="off"
               spellCheck="false"
               aria-label="Terminal command input"
