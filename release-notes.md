@@ -19,6 +19,43 @@ If you are asked to update this file, follow these rules:
 
 ## October 15, 2025
 
+### Audio timing and typewriter speed improvements
+
+**Enhanced user experience with improved audio trigger and faster text animations:**
+
+**Audio Trigger Refinement:**
+- Audio now plays exclusively on boot-to-content transition (when user clicks/presses key on boot prompt)
+- Removed audio trigger from command input focus handler
+- Simplified audio flow: single trigger point at exact moment user transitions from boot screen
+- File: components/terminal-container.tsx
+
+**Typewriter Speed Increase:**
+- Changed typewriter delay from 15ms to 5ms (3x faster)
+- Applies to both boot sequence and CV content typewriter effects
+- More responsive feel while maintaining authentic terminal aesthetic
+- File: lib/utils.ts (ANIMATION_DELAYS.typewriter: 15 → 5)
+
+**Boot Sequence Content Updates:**
+- MS-DOS version now displays dynamic age instead of static "v3.08"
+- Shows actual age value (e.g., "MS-DOS v43.45") calculated from birthdate
+- Removed "Writing to" line entirely for cleaner boot sequence
+- Boot sequence now shows: MS-DOS version, copyright, tagline, booting message
+- Files: components/boot-sequence.tsx
+
+**Impact:**
+- More intuitive audio trigger tied to user's explicit transition action
+- Faster content reveal improves perceived performance
+- Dynamic version display adds personalization and authenticity
+- Cleaner boot sequence with fewer lines
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+
+**Files Changed:** 3 files (components/terminal-container.tsx, components/command-prompt.tsx, components/boot-sequence.tsx, lib/utils.ts)
+
+---
+
 ### Boot sequence interactive pause
 
 **Added user interaction requirement before terminal proceeds:**

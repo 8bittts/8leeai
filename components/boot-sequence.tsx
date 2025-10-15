@@ -39,10 +39,9 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   // Memoize boot lines to include dynamic version
   const bootLines = useMemo(
     () => [
-      { text: "MS-DOS v3.08", group: 1 },
-      { text: "Copyright 1982, 1983 Saddington, Inc.", group: 1 },
-      { text: "Eight Lee • Build Great Products", group: 2 },
-      { text: `Writing to ${versionLabel}.r0aR0L.md`, group: 2 },
+      { text: `MS-DOS v${versionLabel}`, group: 1 },
+      { text: "(C) 1982, 1983 Saddington, Inc.", group: 1 },
+      { text: "Eight Lee • Systems & Engineering", group: 2 },
       { text: "Booting CJ in the Shell...", group: 2 },
     ],
     [versionLabel]
