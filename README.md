@@ -30,14 +30,14 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 ## Features
 
-- **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface
+- **Authentic Terminal Experience**: Complete boot sequence animation and command-line interface with visible cursor (2px mobile, 1px desktop)
 - **Matrix Background Effect**: Subtle falling characters animation on mobile using `requestAnimationFrame` for optimal performance
 - **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`)
 - **Typewriter Effects**: Smooth text animations with nostalgic terminal feel and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
 - **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
 - **Production Security**: CSP headers, CORS restrictions, and secure external link handling
-- **Responsive Design**: Fully responsive terminal interface for all devices
+- **Mobile-First UX**: Natural browser behavior, visible cursor, no auto-focus traps, keyboard hides after Enter (user taps to reopen)
 - **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`, extracted shared rendering utilities
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **Audio Integration**: Preloaded interaction sound effects at 2% volume on first user interaction
@@ -137,12 +137,12 @@ Lightweight unit and component testing with Bun's native test runner and React T
 Run `bun test` to execute all tests. Tests are co-located with source files:
 - `lib/utils.test.ts` - Data integrity, user input validation, and security filtering (URL validation, malicious pattern detection)
 - `hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
-- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile UX for command history
+- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control (hide after Enter, natural focus behavior)
 - `components/cursor.test.tsx` - Visual feedback for terminal readiness
 
 **Testing Philosophy:**
 - Tests focus on **user intent and business logic**, not implementation details
-- Test names read like requirements (e.g., "prevents keyboard popup when navigating command history")
+- Test names read like requirements (e.g., "hides keyboard after command submission on touch devices")
 - Every assertion includes comments explaining the business reason
 - Tests document WHY features exist, making them resilient to refactoring
 - Observable behavior over internal mechanisms
@@ -191,7 +191,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   └── terminal-container.tsx
 ├── hooks/              # Custom React hooks
 │   ├── use-typewriter.ts            # Optimized typewriter effect
-│   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard control
+│   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard suppression (32 lines, blur on Enter)
 ├── lib/                # Utilities and data
 │   ├── data.ts         # Portfolio data (projects, education, volunteer)
 │   ├── utils.ts        # Utilities, constants, command types, rendering logic
@@ -239,6 +239,7 @@ v1.0 - October 2025:
 - **Test Coverage**: Intent-focused testing with Bun native test runner (32 tests, 99 assertions) - tests document user needs and business logic, not implementation details
 - **Component Architecture**: Reusable components (`SecureExternalLink`, `DataGridSection`) eliminate duplication and improve maintainability
 - **Type Safety**: Elite-level TypeScript with strict null checks, proper type guards, and zero unsafe patterns
+- **Mobile-First UX**: Natural browser behavior, 2px cursor visibility on mobile, no click-to-reveal or auto-focus traps, simplified keyboard suppression (32 lines, 73% reduction), immediate content display after boot
 
 ## Contributing
 

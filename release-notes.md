@@ -19,6 +19,66 @@ If you are asked to update this file, follow these rules:
 
 ## October 14, 2025
 
+### Mobile UX overhaul - natural browser behavior and simplified interactions
+
+**Comprehensive mobile experience improvements prioritizing default browser behavior over custom solutions:**
+
+**Cursor Visibility Enhancement:**
+- Increased cursor width from 1px to 2px on mobile devices (`w-0.5 sm:w-px`)
+- Desktop maintains thin 1px cursor for authentic terminal aesthetic
+- Mobile users can now clearly see blinking cursor on retina displays
+- File: components/cursor.tsx
+
+**Removed Click-to-Reveal Interaction:**
+- Eliminated post-boot "click anywhere to continue" requirement
+- Content and command prompt appear immediately after boot sequence completes
+- Removed `showContent` state variable entirely
+- Removed document-wide click/keydown event listeners
+- Removed container-wide `onClick`, `onKeyDown`, `tabIndex`, and `role` attributes
+- Audio still plays on first input focus (respects browser autoplay policies)
+- File: components/terminal-container.tsx
+
+**Natural Focus Behavior:**
+- Removed aggressive auto-focus on component mount
+- Input focuses naturally when user explicitly taps it
+- Eliminated frustrating "keyboard keeps appearing" loop
+- Users can read content without keyboard covering 40% of screen
+- Added `onFirstInteraction` callback for audio playback trigger
+- File: components/command-prompt.tsx
+
+**Simplified Virtual Keyboard Suppression (73% code reduction):**
+- Reduced hook from 116 lines to 32 lines
+- Mobile: Simple `blur()` call to hide keyboard after Enter key
+- Desktop: No-op, maintains focus for continuous typing
+- Removed complex readonly/inputmode attribute manipulation
+- Removed double `requestAnimationFrame` nesting
+- Removed pointerdown/keydown event listener juggling
+- User taps input naturally when ready to type again
+- File: hooks/use-virtual-keyboard-suppression.ts
+
+**Updated Test Suite:**
+- Refactored 3 tests to verify blur behavior instead of readonly attributes
+- Added desktop focus retention test
+- Updated intent-focused comments to match new behavior
+- All 32 tests passing with 99 assertions
+- File: hooks/use-virtual-keyboard-suppression.test.tsx
+
+**Impact:**
+- **Before:** Invisible cursor, click-to-reveal confusion, aggressive auto-focus, keyboard covering content
+- **After:** Visible cursor, immediate content display, user-controlled focus, natural keyboard behavior
+- **Code Quality:** 84 lines removed, simpler architecture, fewer edge cases
+- **User Experience:** Terminal behaves like standard web form on mobile while maintaining terminal aesthetic on desktop
+- **Accessibility:** Natural focus management, no focus trapping, respects user intent
+
+**Verification:**
+- Tests: 32 pass, 99 assertions (874ms)
+- Biome: 30 files checked, 0 issues
+- Production build: Successful (2.6s compile)
+
+**Files Changed:** 5 files (components/cursor.tsx, components/terminal-container.tsx, components/command-prompt.tsx, hooks/use-virtual-keyboard-suppression.ts, hooks/use-virtual-keyboard-suppression.test.tsx)
+
+---
+
 ### Documentation cleanup - removed all emojis
 
 **Removed all emoji characters from documentation files:**
