@@ -20,7 +20,6 @@ interface CommandPromptProps {
   totalProjects: number
   command: string
   setCommand: (command: string) => void
-  onFirstInteraction?: () => void
 }
 
 export interface CommandPromptRef {
@@ -38,7 +37,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       totalProjects,
       command,
       setCommand,
-      onFirstInteraction,
     },
     ref
   ) {
@@ -184,10 +182,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       },
     }))
 
-    const handleInputFocus = () => {
-      onFirstInteraction?.()
-    }
-
     return (
       <>
         {/* Email Section */}
@@ -241,7 +235,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
-              onFocus={handleInputFocus}
               autoComplete="off"
               spellCheck="false"
               aria-label="Terminal command input"

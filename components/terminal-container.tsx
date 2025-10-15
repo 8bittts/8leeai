@@ -31,16 +31,14 @@ export function TerminalContainer() {
 
   const handleBootComplete = () => {
     setBootComplete(true)
-  }
-
-  const handleFirstInteraction = useCallback(() => {
+    // Play audio on boot-to-content transition
     if (!audioPlayedRef.current && audioRef.current) {
       audioRef.current.play().catch(() => {
         // Intentionally empty - audio is optional enhancement
       })
       audioPlayedRef.current = true
     }
-  }, [])
+  }
 
   const showMoreProjects = useCallback(() => {
     setVisibleProjects((prev) => Math.min(prev + PROJECTS_PER_PAGE, projects.length))
@@ -113,7 +111,6 @@ export function TerminalContainer() {
             totalProjects={projects.length}
             command={command}
             setCommand={setCommand}
-            onFirstInteraction={handleFirstInteraction}
           />
         </div>
       )}
