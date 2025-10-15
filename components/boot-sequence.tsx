@@ -33,6 +33,7 @@ const calculateAgeInYears = (date: Date): number => {
 export function BootSequence({ onComplete }: BootSequenceProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [showPrompt, setShowPrompt] = useState(false)
+  const [waitingForInteraction, setWaitingForInteraction] = useState(false)
   const [versionLabel, setVersionLabel] = useState(() => calculateAgeInYears(new Date()).toFixed(2))
 
   // Memoize boot lines to include dynamic version
@@ -53,12 +54,13 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     if (currentLineIndex < bootLines.length - 1) {
       setCurrentLineIndex((prev) => prev + 1)
     } else {
+      // Show prompt and wait for user interaction
       setTimeout(() => {
         setShowPrompt(true)
-        onComplete()
+        setWaitingForInteraction(true)
       }, ANIMATION_DELAYS.bootPrompt)
     }
-  }, [currentLineIndex, bootLines.length, onComplete])
+  }, [currentLineIndex, bootLines.length])
 
   const { displayedText, isTyping } = useTypewriter({
     text: currentLine?.text ?? "",
@@ -78,6 +80,25 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       window.clearInterval(intervalId)
     }
   }, [])
+
+  // Wait for user interaction before proceeding
+  useEffect(() => {
+    if (!waitingForInteraction) return
+
+    const handleInteraction = () => {
+      setWaitingForInteraction(false)
+      onComplete()
+    }
+
+    // Listen for any click or key press
+    window.addEventListener("click", handleInteraction)
+    window.addEventListener("keydown", handleInteraction)
+
+    return () => {
+      window.removeEventListener("click", handleInteraction)
+      window.removeEventListener("keydown", handleInteraction)
+    }
+  }, [waitingForInteraction, onComplete])
 
   // Track all completed lines for display
   const completedLines = bootLines.slice(0, currentLineIndex + 1)
