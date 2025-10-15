@@ -19,6 +19,46 @@ If you are asked to update this file, follow these rules:
 
 ## October 14, 2025
 
+### Biome configuration cleanup
+
+**Enhanced Biome configuration for cleaner validation output:**
+
+- Updated `biome.json` to set `ignoreUnknown: true` for files configuration
+- Suppresses verbose warnings about unknown file extensions (images, markdown, PDFs, etc.)
+- Maintains aggressive error-level linting for all code files
+- Cleaner CI/verbose output while preserving all 100+ error-level rules
+
+**Validation:**
+- Tests: 32 pass, 99 assertions ✓
+- TypeScript strict mode: Zero errors ✓
+- Biome CI mode: 30 files checked, no issues ✓
+- Production build: Successful ✓
+
+**Files Changed:** 1 file (biome.json)
+
+---
+
+### LinkedIn command addition
+
+**Added LinkedIn profile link with command aliases:**
+
+- Added `linkedin` and `li` commands to open https://www.linkedin.com/in/8lee/
+- Both commands (and slash variants `/linkedin`, `/li`) open LinkedIn profile in new tab
+- Updated VALID_COMMANDS array in lib/utils.ts to include new aliases
+- Added to COMMAND_DISPLAY_LIST as "linkedin (li)" for consistent grouping pattern
+- Enhanced handleExternalLinkCommand in command-prompt.tsx with LinkedIn links
+
+**Documentation Updates:**
+- Updated README.md Available Commands section with LinkedIn entry
+- Enhanced README.md Features section to mention `li` alias alongside `ed` and `vol`
+- Updated README.md Mobile-First UX feature with recent improvements (2px cursor, immediate content)
+- Removed code reduction percentage mentions from README.md
+- Updated CLAUDE.md Component Flow section to include linkedin command
+
+**Files Changed:** 4 files (lib/utils.ts, components/command-prompt.tsx, README.md, CLAUDE.md)
+
+---
+
 ### Mobile UX overhaul - natural browser behavior and simplified interactions
 
 **Comprehensive mobile experience improvements prioritizing default browser behavior over custom solutions:**
