@@ -16,7 +16,7 @@ An original, retro terminal-style portfolio experience built with modern web tec
 The current settings are designed for a completely private portfolio that won't appear in search results.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.5-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5.6-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.14-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
@@ -130,7 +130,7 @@ Lightweight unit and component testing with Bun's native test runner and React T
 
 - **Test Framework**: Bun test (native)
 - **Component Testing**: @testing-library/react 16.3.0
-- **DOM Environment**: happy-dom 20.0.0
+- **DOM Environment**: happy-dom 20.0.5
 - **Test Utilities**: @testing-library/jest-dom 6.9.1
 - **Coverage**: 32 tests, 99 assertions across 4 files
 - **Execution Time**: ~850ms for full test suite
@@ -159,7 +159,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 **Package Manager & Runtime**: [Bun 1.2.23](https://bun.sh) - **Exclusively used for all operations**
 
-- **Framework**: [Next.js 15.5.5](https://nextjs.org) with App Router & Turbopack
+- **Framework**: [Next.js 15.5.6](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev) with modern hooks
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration + 4 ultra-strict flags
@@ -168,7 +168,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 
 ### Development Tools
-- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.2, @types/node 24.7.2
+- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.2, @types/node 24.8.1
 - **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
 - **Security**: Production-grade middleware with CSP and CORS
 - **Deployment**: [Vercel](https://vercel.com)
