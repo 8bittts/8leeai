@@ -34,7 +34,11 @@ If you are asked to update this file, follow these rules:
 - Biome linting passed with no issues
 - No breaking changes in patch updates
 
-**Files Changed:** 2 files (package.json, bun.lock)
+**Documentation Updates:**
+- Updated version references in CLAUDE.md (line 45)
+- Updated version references in README.md (lines 19, 133, 162, 171)
+
+**Files Changed:** 5 files (package.json, bun.lock, CLAUDE.md, README.md, release-notes.md)
 
 ---
 
