@@ -153,6 +153,49 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - All tests pass Biome's strict linting rules
 - DOM environment configured with `requestAnimationFrame` and `matchMedia` polyfills for comprehensive browser API coverage
 
+### Package Monitoring
+
+Intelligent package update monitoring with breaking change detection and impact analysis:
+
+```bash
+# Check for updates with intelligent analysis
+bun run packages
+
+# Monitor continuously (checks every 6 hours)
+bun run packages:watch
+
+# Only show critical/security updates
+bun run packages:critical
+```
+
+**Package Monitor Agent Features:**
+- **Breaking Change Detection**: Database of known breaking changes for Next.js, React, TypeScript, Tailwind, Biome
+- **Priority Scoring**: Categorizes updates as critical, high, medium, or low priority
+- **Impact Assessment**: Analyzes effort (high/medium/low) required for each update
+- **Security Detection**: Automatically identifies security-related updates
+- **Smart Recommendations**: Color-coded output with 🚨 urgent, ⚠️ caution, ✅ safe indicators
+- **Action Plans**: Generates markdown files with step-by-step update instructions
+- **Batch Commands**: Creates ready-to-run commands for safe updates
+- **Testing Checklist**: Includes verification steps after updates
+
+**Example Output:**
+```
+📦 Package Update Monitor - Bun Edition
+
+📋 Update Recommendations:
+
+⚠️  next
+   Current: 15.5.6 → Latest: 16.0.0
+   Priority: HIGH
+   Impact: high | Effort: high
+   💔 Breaking changes:
+      • Potential App Router changes
+      • Node.js version requirements
+   ⚠️  CAUTION: Review breaking changes first
+```
+
+The monitor saves detailed action plans as `package-update-plan-YYYY-MM-DD.md` with breaking change details and testing checklists.
+
 ## Tech Stack
 
 ### Core Dependencies
@@ -200,6 +243,8 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ├── public/             # Static assets
 │   ├── mario.jpg       # 404 background
 │   └── 8-social.jpeg   # Social share image
+├── scripts/            # Development utilities
+│   └── package-monitor.js       # Intelligent package update monitoring
 ├── middleware.ts       # Security headers
 ├── release-notes.md    # Comprehensive commit changelog
 ├── test-setup.ts       # Bun test configuration with happy-dom
