@@ -110,6 +110,7 @@ Once the terminal loads, you can use these commands:
 - `github` - Open this GitHub project
 - `wellfound` - Open Wellfound profile
 - `linkedin` or `li` - Open LinkedIn profile
+- `x` - Open X/Twitter profile
 - `deathnote` - Open deathnote.ai website
 - `clear` - Reset terminal display
 
