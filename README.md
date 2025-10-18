@@ -2,15 +2,37 @@
 
 An original, retro terminal-style portfolio experience built with modern web technologies.
 
-**FYI**: The codebase is configured for **"ultra private" mode** with aggressive anti-crawling settings:
-- `robots.txt` blocks all search engines and crawlers
-- Security headers prevent indexing and archiving
-- Metadata includes `noindex, nofollow` directives
+**FYI**: The codebase is configured for **"ultra private" mode** with triple-layer anti-crawling protection:
+
+**Layer 1 - robots.txt:**
+- Blocks all major search engines (Google, Bing, DuckDuckGo, Baidu, Yandex)
+- Blocks social media crawlers (Facebook, Twitter, LinkedIn, WhatsApp)
+- Blocks SEO tools (Ahrefs, Semrush, MJ12bot, DotBot, DataForSeoBot)
+- Sets 24-hour crawl delay
+
+**Layer 2 - HTTP Headers (middleware.ts):**
+- X-Robots-Tag: `noindex, nofollow, noarchive, nosnippet, noimageindex`
+- Strict-Transport-Security with HSTS preload
+- Content-Security-Policy with minimal allowlist
+- X-Frame-Options: DENY (prevents clickjacking)
+- Comprehensive Permissions-Policy disabling unnecessary browser features
+
+**Layer 3 - HTML Metadata (app/layout.tsx):**
+- robots: `index: false, follow: false`
+- googleBot: `noimageindex: true, max-snippet: -1`
+- Additional X-Robots-Tag in metadata
+
+**What This Means:**
+- Site will NOT appear in Google, Bing, or any search engines
+- Site will NOT be archived by Internet Archive/Wayback Machine
+- Site will NOT show snippets or image previews in search results
+- Social media previews WILL work when you manually share links
+- Direct visitors can still access the site normally
 
 **Before using this template, please review and update:**
 - `/public/robots.txt` - Remove restrictive crawler blocking if you want SEO
-- `/middleware.ts` - Adjust security headers and CORS settings for your domain
-- `/app/layout.tsx` - Update metadata, robots settings, and OpenGraph data
+- `/middleware.ts` - Adjust X-Robots-Tag headers and CORS settings for your domain
+- `/app/layout.tsx` - Update metadata `robots` configuration and OpenGraph data
 - `/lib/data.ts` - Replace with your own portfolio content
 
 The current settings are designed for a completely private portfolio that won't appear in search results.
@@ -260,13 +282,23 @@ All code includes concise, useful comments following these guidelines:
 
 ## Security
 
-Production-ready security implementation:
-- **Content Security Policy**: Strict CSP with minimal external allowlist
-- **CORS**: Restrictive cross-origin policy locked to 8lee.ai
-- **HSTS**: Strict transport security with preload
+Production-ready security implementation with ultra-private mode:
+
+**Triple-Layer Anti-Crawling Protection:**
+- **robots.txt**: Blocks 17+ major crawlers including Google, Bing, social media, and SEO tools
+- **HTTP Headers**: X-Robots-Tag with `noindex, nofollow, noarchive, nosnippet, noimageindex`
+- **HTML Metadata**: robots metadata set to `index: false, follow: false` with googleBot restrictions
+
+**Additional Security Headers:**
+- **Content Security Policy**: Strict CSP with minimal external allowlist (Vercel analytics only)
+- **CORS**: Restrictive cross-origin policy locked to approved domains
+- **HSTS**: Strict transport security with preload enabled
+- **Frame Protection**: X-Frame-Options DENY prevents clickjacking
+- **Permissions Policy**: Disables unnecessary browser features (camera, mic, geolocation, etc.)
+- **XSS Protection**: X-XSS-Protection enabled with mode=block
 - **External Links**: Secure utility prevents window.opener vulnerabilities
-- **Anti-Crawling**: Comprehensive robot blocking configuration
-- **Headers**: XSS protection, frame options, content type options
+
+**Result**: Site will NOT appear in search engines, archiving services, or indexing tools while maintaining normal access for direct visitors.
 
 ## Version History
 
