@@ -21,6 +21,25 @@ If you are asked to update this file, follow these rules:
 
 ## October 18, 2025
 
+### Added twitter command alias
+
+**Enhanced Twitter command with additional alias:**
+- Added `twitter` as an alias command alongside `x` (both open https://twitter.com/8bit)
+- Supports all variations: `x`, `/x`, `twitter`, `/twitter`
+- Only "x" displayed in command list to maintain clean UI
+- Both commands route to identical Twitter URL
+
+**Technical Implementation:**
+- Updated `VALID_COMMANDS` array in lib/utils.ts to include "twitter"
+- Added `twitter: "https://twitter.com/8bit"` to links object in command-prompt.tsx
+- Maintains backward compatibility with existing "x" command
+
+**Files Changed:**
+- `lib/utils.ts` - Added "twitter" to VALID_COMMANDS array
+- `components/command-prompt.tsx` - Added twitter link to handleExternalLinkCommand
+
+---
+
 ### Added X/Twitter command
 
 **New terminal command for social media:**

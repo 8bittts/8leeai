@@ -115,6 +115,7 @@ export const VALID_COMMANDS = [
   "linkedin",
   "li",
   "x",
+  "twitter",
   "deathnote",
   "clear",
 ] as const
