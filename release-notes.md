@@ -19,6 +19,27 @@ If you are asked to update this file, follow these rules:
 
 ## October 15, 2025
 
+## October 18, 2025
+
+### Package dependency update (Bun 1.3.0)
+
+**Updated Bun to latest minor version:**
+
+- `bun`: 1.2.23 → 1.3.0 (minor, backwards-compatible update)
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- No breaking changes in minor update
+
+**Documentation Updates:**
+- Updated version references in README.md (lines 23, 54, 71, 160)
+- Updated packageManager field in package.json
+
+**Files Changed:** 3 files (package.json, README.md, release-notes.md)
+
+---
+
 ## October 17, 2025
 
 ### Package dependency updates (Next.js 15.5.6, type definitions, test DOM)

@@ -2,7 +2,7 @@
   "name": "8leeai",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "bun@1.2.23",
+  "packageManager": "bun@1.3.0",
   "scripts": {
     "dev": "lsof -ti:1333 | xargs kill -9 2>/dev/null || true && rm -rf .next .turbo node_modules/.cache && next dev -p 1333 --turbo",
     "dev:clean": "rm -rf .next node_modules/.cache && bun run dev",
