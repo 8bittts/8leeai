@@ -13,7 +13,10 @@
     "lint": "bunx biome check .",
     "format": "bunx biome format --write .",
     "check": "bunx biome check --write .",
-    "clean": "rm -rf .next node_modules/.cache .turbo"
+    "clean": "rm -rf .next node_modules/.cache .turbo",
+    "packages": "bun scripts/package-monitor.js",
+    "packages:watch": "bun scripts/package-monitor.js --watch",
+    "packages:critical": "bun scripts/package-monitor.js --critical"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
