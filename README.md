@@ -20,7 +20,7 @@ The current settings are designed for a completely private portfolio that won't 
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.14-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
-[![Bun](https://img.shields.io/badge/Bun-1.2.23-fbf0df)](https://bun.sh)
+[![Bun](https://img.shields.io/badge/Bun-1.3.0-fbf0df)](https://bun.sh)
 
 ## Live Demo
 
@@ -51,7 +51,7 @@ Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
 
 **This project uses Bun exclusively as its package manager and runtime.**
 
-- **Required**: [Bun](https://bun.sh) v1.2.23 or higher
+- **Required**: [Bun](https://bun.sh) v1.3.0 or higher
 - **Do NOT use**: npm, yarn, or pnpm - only Bun is supported
 
 ### Installation
@@ -68,7 +68,7 @@ bun install
 bun run dev
 ```
 
-**Note**: All commands in this project use `bun` or `bunx`. The `package.json` has `"packageManager": "bun@1.2.23"` to enforce this.
+**Note**: All commands in this project use `bun` or `bunx`. The `package.json` has `"packageManager": "bun@1.3.0"` to enforce this.
 
 Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
@@ -157,7 +157,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 ### Core Dependencies
 
-**Package Manager & Runtime**: [Bun 1.2.23](https://bun.sh) - **Exclusively used for all operations**
+**Package Manager & Runtime**: [Bun 1.3.0](https://bun.sh) - **Exclusively used for all operations**
 
 - **Framework**: [Next.js 15.5.6](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev) with modern hooks
