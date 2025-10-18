@@ -173,25 +173,25 @@ bun run packages:critical
 - **Priority Scoring**: Categorizes updates as critical, high, medium, or low priority
 - **Impact Assessment**: Analyzes effort (high/medium/low) required for each update
 - **Security Detection**: Automatically identifies security-related updates
-- **Smart Recommendations**: Color-coded output with 🚨 urgent, ⚠️ caution, ✅ safe indicators
+- **Smart Recommendations**: Color-coded output with [URGENT], [CAUTION], [SAFE] indicators
 - **Action Plans**: Generates markdown files with step-by-step update instructions
 - **Batch Commands**: Creates ready-to-run commands for safe updates
 - **Testing Checklist**: Includes verification steps after updates
 
 **Example Output:**
 ```
-📦 Package Update Monitor - Bun Edition
+[MONITOR] Package Update Monitor - Bun Edition
 
-📋 Update Recommendations:
+[PLAN] Update Recommendations:
 
-⚠️  next
+[CAUTION] next
    Current: 15.5.6 → Latest: 16.0.0
    Priority: HIGH
    Impact: high | Effort: high
-   💔 Breaking changes:
+   [BREAKING] Breaking changes:
       • Potential App Router changes
       • Node.js version requirements
-   ⚠️  CAUTION: Review breaking changes first
+   [CAUTION] Review breaking changes first
 ```
 
 The monitor saves detailed action plans as `package-update-plan-YYYY-MM-DD.md` with breaking change details and testing checklists.
