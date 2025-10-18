@@ -304,21 +304,6 @@ Production-ready security implementation with ultra-private mode:
 
 For detailed commit history and comprehensive changelog, see [release-notes.md](release-notes.md).
 
-v1.0 - October 2025:
-- **Production Release**: Terminal interface with authentic boot sequence
-- **Interactive Commands**: Full command system with 60+ projects, command aliases (`ed`, `vol`)
-- **Security Hardened**: Production-grade middleware and secure link handling
-- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks, minimal dependencies, Turbopack, zero custom CSS
-- **Comprehensive Data**: Complete portfolio with projects, education, and volunteer experience
-- **Audio Integration**: Preloaded sound effects for enhanced immersion
-- **Full Accessibility**: WCAG 2.1 AA compliant with semantic HTML, ARIA support, keyboard navigation, skip links, and reduced motion
-- **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, all packages on latest stable versions, concise useful comments for open source contributors
-- **Shared Utilities**: Extracted rendering logic (`renderTextWithUnderlinedWord`), custom hooks (`useVirtualKeyboardSuppression`), typed command constants
-- **Test Coverage**: Intent-focused testing with Bun native test runner (32 tests, 99 assertions) - tests document user needs and business logic, not implementation details
-- **Component Architecture**: Reusable components (`SecureExternalLink`, `DataGridSection`) eliminate duplication and improve maintainability
-- **Type Safety**: Elite-level TypeScript with strict null checks, proper type guards, and zero unsafe patterns
-- **Mobile-First UX**: Natural browser behavior, 2px cursor visibility on mobile, no click-to-reveal or auto-focus traps, simplified keyboard suppression, immediate content display after boot
-
 ## Contributing
 
 This is a personal portfolio project. Feel free to make suggestions!
