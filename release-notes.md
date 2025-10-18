@@ -21,6 +21,20 @@ If you are asked to update this file, follow these rules:
 
 ## October 18, 2025
 
+### Added X/Twitter command
+
+**New terminal command for social media:**
+- Added `x` command to open Twitter profile at https://twitter.com/8bit
+- Command integrated into all validation arrays (VALID_COMMANDS, COMMAND_DISPLAY_LIST)
+- Updated documentation in README.md and CLAUDE.md
+- Links object in command-prompt.tsx updated with Twitter URL
+
+**Files Changed:**
+- `lib/utils.ts` - Added "x" to VALID_COMMANDS and COMMAND_DISPLAY_LIST
+- `components/command-prompt.tsx` - Added x: "https://twitter.com/8bit" to links object
+- `CLAUDE.md` - Updated command list documentation
+- `README.md` - Added "x" command to Available Commands section
+
 ### Enhanced ultra-private mode documentation
 
 **Comprehensive documentation of triple-layer anti-crawling protection:**

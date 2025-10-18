@@ -92,6 +92,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         wellfound: "https://wellfound.com/u/eightlee",
         linkedin: "https://www.linkedin.com/in/8lee/",
         li: "https://www.linkedin.com/in/8lee/",
+        x: "https://twitter.com/8bit",
         deathnote: "https://deathnote.ai",
       } as const
 
