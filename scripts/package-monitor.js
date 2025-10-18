@@ -38,7 +38,7 @@ class PackageMonitorAgent {
 		try {
 			return JSON.parse(fs.readFileSync("package.json", "utf8"));
 		} catch (error) {
-			console.error("❌ Failed to load package.json:", error.message);
+			console.error("[ERROR] Failed to load package.json:", error.message);
 			process.exit(1);
 		}
 	}
@@ -136,14 +136,14 @@ class PackageMonitorAgent {
 	}
 
 	async checkPackageUpdates() {
-		console.log(`${COLORS.cyan}${COLORS.bright}📦 Package Update Monitor - Bun Edition${COLORS.reset}\n`);
+		console.log(`${COLORS.cyan}${COLORS.bright}[MONITOR] Package Update Monitor - Bun Edition${COLORS.reset}\n`);
 
 		try {
 			// Get bun outdated information
 			const updates = this.getBunOutdated();
 
 			if (updates.length === 0) {
-				console.log(`${COLORS.green}✅ All packages are up to date!${COLORS.reset}`);
+				console.log(`${COLORS.green}[OK] All packages are up to date!${COLORS.reset}`);
 				return;
 			}
 
@@ -156,7 +156,7 @@ class PackageMonitorAgent {
 				: analyzed;
 
 			if (filtered.length === 0 && this.criticalOnly) {
-				console.log(`${COLORS.green}✅ No critical updates found!${COLORS.reset}`);
+				console.log(`${COLORS.green}[OK] No critical updates found!${COLORS.reset}`);
 				return;
 			}
 
@@ -169,7 +169,7 @@ class PackageMonitorAgent {
 			// Generate action plan
 			this.generateActionPlan(filtered);
 		} catch (error) {
-			console.error(`${COLORS.red}❌ Monitor failed:${COLORS.reset}`, error.message);
+			console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, error.message);
 		}
 	}
 
@@ -341,7 +341,7 @@ class PackageMonitorAgent {
 	}
 
 	displayRecommendations(updates) {
-		console.log(`${COLORS.bright}📋 Update Recommendations:${COLORS.reset}\n`);
+		console.log(`${COLORS.bright}[PLAN] Update Recommendations:${COLORS.reset}\n`);
 
 		for (const update of updates) {
 			const priorityColor = {
@@ -351,13 +351,13 @@ class PackageMonitorAgent {
 				low: COLORS.cyan,
 			}[update.priority];
 
-			const recommendationIcon = {
-				urgent: "🚨",
-				caution: "⚠️",
-				safe: "✅",
+			const recommendationLabel = {
+				urgent: "[URGENT]",
+				caution: "[CAUTION]",
+				safe: "[SAFE]",
 			}[update.recommendation];
 
-			console.log(`${recommendationIcon} ${COLORS.bright}${update.name}${COLORS.reset}`);
+			console.log(`${recommendationLabel} ${COLORS.bright}${update.name}${COLORS.reset}`);
 			console.log(
 				`   ${COLORS.cyan}Current:${COLORS.reset} ${update.current} → ${COLORS.green}Latest:${COLORS.reset} ${update.latest}`,
 			);
@@ -369,11 +369,11 @@ class PackageMonitorAgent {
 			);
 
 			if (update.hasSecurity) {
-				console.log(`   ${COLORS.red}🔒 Security update detected${COLORS.reset}`);
+				console.log(`   ${COLORS.red}[SECURITY] Security update detected${COLORS.reset}`);
 			}
 
 			if (update.breakingChanges.length > 0) {
-				console.log(`   ${COLORS.red}💔 Breaking changes:${COLORS.reset}`);
+				console.log(`   ${COLORS.red}[BREAKING] Breaking changes:${COLORS.reset}`);
 				update.breakingChanges.forEach((change) => {
 					console.log(`      • ${change}`);
 				});
@@ -387,19 +387,19 @@ class PackageMonitorAgent {
 	displayRecommendation(update) {
 		switch (update.recommendation) {
 			case "urgent":
-				console.log(`   ${COLORS.red}${COLORS.bright}🚨 URGENT: Update immediately${COLORS.reset}`);
+				console.log(`   ${COLORS.red}${COLORS.bright}[URGENT] Update immediately${COLORS.reset}`);
 				console.log(`   ${COLORS.red}   Command: bun update ${update.name}${COLORS.reset}`);
 				break;
 
 			case "caution":
-				console.log(`   ${COLORS.yellow}⚠️  CAUTION: Review breaking changes first${COLORS.reset}`);
+				console.log(`   ${COLORS.yellow}[CAUTION] Review breaking changes first${COLORS.reset}`);
 				console.log(`   ${COLORS.yellow}   1. Review changelog on npm/GitHub${COLORS.reset}`);
 				console.log(`   ${COLORS.yellow}   2. Test in development: bun update ${update.name}${COLORS.reset}`);
 				console.log(`   ${COLORS.yellow}   3. Run tests: bun test && bun run build${COLORS.reset}`);
 				break;
 
 			case "safe":
-				console.log(`   ${COLORS.green}✅ SAFE: Update when convenient${COLORS.reset}`);
+				console.log(`   ${COLORS.green}[SAFE] Update when convenient${COLORS.reset}`);
 				console.log(`   ${COLORS.green}   Command: bun update ${update.name}${COLORS.reset}`);
 				break;
 		}
@@ -410,10 +410,10 @@ class PackageMonitorAgent {
 		const caution = updates.filter((u) => u.recommendation === "caution");
 		const safe = updates.filter((u) => u.recommendation === "safe");
 
-		console.log(`${COLORS.bright}📋 Action Plan:${COLORS.reset}\n`);
+		console.log(`${COLORS.bright}[PLAN] Action Plan:${COLORS.reset}\n`);
 
 		if (urgent.length > 0) {
-			console.log(`${COLORS.red}${COLORS.bright}🚨 IMMEDIATE ACTION (${urgent.length} packages):${COLORS.reset}`);
+			console.log(`${COLORS.red}${COLORS.bright}[URGENT] IMMEDIATE ACTION (${urgent.length} packages):${COLORS.reset}`);
 			urgent.forEach((update) => {
 				console.log(`   bun update ${update.name}`);
 			});
@@ -421,7 +421,7 @@ class PackageMonitorAgent {
 		}
 
 		if (caution.length > 0) {
-			console.log(`${COLORS.yellow}${COLORS.bright}⚠️  PLANNED UPDATES (${caution.length} packages):${COLORS.reset}`);
+			console.log(`${COLORS.yellow}${COLORS.bright}[CAUTION] PLANNED UPDATES (${caution.length} packages):${COLORS.reset}`);
 			console.log(`   1. Create feature branch: git checkout -b package-updates`);
 			caution.forEach((update, index) => {
 				console.log(`   ${index + 2}. Update ${update.name}: bun update ${update.name}`);
@@ -434,7 +434,7 @@ class PackageMonitorAgent {
 		}
 
 		if (safe.length > 0) {
-			console.log(`${COLORS.green}${COLORS.bright}✅ ROUTINE UPDATES (${safe.length} packages):${COLORS.reset}`);
+			console.log(`${COLORS.green}${COLORS.bright}[SAFE] ROUTINE UPDATES (${safe.length} packages):${COLORS.reset}`);
 			console.log(`   # Batch update command:`);
 			const safeUpdates = safe.map((u) => u.name).join(" ");
 			console.log(`   bun update ${safeUpdates}`);
@@ -453,7 +453,7 @@ class PackageMonitorAgent {
 		content += `Generated by Package Monitor Agent (Bun Edition)\n\n`;
 
 		if (plan.urgent.length > 0) {
-			content += `## 🚨 URGENT UPDATES (${plan.urgent.length})\n\n`;
+			content += `## URGENT UPDATES (${plan.urgent.length})\n\n`;
 			plan.urgent.forEach((update) => {
 				content += `- **${update.name}**: ${update.current} → ${update.latest}\n`;
 				content += `  - Priority: ${update.priority}\n`;
@@ -463,7 +463,7 @@ class PackageMonitorAgent {
 		}
 
 		if (plan.caution.length > 0) {
-			content += `## ⚠️ PLANNED UPDATES (${plan.caution.length})\n\n`;
+			content += `## PLANNED UPDATES (${plan.caution.length})\n\n`;
 			plan.caution.forEach((update) => {
 				content += `- **${update.name}**: ${update.current} → ${update.latest}\n`;
 				content += `  - Impact: ${update.impact} | Effort: ${update.effort}\n`;
@@ -478,7 +478,7 @@ class PackageMonitorAgent {
 		}
 
 		if (plan.safe.length > 0) {
-			content += `## ✅ ROUTINE UPDATES (${plan.safe.length})\n\n`;
+			content += `## ROUTINE UPDATES (${plan.safe.length})\n\n`;
 			const safeList = plan.safe.map((u) => u.name).join(" ");
 			content += `\`\`\`bash\nbun update ${safeList}\n\`\`\`\n\n`;
 		}
@@ -492,14 +492,14 @@ class PackageMonitorAgent {
 
 		try {
 			fs.writeFileSync(filename, content);
-			console.log(`${COLORS.green}📄 Action plan saved to: ${filename}${COLORS.reset}`);
+			console.log(`${COLORS.green}[SAVED] Action plan saved to: ${filename}${COLORS.reset}`);
 		} catch (error) {
-			console.error(`${COLORS.red}❌ Failed to save action plan:${COLORS.reset}`, error.message);
+			console.error(`${COLORS.red}[ERROR] Failed to save action plan:${COLORS.reset}`, error.message);
 		}
 	}
 
 	async startWatchMode() {
-		console.log(`${COLORS.cyan}👁️  Starting package monitor in watch mode...${COLORS.reset}`);
+		console.log(`${COLORS.cyan}[WATCH] Starting package monitor in watch mode...${COLORS.reset}`);
 		console.log(`${COLORS.cyan}   Checking every 6 hours. Press Ctrl+C to stop.${COLORS.reset}\n`);
 
 		const checkInterval = 6 * 60 * 60 * 1000; // 6 hours
@@ -509,7 +509,7 @@ class PackageMonitorAgent {
 
 		// Set up periodic checks
 		setInterval(async () => {
-			console.log(`\n${COLORS.cyan}🔄 Scheduled package check - ${new Date().toLocaleString()}${COLORS.reset}`);
+			console.log(`\n${COLORS.cyan}[CHECK] Scheduled package check - ${new Date().toLocaleString()}${COLORS.reset}`);
 			await this.checkPackageUpdates();
 		}, checkInterval);
 	}
@@ -534,13 +534,13 @@ async function main() {
 
 // Handle graceful shutdown
 process.on("SIGINT", () => {
-	console.log(`\n${COLORS.yellow}📦 Package monitor stopped.${COLORS.reset}`);
+	console.log(`\n${COLORS.yellow}[MONITOR] Package monitor stopped.${COLORS.reset}`);
 	process.exit(0);
 });
 
 if (import.meta.url === `file://${process.argv[1]}`) {
 	main().catch((error) => {
-		console.error(`${COLORS.red}❌ Monitor failed:${COLORS.reset}`, error);
+		console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, error);
 		process.exit(1);
 	});
 }

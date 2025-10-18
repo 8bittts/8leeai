@@ -37,7 +37,7 @@ If you are asked to update this file, follow these rules:
 1. **Package Monitor Script (scripts/package-monitor.js):**
    - Uses Bun native commands instead of npm
    - Breaking changes database for Next.js, React, TypeScript, Tailwind, Biome
-   - Color-coded CLI output with priority indicators (🚨 urgent, ⚠️ caution, ✅ safe)
+   - Color-coded CLI output with priority indicators ([URGENT], [CAUTION], [SAFE])
    - Security update detection
    - Generates markdown action plans with testing checklist
 
