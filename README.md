@@ -116,63 +116,57 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 ```
 8leeai/
-├── app/                 # Next.js app router
-│   ├── layout.tsx       # Root layout with metadata
-│   ├── page.tsx         # Main terminal page
-│   └── not-found.tsx    # Custom 404 page
-├── components/          # React components
-│   ├── boot-sequence.tsx
-│   ├── command-prompt.tsx
-│   ├── cursor.tsx
-│   ├── cv-content.tsx
-│   ├── data-grid-section.tsx       # Reusable grid for Education/Volunteer
-│   ├── matrix-background.tsx
-│   ├── secure-external-link.tsx    # Secure link with opener protection
-│   └── terminal-container.tsx
-├── hooks/              # Custom React hooks
-│   ├── use-typewriter.ts            # Optimized typewriter effect
-│   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard suppression (32 lines, blur on Enter)
-├── lib/                # Utilities and data
-│   ├── data.ts         # Portfolio data (projects, education, volunteer)
-│   ├── utils.ts        # Utilities, constants, command types, rendering logic
-│   └── utils.test.ts   # Utility function tests
-├── public/             # Static assets
-│   ├── mario.jpg       # 404 background
-│   └── 8-social.jpeg   # Social share image
-├── scripts/            # Development utilities
-│   └── package-monitor.js       # Intelligent package update monitoring
-├── middleware.ts       # Security headers
-├── release-notes.md    # Comprehensive commit changelog
-├── test-setup.ts       # Bun test configuration with happy-dom
-└── bunfig.toml         # Bun configuration for tests
+├── app/                              # Next.js app router
+│   ├── layout.tsx                    # Root layout with metadata, Analytics & SpeedInsights
+│   ├── page.tsx                      # Main terminal page
+│   └── not-found.tsx                 # Custom 404 with Mario background
+├── components/                       # React components
+│   ├── boot-sequence.tsx             # Terminal boot animation
+│   ├── command-prompt.tsx            # User command interface
+│   ├── cursor.tsx                    # Reusable blinking cursor (2px mobile, 1px desktop)
+│   ├── cv-content.tsx                # Portfolio content display
+│   ├── data-grid-section.tsx         # Reusable grid for Education/Volunteer
+│   ├── matrix-background.tsx         # Matrix rain effect (mobile only)
+│   ├── secure-external-link.tsx      # Secure link with opener protection
+│   └── terminal-container.tsx        # State orchestration
+├── hooks/                            # Custom React hooks
+│   ├── use-typewriter.ts             # Optimized typewriter effect
+│   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard (blur on Enter)
+├── lib/                              # Utilities and data
+│   ├── data.ts                       # Portfolio data (60 projects, 5 education, 6 volunteer)
+│   ├── utils.ts                      # Utilities, constants, command types, rendering logic
+│   └── utils.test.ts                 # Utility function tests
+├── public/                           # Static assets
+│   ├── cj.m4a                        # Interaction audio
+│   ├── mario.jpg                     # 404 background
+│   ├── bitcoin.pdf                   # Bitcoin whitepaper (easter egg)
+│   └── 8-social.jpeg                 # Social share image
+├── scripts/                          # Development utilities
+│   └── package-monitor.js            # Intelligent package update monitoring
+├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
+├── ghostty.md                        # Ghostty terminal configuration
+├── release-notes.md                  # Comprehensive commit changelog
+├── test-setup.ts                     # Bun test configuration with happy-dom
+└── bunfig.toml                       # Bun configuration for test preloading
 ```
-
-## Code Quality
-
-All code includes concise, useful comments following these guidelines:
-- **Component-level**: JSDoc describing purpose and behavior
-- **Inline comments**: Explain complex logic, state management, and non-obvious patterns
-- **No redundant comments**: Code clarity over stating the obvious
 
 ## Security
 
-Production-ready security implementation with ultra-private mode:
-
-**Triple-Layer Anti-Crawling Protection:**
-- **robots.txt**: Blocks 17+ major crawlers including Google, Bing, social media, and SEO tools
-- **HTTP Headers**: X-Robots-Tag with `noindex, nofollow, noarchive, nosnippet, noimageindex`
-- **HTML Metadata**: robots metadata set to `index: false, follow: false` with googleBot restrictions
+**Triple-Layer Anti-Crawling Protection** (ultra-private mode):
+1. **robots.txt** - Blocks 17+ major crawlers (Google, Bing, social media, SEO tools)
+2. **HTTP Headers (middleware.ts)** - X-Robots-Tag: `noindex, nofollow, noarchive, nosnippet, noimageindex`
+3. **HTML Metadata (app/layout.tsx)** - robots: `index: false, follow: false` + googleBot restrictions
 
 **Additional Security Headers:**
-- **Content Security Policy**: Strict CSP with minimal external allowlist (Vercel analytics only)
+- **CSP**: Strict Content Security Policy (Vercel analytics only)
 - **CORS**: Restrictive cross-origin policy locked to approved domains
-- **HSTS**: Strict transport security with preload enabled
-- **Frame Protection**: X-Frame-Options DENY prevents clickjacking
-- **Permissions Policy**: Disables unnecessary browser features (camera, mic, geolocation, etc.)
-- **XSS Protection**: X-XSS-Protection enabled with mode=block
+- **HSTS**: Strict transport security with preload
+- **Frame Protection**: X-Frame-Options DENY (prevents clickjacking)
+- **Permissions Policy**: Disables camera, mic, geolocation, etc.
+- **XSS Protection**: X-XSS-Protection with mode=block
 - **External Links**: Secure utility prevents window.opener vulnerabilities
 
-**Result**: Site will NOT appear in search engines, archiving services, or indexing tools while maintaining normal access for direct visitors.
+**Result**: Site will NOT appear in search engines, archives, or indexing tools while remaining accessible to direct visitors. Social media previews WILL work when manually sharing links.
 
 ## Version History
 
@@ -185,6 +179,7 @@ This is a personal portfolio project. Feel free to make suggestions!
 ## Contact
 
 For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai), [@8BIT](https://x.com/8BIT) on X, and check out [DeathNote](https://deathnote.ai).
+
 ## License
 
 MIT and all that good jazz.
