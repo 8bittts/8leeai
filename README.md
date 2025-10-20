@@ -41,28 +41,17 @@ See [Security](#security) section below for implementation details.
 
 ## Quick Start
 
-### Prerequisites
-
-**This project uses Bun exclusively as its package manager and runtime.**
-
-- **Required**: [Bun](https://bun.sh) v1.3.0 or higher
-- **Do NOT use**: npm, yarn, or pnpm - only Bun is supported
-
-### Installation
+**This project uses [Bun](https://bun.sh) v1.3.0+ exclusively** - Do NOT use npm, yarn, or pnpm.
 
 ```bash
-# Clone the repository
+# Clone and install
 git clone https://github.com/8bittts/8leeai.git
 cd 8leeai
-
-# Install dependencies with Bun
 bun install
 
-# Run development server with Bun
+# Run development server (port 1333, auto-kills existing process, clears caches)
 bun run dev
 ```
-
-**Note**: All commands in this project use `bun` or `bunx`. The `package.json` has `"packageManager": "bun@1.3.0"` to enforce this.
 
 Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
@@ -70,145 +59,57 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
 ## Available Commands
 
-Once the terminal loads, you can use these commands:
+**Terminal Commands** (once loaded):
+- `enter` - Show more projects (15 per page)
+- `1-60` - Open specific project by number
+- `61-65` - Education item by number
+- `66-71` - Volunteer experience by number
+- `email` - Contact email info
+- `education` / `ed` - Education background
+- `volunteer` / `vol` - Volunteer experience
+- `github` - This GitHub project
+- `wellfound` - Wellfound profile
+- `linkedin` / `li` - LinkedIn profile
+- `x` - X/Twitter profile
+- `deathnote` - deathnote.ai website
+- `clear` - Reset terminal
 
-- `enter` - Show more projects (pagination is 15 by default)
-- `1-60` - Open specific project by number (e.g., `42`)
-- `61-65` - Open education item by number
-- `66-71` - Open volunteer experience by number
-- `email` - Display contact email info
-- `education` or `ed` - Show education background
-- `volunteer` or `vol` - Display volunteer experience
-- `github` - Open this GitHub project
-- `wellfound` - Open Wellfound profile
-- `linkedin` or `li` - Open LinkedIn profile
-- `x` - Open X/Twitter profile
-- `deathnote` - Open deathnote.ai website
-- `clear` - Reset terminal display
-
-## Development
-
-**IMPORTANT**: All development commands use Bun exclusively. Do not use npm, yarn, or pnpm.
-
-### Recommended Terminal Setup
-
-For optimal development experience on macOS, use [Ghostty](https://ghostty.org) with the custom 8LEE Terminal Theme. Configuration details available in `ghostty.md`.
-
-### Available Commands (Bun Only)
-
+**Development Commands** (Bun only):
 ```bash
-# Development with Turbopack (auto-kills port 1333, clears caches)
-bun run dev
-
-# Build for production (clears .next before build)
-bun run build
-
-# Start production server
-bun run start
-
-# Run tests with Bun's native test runner
-bun test
-
-# Run tests in watch mode
-bun run test:watch
-
-# Lint and format code with Biome (via bunx)
-bun run check
-
-# Clean all caches (.next, .turbo, node_modules/.cache)
-bun run clean
+bun run dev          # Development with Turbopack (port 1333, auto-kill, clears caches)
+bun run build        # Production build (clears .next first)
+bun run start        # Start production server
+bun test             # Run tests with Bun's native runner
+bun run test:watch   # Tests in watch mode
+bun run check        # Lint and format with Biome (via bunx)
+bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
+bun run packages     # Check for package updates with breaking change analysis
 ```
 
-### Testing
+**Recommended Terminal**: [Ghostty](https://ghostty.org) with custom 8LEE Terminal Theme (see `ghostty.md`)
 
-Lightweight unit and component testing with Bun's native test runner and React Testing Library:
+## Testing
 
-- **Test Framework**: Bun test (native)
-- **Component Testing**: @testing-library/react 16.3.0
-- **DOM Environment**: happy-dom 20.0.5
-- **Test Utilities**: @testing-library/jest-dom 6.9.1
-- **Coverage**: 32 tests, 99 assertions across 4 files
-- **Execution Time**: ~850ms for full test suite
+**Coverage**: 32 tests, 99 assertions across 4 files (~850ms execution)
 
 Run `bun test` to execute all tests. Tests are co-located with source files:
-- `lib/utils.test.ts` - Data integrity, user input validation, and security filtering (URL validation, malicious pattern detection)
+- `lib/utils.test.ts` - Data integrity, user input validation, security filtering
 - `hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
-- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control (hide after Enter, natural focus behavior)
+- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control
 - `components/cursor.test.tsx` - Visual feedback for terminal readiness
 
-**Testing Philosophy:**
-- Tests focus on **user intent and business logic**, not implementation details
-- Test names read like requirements (e.g., "hides keyboard after command submission on touch devices")
-- Every assertion includes comments explaining the business reason
-- Tests document WHY features exist, making them resilient to refactoring
-- Observable behavior over internal mechanisms
-
-**Important Notes:**
-- Test files are excluded from Next.js builds via `tsconfig.json`
-- All tests pass Biome's strict linting rules
-- DOM environment configured with `requestAnimationFrame` and `matchMedia` polyfills for comprehensive browser API coverage
-
-### Package Monitoring
-
-Intelligent package update monitoring with breaking change detection and impact analysis:
-
-```bash
-# Check for updates with intelligent analysis
-bun run packages
-
-# Monitor continuously (checks every 6 hours)
-bun run packages:watch
-
-# Only show critical/security updates
-bun run packages:critical
-```
-
-**Package Monitor Agent Features:**
-- **Breaking Change Detection**: Database of known breaking changes for Next.js, React, TypeScript, Tailwind, Biome
-- **Priority Scoring**: Categorizes updates as critical, high, medium, or low priority
-- **Impact Assessment**: Analyzes effort (high/medium/low) required for each update
-- **Security Detection**: Automatically identifies security-related updates
-- **Smart Recommendations**: Color-coded output with [URGENT], [CAUTION], [SAFE] indicators
-- **Action Plans**: Generates markdown files with step-by-step update instructions
-- **Batch Commands**: Creates ready-to-run commands for safe updates
-- **Testing Checklist**: Includes verification steps after updates
-
-**Example Output:**
-```
-[MONITOR] Package Update Monitor - Bun Edition
-
-[PLAN] Update Recommendations:
-
-[CAUTION] next
-   Current: 15.5.6 → Latest: 16.0.0
-   Priority: HIGH
-   Impact: high | Effort: high
-   [BREAKING] Breaking changes:
-      • Potential App Router changes
-      • Node.js version requirements
-   [CAUTION] Review breaking changes first
-```
-
-The monitor saves detailed action plans as `package-update-plan-YYYY-MM-DD.md` with breaking change details and testing checklists.
+**Testing Philosophy**: Tests focus on **user intent and business logic**, not implementation details. Test names read like requirements (e.g., "hides keyboard after command submission on touch devices"). Every assertion includes comments explaining WHY it matters to users.
 
 ## Tech Stack
 
-### Core Dependencies
-
-**Package Manager & Runtime**: [Bun 1.3.0](https://bun.sh) - **Exclusively used for all operations**
-
+- **Package Manager & Runtime**: [Bun 1.3.0](https://bun.sh)
 - **Framework**: [Next.js 15.5.6](https://nextjs.org) with App Router & Turbopack
-- **UI**: [React 19.2.0](https://react.dev) with modern hooks
+- **UI**: [React 19.2.0](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
-- **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict configuration + 4 ultra-strict flags
-- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) for ultra-aggressive linting (100+ error rules + 5 nursery rules)
-- **Test Runner**: Bun native test runner with happy-dom (not Jest/Vitest)
-- **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) and [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
-
-### Development Tools
-- **Type Definitions**: @types/react 19.2.2, @types/react-dom 19.2.2, @types/node 24.8.1
-- **Build Tools**: PostCSS 8.5.6, Autoprefixer 10.4.21
-- **Security**: Production-grade middleware with CSP and CORS
+- **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
+- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
+- **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## Project Structure
