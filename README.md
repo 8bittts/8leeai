@@ -1,41 +1,18 @@
-# Retro Terminal Homepage - Focused on Privacy
+# Retro Terminal Homepage
 
 An original, retro terminal-style portfolio experience built with modern web technologies.
 
-**FYI**: The codebase is configured for **"ultra private" mode** with triple-layer anti-crawling protection:
+## ⚠️ Ultra Private Mode Enabled
 
-**Layer 1 - robots.txt:**
-- Blocks all major search engines (Google, Bing, DuckDuckGo, Baidu, Yandex)
-- Blocks social media crawlers (Facebook, Twitter, LinkedIn, WhatsApp)
-- Blocks SEO tools (Ahrefs, Semrush, MJ12bot, DotBot, DataForSeoBot)
-- Sets 24-hour crawl delay
+This codebase is configured for **triple-layer anti-crawling protection** - the site will NOT appear in search engines, archives, or indexing tools while remaining accessible to direct visitors.
 
-**Layer 2 - HTTP Headers (middleware.ts):**
-- X-Robots-Tag: `noindex, nofollow, noarchive, nosnippet, noimageindex`
-- Strict-Transport-Security with HSTS preload
-- Content-Security-Policy with minimal allowlist
-- X-Frame-Options: DENY (prevents clickjacking)
-- Comprehensive Permissions-Policy disabling unnecessary browser features
+**Before using this template, update these files:**
+- `/public/robots.txt` - Remove crawler blocking if you want SEO
+- `/middleware.ts` - Adjust X-Robots-Tag headers and CORS for your domain
+- `/app/layout.tsx` - Update robots metadata and OpenGraph data
+- `/lib/data.ts` - Replace with your portfolio content
 
-**Layer 3 - HTML Metadata (app/layout.tsx):**
-- robots: `index: false, follow: false`
-- googleBot: `noimageindex: true, max-snippet: -1`
-- Additional X-Robots-Tag in metadata
-
-**What This Means:**
-- Site will NOT appear in Google, Bing, or any search engines
-- Site will NOT be archived by Internet Archive/Wayback Machine
-- Site will NOT show snippets or image previews in search results
-- Social media previews WILL work when you manually share links
-- Direct visitors can still access the site normally
-
-**Before using this template, please review and update:**
-- `/public/robots.txt` - Remove restrictive crawler blocking if you want SEO
-- `/middleware.ts` - Adjust X-Robots-Tag headers and CORS settings for your domain
-- `/app/layout.tsx` - Update metadata `robots` configuration and OpenGraph data
-- `/lib/data.ts` - Replace with your own portfolio content
-
-The current settings are designed for a completely private portfolio that won't appear in search results.
+See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.6-black)](https://nextjs.org)
@@ -44,28 +21,23 @@ The current settings are designed for a completely private portfolio that won't 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
 [![Bun](https://img.shields.io/badge/Bun-1.3.0-fbf0df)](https://bun.sh)
 
-## Live Demo
-
-Take it for a test-drive at [www.8lee.ai](https://8lee.ai).
+**Live Demo**: [www.8lee.ai](https://8lee.ai)
 
 ![8lee.ai Terminal Screenshot](public/8lee-screenshot.png)
 
 ## Features
 
-- **Authentic Terminal Experience**: Complete boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop)
-- **Matrix Background Effect**: Subtle falling characters animation on mobile using `requestAnimationFrame` for optimal performance
-- **Interactive Commands**: Navigate through 60+ projects, education, and volunteer experience with command aliases (`ed`, `vol`, `li`)
-- **Typewriter Effects**: Smooth text animations with nostalgic terminal feel and prefers-reduced-motion support
-- **Custom 404 Page**: Mario-themed error page with typewriter effect that returns to home on interaction
-- **Comprehensive Portfolio**: Professional work and achievements spanning multiple decades
-- **Production Security**: CSP headers, CORS restrictions, and secure external link handling
-- **Mobile-First UX**: Natural browser behavior, 2px visible cursor on mobile, boot sequence pauses for user interaction, user-controlled focus, keyboard hides after Enter
-- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`, extracted shared rendering utilities
+- **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop)
+- **Matrix Background Effect**: Subtle falling characters on mobile using `requestAnimationFrame`
+- **Interactive Commands**: 60+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`) - see [Available Commands](#available-commands)
+- **Typewriter Effects**: Smooth text animations with prefers-reduced-motion support
+- **Custom 404 Page**: Mario-themed error page that returns to home on interaction
+- **Mobile-First UX**: Boot pause for user interaction, keyboard hides after Enter, 2px visible cursor on mobile
+- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
-- **Audio Integration**: Preloaded interaction sound effects at 2% volume on first user interaction
-- **PWA Ready**: Includes favicon set and Apple Touch icons for mobile home screen installation
-- **WCAG 2.1 AA Compliant**: Full accessibility with semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links, and reduced motion support
-- **Code Quality**: Ultra-aggressive Biome linting with 100+ error-level rules, zero tolerance for code smells
+- **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links
+- **Production Security**: CSP, CORS, HSTS, secure external link handling - see [Security](#security)
+- **Code Quality**: Ultra-aggressive Biome linting (100+ error rules), 32 tests with 99 assertions - see [Testing](#testing)
 
 ## Quick Start
 
