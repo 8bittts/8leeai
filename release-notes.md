@@ -19,6 +19,26 @@ If you are asked to update this file, follow these rules:
 
 ## October 21, 2025
 
+### Removed Ghostty terminal configuration
+
+**Removed terminal-specific configuration file:**
+
+- Deleted `ghostty.md` file from repository
+- Removed all references to Ghostty from documentation
+- Updated CLAUDE.md file structure section (removed ghostty.md line)
+- Updated CLAUDE.md to remove Terminal Setup section
+- Updated README.md to remove Recommended Terminal section
+- Updated README.md file structure section (removed ghostty.md line)
+
+**Rationale:**
+- Terminal configuration is user-specific and not project-specific
+- Reduces repository scope to focus on application code only
+- Users can configure their own terminal preferences independently
+
+**Files Changed:** 3 files (ghostty.md deleted, CLAUDE.md, README.md)
+
+---
+
 ### Documentation update - Bun version sync
 
 **Updated CLAUDE.md to reflect current Bun version:**
