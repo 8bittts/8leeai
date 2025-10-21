@@ -86,8 +86,6 @@ bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
 bun run packages     # Check for package updates with breaking change analysis
 ```
 
-**Recommended Terminal**: [Ghostty](https://ghostty.org) with custom 8LEE Terminal Theme (see `ghostty.md`)
-
 ## Testing
 
 **Coverage**: 32 tests, 99 assertions across 4 files (~850ms execution)
@@ -144,7 +142,6 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ├── scripts/                          # Development utilities
 │   └── package-monitor.js            # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
-├── ghostty.md                        # Ghostty terminal configuration
 ├── release-notes.md                  # Comprehensive commit changelog
 ├── test-setup.ts                     # Bun test configuration with happy-dom
 └── bunfig.toml                       # Bun configuration for test preloading
