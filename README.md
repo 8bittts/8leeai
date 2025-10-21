@@ -175,8 +175,8 @@ This is a personal portfolio project. Feel free to make suggestions!
 
 ## Contact
 
-For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai), [@8BIT](https://x.com/8BIT) on X, and check out [DeathNote](https://deathnote.ai).
+For inquiries, use the `email` command in the terminal on [8lee.ai](https://8lee.ai) or ping on [Twitter](https://x.com/8BIT) on X. Check out my project [DeathNote](https://deathnote.ai).
 
 ## License
 
-MIT and all that good jazz.
+MIT for all the goodness. Enjoy!
