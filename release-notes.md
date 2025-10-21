@@ -17,7 +17,25 @@ If you are asked to update this file, follow these rules:
 
 ---
 
-## October 15, 2025
+## October 21, 2025
+
+### Documentation update - Bun version sync
+
+**Updated CLAUDE.md to reflect current Bun version:**
+
+- Updated Bun version references from 1.2.23 to 1.3.0 in CLAUDE.md
+- Synced documentation with package.json packageManager field
+- Two locations updated:
+  - "CRITICAL: This Project Uses Bun" section (line 7)
+  - "Tech Stack" section (line 59)
+
+**Verification:**
+- README.md already current with Bun 1.3.0 references
+- All documentation now consistent across files
+
+**Files Changed:** 1 file (CLAUDE.md)
+
+---
 
 ## October 18, 2025
 
