@@ -15,11 +15,11 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.6-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.0-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.14-38B2AC)](https://tailwindcss.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.15-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
-[![Bun](https://img.shields.io/badge/Bun-1.3.0-fbf0df)](https://bun.sh)
+[![Bun](https://img.shields.io/badge/Bun-1.3.1-fbf0df)](https://bun.sh)
 
 **Live Demo**: [www.8lee.ai](https://8lee.ai)
 
@@ -41,7 +41,7 @@ See [Security](#security) section below for implementation details.
 
 ## Quick Start
 
-**This project uses [Bun](https://bun.sh) v1.3.0+ exclusively** - Do NOT use npm, yarn, or pnpm.
+**This project uses [Bun](https://bun.sh) v1.3.1+ exclusively** - Do NOT use npm, yarn, or pnpm.
 
 ```bash
 # Clone and install
@@ -100,12 +100,12 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 ## Tech Stack
 
-- **Package Manager & Runtime**: [Bun 1.3.0](https://bun.sh)
-- **Framework**: [Next.js 15.5.6](https://nextjs.org) with App Router & Turbopack
+- **Package Manager & Runtime**: [Bun 1.3.1](https://bun.sh)
+- **Framework**: [Next.js 16.0.0](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev)
-- **Styling**: [Tailwind CSS v4.1.14](https://tailwindcss.com) pure utilities
+- **Styling**: [Tailwind CSS v4.1.15](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
-- **Code Quality**: [Biome 2.2.6](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **Code Quality**: [Biome 2.2.7](https://biomejs.dev) - 100+ error rules + 5 nursery rules
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
