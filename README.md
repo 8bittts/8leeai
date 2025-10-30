@@ -29,7 +29,7 @@ See [Security](#security) section below for implementation details.
 
 - **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop)
 - **Matrix Background Effect**: Subtle falling characters on mobile using `requestAnimationFrame`
-- **Interactive Commands**: 60+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`) - see [Available Commands](#available-commands)
+- **Interactive Commands**: 62+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`) - see [Available Commands](#available-commands)
 - **Typewriter Effects**: Smooth text animations with prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
 - **Mobile-First UX**: Boot pause for user interaction, keyboard hides after Enter, 2px visible cursor on mobile
@@ -61,9 +61,9 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
 **Terminal Commands** (once loaded):
 - `enter` - Show more projects (15 per page)
-- `1-60` - Open specific project by number
-- `61-65` - Education item by number
-- `66-71` - Volunteer experience by number
+- `1-62` - Open specific project by number
+- `63-67` - Education item by number
+- `68-73` - Volunteer experience by number
 - `email` - Contact email info
 - `education` / `ed` - Education background
 - `volunteer` / `vol` - Volunteer experience
@@ -131,7 +131,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   ├── use-typewriter.ts             # Optimized typewriter effect
 │   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard (blur on Enter)
 ├── lib/                              # Utilities and data
-│   ├── data.ts                       # Portfolio data (60 projects, 5 education, 6 volunteer)
+│   ├── data.ts                       # Portfolio data (62 projects, 5 education, 6 volunteer)
 │   ├── utils.ts                      # Utilities, constants, command types, rendering logic
 │   └── utils.test.ts                 # Utility function tests
 ├── public/                           # Static assets

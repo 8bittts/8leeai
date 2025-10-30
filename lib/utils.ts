@@ -96,9 +96,9 @@ export const ANIMATION_DELAYS = {
 } as const
 
 export const DATA_OFFSETS = {
-  projects: { start: 1, end: 60 },
-  education: { start: 61, end: 65 },
-  volunteer: { start: 66, end: 71 },
+  projects: { start: 1, end: 62 },
+  education: { start: 63, end: 67 },
+  volunteer: { start: 68, end: 73 },
 } as const
 
 export const PROJECTS_PER_PAGE = 15
