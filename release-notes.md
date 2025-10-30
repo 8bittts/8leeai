@@ -17,6 +17,41 @@ If you are asked to update this file, follow these rules:
 
 ---
 
+## October 30, 2025
+
+### Added two new projects to portfolio
+
+**Portfolio expansion with mobile and enterprise projects:**
+
+- Added **Shibuyaaa** • Mobile Music Creation App as newest project (#1)
+- Added **Influur** • Enterprise Marketing AI Platform after Valkyrie AI (#4)
+- Total projects increased from 60 to 62
+
+**Data Updates:**
+- `lib/data.ts`: Added 2 new project entries with proper formatting
+- Project order: Shibuyaaa (newest), Cascading AI, Valkyrie AI, Influur, dotEARTH...
+
+**Documentation Updates:**
+- Updated DATA_OFFSETS in `lib/utils.ts`:
+  - Projects: 1-62 (was 1-60)
+  - Education: 63-67 (was 61-65)
+  - Volunteer: 68-73 (was 66-71)
+- Updated `CLAUDE.md` with new project counts and number ranges
+- Updated `README.md` in 3 locations:
+  - Features section: "62+ projects" (was "60+ projects")
+  - Available Commands: "1-62", "63-67", "68-73"
+  - Project Structure: "62 projects"
+- Updated test comments in `lib/utils.test.ts` to reflect new max project number
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- DATA_OFFSETS ranges remain non-overlapping (critical business rule)
+
+**Files Changed:** 5 files (lib/data.ts, lib/utils.ts, CLAUDE.md, README.md, lib/utils.test.ts, release-notes.md)
+
+---
+
 ## October 22, 2025
 
 ### Package dependency updates (Next.js 16.0.0, Biome 2.2.7, Tailwind v4.1.15, Bun 1.3.1)

@@ -1,5 +1,11 @@
 export const projects = [
   {
+    id: "shibuyaaa",
+    name: "Shibuyaaa • Mobile Music Creation App",
+    url: "",
+    linkWord: "",
+  },
+  {
     id: "cascading-ai",
     name: "Cascading AI (YC23) • AI-native Loan Origination Platform",
     url: "",
@@ -8,6 +14,12 @@ export const projects = [
   {
     id: "valkyrie-ai",
     name: "Valkyrie AI • LLMs + Knowledge Graphs for the DoD",
+    url: "",
+    linkWord: "",
+  },
+  {
+    id: "influur",
+    name: "Influur • Enterprise Marketing AI Platform",
     url: "",
     linkWord: "",
   },

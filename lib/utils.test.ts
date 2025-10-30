@@ -16,12 +16,12 @@ import {
 describe("formatIndex - Consistent numbering for scannable lists", () => {
   test("displays project numbers in consistent width for visual scanning", () => {
     // Intent: Users can quickly scan numbered lists when numbers align vertically
-    // Single-digit projects (1-9) need padding to match double-digit format (10-60)
+    // Single-digit projects (1-9) need padding to match double-digit format (10-62)
     expect(formatIndex(0)).toBe("01") // Project 1 displays as "01"
     expect(formatIndex(5)).toBe("06") // Project 6 displays as "06"
     expect(formatIndex(9)).toBe("10") // Project 10 displays as "10"
     expect(formatIndex(10)).toBe("11") // Project 11 displays as "11"
-    expect(formatIndex(59)).toBe("60") // Project 60 displays as "60"
+    expect(formatIndex(61)).toBe("62") // Project 62 displays as "62"
   })
 })
 
