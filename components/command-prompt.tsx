@@ -4,12 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
-import {
-  COMMAND_DISPLAY_LIST,
-  DATA_OFFSETS,
-  openExternalLink,
-  PROJECTS_PER_PAGE,
-} from "@/lib/utils"
+import { DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
@@ -207,19 +202,18 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         {showHelp && (
           <section className="mb-8" aria-label="Available Commands">
             <h2 className="text-xl font-bold mb-4">Available Commands</h2>
-            <div className="text-sm space-y-2">
-              <p>• Press Enter — Load more projects (15 per page)</p>
-              <p>• Type 1-62 — Open specific project by number</p>
-              <p>• Type 63-67 — Open education entry by number</p>
-              <p>• Type 68-73 — Open volunteer entry by number</p>
-              <div className="mt-4">
-                <p className="font-bold mb-2">Commands:</p>
-                <ul className="space-y-1 ml-4">
-                  {COMMAND_DISPLAY_LIST.map((cmd) => (
-                    <li key={cmd}>• {cmd}</li>
-                  ))}
-                </ul>
-              </div>
+            <div className="text-sm space-y-1">
+              <p>• enter · Load more projects (15 per page)</p>
+              <p>• email · Eight's email address</p>
+              <p>• help · Show this help screen</p>
+              <p>• education (ed) · Education background</p>
+              <p>• volunteer (vol) · Volunteer experience</p>
+              <p>• github · Link to this project</p>
+              <p>• wellfound · Eight's Wellfound profile</p>
+              <p>• linkedin (li) · Eight's LinkedIn profile</p>
+              <p>• x · Eight's X/Twitter profile</p>
+              <p>• deathnote · deathnote.ai website</p>
+              <p>• clear · Reset terminal</p>
             </div>
           </section>
         )}
