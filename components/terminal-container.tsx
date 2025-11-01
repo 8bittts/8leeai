@@ -67,6 +67,28 @@ export function TerminalContainer() {
     }
   }, [])
 
+  // Keyboard shortcuts for clear (Ctrl+L / Cmd+K)
+  useEffect(() => {
+    if (!bootComplete) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check if target is an input to avoid interfering with typing
+      const target = e.target as HTMLElement
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+        return
+      }
+
+      // Ctrl+L (standard terminal clear) or Cmd+K (macOS terminal clear)
+      if ((e.ctrlKey || e.metaKey) && (e.key === "l" || e.key === "k")) {
+        e.preventDefault()
+        clearToStart()
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [bootComplete, clearToStart])
+
   return (
     <div
       className={`h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse bg-red-900/20" : ""} transition-colors duration-150`}

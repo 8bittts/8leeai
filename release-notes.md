@@ -31,20 +31,21 @@ If you are asked to update this file, follow these rules:
 **Implementation:**
 - Added `"help"` to `VALID_COMMANDS` and `COMMAND_DISPLAY_LIST` in `lib/utils.ts`
 - Created help command handler in `command-prompt.tsx` with dedicated Help Section
-- Help section displays:
-  - Instructions for pressing Enter (load more projects)
-  - Project numbers (1-62)
-  - Education numbers (63-67)
-  - Volunteer numbers (68-73)
-  - Complete list of all available commands
+- Designed compact, space-efficient help display:
+  - Single header: "Available Commands"
+  - Inline descriptions using middot (·) separator
+  - Format: `• command · Description` (e.g., `• email · Eight's email address`)
+  - Tighter vertical spacing with `space-y-1`
+  - Removed redundant number range instructions
 - Updated placeholder text: `Hit "return" for more projects, "help" for all commands`
 - Simplified command instructions to: `Commands: email, help, clear`
 
 **User Experience:**
 - **Before**: Long placeholder text with all commands listed below prompt (cluttered)
 - **After**: Clean interface with `help` command for full command discovery
-- Help command behaves like other info commands (email, education, volunteer)
-- Type `help` to see comprehensive command reference
+- Help screen uses compact single-column format with descriptions
+- Every command shows inline explanation (e.g., `github · Link to this project`)
+- More scannable and space-efficient than previous multi-section layout
 - Essential commands still visible below prompt for quick reference
 
 **Impact:**
@@ -54,8 +55,8 @@ If you are asked to update this file, follow these rules:
 - Professional terminal behavior matching standard CLI conventions
 
 **Verification:**
-- All 32 tests passed with 99 assertions
-- Biome linting passed with no issues
+- All 32 tests passed with 97 assertions
+- Biome linting passed (removed unused import)
 
 **Files Changed:** 2 files (lib/utils.ts, components/command-prompt.tsx)
 
