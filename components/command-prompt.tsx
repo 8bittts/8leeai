@@ -43,6 +43,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showEducation, setShowEducation] = useState(false)
     const [showVolunteer, setShowVolunteer] = useState(false)
     const [showEmail, setShowEmail] = useState(false)
+    const [showHelp, setShowHelp] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
@@ -76,6 +77,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setShowEducation(false)
         setShowVolunteer(false)
         setShowEmail(false)
+        setShowHelp(false)
         clearToStart()
         setStatusMessage("Terminal cleared")
         return true
@@ -84,8 +86,18 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setShowEmail(true)
         setShowEducation(false)
         setShowVolunteer(false)
+        setShowHelp(false)
         setCommand("")
         setStatusMessage("Contact email displayed")
+        return true
+      }
+      if (cmdLower === "help") {
+        setShowHelp(true)
+        setShowEmail(false)
+        setShowEducation(false)
+        setShowVolunteer(false)
+        setCommand("")
+        setStatusMessage("Available commands displayed")
         return true
       }
       return false
@@ -191,6 +203,27 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
     return (
       <>
+        {/* Help Section */}
+        {showHelp && (
+          <section className="mb-8" aria-label="Available Commands">
+            <h2 className="text-xl font-bold mb-4">Available Commands</h2>
+            <div className="text-sm space-y-2">
+              <p>• Press Enter — Load more projects (15 per page)</p>
+              <p>• Type 1-62 — Open specific project by number</p>
+              <p>• Type 63-67 — Open education entry by number</p>
+              <p>• Type 68-73 — Open volunteer entry by number</p>
+              <div className="mt-4">
+                <p className="font-bold mb-2">Commands:</p>
+                <ul className="space-y-1 ml-4">
+                  {COMMAND_DISPLAY_LIST.map((cmd) => (
+                    <li key={cmd}>• {cmd}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Email Section */}
         {showEmail && (
           <section className="mb-8" aria-label="Contact Email">
@@ -238,7 +271,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               type="text"
               inputMode="text"
               className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
-              placeholder="Load more (enter), open project (e.g. '01'), or commands below"
+              placeholder='Hit "return" for more projects, "help" for all commands'
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
@@ -249,7 +282,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             />
           </form>
           <p id="command-instructions" className="text-xs text-gray-500 mt-2">
-            Commands: {COMMAND_DISPLAY_LIST.join(", ")}
+            Commands: email, help, clear
           </p>
         </nav>
 

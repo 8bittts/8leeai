@@ -19,6 +19,84 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### Help command and streamlined command prompt interface
+
+**Improved command discoverability with cleaner UI:**
+
+**Feature Overview:**
+- Added new `help` command that displays all available commands and usage instructions
+- Streamlined command prompt interface with concise placeholder and minimal instructions
+- Users can now discover all commands without cluttering the interface
+
+**Implementation:**
+- Added `"help"` to `VALID_COMMANDS` and `COMMAND_DISPLAY_LIST` in `lib/utils.ts`
+- Created help command handler in `command-prompt.tsx` with dedicated Help Section
+- Help section displays:
+  - Instructions for pressing Enter (load more projects)
+  - Project numbers (1-62)
+  - Education numbers (63-67)
+  - Volunteer numbers (68-73)
+  - Complete list of all available commands
+- Updated placeholder text: `Hit "return" for more projects, "help" for all commands`
+- Simplified command instructions to: `Commands: email, help, clear`
+
+**User Experience:**
+- **Before**: Long placeholder text with all commands listed below prompt (cluttered)
+- **After**: Clean interface with `help` command for full command discovery
+- Help command behaves like other info commands (email, education, volunteer)
+- Type `help` to see comprehensive command reference
+- Essential commands still visible below prompt for quick reference
+
+**Impact:**
+- Cleaner, less overwhelming interface for new users
+- Better command discoverability through dedicated help section
+- Reduced visual clutter while maintaining accessibility
+- Professional terminal behavior matching standard CLI conventions
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+
+**Files Changed:** 2 files (lib/utils.ts, components/command-prompt.tsx)
+
+---
+
+### Automatic cursor focus after boot sequence
+
+**Enhanced user experience with immediate input readiness:**
+
+**Feature Overview:**
+- Command prompt input now automatically focuses after boot sequence completes
+- Cursor is ready for user input without requiring manual click or tap
+- Eliminates extra interaction step between boot and typing commands
+
+**Implementation:**
+- Added `useEffect` hook in `command-prompt.tsx` that runs once on mount
+- Automatically calls `inputRef.current?.focus()` when component appears
+- Works seamlessly on both desktop and mobile devices
+- Maintains existing keyboard suppression behavior on mobile (keyboard hides after Enter)
+
+**User Experience:**
+1. Boot sequence completes and displays `$:` prompt
+2. Content and command prompt appear
+3. Input is immediately focused and ready for typing
+4. User can start typing commands without additional click/tap
+
+**Impact:**
+- Smoother transition from boot to interactive terminal
+- Reduces friction in user interaction flow
+- Natural terminal behavior where cursor is always ready
+- Preserves all existing mobile keyboard management features
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- Focus management works correctly with existing ref API
+
+**Files Changed:** 1 file (components/command-prompt.tsx)
+
+---
+
 ### Next.js 16 proxy migration - deprecated middleware replaced
 
 **Migrated from deprecated middleware.ts to new proxy.ts convention for Next.js 16:**

@@ -106,6 +106,7 @@ export const PROJECTS_PER_PAGE = 15
 // Valid terminal commands with strict typing
 export const VALID_COMMANDS = [
   "email",
+  "help",
   "education",
   "ed",
   "volunteer",
@@ -132,6 +133,7 @@ export function isValidCommand(cmd: string): cmd is Command {
 // Formatted command list for display (groups aliases with main commands)
 export const COMMAND_DISPLAY_LIST = [
   "email",
+  "help",
   "education (ed)",
   "volunteer (vol)",
   "github",

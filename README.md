@@ -27,12 +27,12 @@ See [Security](#security) section below for implementation details.
 
 ## Features
 
-- **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop)
+- **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop), automatic input focus after boot
 - **Matrix Background Effect**: Subtle falling characters on mobile using `requestAnimationFrame`
 - **Interactive Commands**: 62+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`) - see [Available Commands](#available-commands)
 - **Typewriter Effects**: Smooth text animations with prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
-- **Mobile-First UX**: Boot pause for user interaction, keyboard hides after Enter, 2px visible cursor on mobile
+- **Mobile-First UX**: Boot pause for user interaction, automatic cursor focus, keyboard hides after Enter, 2px visible cursor on mobile
 - **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links
