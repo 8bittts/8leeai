@@ -28,7 +28,7 @@ const ALLOWED_ORIGINS = [
   "https://8leeai-git-main-death-note.vercel.app",
 ]
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Legacy URL redirect strategy: Redirect semantic-looking 404s to homepage

@@ -17,6 +17,60 @@ If you are asked to update this file, follow these rules:
 
 ---
 
+## November 1, 2025
+
+### Next.js 16 proxy migration - deprecated middleware replaced
+
+**Migrated from deprecated middleware.ts to new proxy.ts convention for Next.js 16:**
+
+**Migration Steps:**
+- Renamed `middleware.ts` → `proxy.ts` (Next.js 16 naming convention)
+- Updated function export from `middleware()` → `proxy()` (API requirement)
+- Updated all documentation references in CLAUDE.md
+- Verified build completes without deprecation warnings
+
+**Why This Matters:**
+- Next.js 16 deprecated the "middleware" convention in favor of "proxy"
+- New naming clarifies network boundary and runtime behavior
+- Prevents confusion with Express.js middleware patterns
+- Aligns with Next.js team's recommended architecture
+- Eliminates build warning: "middleware file convention is deprecated"
+
+**Technical Details:**
+- Same security headers and logic (CSP, CORS, HSTS, XSS, Permissions Policy)
+- Same redirect strategy for legacy URLs and semantic 404s
+- Function signature unchanged: `proxy(request: NextRequest)`
+- Config matcher unchanged: `/:path*`
+
+**Files Changed:** 3 files (middleware.ts → proxy.ts, CLAUDE.md, release-notes.md)
+
+---
+
+### Package monitor auto-cleanup - intelligent .md file management
+
+**Enhanced package monitor script with automatic cleanup of generated plan files:**
+
+**Automatic Cleanup Logic:**
+- **Simple/Safe Updates**: Auto-removes `.md` file after routine updates (no manual review needed)
+- **Complex Updates** (CAUTION/URGENT): Preserves `.md` file when breaking changes or security updates require review
+- **All Up-to-Date**: Cleans up old plan files when all packages are current
+
+**Implementation:**
+- `saveActionPlan()` returns `{ filename, keepFile }` with intelligent decision logic
+- `cleanupPlanFile()` removes files for simple updates with user-friendly console output
+- `cleanupOldPlans()` removes stale plan files when everything is up-to-date
+- Conditional cleanup in `checkPackageUpdates()` based on update complexity
+
+**User Experience:**
+- Reduces file clutter - only see `.md` files when you need them
+- Clear console messages explain cleanup actions
+- Breaking changes database still guides CAUTION/URGENT classifications
+- Documentation updated in CLAUDE.md and script header
+
+**Files Changed:** 2 files (scripts/package-monitor.js, CLAUDE.md)
+
+---
+
 ## October 31, 2025
 
 ### Package version verification - all packages at latest stable releases
