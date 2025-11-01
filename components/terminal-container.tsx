@@ -72,13 +72,8 @@ export function TerminalContainer() {
     if (!bootComplete) return
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Check if target is an input to avoid interfering with typing
-      const target = e.target as HTMLElement
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
-        return
-      }
-
       // Ctrl+L (standard terminal clear) or Cmd+K (macOS terminal clear)
+      // These should work even when input is focused, just like real terminals
       if ((e.ctrlKey || e.metaKey) && (e.key === "l" || e.key === "k")) {
         e.preventDefault()
         clearToStart()
