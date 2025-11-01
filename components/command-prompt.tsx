@@ -211,7 +211,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               <p>• github · Link to this project</p>
               <p>• wellfound · Eight's Wellfound profile</p>
               <p>• linkedin (li) · Eight's LinkedIn profile</p>
-              <p>• x · Eight's X/Twitter profile</p>
+              <p>• x (twitter) · Eight's X/Twitter profile</p>
               <p>• deathnote · deathnote.ai website</p>
               <p>• clear · Reset terminal</p>
             </div>
