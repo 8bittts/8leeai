@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, volunteer } from "@/lib/data"
@@ -47,6 +47,11 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
       useVirtualKeyboardSuppression(inputRef)
+
+    // Auto-focus input on mount (after boot sequence completes)
+    useEffect(() => {
+      inputRef.current?.focus()
+    }, [])
 
     const handleSectionCommand = (cmdLower: string) => {
       if (cmdLower === "education" || cmdLower === "ed") {
