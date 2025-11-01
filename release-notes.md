@@ -19,6 +19,43 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### Keyboard shortcuts for clear (Ctrl+L / Cmd+K)
+
+**Added standard terminal keyboard shortcuts for clearing the screen:**
+
+**Feature Overview:**
+- Implemented `Ctrl+L` (Windows/Linux) and `Cmd+K` (macOS) shortcuts to clear terminal
+- Shortcuts work even when input is focused, matching real terminal behavior
+- Provides familiar muscle-memory experience for terminal users
+
+**Implementation:**
+- Added keyboard event listener in `terminal-container.tsx` with `useEffect` hook
+- Detects `Ctrl+L` or `Cmd+K` key combinations
+- Calls `clearToStart()` to reset terminal state
+- Uses `e.preventDefault()` to override default browser behavior
+- Only activates after boot sequence completes
+- Properly cleans up event listener on component unmount
+
+**User Experience:**
+- Power users can quickly clear terminal with familiar keyboard shortcuts
+- Works regardless of whether input field is focused
+- Matches standard terminal conventions (Ctrl+L for Unix/Linux, Cmd+K for macOS)
+- No interference with normal typing or other keyboard shortcuts
+
+**Impact:**
+- Professional terminal behavior matching real CLI tools
+- Improved workflow efficiency for keyboard-focused users
+- Zero friction - shortcuts "just work" as expected
+- Enhances authenticity of terminal simulation
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+
+**Files Changed:** 1 file (components/terminal-container.tsx)
+
+---
+
 ### Help command and streamlined command prompt interface
 
 **Improved command discoverability with cleaner UI:**
