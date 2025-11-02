@@ -31,7 +31,8 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
 
   useEffect(() => {
     if (visibleProjects > 15) {
-      projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+      // Center alignment prevents last project from being cut off at screen edge (especially helpful on mobile)
+      projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }
   }, [visibleProjects])
 

@@ -4,6 +4,37 @@ This document tracks potential improvements to the terminal portfolio, organized
 
 ---
 
+## ✅ COMPLETED
+
+### 1. Smooth scroll padding (Nov 1, 2025)
+**Impact:** Medium | **Risk:** None | **Time:** 5 min
+
+Changed auto-scroll behavior from `block: "end"` to `block: "center"` so last project isn't cut off at screen edge on mobile.
+
+**Implementation:**
+- Modified `scrollIntoView` in `cv-content.tsx:35`
+- Added clarifying comment explaining mobile UX benefit
+
+**Files modified:**
+- `/components/cv-content.tsx`
+
+---
+
+### 2. Desktop ASCII logo glow (Nov 1, 2025)
+**Impact:** Low | **Risk:** None | **Time:** 5 min
+
+Added subtle green glow effect to top-right ASCII logo for better visibility while maintaining terminal aesthetic.
+
+**Implementation:**
+- Added inline `textShadow: "0 0 10px rgba(34, 197, 94, 0.3)"` style
+- Used rgba(34, 197, 94) to match Tailwind green-500
+- Kept glow very subtle (0.3 opacity)
+
+**Files modified:**
+- `/components/terminal-container.tsx`
+
+---
+
 ## 🟡 MEDIUM (1-2 hours each)
 
 Moderate complexity improvements requiring more implementation time but still low risk.
@@ -28,44 +59,6 @@ Brief "Opening..." message or spinner when link is clicked, especially helpful o
 **Notes:**
 - Provides feedback that action registered
 - Especially useful on slow networks
-
----
-
-#### 2. Smooth scroll padding
-**Impact:** Medium | **Risk:** None | **Time:** 10 min
-
-When loading more projects on mobile, auto-scroll goes to very bottom. Add padding so last project isn't at screen edge.
-
-**Implementation:**
-- In `cv-content.tsx`, adjust `scrollIntoView` behavior
-- Change `block: "end"` to `block: "center"` or `block: "nearest"`
-- Or add invisible padding div below projects
-
-**Files affected:**
-- `/components/cv-content.tsx`
-
-**Notes:**
-- Better mobile reading experience
-- Prevents content being cut off at screen edge
-
----
-
-#### 3. Improve desktop 8 logo visibility
-**Impact:** Low | **Risk:** None | **Time:** 15 min
-
-ASCII logo in top-right is very subtle. Consider adding glow or animation.
-
-**Implementation:**
-- Add subtle text-shadow glow: `text-shadow: 0 0 10px rgba(0, 255, 0, 0.3)`
-- Or add pulse animation on hover
-- Or subtle opacity animation
-
-**Files affected:**
-- `/components/terminal-container.tsx`
-
-**Notes:**
-- Branding enhancement
-- Keep subtle to match terminal aesthetic
 
 ---
 
@@ -114,8 +107,7 @@ High Impact, Low Effort:
 
 Low Impact, Low Effort:
 ┌─────────────────────────────┐
-│ • Smooth scroll padding (2) │
-│ • Desktop logo (3)          │
+│ (All completed)             │
 └─────────────────────────────┘
 ```
 
@@ -150,4 +142,4 @@ For each implemented improvement, verify:
 ---
 
 **Last Updated:** 2025-11-01
-**Document Version:** 1.8
+**Document Version:** 1.9
