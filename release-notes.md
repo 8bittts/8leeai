@@ -19,6 +19,76 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### Completed all improvement opportunities from opps.md
+
+**Closed out opps.md tracking document - all planned improvements completed:**
+
+**Summary:**
+- Completed all low-effort improvements from improvement opportunities list
+- Deleted opps.md file after finishing final items
+- Two improvements completed today, both focused on polish and UX
+
+**Completed Improvements:**
+1. **Smooth scroll padding** (5 min) - Mobile pagination UX enhancement
+2. **Desktop ASCII logo glow** (5 min) - Branding visibility improvement
+
+**Status:**
+- All high-impact, low-effort items: Completed
+- All low-impact, low-effort items: Completed
+- Medium-effort items: Removed from scope (loading indicators)
+- Priority matrix: Empty
+
+**Impact:**
+- Portfolio now has all planned quick-win improvements
+- Focus can shift to new features or maintenance
+- Clean slate for future enhancement tracking
+
+---
+
+### Mobile UX and branding polish
+
+**Enhanced mobile experience and desktop branding with two subtle improvements:**
+
+**Feature Overview:**
+- Improved mobile auto-scroll behavior when paginating through projects
+- Added subtle glow effect to desktop ASCII logo for better visibility
+- Both changes maintain terminal aesthetic while improving usability
+
+**Implementation:**
+
+1. **Smooth Scroll Padding (Mobile UX):**
+   - Changed `scrollIntoView` behavior from `block: "end"` to `block: "center"`
+   - Prevents last project from being cut off at screen edge on mobile
+   - Provides better reading experience with content centered in viewport
+   - File: `components/cv-content.tsx:35`
+
+2. **Desktop ASCII Logo Glow (Branding):**
+   - Added subtle green glow: `textShadow: "0 0 10px rgba(34, 197, 94, 0.3)"`
+   - Uses green-500 color (rgba 34, 197, 94) matching terminal theme
+   - Very subtle 30% opacity maintains terminal aesthetic
+   - Desktop-only enhancement (logo hidden on mobile)
+   - File: `components/terminal-container.tsx:99`
+
+**User Experience:**
+- Mobile: Last project in pagination no longer gets cut off at screen bottom
+- Desktop: ASCII "8" logo in top-right corner slightly more visible with gentle glow
+- Both improvements are subtle and don't break terminal authenticity
+
+**Impact:**
+- Better mobile UX when loading more projects
+- Improved desktop branding visibility
+- Zero risk - purely visual enhancements
+- Total implementation time: ~10 minutes
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- TypeScript strict mode: Zero errors
+
+**Files Changed:** 2 files (components/cv-content.tsx, components/terminal-container.tsx)
+
+---
+
 ### Command alias improvements in status messages
 
 **Enhanced status message clarity by showing full command names instead of aliases:**

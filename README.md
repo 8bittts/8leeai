@@ -27,15 +27,16 @@ See [Security](#security) section below for implementation details.
 
 ## Features
 
-- **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop), automatic input focus after boot
-- **Matrix Background Effect**: Subtle falling characters on mobile using `requestAnimationFrame`
-- **Interactive Commands**: 62+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`) - see [Available Commands](#available-commands)
-- **Typewriter Effects**: Smooth text animations with prefers-reduced-motion support
+- **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop), automatic input focus after boot, keyboard shortcuts (`Ctrl+L`/`Cmd+K` to clear)
+- **Matrix Background Effect**: Battery-optimized falling characters on mobile (13fps) using `requestAnimationFrame`
+- **Interactive Commands**: 62+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`), `random` command for discovery, `help` command - see [Available Commands](#available-commands)
+- **Typewriter Effects**: Smooth text animations with 300ms fade-in transitions and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
-- **Mobile-First UX**: Boot pause for user interaction, automatic cursor focus, keyboard hides after Enter, 2px visible cursor on mobile
-- **Performance Optimized**: `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`
+- **Mobile-First UX**: Optimized auto-scroll centers content in viewport, automatic cursor focus, keyboard hides after Enter, 2px visible cursor
+- **Enhanced Interactivity**: Link hover states with subtle green background, smooth content transitions, polished animations
+- **Performance Optimized**: 13fps Matrix animation for battery life, `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
-- **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links
+- **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links, enhanced affordances
 - **Production Security**: CSP, CORS, HSTS, secure external link handling - see [Security](#security)
 - **Code Quality**: Ultra-aggressive Biome linting (100+ error rules), 32 tests with 99 assertions - see [Testing](#testing)
 
@@ -64,6 +65,8 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `1-62` - Open specific project by number
 - `63-67` - Education item by number
 - `68-73` - Volunteer experience by number
+- `help` - Show all available commands
+- `random` - Open a random project
 - `email` - Contact email info
 - `education` / `ed` - Education background
 - `volunteer` / `vol` - Volunteer experience
@@ -73,6 +76,7 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `x` - X/Twitter profile
 - `deathnote` - deathnote.ai website
 - `clear` - Reset terminal
+- `Ctrl+L` / `Cmd+K` - Keyboard shortcut to clear terminal
 
 **Development Commands** (Bun only):
 ```bash
