@@ -19,7 +19,7 @@ interface DataGridSectionProps {
 
 export function DataGridSection({ title, items, startOffset, ariaLabel }: DataGridSectionProps) {
   return (
-    <section className="mb-8" aria-label={ariaLabel}>
+    <section className="mb-8 animate-fadeIn" aria-label={ariaLabel}>
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
         {items.map((item, index) => (

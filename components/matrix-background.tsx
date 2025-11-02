@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react"
 
 // Matrix animation constants
 const MATRIX_FONT_SIZE = 14
-const MATRIX_UPDATE_INTERVAL = 50 // milliseconds between updates (20fps)
+const MATRIX_UPDATE_INTERVAL = 75 // milliseconds between updates (13fps, reduced from 20fps for better battery life)
 const MATRIX_DROP_RESET_PROBABILITY = 0.975 // Higher = longer drops before reset
 
 export function MatrixBackground() {

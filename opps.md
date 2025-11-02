@@ -4,166 +4,13 @@ This document tracks potential improvements to the terminal portfolio, organized
 
 ---
 
-## 🟢 EASY WINS (15-45 minutes each)
-
-Low effort, high impact improvements that can be implemented quickly with minimal risk.
-
-### Style
-
-#### 1. Reduce Matrix background CPU usage
-**Impact:** Medium | **Risk:** None | **Time:** 2 min
-
-Currently updates at 20fps (50ms interval). Reduce to 10-15fps for better battery life with no visual difference.
-
-**Implementation:**
-- Change `MATRIX_UPDATE_INTERVAL` from `50` to `75` or `100` in `/components/matrix-background.tsx`
-- Test on mobile to verify smoothness
-
-**Files affected:**
-- `/components/matrix-background.tsx`
-
-**Notes:**
-- Significant battery savings on mobile
-- Imperceptible visual difference at 8% opacity
-
----
-
-#### 2. Improve link hover states
-**Impact:** Medium | **Risk:** None | **Time:** 10 min
-
-Current underline-only hover is subtle, especially on mobile.
-
-**Implementation:**
-- Add hover classes to `SecureExternalLink` component
-- Try: `hover:bg-green-500/10 hover:scale-[1.02]`
-- Or: `hover:text-green-400 hover:brightness-125`
-- Keep transitions smooth: `transition-all duration-150`
-
-**Files affected:**
-- `/components/secure-external-link.tsx`
-- Potentially `/components/cv-content.tsx` for inline "chat" button
-
-**Notes:**
-- Better affordance for interactive elements
-- Helps users understand what's clickable
-
----
-
-#### 3. Add subtle transition to project grid
-**Impact:** Low | **Risk:** None | **Time:** 10 min
-
-When new projects load via Enter, they appear instantly. Add fade-in for smoother feel.
-
-**Implementation:**
-- Wrap new projects in container with `animate-fadeIn` class
-- Add Tailwind animation: `@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }`
-- Or use existing Tailwind: `transition-opacity duration-300 ease-in`
-
-**Files affected:**
-- `/components/cv-content.tsx`
-- Potentially `/app/globals.css` for custom animation
-
-**Notes:**
-- Subtle polish
-- Matches typewriter aesthetic
-
----
-
 ## 🟡 MEDIUM (1-2 hours each)
 
 Moderate complexity improvements requiring more implementation time but still low risk.
 
 ### Function
 
-#### 4. Tab autocomplete
-**Impact:** High | **Risk:** Low | **Time:** 90 min
-
-Type first few letters of command, press Tab to complete. Matches standard terminal behavior.
-
-**Implementation:**
-- Add Tab key handler in `command-prompt.tsx`
-- Filter `VALID_COMMANDS` by current input prefix
-- If single match, autocomplete fully
-- If multiple matches, cycle through or show options
-- Handle case sensitivity
-
-**Files affected:**
-- `/components/command-prompt.tsx`
-- `/lib/utils.ts` (helper function for fuzzy matching)
-
-**Notes:**
-- Standard terminal UX
-- Consider showing completion hints below prompt
-
----
-
-#### 5. Download resume command
-**Impact:** High | **Risk:** None | **Time:** 20 min
-
-Add `download` or `resume` command like the existing `bitcoin.pdf` easter egg.
-
-**Implementation:**
-- Add PDF resume file to `/public/` directory
-- Add `"download"` or `"resume"` to `VALID_COMMANDS`
-- Handler opens `/resume.pdf` in new tab
-- Or trigger direct download via `<a>` tag with `download` attribute
-
-**Files affected:**
-- `/lib/utils.ts`
-- `/components/command-prompt.tsx`
-- `/public/resume.pdf` (new file)
-
-**Notes:**
-- Common portfolio feature
-- Could also add to COMMAND_DISPLAY_LIST
-
----
-
-#### 6. Prevent duplicate external link opens
-**Impact:** Medium | **Risk:** None | **Time:** 30 min
-
-If user spams Enter on a project number, multiple tabs open simultaneously.
-
-**Implementation:**
-- Add `isOpening` state to `command-prompt.tsx`
-- Set true when opening link, false after 500ms
-- Disable input or ignore commands while `isOpening === true`
-- Show "Opening..." in status
-
-**Files affected:**
-- `/components/command-prompt.tsx`
-
-**Notes:**
-- Prevents accidental spam
-- Better UX feedback
-
----
-
-#### 7. Search/filter projects
-**Impact:** High | **Risk:** Medium | **Time:** 2 hrs
-
-Type partial name to filter visible projects (e.g., `search ai` shows only AI-related projects).
-
-**Implementation:**
-- Add `"search"` command to `VALID_COMMANDS`
-- Accept argument: `search [term]`
-- Filter `projects` array by name matching
-- Display filtered results in CVContent
-- Add "clear search" mechanism
-
-**Files affected:**
-- `/lib/utils.ts`
-- `/components/command-prompt.tsx`
-- `/components/cv-content.tsx`
-- `/components/terminal-container.tsx` (new state)
-
-**Notes:**
-- Very useful on mobile with 60 projects
-- Consider fuzzy matching library
-
----
-
-#### 8. Audio toggle command
+#### 1. Audio toggle command
 **Impact:** Low | **Risk:** None | **Time:** 20 min
 
 Add `sound on|off` command to control boot audio playback.
@@ -184,7 +31,7 @@ Add `sound on|off` command to control boot audio playback.
 
 ---
 
-#### 9. Command aliases in status messages
+#### 2. Command aliases in status messages
 **Impact:** Low | **Risk:** None | **Time:** 15 min
 
 When user types `li`, show "Opening LinkedIn..." (not "Opening li...").
@@ -206,7 +53,7 @@ When user types `li`, show "Opening LinkedIn..." (not "Opening li...").
 
 ### Style
 
-#### 10. Loading indicator for external links
+#### 3. Loading indicator for external links
 **Impact:** Medium | **Risk:** None | **Time:** 30 min
 
 Brief "Opening..." message or spinner when link is clicked, especially helpful on slower mobile connections.
@@ -227,7 +74,7 @@ Brief "Opening..." message or spinner when link is clicked, especially helpful o
 
 ---
 
-#### 11. Smooth scroll padding
+#### 4. Smooth scroll padding
 **Impact:** Medium | **Risk:** None | **Time:** 10 min
 
 When loading more projects on mobile, auto-scroll goes to very bottom. Add padding so last project isn't at screen edge.
@@ -246,7 +93,7 @@ When loading more projects on mobile, auto-scroll goes to very bottom. Add paddi
 
 ---
 
-#### 12. Improve desktop 8 logo visibility
+#### 5. Improve desktop 8 logo visibility
 **Impact:** Low | **Risk:** None | **Time:** 15 min
 
 ASCII logo in top-right is very subtle. Consider adding glow or animation.
@@ -262,203 +109,6 @@ ASCII logo in top-right is very subtle. Consider adding glow or animation.
 **Notes:**
 - Branding enhancement
 - Keep subtle to match terminal aesthetic
-
----
-
-#### 13. Add section transitions
-**Impact:** Low | **Risk:** None | **Time:** 20 min
-
-When education/volunteer sections appear, fade them in instead of instant display.
-
-**Implementation:**
-- Add animation classes to `DataGridSection` component
-- Use Tailwind: `animate-fadeIn` or `transition-opacity`
-- Match typewriter aesthetic
-
-**Files affected:**
-- `/components/data-grid-section.tsx`
-- Potentially `/app/globals.css`
-
-**Notes:**
-- Matches existing typewriter polish
-- Smooth content transitions
-
----
-
-## 🔴 HARDER (3+ hours each)
-
-Complex improvements requiring significant implementation time. Higher risk of introducing bugs.
-
-### Function
-
-#### 14. Session persistence
-**Impact:** High | **Risk:** Medium | **Time:** 3-4 hrs
-
-Save command history, scroll position, visible projects count to localStorage for session continuity.
-
-**Implementation:**
-- Create localStorage utility for safe read/write
-- Save state on unmount or interval
-- Restore state on mount
-- Handle localStorage quota exceeded
-- Add "clear session" command
-
-**Files affected:**
-- `/components/terminal-container.tsx`
-- `/components/command-prompt.tsx`
-- `/lib/utils.ts` (new localStorage utilities)
-
-**Notes:**
-- Significant UX improvement for returning users
-- Requires careful state serialization
-- Privacy considerations (PII in commands?)
-
----
-
-#### 15. Advanced filtering
-**Impact:** Medium | **Risk:** Medium | **Time:** 4 hrs
-
-Commands like `projects --ai` to filter by keyword, or `projects --recent` for chronological sorting.
-
-**Implementation:**
-- Parse command arguments (build mini CLI parser)
-- Add tags/categories to projects in `/lib/data.ts`
-- Implement filter/sort logic
-- Update display to show filtered results
-- Add "clear filter" command
-
-**Files affected:**
-- `/lib/data.ts` (add metadata)
-- `/lib/utils.ts` (parser + filter logic)
-- `/components/command-prompt.tsx`
-- `/components/cv-content.tsx`
-- `/components/terminal-container.tsx`
-
-**Notes:**
-- Powerful feature for large project list
-- Requires project metadata addition
-- Consider UI for showing active filters
-
----
-
-#### 16. ASCII art easter eggs
-**Impact:** Low | **Risk:** Low | **Time:** 3 hrs
-
-Show ASCII art for certain commands or milestones (all projects loaded, Konami code, etc.).
-
-**Implementation:**
-- Create ASCII art library in `/lib/ascii-art.ts`
-- Add special commands or triggers
-- Display in terminal output area
-- Ensure responsive (width consideration)
-
-**Files affected:**
-- `/lib/ascii-art.ts` (new file)
-- `/components/command-prompt.tsx`
-- `/components/cv-content.tsx` (display area)
-
-**Notes:**
-- Fun personality addition
-- Art creation is time-consuming
-- Must work on mobile widths
-
----
-
-#### 17. Konami code easter egg
-**Impact:** Low | **Risk:** Low | **Time:** 2 hrs
-
-Trigger special animation or content with keyboard sequence (↑↑↓↓←→←→BA).
-
-**Implementation:**
-- Add global keyboard listener tracking sequence
-- Detect Konami code pattern
-- Trigger special effect (Matrix rain goes crazy, secret project unlocks, etc.)
-- Reset after timeout
-
-**Files affected:**
-- `/components/terminal-container.tsx`
-- `/components/matrix-background.tsx` (for effects)
-
-**Notes:**
-- Classic easter egg
-- Fun personality touch
-- Popular portfolio feature
-
----
-
-### Style
-
-#### 18. Terminal themes
-**Impact:** Medium | **Risk:** High | **Time:** 4 hrs
-
-Light mode or alternate color schemes via command (e.g., `theme amber`, `theme light`).
-
-**Implementation:**
-- Convert hardcoded colors to CSS variables
-- Create theme objects with color mappings
-- Add `theme` command with options
-- Store preference in localStorage
-- Update all components to use variables
-
-**Files affected:**
-- `/app/globals.css` (CSS variables)
-- All component files (color class updates)
-- `/components/command-prompt.tsx` (theme command)
-- `/lib/utils.ts` (theme constants)
-
-**Notes:**
-- Significant refactor required
-- Risk of breaking accessibility (contrast ratios)
-- Must test all color combinations for WCAG AA
-
----
-
-#### 19. Typewriter speed control
-**Impact:** Low | **Risk:** Medium | **Time:** 2 hrs
-
-Let users adjust typing speed with command (e.g., `speed fast`, `speed slow`).
-
-**Implementation:**
-- Add speed preference state
-- Update `ANIMATION_DELAYS.typewriter` constant
-- Add `speed` command with presets
-- Store preference in localStorage
-- Pass to all typewriter hooks
-
-**Files affected:**
-- `/lib/utils.ts`
-- `/hooks/use-typewriter.ts`
-- `/components/terminal-container.tsx`
-- `/components/command-prompt.tsx`
-
-**Notes:**
-- Accessibility feature (some prefer no animation)
-- Requires refactoring constants to state
-- Consider prefers-reduced-motion as default
-
----
-
-#### 20. Particle effects
-**Impact:** Low | **Risk:** Medium | **Time:** 4 hrs
-
-Add subtle particle effects on certain actions (command execution, project open, link click).
-
-**Implementation:**
-- Create particle system with canvas or CSS
-- Trigger on specific actions
-- Keep subtle (terminal aesthetic)
-- Performance test on mobile
-- Add disable option
-
-**Files affected:**
-- `/components/particle-effect.tsx` (new file)
-- `/components/terminal-container.tsx`
-- `/components/command-prompt.tsx`
-
-**Notes:**
-- Eye candy feature
-- Must maintain performance
-- Risk of feeling gimmicky if overdone
 
 ---
 
@@ -497,30 +147,21 @@ Current feedback is clean and functional. If improving, option #1 (inline error 
 
 ---
 
-## 🎯 EASY WINS TO PRIORITIZE
-
-Based on impact vs. effort, these quick improvements add polish:
-
----
-
 ## Implementation Priority Matrix
 
 ```
-High Impact, Low Effort:          High Impact, High Effort:
-┌─────────────────────────────┐  ┌─────────────────────────────┐
-│ • Matrix FPS reduction (1)  │  │ • Session persistence (14)  │
-│ • Link hover states (2)     │  │ • Search/filter (7)         │
-│                             │  │ • Tab autocomplete (4)      │
-│                             │  │ • Download resume (5)       │
-└─────────────────────────────┘  └─────────────────────────────┘
+High Impact, Low Effort:
+┌─────────────────────────────┐
+│ (No items currently)        │
+└─────────────────────────────┘
 
-Low Impact, Low Effort:           Low Impact, High Effort:
-┌─────────────────────────────┐  ┌─────────────────────────────┐
-│ • Project transitions (3)   │  │ • Themes (18)               │
-│ • Alias status msgs (9)     │  │ • Particle effects (20)     │
-│ • Section transitions (13)  │  │ • ASCII art eggs (16)       │
-│                             │  │ • Advanced filtering (15)   │
-└─────────────────────────────┘  └─────────────────────────────┘
+Low Impact, Low Effort:
+┌─────────────────────────────┐
+│ • Audio toggle (1)          │
+│ • Alias status msgs (2)     │
+│ • Smooth scroll padding (4) │
+│ • Desktop logo (5)          │
+└─────────────────────────────┘
 ```
 
 ---
@@ -554,4 +195,4 @@ For each implemented improvement, verify:
 ---
 
 **Last Updated:** 2025-11-01
-**Document Version:** 1.5
+**Document Version:** 1.6
