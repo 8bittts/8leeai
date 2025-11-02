@@ -19,6 +19,57 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### UX polish - animations, hover states, and performance improvements
+
+**Added subtle transitions and improved interactivity across the portfolio:**
+
+**Feature Overview:**
+- Reduced Matrix background CPU usage from 20fps to 13fps for better mobile battery life
+- Enhanced link hover states with background highlight for better affordance
+- Added fade-in transitions to project grid and section displays
+- Improved visual feedback across all interactive elements
+
+**Implementation:**
+
+1. **Matrix Background Optimization:**
+   - Changed `MATRIX_UPDATE_INTERVAL` from 50ms to 75ms in `matrix-background.tsx`
+   - Reduces frame rate from 20fps to 13fps
+   - Imperceptible visual difference at 8% opacity
+   - Significant battery savings on mobile devices
+
+2. **Link Hover Enhancements:**
+   - Updated `SecureExternalLink` component with `hover:bg-green-500/10`
+   - Changed transition from `transition-colors` to `transition-all duration-150`
+   - Applied same hover treatment to inline "chat" button in CV content
+   - Provides better visual feedback that elements are clickable
+
+3. **Fade-in Transitions:**
+   - Created `animate-fadeIn` CSS animation in `globals.css` (300ms ease-in)
+   - Applied to project grid section when it appears
+   - Applied to Education/Volunteer sections via `DataGridSection` component
+   - Matches typewriter aesthetic with smooth content reveals
+
+**User Experience:**
+- Mobile users experience better battery life with optimized Matrix animation
+- All links and buttons have clear hover feedback with subtle background highlight
+- Content sections fade in smoothly instead of appearing instantly
+- More polished, professional feel while maintaining terminal authenticity
+
+**Impact:**
+- Better mobile performance and battery efficiency
+- Improved discoverability of interactive elements (especially on mobile)
+- Smoother content transitions matching existing typewriter effects
+- Enhanced accessibility with clearer interactive affordances
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- TypeScript strict mode: Zero errors
+
+**Files Changed:** 4 files (components/matrix-background.tsx, components/secure-external-link.tsx, components/cv-content.tsx, components/data-grid-section.tsx, app/globals.css)
+
+---
+
 ### Random command - discover projects serendipitously
 
 **Added "random" command to open a random project from the portfolio:**

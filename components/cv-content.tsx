@@ -46,7 +46,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {!isTyping && (
             <button
               type="button"
-              className="underline hover:text-green-400 transition-colors cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+              className="underline hover:text-green-400 hover:bg-green-500/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
               onClick={() => setCommand?.("email")}
               aria-label="Show contact email"
             >
@@ -59,7 +59,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
       </section>
 
       {showProjects && (
-        <section aria-label="Projects">
+        <section aria-label="Projects" className="animate-fadeIn">
           <h2 className="text-xl font-bold mb-4">
             Projects ({visibleProjects} of {projects.length})
           </h2>
