@@ -118,6 +118,7 @@ export const VALID_COMMANDS = [
   "x",
   "twitter",
   "deathnote",
+  "random",
   "clear",
 ] as const
 
