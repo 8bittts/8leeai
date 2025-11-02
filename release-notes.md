@@ -19,6 +19,47 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### Random command - discover projects serendipitously
+
+**Added "random" command to open a random project from the portfolio:**
+
+**Feature Overview:**
+- New `random` command opens a random project in a new tab
+- Only selects from projects with actual URLs (42 projects out of 62 total)
+- Filters out projects with empty URL fields
+- Easter egg-style discovery feature for exploring portfolio
+
+**Implementation:**
+- Added `"random"` to `VALID_COMMANDS` array in `lib/utils.ts`
+- Created handler in `command-prompt.tsx` with smart URL filtering:
+  - Filters projects array to only include entries with non-empty URLs
+  - Randomly selects from filtered array using `Math.random()`
+  - Finds original project number (1-62) for proper routing
+  - Opens via existing `openProject()` function
+- Added to help screen: `• random · Open a random project`
+- Status message shows: "Opening random project [number] in new tab"
+
+**User Experience:**
+- Type `random` (or `/random`) to open a surprise project
+- Great for discovery and exploration of portfolio
+- Prevents landing on projects without links (cleaner UX)
+- Fun, low-stakes way to browse work
+
+**Impact:**
+- Encourages portfolio exploration beyond sequential browsing
+- Easter egg feature adds personality to terminal interface
+- Zero risk - only opens projects with valid URLs
+- Complements existing navigation (numbered access, pagination)
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- TypeScript strict mode: Zero errors (added explicit null check for type safety)
+
+**Files Changed:** 2 files (lib/utils.ts, components/command-prompt.tsx)
+
+---
+
 ### Keyboard shortcuts for clear (Ctrl+L / Cmd+K)
 
 **Added standard terminal keyboard shortcuts for clearing the screen:**
