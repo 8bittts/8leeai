@@ -19,6 +19,53 @@ If you are asked to update this file, follow these rules:
 
 ## November 1, 2025
 
+### Command alias improvements in status messages
+
+**Enhanced status message clarity by showing full command names instead of aliases:**
+
+**Feature Overview:**
+- When users type command aliases like `li`, `ed`, or `vol`, status messages now show full names
+- Example: Typing `li` shows "Opening LinkedIn in new tab" instead of "Opening li in new tab"
+- Improves clarity and professionalism of user feedback
+- Applies to all command aliases across the terminal
+
+**Implementation:**
+- Created `COMMAND_ALIASES` constant in `lib/utils.ts` mapping all aliases to full names
+- Updated `handleSectionCommand()` to use alias lookup for Education/Volunteer
+- Updated `handleExternalLinkCommand()` to use alias lookup for external links
+- Fallback to original command if alias not found (defensive programming)
+
+**Alias Mappings:**
+- `li` / `linkedin` → "LinkedIn"
+- `ed` / `education` → "Education"
+- `vol` / `volunteer` → "Volunteer"
+- `x` / `twitter` → "X/Twitter"
+- `github` → "GitHub"
+- `wellfound` → "Wellfound"
+- `deathnote` → "DeathNote"
+- `random` → "random project"
+
+**User Experience:**
+- More professional and clear feedback messages
+- Users immediately understand what command executed
+- Reduces confusion especially for new visitors
+- Maintains all existing alias functionality
+
+**Impact:**
+- Better UX with clearer communication
+- More polished terminal experience
+- No breaking changes - pure enhancement
+- Minimal code addition (15 lines total)
+
+**Verification:**
+- All 32 tests passed with 99 assertions
+- Biome linting passed with no issues
+- TypeScript strict mode: Zero errors
+
+**Files Changed:** 2 files (lib/utils.ts, components/command-prompt.tsx)
+
+---
+
 ### UX polish - animations, hover states, and performance improvements
 
 **Added subtle transitions and improved interactivity across the portfolio:**

@@ -8,52 +8,9 @@ This document tracks potential improvements to the terminal portfolio, organized
 
 Moderate complexity improvements requiring more implementation time but still low risk.
 
-### Function
-
-#### 1. Audio toggle command
-**Impact:** Low | **Risk:** None | **Time:** 20 min
-
-Add `sound on|off` command to control boot audio playback.
-
-**Implementation:**
-- Add audio preference state in `terminal-container.tsx`
-- Store in localStorage
-- Add `"sound"` command accepting `on`/`off` args
-- Check preference before playing audio in `handleBootComplete()`
-
-**Files affected:**
-- `/components/terminal-container.tsx`
-- `/components/command-prompt.tsx`
-
-**Notes:**
-- Accessibility consideration
-- Some users find auto-play jarring
-
----
-
-#### 2. Command aliases in status messages
-**Impact:** Low | **Risk:** None | **Time:** 15 min
-
-When user types `li`, show "Opening LinkedIn..." (not "Opening li...").
-
-**Implementation:**
-- Create mapping object: `{ li: 'LinkedIn', ed: 'Education', vol: 'Volunteer' }`
-- In status message, resolve alias to full name
-- Improves clarity of feedback
-
-**Files affected:**
-- `/components/command-prompt.tsx`
-- `/lib/utils.ts` (add COMMAND_ALIASES constant)
-
-**Notes:**
-- Better UX feedback
-- Minimal code change
-
----
-
 ### Style
 
-#### 3. Loading indicator for external links
+#### 1. Loading indicator for external links
 **Impact:** Medium | **Risk:** None | **Time:** 30 min
 
 Brief "Opening..." message or spinner when link is clicked, especially helpful on slower mobile connections.
@@ -74,7 +31,7 @@ Brief "Opening..." message or spinner when link is clicked, especially helpful o
 
 ---
 
-#### 4. Smooth scroll padding
+#### 2. Smooth scroll padding
 **Impact:** Medium | **Risk:** None | **Time:** 10 min
 
 When loading more projects on mobile, auto-scroll goes to very bottom. Add padding so last project isn't at screen edge.
@@ -93,7 +50,7 @@ When loading more projects on mobile, auto-scroll goes to very bottom. Add paddi
 
 ---
 
-#### 5. Improve desktop 8 logo visibility
+#### 3. Improve desktop 8 logo visibility
 **Impact:** Low | **Risk:** None | **Time:** 15 min
 
 ASCII logo in top-right is very subtle. Consider adding glow or animation.
@@ -157,10 +114,8 @@ High Impact, Low Effort:
 
 Low Impact, Low Effort:
 ┌─────────────────────────────┐
-│ • Audio toggle (1)          │
-│ • Alias status msgs (2)     │
-│ • Smooth scroll padding (4) │
-│ • Desktop logo (5)          │
+│ • Smooth scroll padding (2) │
+│ • Desktop logo (3)          │
 └─────────────────────────────┘
 ```
 
@@ -195,4 +150,4 @@ For each implemented improvement, verify:
 ---
 
 **Last Updated:** 2025-11-01
-**Document Version:** 1.6
+**Document Version:** 1.8

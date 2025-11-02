@@ -144,3 +144,22 @@ export const COMMAND_DISPLAY_LIST = [
   "deathnote",
   "clear",
 ] as const
+
+// Command aliases for better status message feedback
+export const COMMAND_ALIASES: Record<string, string> = {
+  li: "LinkedIn",
+  linkedin: "LinkedIn",
+  ed: "Education",
+  education: "Education",
+  vol: "Volunteer",
+  volunteer: "Volunteer",
+  x: "X/Twitter",
+  twitter: "X/Twitter",
+  github: "GitHub",
+  wellfound: "Wellfound",
+  deathnote: "DeathNote",
+  email: "email",
+  help: "help",
+  clear: "clear",
+  random: "random project",
+} as const
