@@ -12,3 +12,17 @@
 .animate-fadeIn {
   animation: fadeIn 300ms ease-in;
 }
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-logo-pulse {
+  animation: logoPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

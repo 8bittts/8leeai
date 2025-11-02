@@ -93,9 +93,9 @@ export function TerminalContainer() {
         {/* Mobile: Matrix-style background effect */}
         <MatrixBackground />
 
-        {/* Desktop: Small top-right logo with pulsing animation */}
+        {/* Desktop: Small top-right logo with slow pulsing animation (4s cycle) */}
         <div
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20 animate-pulse"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20 animate-logo-pulse"
           role="img"
           aria-label="Eight Lee logo"
         >

@@ -51,7 +51,7 @@ If you are asked to update this file, follow these rules:
 
 **Feature Overview:**
 - Improved mobile auto-scroll behavior when paginating through projects
-- Added subtle glow effect to desktop ASCII logo for better visibility
+- Added slow pulsing animation to desktop ASCII logo for better visibility
 - Both changes maintain terminal aesthetic while improving usability
 
 **Implementation:**
@@ -62,30 +62,33 @@ If you are asked to update this file, follow these rules:
    - Provides better reading experience with content centered in viewport
    - File: `components/cv-content.tsx:35`
 
-2. **Desktop ASCII Logo Glow (Branding):**
-   - Added subtle green glow: `textShadow: "0 0 10px rgba(34, 197, 94, 0.3)"`
-   - Uses green-500 color (rgba 34, 197, 94) matching terminal theme
-   - Very subtle 30% opacity maintains terminal aesthetic
+2. **Desktop ASCII Logo Pulse Animation (Branding):**
+   - Created custom `logoPulse` keyframe animation with 4-second cycle
+   - Pulses between 100% → 50% → 100% opacity for subtle visibility
+   - Uses cubic-bezier easing matching Tailwind's default pulse
+   - Slower than cursor (4s vs 2s) for more relaxed, ambient effect
    - Desktop-only enhancement (logo hidden on mobile)
-   - File: `components/terminal-container.tsx:99`
+   - Files: `app/globals.css`, `components/terminal-container.tsx:98`
 
 **User Experience:**
 - Mobile: Last project in pagination no longer gets cut off at screen bottom
-- Desktop: ASCII "8" logo in top-right corner slightly more visible with gentle glow
+- Desktop: ASCII "8" logo in top-right corner gently pulses to draw attention
 - Both improvements are subtle and don't break terminal authenticity
+- Animation feels organic and non-intrusive
 
 **Impact:**
 - Better mobile UX when loading more projects
-- Improved desktop branding visibility
+- Improved desktop branding visibility through motion
 - Zero risk - purely visual enhancements
-- Total implementation time: ~10 minutes
+- CSS-based animation (no JS overhead)
+- Total implementation time: ~15 minutes
 
 **Verification:**
 - All 32 tests passed with 99 assertions
 - Biome linting passed with no issues
 - TypeScript strict mode: Zero errors
 
-**Files Changed:** 2 files (components/cv-content.tsx, components/terminal-container.tsx)
+**Files Changed:** 3 files (components/cv-content.tsx, components/terminal-container.tsx, app/globals.css)
 
 ---
 
