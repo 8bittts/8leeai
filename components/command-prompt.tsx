@@ -3,7 +3,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
-import { education, volunteer } from "@/lib/data"
+import { education, projects, volunteer } from "@/lib/data"
 import { DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 interface CommandPromptProps {
@@ -93,6 +93,23 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setShowVolunteer(false)
         setCommand("")
         setStatusMessage("Available commands displayed")
+        return true
+      }
+      if (cmdLower === "random") {
+        // Filter projects that have actual URLs (not empty strings)
+        const projectsWithUrls = projects.filter((p) => p.url && p.url.trim() !== "")
+        if (projectsWithUrls.length > 0) {
+          const randomProject =
+            projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
+          // TypeScript narrowing: randomProject is guaranteed to exist due to length check above
+          if (randomProject) {
+            // Find the project number (1-based index in original projects array)
+            const projectNumber = projects.findIndex((p) => p.id === randomProject.id) + 1
+            openProject(projectNumber)
+            setStatusMessage(`Opening random project ${projectNumber} in new tab`)
+          }
+        }
+        setCommand("")
         return true
       }
       return false
@@ -213,6 +230,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               <p>• linkedin (li) · Eight's LinkedIn profile</p>
               <p>• twitter/x · Eight's X/Twitter profile</p>
               <p>• deathnote · deathnote.ai website</p>
+              <p>• random · Open a random project</p>
               <p>• clear · Reset terminal</p>
             </div>
           </section>
