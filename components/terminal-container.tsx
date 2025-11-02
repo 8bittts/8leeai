@@ -93,9 +93,10 @@ export function TerminalContainer() {
         {/* Mobile: Matrix-style background effect */}
         <MatrixBackground />
 
-        {/* Desktop: Small top-right logo */}
+        {/* Desktop: Small top-right logo with subtle glow */}
         <div
           className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20"
+          style={{ textShadow: "0 0 10px rgba(34, 197, 94, 0.3)" }}
           role="img"
           aria-label="Eight Lee logo"
         >
