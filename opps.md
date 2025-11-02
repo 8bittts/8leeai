@@ -8,31 +8,9 @@ This document tracks potential improvements to the terminal portfolio, organized
 
 Low effort, high impact improvements that can be implemented quickly with minimal risk.
 
-### Function
-
-#### 1. Add "random" command
-**Impact:** Low | **Risk:** None | **Time:** 5 min
-
-Fun feature to open a random project from the portfolio.
-
-**Implementation:**
-- Add `"random"` to `VALID_COMMANDS` in `/lib/utils.ts`
-- Add handler: `openProject(Math.floor(Math.random() * 60) + 1)`
-- Set status: "Opening random project..."
-
-**Files affected:**
-- `/lib/utils.ts`
-- `/components/command-prompt.tsx`
-
-**Notes:**
-- Easter egg style feature
-- Good for discovery
-
----
-
 ### Style
 
-#### 2. Reduce Matrix background CPU usage
+#### 1. Reduce Matrix background CPU usage
 **Impact:** Medium | **Risk:** None | **Time:** 2 min
 
 Currently updates at 20fps (50ms interval). Reduce to 10-15fps for better battery life with no visual difference.
@@ -50,7 +28,7 @@ Currently updates at 20fps (50ms interval). Reduce to 10-15fps for better batter
 
 ---
 
-#### 3. Improve link hover states
+#### 2. Improve link hover states
 **Impact:** Medium | **Risk:** None | **Time:** 10 min
 
 Current underline-only hover is subtle, especially on mobile.
@@ -71,7 +49,7 @@ Current underline-only hover is subtle, especially on mobile.
 
 ---
 
-#### 4. Add subtle transition to project grid
+#### 3. Add subtle transition to project grid
 **Impact:** Low | **Risk:** None | **Time:** 10 min
 
 When new projects load via Enter, they appear instantly. Add fade-in for smoother feel.
@@ -97,7 +75,7 @@ Moderate complexity improvements requiring more implementation time but still lo
 
 ### Function
 
-#### 5. Tab autocomplete
+#### 4. Tab autocomplete
 **Impact:** High | **Risk:** Low | **Time:** 90 min
 
 Type first few letters of command, press Tab to complete. Matches standard terminal behavior.
@@ -119,7 +97,7 @@ Type first few letters of command, press Tab to complete. Matches standard termi
 
 ---
 
-#### 6. Download resume command
+#### 5. Download resume command
 **Impact:** High | **Risk:** None | **Time:** 20 min
 
 Add `download` or `resume` command like the existing `bitcoin.pdf` easter egg.
@@ -141,7 +119,7 @@ Add `download` or `resume` command like the existing `bitcoin.pdf` easter egg.
 
 ---
 
-#### 7. Prevent duplicate external link opens
+#### 6. Prevent duplicate external link opens
 **Impact:** Medium | **Risk:** None | **Time:** 30 min
 
 If user spams Enter on a project number, multiple tabs open simultaneously.
@@ -161,7 +139,7 @@ If user spams Enter on a project number, multiple tabs open simultaneously.
 
 ---
 
-#### 8. Search/filter projects
+#### 7. Search/filter projects
 **Impact:** High | **Risk:** Medium | **Time:** 2 hrs
 
 Type partial name to filter visible projects (e.g., `search ai` shows only AI-related projects).
@@ -185,7 +163,7 @@ Type partial name to filter visible projects (e.g., `search ai` shows only AI-re
 
 ---
 
-#### 9. Audio toggle command
+#### 8. Audio toggle command
 **Impact:** Low | **Risk:** None | **Time:** 20 min
 
 Add `sound on|off` command to control boot audio playback.
@@ -206,7 +184,7 @@ Add `sound on|off` command to control boot audio playback.
 
 ---
 
-#### 10. Command aliases in status messages
+#### 9. Command aliases in status messages
 **Impact:** Low | **Risk:** None | **Time:** 15 min
 
 When user types `li`, show "Opening LinkedIn..." (not "Opening li...").
@@ -228,7 +206,7 @@ When user types `li`, show "Opening LinkedIn..." (not "Opening li...").
 
 ### Style
 
-#### 11. Loading indicator for external links
+#### 10. Loading indicator for external links
 **Impact:** Medium | **Risk:** None | **Time:** 30 min
 
 Brief "Opening..." message or spinner when link is clicked, especially helpful on slower mobile connections.
@@ -249,7 +227,7 @@ Brief "Opening..." message or spinner when link is clicked, especially helpful o
 
 ---
 
-#### 12. Smooth scroll padding
+#### 11. Smooth scroll padding
 **Impact:** Medium | **Risk:** None | **Time:** 10 min
 
 When loading more projects on mobile, auto-scroll goes to very bottom. Add padding so last project isn't at screen edge.
@@ -268,7 +246,7 @@ When loading more projects on mobile, auto-scroll goes to very bottom. Add paddi
 
 ---
 
-#### 13. Improve desktop 8 logo visibility
+#### 12. Improve desktop 8 logo visibility
 **Impact:** Low | **Risk:** None | **Time:** 15 min
 
 ASCII logo in top-right is very subtle. Consider adding glow or animation.
@@ -287,7 +265,7 @@ ASCII logo in top-right is very subtle. Consider adding glow or animation.
 
 ---
 
-#### 14. Add section transitions
+#### 13. Add section transitions
 **Impact:** Low | **Risk:** None | **Time:** 20 min
 
 When education/volunteer sections appear, fade them in instead of instant display.
@@ -313,7 +291,7 @@ Complex improvements requiring significant implementation time. Higher risk of i
 
 ### Function
 
-#### 15. Session persistence
+#### 14. Session persistence
 **Impact:** High | **Risk:** Medium | **Time:** 3-4 hrs
 
 Save command history, scroll position, visible projects count to localStorage for session continuity.
@@ -337,7 +315,7 @@ Save command history, scroll position, visible projects count to localStorage fo
 
 ---
 
-#### 16. Advanced filtering
+#### 15. Advanced filtering
 **Impact:** Medium | **Risk:** Medium | **Time:** 4 hrs
 
 Commands like `projects --ai` to filter by keyword, or `projects --recent` for chronological sorting.
@@ -363,7 +341,7 @@ Commands like `projects --ai` to filter by keyword, or `projects --recent` for c
 
 ---
 
-#### 17. ASCII art easter eggs
+#### 16. ASCII art easter eggs
 **Impact:** Low | **Risk:** Low | **Time:** 3 hrs
 
 Show ASCII art for certain commands or milestones (all projects loaded, Konami code, etc.).
@@ -386,7 +364,7 @@ Show ASCII art for certain commands or milestones (all projects loaded, Konami c
 
 ---
 
-#### 18. Konami code easter egg
+#### 17. Konami code easter egg
 **Impact:** Low | **Risk:** Low | **Time:** 2 hrs
 
 Trigger special animation or content with keyboard sequence (↑↑↓↓←→←→BA).
@@ -410,7 +388,7 @@ Trigger special animation or content with keyboard sequence (↑↑↓↓←→�
 
 ### Style
 
-#### 19. Terminal themes
+#### 18. Terminal themes
 **Impact:** Medium | **Risk:** High | **Time:** 4 hrs
 
 Light mode or alternate color schemes via command (e.g., `theme amber`, `theme light`).
@@ -435,7 +413,7 @@ Light mode or alternate color schemes via command (e.g., `theme amber`, `theme l
 
 ---
 
-#### 20. Typewriter speed control
+#### 19. Typewriter speed control
 **Impact:** Low | **Risk:** Medium | **Time:** 2 hrs
 
 Let users adjust typing speed with command (e.g., `speed fast`, `speed slow`).
@@ -460,7 +438,7 @@ Let users adjust typing speed with command (e.g., `speed fast`, `speed slow`).
 
 ---
 
-#### 21. Particle effects
+#### 20. Particle effects
 **Impact:** Low | **Risk:** Medium | **Time:** 4 hrs
 
 Add subtle particle effects on certain actions (command execution, project open, link click).
@@ -530,18 +508,18 @@ Based on impact vs. effort, these quick improvements add polish:
 ```
 High Impact, Low Effort:          High Impact, High Effort:
 ┌─────────────────────────────┐  ┌─────────────────────────────┐
-│ • Matrix FPS reduction (1.2)│  │ • Session persistence (1.15)│
-│ • Link hover states (1.3)   │  │ • Search/filter (1.8)       │
-│                             │  │ • Tab autocomplete (1.5)    │
-│                             │  │ • Download resume (1.6)     │
+│ • Matrix FPS reduction (1)  │  │ • Session persistence (14)  │
+│ • Link hover states (2)     │  │ • Search/filter (7)         │
+│                             │  │ • Tab autocomplete (4)      │
+│                             │  │ • Download resume (5)       │
 └─────────────────────────────┘  └─────────────────────────────┘
 
 Low Impact, Low Effort:           Low Impact, High Effort:
 ┌─────────────────────────────┐  ┌─────────────────────────────┐
-│ • Random command (1.1)      │  │ • Themes (1.19)             │
-│ • Project transitions (1.4) │  │ • Particle effects (1.21)   │
-│ • Alias status msgs (1.10)  │  │ • ASCII art eggs (1.17)     │
-│ • Section transitions (1.14)│  │ • Advanced filtering (1.16) │
+│ • Project transitions (3)   │  │ • Themes (18)               │
+│ • Alias status msgs (9)     │  │ • Particle effects (20)     │
+│ • Section transitions (13)  │  │ • ASCII art eggs (16)       │
+│                             │  │ • Advanced filtering (15)   │
 └─────────────────────────────┘  └─────────────────────────────┘
 ```
 
@@ -576,4 +554,4 @@ For each implemented improvement, verify:
 ---
 
 **Last Updated:** 2025-11-01
-**Document Version:** 1.4
+**Document Version:** 1.5
