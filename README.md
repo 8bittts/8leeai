@@ -34,7 +34,7 @@ See [Security](#security) section below for implementation details.
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
 - **Mobile-First UX**: Optimized auto-scroll centers content in viewport, automatic cursor focus, keyboard hides after Enter, 2px visible cursor
 - **Enhanced Interactivity**: Link hover states with subtle green background, smooth content transitions, polished animations
-- **Performance Optimized**: 13fps Matrix animation for battery life, `requestAnimationFrame` animations, audio preloading, optimized React hooks with `useRef`
+- **Performance Optimized**: 13fps Matrix animation for battery life, `requestAnimationFrame` animations, CSS-based logo pulse (4s), audio preloading, optimized React hooks with `useRef`
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links, enhanced affordances
 - **Production Security**: CSP, CORS, HSTS, secure external link handling - see [Security](#security)
