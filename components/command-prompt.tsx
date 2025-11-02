@@ -4,7 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
-import { DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
+import { COMMAND_ALIASES, DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
@@ -54,14 +54,14 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setShowEducation(true)
         setShowVolunteer(false)
         setCommand("")
-        setStatusMessage("Education section displayed")
+        setStatusMessage(`${COMMAND_ALIASES[cmdLower]} section displayed`)
         return true
       }
       if (cmdLower === "volunteer" || cmdLower === "vol") {
         setShowVolunteer(true)
         setShowEducation(false)
         setCommand("")
-        setStatusMessage("Volunteer experience section displayed")
+        setStatusMessage(`${COMMAND_ALIASES[cmdLower]} experience section displayed`)
         return true
       }
       return false
@@ -132,7 +132,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       if (isValidLinkKey(cmdLower)) {
         openExternalLink(links[cmdLower])
         setCommand("")
-        setStatusMessage(`Opening ${cmdLower} in new tab`)
+        setStatusMessage(`Opening ${COMMAND_ALIASES[cmdLower] || cmdLower} in new tab`)
         return true
       }
       return false
