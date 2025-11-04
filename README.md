@@ -146,7 +146,11 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ├── scripts/                          # Development utilities
 │   └── package-monitor.js            # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
-├── release-notes.md                  # Comprehensive commit changelog
+├── _docs/                            # Release notes documentation
+│   ├── README.md                     # Documentation structure guide
+│   ├── 2025-november.md              # November 2025 release notes
+│   ├── 2025-october.md               # October 2025 release notes
+│   └── 2025-september.md             # September 2025 release notes
 ├── test-setup.ts                     # Bun test configuration with happy-dom
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
@@ -171,7 +175,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 ## Version History
 
-For detailed commit history and comprehensive changelog, see [release-notes.md](release-notes.md).
+For detailed commit history and comprehensive changelog, see the [_docs](_docs/) directory with monthly release notes.
 
 ## Contributing
 
