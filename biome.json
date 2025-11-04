@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.7/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.3/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -115,7 +115,8 @@
         "useShorthandAssign": "error",
         "useSingleVarDeclarator": "error",
         "useTemplate": "error",
-        "useThrowOnlyError": "error"
+        "useThrowOnlyError": "error",
+        "useConsistentTypeDefinitions": "error"
       },
       "suspicious": {
         "noApproximativeNumericConstant": "error",
@@ -182,17 +183,16 @@
       "security": {
         "noDangerouslySetInnerHtml": "error",
         "noDangerouslySetInnerHtmlWithChildren": "error",
-        "noGlobalEval": "error"
+        "noGlobalEval": "error",
+        "noSecrets": "off"
       },
       "nursery": {
         "noFloatingPromises": "error",
         "noUnusedExpressions": "error",
         "noUselessUndefined": "error",
-        "useConsistentTypeDefinitions": "error",
         "useExhaustiveSwitchCases": "error",
         "noUnnecessaryConditions": "error",
         "noShadow": "error",
-        "noSecrets": "off",
         "useSortedClasses": "off"
       }
     }
