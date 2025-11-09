@@ -15,9 +15,9 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-16.0.1-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.0-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.16-38B2AC)](https://tailwindcss.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.17-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
 [![Bun](https://img.shields.io/badge/Bun-1.3.1-fbf0df)](https://bun.sh)
 
