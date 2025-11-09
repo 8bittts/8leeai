@@ -342,9 +342,11 @@ class PackageMonitorAgent {
     // Handles scoped packages and (dev) suffix
     for (const line of lines) {
       // Match: | package-name (optional (dev)) | current | update | latest |
-      const match = line.match(/^\|\s*(@?[\w-/@.]+)(?:\s+\(dev\))?\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|/)
+      const match = line.match(
+        /^\|\s*(@?[\w-/@.]+)(?:\s+\(dev\))?\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|/
+      )
       if (match) {
-        const [, name, current, update, latest] = match
+        const [, name, current, _update, latest] = match
         // Only add if there's an actual update (latest > current)
         if (latest !== current) {
           updates.push({
