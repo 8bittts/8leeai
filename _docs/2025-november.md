@@ -1,5 +1,47 @@
 # November 2025 Release Notes
 
+## November 9, 2025
+
+### Package monitor overhaul and dependency updates
+
+**Overhauled package monitor script for comprehensive tracking and updated all packages:**
+
+**Critical Bug Fixes:**
+- Fixed parser regex that was using arrow format (→) but bun outdated returns TABLE format
+  - Monitor was matching ZERO packages - always reported "all up to date"
+  - Now correctly parses table rows: `| package | current | update | latest |`
+- Added comprehensive breaking changes database for all 17 packages (was only 8)
+- Fixed priority classification to use EXACT name matching (was using loose includes() that caused false positives)
+
+**Packages Updated:**
+- `@biomejs/biome`: 2.3.3 → 2.3.4 (minor update)
+- `@tailwindcss/postcss`: 4.1.16 → 4.1.17 (patch update)
+- `tailwindcss`: 4.1.16 → 4.1.17 (patch update)
+
+**Packages with Available Updates (Pinned):**
+- `next`: 16.0.0 → 16.0.1 (patch, requires manual update)
+- `happy-dom`: 20.0.8 → 20.0.10 (minor, requires manual update)
+
+**Actions Taken:**
+- Ran `bun update` to update all safe packages
+- Fixed Biome schema version mismatch (2.3.3 → 2.3.4 in biome.json)
+- Fixed unused variable warning in package-monitor.js
+- Verified all tests pass (32 tests, 99 assertions)
+- Verified linting/formatting passes
+- Successfully built production version
+- Updated CLAUDE.md with new version numbers
+- Updated README.md version badges
+
+**Safeguards Added to package-monitor.js:**
+- Comprehensive header comments documenting parser requirements
+- Warning comments on priority classification function (example of previous bug)
+- Database structure documentation with instructions for adding new packages
+- All changes permanently committed to git with detailed commit message
+
+**Files Changed:** package.json, bun.lock, biome.json, scripts/package-monitor.js, CLAUDE.md, README.md, _docs/2025-november.md
+
+---
+
 ## November 4, 2025
 
 ### Release notes reorganization into monthly files
