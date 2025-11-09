@@ -6,6 +6,25 @@
  * Monitors library and package updates, analyzes breaking changes,
  * and provides impact-based recommendations for updates.
  *
+ * CRITICAL IMPLEMENTATION NOTES:
+ * ==============================
+ * 1. Parser (parseBunOutdated):
+ *    - Parses TABLE FORMAT from `bun outdated` command (NOT arrow format)
+ *    - Table columns: | Package | Current | Update | Latest |
+ *    - Must handle scoped packages (@org/pkg) and (dev) suffix
+ *    - Regex: /^\|\s*(@?[\w-/@.]+)(?:\s+\(dev\))?\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|/
+ *    - Only includes updates where latest !== current
+ *
+ * 2. Priority Classification (calculatePriority):
+ *    - MUST use EXACT package name matching, NOT includes()
+ *    - Prevents misclassification (e.g., @testing-library/react as HIGH)
+ *    - Current tiers: HIGH (core), MEDIUM (build-time), LOW (dev-only)
+ *
+ * 3. Breaking Changes Database (loadBreakingChangesDB):
+ *    - MUST include entries for ALL 17 packages in package.json
+ *    - Organized by category: Production Deps, Dev Deps (Build/Style, Linting, Testing, Types)
+ *    - Each entry: { breaking: [...], impact: "high|medium|low", effort: "high|medium|low" }
+ *
  * Automatic cleanup:
  *   - Removes generated .md file after simple/safe updates
  *   - Keeps .md file for complex updates (CAUTION/URGENT) requiring review
@@ -49,8 +68,21 @@ class PackageMonitorAgent {
   }
 
   loadBreakingChangesDB() {
-    // Breaking changes database tailored for 8leeai tech stack
+    // ⚠️ CRITICAL: Breaking Changes Database
+    // =====================================
+    // MUST include ALL 17 packages from package.json (both dependencies & devDependencies)
+    // If new packages are added to package.json, add entries here!
+    // Format: { breaking: [...], impact: "high|medium|low", effort: "high|medium|low" }
+    //
+    // Organized by dependency type:
+    // 1. Production Dependencies (used in runtime)
+    // 2. Dev Dependencies - Build & Style (used during build)
+    // 3. Dev Dependencies - Linting & Format (code quality)
+    // 4. Dev Dependencies - Testing (test infrastructure)
+    // 5. Dev Dependencies - Type Definitions (TypeScript only)
+
     return {
+      // Production Dependencies
       next: {
         "16.0.0": {
           breaking: ["Potential App Router changes", "Node.js version requirements"],
@@ -95,6 +127,22 @@ class PackageMonitorAgent {
           effort: "medium",
         },
       },
+      "@vercel/analytics": {
+        "2.0.0": {
+          breaking: ["API changes", "Configuration updates"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+      "@vercel/speed-insights": {
+        "2.0.0": {
+          breaking: ["API changes", "Configuration updates"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+
+      // Dev Dependencies - Build & Style
       typescript: {
         "6.0.0": {
           breaking: ["Potential compiler changes", "Type inference changes"],
@@ -119,11 +167,44 @@ class PackageMonitorAgent {
           effort: "medium",
         },
       },
+      "@tailwindcss/postcss": {
+        "5.0.0": {
+          breaking: ["Engine changes", "Config format changes"],
+          impact: "high",
+          effort: "medium",
+        },
+        "4.0.0": {
+          breaking: ["New engine integration", "CSS output format"],
+          impact: "medium",
+          effort: "low",
+        },
+      },
+      postcss: {
+        "9.0.0": {
+          breaking: ["Plugin API changes", "Configuration updates"],
+          impact: "medium",
+          effort: "medium",
+        },
+        "8.0.0": {
+          breaking: ["Safe parser removed", "Plugin API updates"],
+          impact: "medium",
+          effort: "low",
+        },
+      },
+      autoprefixer: {
+        "11.0.0": {
+          breaking: ["PostCSS 8 required", "Config format updates"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+
+      // Dev Dependencies - Linting & Format
       "@biomejs/biome": {
         "3.0.0": {
           breaking: ["Config format changes", "Rule changes", "CLI changes"],
           impact: "medium",
-          effort: "low",
+          effort: "medium",
         },
         "2.0.0": {
           breaking: ["Config schema updates", "New rules", "Performance improvements"],
@@ -131,16 +212,58 @@ class PackageMonitorAgent {
           effort: "low",
         },
       },
-      "@vercel/analytics": {
-        "2.0.0": {
-          breaking: ["API changes", "Configuration updates"],
+
+      // Dev Dependencies - Testing
+      "@testing-library/react": {
+        "16.0.0": {
+          breaking: ["React 19 required", "Hook testing changes"],
+          impact: "medium",
+          effort: "low",
+        },
+        "14.0.0": {
+          breaking: ["React 17+ required", "Query API updates"],
+          impact: "medium",
+          effort: "low",
+        },
+      },
+      "@testing-library/jest-dom": {
+        "7.0.0": {
+          breaking: ["Assertion API updates", "Matchers refactoring"],
           impact: "low",
           effort: "low",
         },
       },
-      "@vercel/speed-insights": {
-        "2.0.0": {
-          breaking: ["API changes", "Configuration updates"],
+      "happy-dom": {
+        "13.0.0": {
+          breaking: ["DOM API updates", "Event handling changes"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+
+      // Dev Dependencies - Type Definitions
+      "@types/react": {
+        "20.0.0": {
+          breaking: ["React 19 API changes", "Hook types updated"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+      "@types/react-dom": {
+        "20.0.0": {
+          breaking: ["React 19 API changes", "Portal types updated"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+      "@types/node": {
+        "23.0.0": {
+          breaking: ["Node.js 20+ types", "Removed deprecated APIs"],
+          impact: "low",
+          effort: "low",
+        },
+        "22.0.0": {
+          breaking: ["Node.js 18+ types", "Some APIs deprecated"],
           impact: "low",
           effort: "low",
         },
@@ -214,18 +337,23 @@ class PackageMonitorAgent {
     const updates = []
     const lines = output.split("\n")
 
-    // Parse bun outdated output format
-    // Example: " @biomejs/biome  2.2.5  →  2.2.6"
+    // Parse bun outdated table format
+    // Example table row: "| next                       | 16.0.0  | 16.0.0 | 16.0.1  |"
+    // Handles scoped packages and (dev) suffix
     for (const line of lines) {
-      const match = line.match(/^\s*(@?[\w-/]+)\s+([\d.]+)\s+→\s+([\d.]+)/)
+      // Match: | package-name (optional (dev)) | current | update | latest |
+      const match = line.match(/^\|\s*(@?[\w-/@.]+)(?:\s+\(dev\))?\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|/)
       if (match) {
-        const [, name, current, latest] = match
-        updates.push({
-          name: name.trim(),
-          current: current.trim(),
-          latest: latest.trim(),
-          type: "dependencies",
-        })
+        const [, name, current, update, latest] = match
+        // Only add if there's an actual update (latest > current)
+        if (latest !== current) {
+          updates.push({
+            name: name.trim(),
+            current: current.trim(),
+            latest: latest.trim(),
+            type: "dependencies",
+          })
+        }
       }
     }
 
@@ -283,24 +411,60 @@ class PackageMonitorAgent {
   calculatePriority(update) {
     const { name } = update
 
-    // Critical dependencies
-    const critical = ["next", "react", "typescript", "bun"]
-    if (critical.some((pkg) => name.includes(pkg))) {
+    // ⚠️ IMPORTANT: Use EXACT package name matching ONLY
+    // DO NOT use includes() - it causes false positives!
+    // Example bug: name.includes("react") matched "@testing-library/react" as HIGH
+
+    // HIGH PRIORITY: Core framework & language
+    // Updates to these may break the entire application
+    const criticalExact = {
+      next: true,
+      react: true,
+      "react-dom": true,
+      typescript: true,
+    }
+    if (criticalExact[name]) {
       return "high"
     }
 
-    // Important UI/styling packages
-    const important = ["tailwind", "postcss"]
-    if (important.some((pkg) => name.includes(pkg))) {
+    // HIGH PRIORITY: Production runtime dependencies
+    // Used in production builds, monitoring analytics
+    const highExact = {
+      "@vercel/analytics": true,
+      "@vercel/speed-insights": true,
+    }
+    if (highExact[name]) {
+      return "high"
+    }
+
+    // MEDIUM PRIORITY: Build-time dependencies
+    // Used during dev/build, affects CSS and styling
+    const mediumExact = {
+      tailwindcss: true,
+      "@tailwindcss/postcss": true,
+      postcss: true,
+      autoprefixer: true,
+    }
+    if (mediumExact[name]) {
       return "medium"
     }
 
-    // Development tools
-    const devTools = ["biome", "testing-library", "happy-dom"]
-    if (devTools.some((pkg) => name.includes(pkg))) {
+    // LOW PRIORITY: Development tools only
+    // Test runners, type definitions, linting - dev-only, can update freely
+    const lowExact = {
+      "@biomejs/biome": true,
+      "@testing-library/react": true,
+      "@testing-library/jest-dom": true,
+      "happy-dom": true,
+      "@types/node": true,
+      "@types/react": true,
+      "@types/react-dom": true,
+    }
+    if (lowExact[name]) {
       return "low"
     }
 
+    // Default fallback for any new packages
     return "medium"
   }
 
