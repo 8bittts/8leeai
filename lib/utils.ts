@@ -96,9 +96,9 @@ export const ANIMATION_DELAYS = {
 } as const
 
 export const DATA_OFFSETS = {
-  projects: { start: 1, end: 62 },
-  education: { start: 63, end: 67 },
-  volunteer: { start: 68, end: 73 },
+  projects: { start: 1, end: 64 },
+  education: { start: 65, end: 69 },
+  volunteer: { start: 70, end: 75 },
 } as const
 
 export const PROJECTS_PER_PAGE = 15
@@ -117,7 +117,6 @@ export const VALID_COMMANDS = [
   "li",
   "x",
   "twitter",
-  "deathnote",
   "random",
   "clear",
 ] as const
@@ -141,7 +140,6 @@ export const COMMAND_DISPLAY_LIST = [
   "wellfound",
   "linkedin (li)",
   "x",
-  "deathnote",
   "clear",
 ] as const
 
@@ -157,7 +155,6 @@ export const COMMAND_ALIASES: Record<string, string> = {
   twitter: "X/Twitter",
   github: "GitHub",
   wellfound: "Wellfound",
-  deathnote: "DeathNote",
   email: "email",
   help: "help",
   clear: "clear",

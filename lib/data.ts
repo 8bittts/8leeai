@@ -1,5 +1,17 @@
 export const projects = [
   {
+    id: "yen-terminal",
+    name: "YEN • A Personal Terminal Experience",
+    url: "",
+    linkWord: "",
+  },
+  {
+    id: "deathnote",
+    name: "DeathNote • Digital Legacy Management",
+    url: "https://deathnote.ai",
+    linkWord: "Digital",
+  },
+  {
     id: "shibuyaaa",
     name: "Shibuyaaa • Mobile Music Creation App",
     url: "",

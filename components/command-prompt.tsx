@@ -123,7 +123,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         li: "https://www.linkedin.com/in/8lee/",
         x: "https://twitter.com/8bit",
         twitter: "https://twitter.com/8bit",
-        deathnote: "https://deathnote.ai",
       } as const
 
       type LinkKey = keyof typeof links
@@ -229,7 +228,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               <p>• wellfound · Eight's Wellfound profile</p>
               <p>• linkedin (li) · Eight's LinkedIn profile</p>
               <p>• twitter/x · Eight's X/Twitter profile</p>
-              <p>• deathnote · deathnote.ai website</p>
               <p>• random · Open a random project</p>
               <p>• clear · Reset terminal</p>
             </div>
