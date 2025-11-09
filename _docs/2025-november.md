@@ -2,6 +2,35 @@
 
 ## November 9, 2025 (Latest)
 
+### Cleaned up portfolio descriptions and branding
+
+**Removed possessive language and updated first project:**
+
+**Changes Made:**
+- Updated first project from "YEN • A Personal Terminal Experience" to "YEN.chat • Personal Terminal Experience"
+- Changed project ID from "yen-terminal" to "yen-chat"
+- Removed "Eight's" from all command help descriptions:
+  - "Eight's email address" → "Email address"
+  - "Eight's Wellfound profile" → "Wellfound profile"
+  - "Eight's LinkedIn profile" → "LinkedIn profile"
+  - "Eight's X/Twitter profile" → "X/Twitter profile"
+
+**Rationale:**
+- Cleaner, more concise descriptions that stand on their own
+- First project better reflects the site's purpose (personal terminal experience)
+- Reduced redundancy while maintaining clarity
+
+**Files Changed:** lib/data.ts, components/command-prompt.tsx
+
+**Verification:**
+- ✅ All 32 tests pass (99 assertions)
+- ✅ Biome linting/formatting passes
+- ✅ No TypeScript errors
+
+---
+
+## November 9, 2025
+
 ### Added two new projects and removed deathnote command
 
 **Added YEN and DeathNote as proper portfolio entries:**
