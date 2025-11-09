@@ -29,7 +29,7 @@ See [Security](#security) section below for implementation details.
 
 - **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop), automatic input focus after boot, keyboard shortcuts (`Ctrl+L`/`Cmd+K` to clear)
 - **Matrix Background Effect**: Battery-optimized falling characters on mobile (13fps) using `requestAnimationFrame`
-- **Interactive Commands**: 62+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`), `random` command for discovery, `help` command - see [Available Commands](#available-commands)
+- **Interactive Commands**: 64+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`), `random` command for discovery, `help` command - see [Available Commands](#available-commands)
 - **Typewriter Effects**: Smooth text animations with 300ms fade-in transitions and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
 - **Mobile-First UX**: Optimized auto-scroll centers content in viewport, automatic cursor focus, keyboard hides after Enter, 2px visible cursor
@@ -62,9 +62,9 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 
 **Terminal Commands** (once loaded):
 - `enter` - Show more projects (15 per page)
-- `1-62` - Open specific project by number
-- `63-67` - Education item by number
-- `68-73` - Volunteer experience by number
+- `1-64` - Open specific project by number
+- `65-69` - Education item by number
+- `70-75` - Volunteer experience by number
 - `help` - Show all available commands
 - `random` - Open a random project
 - `email` - Contact email info
@@ -74,7 +74,6 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `wellfound` - Wellfound profile
 - `linkedin` / `li` - LinkedIn profile
 - `x` - X/Twitter profile
-- `deathnote` - deathnote.ai website
 - `clear` - Reset terminal
 - `Ctrl+L` / `Cmd+K` - Keyboard shortcut to clear terminal
 
@@ -105,11 +104,11 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ## Tech Stack
 
 - **Package Manager & Runtime**: [Bun 1.3.1](https://bun.sh)
-- **Framework**: [Next.js 16.0.1](https://nextjs.org) with App Router & Turbopack
+- **Framework**: [Next.js 16.0.0](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev)
-- **Styling**: [Tailwind CSS v4.1.16](https://tailwindcss.com) pure utilities
+- **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
-- **Code Quality**: [Biome 2.3.3](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **Code Quality**: [Biome 2.3.4](https://biomejs.dev) - 100+ error rules + 5 nursery rules
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
@@ -135,7 +134,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   ├── use-typewriter.ts             # Optimized typewriter effect
 │   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard (blur on Enter)
 ├── lib/                              # Utilities and data
-│   ├── data.ts                       # Portfolio data (62 projects, 5 education, 6 volunteer)
+│   ├── data.ts                       # Portfolio data (64 projects, 5 education, 6 volunteer)
 │   ├── utils.ts                      # Utilities, constants, command types, rendering logic
 │   └── utils.test.ts                 # Utility function tests
 ├── public/                           # Static assets
