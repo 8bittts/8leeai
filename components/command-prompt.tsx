@@ -220,14 +220,14 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <h2 className="text-xl font-bold mb-4">Available Commands</h2>
             <div className="text-sm space-y-1">
               <p>• enter · Load more projects (15 per page)</p>
-              <p>• email · Eight's email address</p>
+              <p>• email · Email address</p>
               <p>• help · Show this help screen</p>
               <p>• education (ed) · Education background</p>
               <p>• volunteer (vol) · Volunteer experience</p>
               <p>• github · Link to this project</p>
-              <p>• wellfound · Eight's Wellfound profile</p>
-              <p>• linkedin (li) · Eight's LinkedIn profile</p>
-              <p>• twitter/x · Eight's X/Twitter profile</p>
+              <p>• wellfound · Wellfound profile</p>
+              <p>• linkedin (li) · LinkedIn profile</p>
+              <p>• twitter/x · X/Twitter profile</p>
               <p>• random · Open a random project</p>
               <p>• clear · Reset terminal</p>
             </div>

@@ -1,7 +1,7 @@
 export const projects = [
   {
-    id: "yen-terminal",
-    name: "YEN • A Personal Terminal Experience",
+    id: "yen-chat",
+    name: "YEN.chat • Personal Terminal Experience",
     url: "",
     linkWord: "",
   },
