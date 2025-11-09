@@ -1,5 +1,36 @@
 # November 2025 Release Notes
 
+## November 9, 2025 (Latest)
+
+### Added two new projects and removed deathnote command
+
+**Added YEN and DeathNote as proper portfolio entries:**
+- **YEN** (#1) - "A Personal Terminal Experience" with no external link
+- **DeathNote** (#2) - "Digital Legacy Management" linking to https://deathnote.ai
+
+**Command and numbering updates:**
+- Removed `deathnote` command from VALID_COMMANDS, COMMAND_DISPLAY_LIST, and COMMAND_ALIASES
+- Removed deathnote link handler from command-prompt.tsx
+- Updated all project numbering: 62 → 64 projects
+- Updated DATA_OFFSETS in lib/utils.ts:
+  - Projects: 1-64 (was 1-62)
+  - Education: 65-69 (was 63-67)
+  - Volunteer: 70-75 (was 68-73)
+
+**Documentation updates:**
+- Updated CLAUDE.md with new project counts and command list
+- Updated README.md with new project counts and available commands
+- Removed deathnote from help text in command-prompt.tsx
+
+**Files Changed:** lib/data.ts, lib/utils.ts, components/command-prompt.tsx, CLAUDE.md, README.md
+
+**Verification:**
+- ✅ All 32 tests pass (99 assertions)
+- ✅ Biome linting/formatting passes
+- ✅ No TypeScript errors
+
+---
+
 ## November 9, 2025
 
 ### Package monitor overhaul and dependency updates
