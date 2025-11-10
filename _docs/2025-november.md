@@ -1,5 +1,35 @@
 # November 2025 Release Notes
 
+## November 10, 2025 (Latest)
+
+### Package updates - next and happy-dom
+
+**Updated next and happy-dom to latest stable versions:**
+
+**Dependencies Updated:**
+- `next`: 16.0.0 → 16.0.1 (patch update - minor bug fixes)
+
+**Dev Dependencies Updated:**
+- `happy-dom`: 20.0.8 → 20.0.10 (minor update - 2 patch levels)
+
+**Implementation:**
+- Updated package.json with new versions
+- Ran `bun install` to download and install updated packages
+- Updated package.json with new pinned versions to match installed versions
+- Verified all 32 tests pass (99 assertions)
+- Confirmed Biome linting/formatting passes
+- No TypeScript errors
+
+**Impact:**
+- Both updates are stable, low-risk changes
+- Next.js patch fixes minor issues in v16 line
+- Happy-dom improvements for better DOM simulation in tests
+- Application remains fully stable and functional
+
+**Files Changed:** package.json, bun.lock
+
+---
+
 ## November 9, 2025 (Latest)
 
 ### Cleaned up portfolio descriptions and branding
