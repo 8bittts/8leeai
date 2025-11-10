@@ -15,7 +15,7 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-16.0.0-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.1-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.17-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
@@ -104,7 +104,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ## Tech Stack
 
 - **Package Manager & Runtime**: [Bun 1.3.1](https://bun.sh)
-- **Framework**: [Next.js 16.0.0](https://nextjs.org) with App Router & Turbopack
+- **Framework**: [Next.js 16.0.1](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
