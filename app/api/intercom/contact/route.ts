@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
     // biome-ignore lint/complexity/useLiteralKeys: Next.js environment variable inlining requires bracket notation
     const accessToken = (process.env as Record<string, string | undefined>)["INTERCOM_ACCESS_TOKEN"]
     if (!accessToken) {
+      console.error("INTERCOM_ACCESS_TOKEN not found in environment")
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 

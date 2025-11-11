@@ -68,26 +68,24 @@ export function proxy(request: NextRequest) {
       "magnetometer=(), " +
       "gyroscope=(), " +
       "accelerometer=(), " +
-      "ambient-light-sensor=(), " +
       "autoplay=(), " +
       "encrypted-media=(), " +
       "picture-in-picture=(), " +
-      "sync-xhr=(), " +
       "display-capture=(), " +
       "web-share=()"
   )
 
-  // CSP: Restrict resource loading, allow Vercel analytics/live and Intercom API
+  // CSP: Restrict resource loading, allow Vercel analytics/live and Intercom
   const cspDirectives = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
-    "style-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://js.intercom-static.com",
+    "style-src 'self' 'unsafe-inline' https://js.intercom-static.com",
     "img-src 'self' data: blob: https:",
-    "font-src 'self' data:",
-    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.intercom.io",
+    "font-src 'self' data: https://fonts.intercomcdn.com",
+    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.intercom.io wss://nexus-websocket-a.intercom.io wss://nexus-websocket-b.intercom.io",
     "media-src 'self' blob:",
     "object-src 'none'",
-    "frame-src 'none'",
+    "frame-src https://js.intercom-static.com",
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
