@@ -77,14 +77,14 @@ export function proxy(request: NextRequest) {
       "web-share=()"
   )
 
-  // CSP: Restrict resource loading, allow only Vercel analytics/live
+  // CSP: Restrict resource loading, allow Vercel analytics/live and Intercom API
   const cspDirectives = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
-    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com",
+    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.intercom.io",
     "media-src 'self' blob:",
     "object-src 'none'",
     "frame-src 'none'",
