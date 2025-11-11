@@ -32,7 +32,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
     setSubmitStatus(null)
 
     try {
-      const response = await fetch("/api/zendesk/contact", {
+      const response = await fetch("/api/intercom/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
       if (response.ok) {
         setSubmitStatus({
           type: "success",
-          message: `Message sent! ID: ${data.conversationId}`,
+          message: `Message sent! ID: ${data.messageId}`,
         })
         // Reset form
         setName("")
@@ -71,11 +71,6 @@ export function ContactForm({ onClose }: ContactFormProps) {
     }
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: TypeScript strict mode requires any type for process.env access in client components
-  // biome-ignore lint/complexity/useLiteralKeys: Next.js environment variable inlining requires bracket notation
-  // biome-ignore lint/complexity/useOptionalChain: Optional chaining breaks Next.js build-time substitution
-  const isConfigured = !!((process.env as any) || {})["NEXT_PUBLIC_ZENDESK_APP_ID"]
-
   return (
     <section className="mb-8 p-4 border border-green-500 rounded" aria-label="Contact Form">
       <div className="flex justify-between items-center mb-4">
@@ -90,18 +85,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
         </button>
       </div>
 
-      {!isConfigured && (
-        <div className="text-red-500 text-sm p-2 border border-red-500 rounded mb-4" role="alert">
-          Contact form is not available. Zendesk credentials not configured.
-        </div>
-      )}
-
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="space-y-3"
-        style={{ opacity: isConfigured ? 1 : 0.5 }}
-      >
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label htmlFor="contact-name" className="text-sm block mb-1">
             Name:
@@ -162,7 +146,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
 
         <button
           type="submit"
-          disabled={isSubmitting || !isConfigured}
+          disabled={isSubmitting}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Sending..." : "Send Message"}

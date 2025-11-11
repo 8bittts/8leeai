@@ -8,11 +8,7 @@ interface Conversation {
   createdAt?: string
 }
 
-interface LiveChatWidgetProps {
-  appId: string
-}
-
-export function LiveChatWidget({ appId }: LiveChatWidgetProps) {
+export function LiveChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +18,7 @@ export function LiveChatWidget({ appId }: LiveChatWidgetProps) {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(`/api/zendesk/conversations?appId=${appId}`)
+      const response = await fetch("/api/intercom/conversations")
       if (response.ok) {
         const data = await response.json()
         setConversations(data.conversations || [])
@@ -34,7 +30,7 @@ export function LiveChatWidget({ appId }: LiveChatWidgetProps) {
     } finally {
       setIsLoading(false)
     }
-  }, [appId])
+  }, [])
 
   // Fetch conversations when widget opens
   useEffect(() => {
