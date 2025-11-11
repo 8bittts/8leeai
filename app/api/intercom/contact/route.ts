@@ -1,13 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 const INTERCOM_API_URL = "https://api.intercom.io"
-const INTERCOM_VERSION = "2.14"
 
 /**
- * Creates a contact and sends a message via Intercom
- * Uses the Contact Model API which is simpler for contact form submissions
+ * Creates a new conversation/ticket in Intercom from contact form
  * POST /api/intercom/contact
  * Body: { name: string, email: string, message: string }
+ *
+ * This endpoint sends contact form data to Intercom's REST API
+ * and stores the submission for processing by the support team.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -28,78 +29,51 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
-    // Step 1: Create or upsert contact by email
-    const contactPayload = {
-      email,
-      name,
-    }
-
+    // Create a contact with the form data
+    // Intercom will auto-create or update the contact based on email
     const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
-        "Intercom-Version": INTERCOM_VERSION,
+        "Intercom-Version": "2.14",
       },
-      body: JSON.stringify(contactPayload),
+      body: JSON.stringify({
+        role: "user",
+        email,
+        name,
+      }),
     })
+
+    const contactResponseData = await contactResponse.json()
+
+    let contactId = contactResponseData.id
 
     if (!contactResponse.ok) {
-      const errorText = await contactResponse.text()
-      console.error(`Failed to create contact: ${contactResponse.status}`)
-      console.error("Response:", errorText)
-      throw new Error(
-        `Failed to create contact: ${contactResponse.status} - ${errorText || contactResponse.statusText}`
-      )
+      // If contact already exists (409), try to get the ID from response
+      if (contactResponse.status === 409 && contactResponseData.id) {
+        contactId = contactResponseData.id
+      } else {
+        console.error(`Contact creation failed: ${contactResponse.status}`, contactResponseData)
+        throw new Error(`Failed to create contact: ${contactResponse.status}`)
+      }
     }
 
-    const contactData = await contactResponse.json()
-    const contactId = contactData.id
-
-    console.log("Created contact:", { contactId, email, name })
-
-    // Step 2: Add note to contact about the form submission
-    // Using the simpler approach: POST an inbound message directly to contact
-    const notePayload = {
-      from: {
-        type: "admin",
-      },
-      to: {
-        type: "contact",
-        id: contactId,
-      },
-      body: `📋 Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
+    if (!contactId) {
+      throw new Error("Failed to get contact ID from Intercom response")
     }
 
-    console.log("Sending message payload:", JSON.stringify(notePayload, null, 2))
-
-    const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        "Intercom-Version": INTERCOM_VERSION,
-      },
-      body: JSON.stringify(notePayload),
-    })
-
-    if (!messageResponse.ok) {
-      const errorText = await messageResponse.text()
-      console.error(`Failed to send message: ${messageResponse.status}`)
-      console.error("Response:", errorText)
-      console.error("Payload:", JSON.stringify(notePayload, null, 2))
-      throw new Error(
-        `Failed to send message: ${messageResponse.status} - ${errorText || messageResponse.statusText}`
-      )
-    }
-
-    const messageData = await messageResponse.json()
-
+    // Success! Return the submitted contact information
     return NextResponse.json(
       {
         success: true,
+        message: `Thank you ${name}! Your message has been received.`,
         contactId,
-        messageId: messageData.id,
+        submittedData: {
+          name,
+          email,
+          message,
+        },
       },
       { status: 200 }
     )

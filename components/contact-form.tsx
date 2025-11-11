@@ -45,7 +45,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
       if (response.ok) {
         setSubmitStatus({
           type: "success",
-          message: `Message sent! ID: ${data.messageId}`,
+          message: data.message || "Message sent successfully!",
         })
         // Reset form
         setName("")
