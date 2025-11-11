@@ -1,6 +1,7 @@
 "use client"
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { ContactForm } from "@/components/contact-form"
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
@@ -39,6 +40,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showVolunteer, setShowVolunteer] = useState(false)
     const [showEmail, setShowEmail] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
+    const [showContact, setShowContact] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
@@ -49,17 +51,38 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       inputRef.current?.focus()
     }, [])
 
+    const hideAllSections = () => {
+      setShowEducation(false)
+      setShowVolunteer(false)
+      setShowEmail(false)
+      setShowHelp(false)
+      setShowContact(false)
+    }
+
+    const handleRandomCommand = () => {
+      const projectsWithUrls = projects.filter((p) => p.url && p.url.trim() !== "")
+      if (projectsWithUrls.length > 0) {
+        const randomProject = projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
+        if (randomProject) {
+          const projectNumber = projects.findIndex((p) => p.id === randomProject.id) + 1
+          openProject(projectNumber)
+          setStatusMessage(`Opening random project ${projectNumber} in new tab`)
+        }
+      }
+      setCommand("")
+    }
+
     const handleSectionCommand = (cmdLower: string) => {
       if (cmdLower === "education" || cmdLower === "ed") {
+        hideAllSections()
         setShowEducation(true)
-        setShowVolunteer(false)
         setCommand("")
         setStatusMessage(`${COMMAND_ALIASES[cmdLower]} section displayed`)
         return true
       }
       if (cmdLower === "volunteer" || cmdLower === "vol") {
+        hideAllSections()
         setShowVolunteer(true)
-        setShowEducation(false)
         setCommand("")
         setStatusMessage(`${COMMAND_ALIASES[cmdLower]} experience section displayed`)
         return true
@@ -69,47 +92,34 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
     const handleTerminalCommand = (cmdLower: string) => {
       if (cmdLower === "clear") {
-        setShowEducation(false)
-        setShowVolunteer(false)
-        setShowEmail(false)
-        setShowHelp(false)
+        hideAllSections()
         clearToStart()
         setStatusMessage("Terminal cleared")
         return true
       }
       if (cmdLower === "email") {
+        hideAllSections()
         setShowEmail(true)
-        setShowEducation(false)
-        setShowVolunteer(false)
-        setShowHelp(false)
         setCommand("")
         setStatusMessage("Contact email displayed")
         return true
       }
+      if (cmdLower === "contact") {
+        hideAllSections()
+        setShowContact(true)
+        setCommand("")
+        setStatusMessage("Contact form opened")
+        return true
+      }
       if (cmdLower === "help") {
+        hideAllSections()
         setShowHelp(true)
-        setShowEmail(false)
-        setShowEducation(false)
-        setShowVolunteer(false)
         setCommand("")
         setStatusMessage("Available commands displayed")
         return true
       }
       if (cmdLower === "random") {
-        // Filter projects that have actual URLs (not empty strings)
-        const projectsWithUrls = projects.filter((p) => p.url && p.url.trim() !== "")
-        if (projectsWithUrls.length > 0) {
-          const randomProject =
-            projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
-          // TypeScript narrowing: randomProject is guaranteed to exist due to length check above
-          if (randomProject) {
-            // Find the project number (1-based index in original projects array)
-            const projectNumber = projects.findIndex((p) => p.id === randomProject.id) + 1
-            openProject(projectNumber)
-            setStatusMessage(`Opening random project ${projectNumber} in new tab`)
-          }
-        }
-        setCommand("")
+        handleRandomCommand()
         return true
       }
       return false
@@ -221,6 +231,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <div className="text-sm space-y-1">
               <p>• enter · Load more projects (15 per page)</p>
               <p>• email · Email address</p>
+              <p>• contact · Contact form (Zendesk)</p>
               <p>• help · Show this help screen</p>
               <p>• education (ed) · Education background</p>
               <p>• volunteer (vol) · Volunteer experience</p>
@@ -248,6 +259,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             </div>
           </section>
         )}
+
+        {/* Contact Form Section */}
+        {showContact && <ContactForm onClose={() => setShowContact(false)} />}
 
         {/* Education Section */}
         {showEducation && (
