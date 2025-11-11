@@ -28,50 +28,78 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
-    // Send contact form message - Intercom will auto-create contact from email
-    // This is simpler than trying to create contact first
-    const submitResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
+    // Step 1: Create or upsert contact by email
+    const contactPayload = {
+      email,
+      name,
+    }
+
+    const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "Intercom-Version": INTERCOM_VERSION,
       },
-      body: JSON.stringify({
-        message_type: "inbound",
-        from: {
-          type: "contact",
-          email,
-        },
-        body: `Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      }),
+      body: JSON.stringify(contactPayload),
     })
 
-    if (!submitResponse.ok) {
-      const errorText = await submitResponse.text()
-      console.error(
-        `Failed to submit contact form: ${submitResponse.status} ${submitResponse.statusText}`
-      )
-      console.error("Response body:", errorText)
-      console.error(
-        "Request payload:",
-        JSON.stringify({
-          message_type: "inbound",
-          from: { type: "contact", email },
-          body: `Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-        })
-      )
+    if (!contactResponse.ok) {
+      const errorText = await contactResponse.text()
+      console.error(`Failed to create contact: ${contactResponse.status}`)
+      console.error("Response:", errorText)
       throw new Error(
-        `Failed to submit form: ${submitResponse.status} - ${errorText || submitResponse.statusText}`
+        `Failed to create contact: ${contactResponse.status} - ${errorText || contactResponse.statusText}`
       )
     }
 
-    const submitData = await submitResponse.json()
+    const contactData = await contactResponse.json()
+    const contactId = contactData.id
+
+    console.log("Created contact:", { contactId, email, name })
+
+    // Step 2: Add note to contact about the form submission
+    // Using the simpler approach: POST an inbound message directly to contact
+    const notePayload = {
+      from: {
+        type: "admin",
+      },
+      to: {
+        type: "contact",
+        id: contactId,
+      },
+      body: `📋 Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
+    }
+
+    console.log("Sending message payload:", JSON.stringify(notePayload, null, 2))
+
+    const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "Intercom-Version": INTERCOM_VERSION,
+      },
+      body: JSON.stringify(notePayload),
+    })
+
+    if (!messageResponse.ok) {
+      const errorText = await messageResponse.text()
+      console.error(`Failed to send message: ${messageResponse.status}`)
+      console.error("Response:", errorText)
+      console.error("Payload:", JSON.stringify(notePayload, null, 2))
+      throw new Error(
+        `Failed to send message: ${messageResponse.status} - ${errorText || messageResponse.statusText}`
+      )
+    }
+
+    const messageData = await messageResponse.json()
 
     return NextResponse.json(
       {
         success: true,
-        messageId: submitData.id,
+        contactId,
+        messageId: messageData.id,
       },
       { status: 200 }
     )
