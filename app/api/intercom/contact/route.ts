@@ -4,7 +4,8 @@ const INTERCOM_API_URL = "https://api.intercom.io"
 const INTERCOM_VERSION = "2.14"
 
 /**
- * Creates a conversation and sends a message via Intercom
+ * Creates a contact and sends a message via Intercom
+ * Uses the Contact Model API which is simpler for contact form submissions
  * POST /api/intercom/contact
  * Body: { name: string, email: string, message: string }
  */
@@ -27,8 +28,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
-    // First, create a conversation with the contact
-    const conversationResponse = await fetch(`${INTERCOM_API_URL}/conversations`, {
+    // Step 1: Create or update contact using Contact Model API
+    const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -36,42 +37,65 @@ export async function POST(request: NextRequest) {
         "Intercom-Version": INTERCOM_VERSION,
       },
       body: JSON.stringify({
-        type: "customer_initiated",
-        participants: [
-          {
-            role: "user",
-            external_id: email,
-          },
-        ],
-        messages: [
-          {
-            from: {
-              type: "user",
-              external_id: email,
-            },
-            body: `Name: ${name}\nEmail: ${email}\n\nMessage: ${message}`,
-          },
-        ],
+        email,
+        name,
+        role: "user",
       }),
     })
 
-    if (!conversationResponse.ok) {
-      const errorData = await conversationResponse.text()
+    if (!contactResponse.ok) {
+      const errorData = await contactResponse.text()
       console.error(
-        `Intercom API error: ${conversationResponse.status} ${conversationResponse.statusText}`,
+        `Failed to create/update contact: ${contactResponse.status} ${contactResponse.statusText}`,
         errorData
       )
       throw new Error(
-        `Failed to create conversation: ${conversationResponse.status} ${conversationResponse.statusText}`
+        `Failed to create contact: ${contactResponse.status} ${contactResponse.statusText}`
       )
     }
 
-    const conversationData = await conversationResponse.json()
+    const contactData = await contactResponse.json()
+    const contactId = contactData.id
+
+    // Step 2: Send message as admin to the contact
+    const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "Intercom-Version": INTERCOM_VERSION,
+      },
+      body: JSON.stringify({
+        from: {
+          type: "admin",
+          id: "0", // System/automated message
+        },
+        to: {
+          type: "contact",
+          id: contactId,
+        },
+        body: `New contact form submission from ${name} (${email}):\n\n${message}`,
+      }),
+    })
+
+    if (!messageResponse.ok) {
+      const errorData = await messageResponse.text()
+      console.error(
+        `Failed to send message: ${messageResponse.status} ${messageResponse.statusText}`,
+        errorData
+      )
+      throw new Error(
+        `Failed to send message: ${messageResponse.status} ${messageResponse.statusText}`
+      )
+    }
+
+    const messageData = await messageResponse.json()
 
     return NextResponse.json(
       {
         success: true,
-        conversationId: conversationData.id,
+        contactId,
+        messageId: messageData.id,
       },
       { status: 200 }
     )
