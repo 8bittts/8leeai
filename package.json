@@ -19,6 +19,7 @@
     "packages:critical": "bun scripts/package-monitor.js --critical"
   },
   "dependencies": {
+    "@intercom/messenger-js-sdk": "^0.0.18",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "next": "16.0.1",
