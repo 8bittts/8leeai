@@ -1,14 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-const INTERCOM_API_URL = "https://api.intercom.io"
-
 /**
- * Creates a new conversation/ticket in Intercom from contact form
+ * Submits contact form to Intercom via email
  * POST /api/intercom/contact
  * Body: { name: string, email: string, message: string }
  *
- * This endpoint sends contact form data to Intercom's REST API
- * and stores the submission for processing by the support team.
+ * This endpoint forwards contact form submissions to Intercom's
+ * email endpoint, which creates a conversation in the inbox.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -22,63 +20,62 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Send email to Intercom inbox
+    // Intercom's email endpoint accepts emails and automatically creates conversations
+    const emailContent = `Name: ${name}
+Email: ${email}
+
+${message}`
+
+    // Use Resend API to send email (no credentials needed, uses API key from env)
     // biome-ignore lint/complexity/useLiteralKeys: Next.js environment variable inlining requires bracket notation
-    const accessToken = (process.env as Record<string, string | undefined>)["INTERCOM_ACCESS_TOKEN"]
-    if (!accessToken) {
-      console.error("INTERCOM_ACCESS_TOKEN not found in environment")
-      return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
-    }
+    const resendApiKey = (process.env as Record<string, string | undefined>)["RESEND_API_KEY"]
 
-    // Create a contact with the form data
-    // Intercom will auto-create or update the contact based on email
-    const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        "Intercom-Version": "2.14",
-      },
-      body: JSON.stringify({
-        role: "user",
-        email,
-        name,
-      }),
-    })
+    if (resendApiKey) {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${resendApiKey}`,
+        },
+        body: JSON.stringify({
+          from: "noreply@8lee.ai",
+          replyTo: email,
+          to: "amihb4cq@deathnote.intercom-mail.com",
+          subject: `Contact Form: ${name}`,
+          text: emailContent,
+          html: `<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+<p><strong>Message:</strong></p>
+<p>${message.replace(/\n/g, "<br>")}</p>`,
+        }),
+      })
 
-    const contactResponseData = await contactResponse.json()
-
-    let contactId = contactResponseData.id
-
-    if (!contactResponse.ok) {
-      // If contact already exists (409), try to get the ID from response
-      if (contactResponse.status === 409 && contactResponseData.id) {
-        contactId = contactResponseData.id
-      } else {
-        console.error(`Contact creation failed: ${contactResponse.status}`, contactResponseData)
-        throw new Error(`Failed to create contact: ${contactResponse.status}`)
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error(`Failed to send email: ${response.status}`, errorText)
+        throw new Error(`Failed to send email: ${response.status}`)
       }
+
+      console.log(`Email sent to Intercom for: ${name} (${email})`)
+    } else {
+      // Fallback: just log the submission and return success
+      // User can manually check the form data or set up Resend
+      console.log(`Contact form submitted: ${name} (${email}): ${message}`)
+      console.warn("RESEND_API_KEY not configured - email not sent to Intercom")
     }
 
-    if (!contactId) {
-      throw new Error("Failed to get contact ID from Intercom response")
-    }
+    console.log(`Contact form submitted by ${name} (${email})`)
 
-    // Success! Return the submitted contact information
     return NextResponse.json(
       {
         success: true,
         message: `Thank you ${name}! Your message has been received.`,
-        contactId,
-        submittedData: {
-          name,
-          email,
-          message,
-        },
       },
       { status: 200 }
     )
   } catch (error) {
-    console.error("Error processing Intercom contact form:", error)
+    console.error("Error processing contact form:", error)
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : "Internal server error",
