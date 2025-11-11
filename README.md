@@ -86,8 +86,21 @@ bun test             # Run tests with Bun's native runner
 bun run test:watch   # Tests in watch mode
 bun run check        # Lint and format with Biome (via bunx)
 bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
-bun run packages     # Check for package updates with breaking change analysis
 ```
+
+**Package Update Monitoring** (via `scripts/package-monitor.js`):
+```bash
+bun run packages              # Check all packages with impact analysis
+bun run packages:watch        # Continuous monitoring (checks every 6 hours)
+bun run packages:critical     # Only critical/security updates
+```
+
+The package monitor analyzes breaking changes and categorizes updates by priority:
+- **URGENT**: Security-related or major version changes (apply immediately)
+- **CAUTION**: Known breaking changes (review changelog and test thoroughly)
+- **SAFE**: Patch/minor updates with low impact (apply when convenient)
+
+For simple updates (SAFE only), the plan file auto-deletes. For complex updates (CAUTION/URGENT), it's saved for review.
 
 ## Testing
 
