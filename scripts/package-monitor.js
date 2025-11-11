@@ -3,6 +3,19 @@
 /**
  * Package Update Monitor Agent - Bun Edition
  *
+ * ============================================================
+ * RUN THIS SCRIPT WITH ONE OF THESE COMMANDS:
+ * ============================================================
+ * bun run packages              # Check all packages (recommended)
+ * bun run packages:watch        # Continuous monitoring (every 6 hours)
+ * bun run packages:critical     # Critical/security updates only
+ *
+ * Or directly:
+ * bun scripts/package-monitor.js
+ * bun scripts/package-monitor.js --watch
+ * bun scripts/package-monitor.js --critical
+ * ============================================================
+ *
  * Monitors library and package updates, analyzes breaking changes,
  * and provides impact-based recommendations for updates.
  *

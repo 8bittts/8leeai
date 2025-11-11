@@ -1,6 +1,39 @@
 # November 2025 Release Notes
 
-## November 10, 2025 (Latest)
+## November 11, 2025 (Latest)
+
+### Added explicit documentation for package monitor script
+
+**Enhanced script documentation and usability:**
+
+**Changes Made:**
+- Added prominent command reference block at the top of `scripts/package-monitor.js` with explicit instructions on how to run the script:
+  - `bun run packages` - Check all packages
+  - `bun run packages:watch` - Continuous monitoring
+  - `bun run packages:critical` - Critical updates only
+  - Direct script invocation with options
+
+**Documentation Updates:**
+- Updated README.md with dedicated "Package Update Monitoring" section explaining:
+  - How to run the package monitor
+  - Priority categories (URGENT, CAUTION, SAFE)
+  - Auto-cleanup behavior for simple vs. complex updates
+- Updated CLAUDE.md Quick Start section with:
+  - Separated package monitoring commands for clarity
+  - Direct script invocation examples with command-line flags
+  - Updated notes clarifying file management behavior
+
+**Rationale:**
+- Users can now easily discover and understand how to use the package monitor
+- Clear documentation of all three monitoring modes (packages, watch, critical)
+- Explicit instructions in the script itself prevent confusion about execution
+- Better integration with project documentation (README, CLAUDE.md)
+
+**Files Changed:** scripts/package-monitor.js, README.md, CLAUDE.md
+
+---
+
+## November 10, 2025
 
 ### Package updates - next and happy-dom
 
