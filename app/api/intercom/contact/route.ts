@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 const INTERCOM_API_URL = "https://api.intercom.io"
+const INTERCOM_VERSION = "2.14"
 
 /**
- * Creates a contact and sends them a message via Intercom
+ * Creates a conversation and sends a message via Intercom
  * POST /api/intercom/contact
  * Body: { name: string, email: string, message: string }
  */
@@ -26,91 +27,51 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
-    // Create or find contact by email
-    const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts/search`, {
+    // First, create a conversation with the contact
+    const conversationResponse = await fetch(`${INTERCOM_API_URL}/conversations`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Intercom-Version": INTERCOM_VERSION,
       },
       body: JSON.stringify({
-        query: {
-          field: "email",
-          operator: "=",
-          value: email,
-        },
+        type: "customer_initiated",
+        participants: [
+          {
+            role: "user",
+            external_id: email,
+          },
+        ],
+        messages: [
+          {
+            from: {
+              type: "user",
+              external_id: email,
+            },
+            body: `Name: ${name}\nEmail: ${email}\n\nMessage: ${message}`,
+          },
+        ],
       }),
     })
 
-    if (!contactResponse.ok) {
+    if (!conversationResponse.ok) {
+      const errorData = await conversationResponse.text()
+      console.error(
+        `Intercom API error: ${conversationResponse.status} ${conversationResponse.statusText}`,
+        errorData
+      )
       throw new Error(
-        `Failed to search contacts: ${contactResponse.status} ${contactResponse.statusText}`
+        `Failed to create conversation: ${conversationResponse.status} ${conversationResponse.statusText}`
       )
     }
 
-    const contactData = await contactResponse.json()
-    let contactId: string
-
-    // If contact exists, use it; otherwise create new one
-    if (contactData.data && contactData.data.length > 0) {
-      contactId = contactData.data[0].id
-    } else {
-      // Create new contact
-      const createResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          role: "user",
-          email,
-          name,
-        }),
-      })
-
-      if (!createResponse.ok) {
-        throw new Error(
-          `Failed to create contact: ${createResponse.status} ${createResponse.statusText}`
-        )
-      }
-
-      const newContact = await createResponse.json()
-      contactId = newContact.id
-    }
-
-    // Send message to the contact
-    const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        from: {
-          type: "contact",
-          id: contactId,
-        },
-        body: message,
-      }),
-    })
-
-    if (!messageResponse.ok) {
-      throw new Error(
-        `Failed to send message: ${messageResponse.status} ${messageResponse.statusText}`
-      )
-    }
-
-    const messageData = await messageResponse.json()
+    const conversationData = await conversationResponse.json()
 
     return NextResponse.json(
       {
         success: true,
-        contactId,
-        messageId: messageData.id,
+        conversationId: conversationData.id,
       },
       { status: 200 }
     )
