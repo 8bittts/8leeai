@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { env } from "@/lib/env"
 
 interface ContactFormProps {
   onClose: () => void
@@ -71,6 +72,8 @@ export function ContactForm({ onClose }: ContactFormProps) {
     }
   }
 
+  const isConfigured = env.isConfiguredClient()
+
   return (
     <section className="mb-8 p-4 border border-green-500 rounded" aria-label="Contact Form">
       <div className="flex justify-between items-center mb-4">
@@ -85,7 +88,18 @@ export function ContactForm({ onClose }: ContactFormProps) {
         </button>
       </div>
 
-      <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
+      {!isConfigured && (
+        <div className="text-red-500 text-sm p-2 border border-red-500 rounded mb-4" role="alert">
+          Contact form is not available. Zendesk credentials not configured.
+        </div>
+      )}
+
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="space-y-3"
+        style={{ opacity: isConfigured ? 1 : 0.5 }}
+      >
         <div>
           <label htmlFor="contact-name" className="text-sm block mb-1">
             Name:
@@ -146,7 +160,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
 
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !isConfigured}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
