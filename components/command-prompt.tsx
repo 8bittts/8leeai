@@ -1,7 +1,6 @@
 "use client"
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { ContactForm } from "@/components/contact-form"
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
@@ -40,7 +39,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showVolunteer, setShowVolunteer] = useState(false)
     const [showEmail, setShowEmail] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
-    const [showContact, setShowContact] = useState(false)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
@@ -56,7 +54,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       setShowVolunteer(false)
       setShowEmail(false)
       setShowHelp(false)
-      setShowContact(false)
     }
 
     const handleRandomCommand = () => {
@@ -102,13 +99,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setShowEmail(true)
         setCommand("")
         setStatusMessage("Contact email displayed")
-        return true
-      }
-      if (cmdLower === "contact") {
-        hideAllSections()
-        setShowContact(true)
-        setCommand("")
-        setStatusMessage("Contact form opened")
         return true
       }
       if (cmdLower === "help") {
@@ -231,7 +221,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <div className="text-sm space-y-1">
               <p>• enter · Load more projects (15 per page)</p>
               <p>• email · Email address</p>
-              <p>• contact · Contact form (Zendesk)</p>
               <p>• help · Show this help screen</p>
               <p>• education (ed) · Education background</p>
               <p>• volunteer (vol) · Volunteer experience</p>
@@ -259,9 +248,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             </div>
           </section>
         )}
-
-        {/* Contact Form Section */}
-        {showContact && <ContactForm onClose={() => setShowContact(false)} />}
 
         {/* Education Section */}
         {showEducation && (
