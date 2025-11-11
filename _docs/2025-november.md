@@ -2,6 +2,85 @@
 
 ## November 11, 2025 (Latest)
 
+### Explored Zendesk and Intercom integrations - documented patterns for future reference
+
+**Investigation Summary:**
+
+Researched adding customer support ticketing to the terminal portfolio via Zendesk and Intercom APIs. After extensive testing, determined these integrations are not needed at this time. Documented findings and patterns for future reference before reverting to baseline.
+
+**What Was Attempted:**
+
+1. **Zendesk Integration (Initial exploration)**
+   - Added contact form command (`contact`) to trigger form submission
+   - Created `/api/zendesk/contact` endpoint
+   - Attempted three Zendesk API approaches:
+     - Direct ticket creation via `/tickets` endpoint
+     - Contact creation + message thread workflow
+     - Support request creation
+   - All approaches failed due to authentication or API payload validation issues
+   - Zendesk API requires complex multi-step workflows (contact → ticket → routing)
+
+2. **Intercom Migration (Alternative approach)**
+   - Switched from Zendesk to Intercom after initial failures
+   - Implemented contact creation via `/contacts` endpoint
+   - Attempted multiple conversation/message creation patterns:
+     - `/conversations` endpoint with `customer_initiated` type (failed: "ID is required")
+     - `/messages` endpoint with inbound message type (failed: 404 Resource Not Found)
+     - `/tickets` endpoint with various payload formats (failed: parameter validation)
+   - Discovered Intercom REST API has strict payload validation and complex dependencies
+
+3. **Final Working Solution (Email-based approach)**
+   - Abandoned direct API conversation creation
+   - Implemented email-based forwarding using Resend service
+   - Contact form → `/api/intercom/contact` → Resend → `amihb4cq@deathnote.intercom-mail.com`
+   - Intercom automatically creates conversations from incoming emails (native feature)
+   - This approach is simple, reliable, and requires no complex API orchestration
+   - **Production verified and working** ✅
+
+**Key Technical Insights Captured:**
+
+- **Environment Variables**: Learned distinction between public (`NEXT_PUBLIC_*`) and server-only variables
+  - TypeScript strict mode requires bracket notation: `process.env["KEY"]`
+  - Biome linter requires suppression: `// biome-ignore lint/complexity/useLiteralKeys`
+  - Vercel environment variables must be explicitly added and redeploy required for activation
+
+- **Email Service Integration Pattern**:
+  - Resend API key is workspace/domain-specific
+  - Can only send from verified domains in that workspace
+  - Solution: Use service's email forwarding feature instead of direct API integration
+  - For Intercom: Email endpoint is more reliable than REST API for creating conversations
+
+- **API Complexity Trade-offs**:
+  - Direct REST API integration requires deep understanding of service payload structure
+  - Email-based integration leverages existing email processing pipelines (more stable)
+  - When REST APIs are complex: consider email or webhook alternatives
+
+- **Testing Pattern**:
+  - Local curl tests vs. production Vercel deployment showed different behaviors
+  - Must add environment variables to Vercel and redeploy for changes to take effect
+  - Development works with `.env.local`, production requires explicit Vercel config
+
+**Decision:**
+
+After confirming the Intercom email solution works end-to-end in production, all Zendesk/Intercom API implementations are being removed per request. The email-based approach is retained as it's simpler and requires less maintenance.
+
+**Files That Will Be Removed:**
+- `/app/api/intercom/contact/route.ts`
+- `/app/api/intercom/conversations/route.ts`
+- `/components/contact-form.tsx`
+- `/components/live-chat-widget.tsx`
+- INTERCOM/ZENDESK related environment variables from code
+
+**Patterns Worth Remembering:**
+1. Email forwarding is often more reliable than REST API for creating tickets in support systems
+2. Service-specific API keys are workspace-bound (verify domain ownership)
+3. Always test end-to-end in production after Vercel env var changes
+4. Check service documentation for email endpoints before building complex API integrations
+
+---
+
+## November 11, 2025
+
 ### Package updates - autoprefixer and biome
 
 **Updated autoprefixer and @biomejs/biome to latest stable versions:**

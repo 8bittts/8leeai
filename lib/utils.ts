@@ -118,7 +118,6 @@ export const VALID_COMMANDS = [
   "x",
   "twitter",
   "random",
-  "contact",
   "clear",
 ] as const
 
@@ -141,7 +140,6 @@ export const COMMAND_DISPLAY_LIST = [
   "wellfound",
   "linkedin (li)",
   "x",
-  "contact",
   "clear",
 ] as const
 
@@ -159,7 +157,6 @@ export const COMMAND_ALIASES: Record<string, string> = {
   wellfound: "Wellfound",
   email: "email",
   help: "help",
-  contact: "contact form",
   clear: "clear",
   random: "random project",
 } as const
