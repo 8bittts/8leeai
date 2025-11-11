@@ -1,8 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { env } from "@/lib/env"
 
-const INTERCOM_API_URL = env.INTERCOM_API_URL
-const ACCESS_TOKEN = env.INTERCOM_ACCESS_TOKEN
+const INTERCOM_API_URL = "https://api.intercom.io"
 
 /**
  * Creates a contact and sends them a message via Intercom
@@ -21,8 +19,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate environment
-    if (!ACCESS_TOKEN) {
+    // biome-ignore lint/complexity/useLiteralKeys: Next.js environment variable inlining requires bracket notation
+    const accessToken = (process.env as Record<string, string | undefined>)["INTERCOM_ACCESS_TOKEN"]
+    if (!accessToken) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
@@ -30,7 +29,7 @@ export async function POST(request: NextRequest) {
     const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts/search`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         Accept: "application/json",
       },
@@ -60,7 +59,7 @@ export async function POST(request: NextRequest) {
       const createResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
@@ -85,7 +84,7 @@ export async function POST(request: NextRequest) {
     const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         Accept: "application/json",
       },

@@ -1,8 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { env } from "@/lib/env"
 
-const INTERCOM_API_URL = env.INTERCOM_API_URL
-const ACCESS_TOKEN = env.INTERCOM_ACCESS_TOKEN
+const INTERCOM_API_URL = "https://api.intercom.io"
 
 /**
  * Fetches recent conversations from Intercom
@@ -10,8 +8,9 @@ const ACCESS_TOKEN = env.INTERCOM_ACCESS_TOKEN
  */
 export async function GET(_request: NextRequest) {
   try {
-    // Validate environment
-    if (!ACCESS_TOKEN) {
+    // biome-ignore lint/complexity/useLiteralKeys: Next.js environment variable inlining requires bracket notation
+    const accessToken = (process.env as Record<string, string | undefined>)["INTERCOM_ACCESS_TOKEN"]
+    if (!accessToken) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
@@ -19,7 +18,7 @@ export async function GET(_request: NextRequest) {
     const response = await fetch(`${INTERCOM_API_URL}/conversations?limit=10`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
         Accept: "application/json",
       },
     })
