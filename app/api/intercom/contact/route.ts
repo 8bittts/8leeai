@@ -28,8 +28,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Intercom credentials not configured" }, { status: 500 })
     }
 
-    // Step 1: Create or update contact using Contact Model API
-    const contactResponse = await fetch(`${INTERCOM_API_URL}/contacts`, {
+    // Send contact form message - Intercom will auto-create contact from email
+    // This is simpler than trying to create contact first
+    const submitResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -37,65 +38,40 @@ export async function POST(request: NextRequest) {
         "Intercom-Version": INTERCOM_VERSION,
       },
       body: JSON.stringify({
-        email,
-        name,
-        role: "user",
-      }),
-    })
-
-    if (!contactResponse.ok) {
-      const errorData = await contactResponse.text()
-      console.error(
-        `Failed to create/update contact: ${contactResponse.status} ${contactResponse.statusText}`,
-        errorData
-      )
-      throw new Error(
-        `Failed to create contact: ${contactResponse.status} ${contactResponse.statusText}`
-      )
-    }
-
-    const contactData = await contactResponse.json()
-    const contactId = contactData.id
-
-    // Step 2: Send message as admin to the contact
-    const messageResponse = await fetch(`${INTERCOM_API_URL}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        "Intercom-Version": INTERCOM_VERSION,
-      },
-      body: JSON.stringify({
+        message_type: "inbound",
         from: {
-          type: "admin",
-          id: "0", // System/automated message
-        },
-        to: {
           type: "contact",
-          id: contactId,
+          email,
         },
-        body: `New contact form submission from ${name} (${email}):\n\n${message}`,
+        body: `Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       }),
     })
 
-    if (!messageResponse.ok) {
-      const errorData = await messageResponse.text()
+    if (!submitResponse.ok) {
+      const errorText = await submitResponse.text()
       console.error(
-        `Failed to send message: ${messageResponse.status} ${messageResponse.statusText}`,
-        errorData
+        `Failed to submit contact form: ${submitResponse.status} ${submitResponse.statusText}`
+      )
+      console.error("Response body:", errorText)
+      console.error(
+        "Request payload:",
+        JSON.stringify({
+          message_type: "inbound",
+          from: { type: "contact", email },
+          body: `Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+        })
       )
       throw new Error(
-        `Failed to send message: ${messageResponse.status} ${messageResponse.statusText}`
+        `Failed to submit form: ${submitResponse.status} - ${errorText || submitResponse.statusText}`
       )
     }
 
-    const messageData = await messageResponse.json()
+    const submitData = await submitResponse.json()
 
     return NextResponse.json(
       {
         success: true,
-        contactId,
-        messageId: messageData.id,
+        messageId: submitData.id,
       },
       { status: 200 }
     )
