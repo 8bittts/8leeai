@@ -121,7 +121,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **UI**: [React 19.2.0](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
-- **Code Quality**: [Biome 2.3.4](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **Code Quality**: [Biome 2.3.5](https://biomejs.dev) - 100+ error rules + 5 nursery rules
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
