@@ -44,14 +44,16 @@ export async function POST(request: NextRequest) {
     console.log(`[ZENDESK] Creating ticket for: ${validatedData.requesterEmail}`)
 
     // Zendesk Tickets API request format
+    // Based on: https://developer.zendesk.com/documentation/ticketing/managing-tickets/creating-and-updating-tickets/
     const ticketPayload = {
       ticket: {
         subject: validatedData.subject,
-        description: validatedData.description,
-        requester_email: validatedData.requesterEmail,
-        requester_name: validatedData.requesterName,
         comment: {
           body: validatedData.description,
+        },
+        requester: {
+          name: validatedData.requesterName,
+          email: validatedData.requesterEmail,
         },
         priority: validatedData.priority,
         tags: [validatedData.category, "api-created"],
