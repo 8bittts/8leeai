@@ -64,7 +64,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
 
       setStatusMessage({
         type: "success",
-        message: `Contact created successfully! (ID: ${data.contactId})`,
+        message: `Conversation created! (Conversation ID: ${data.conversationId})`,
       })
 
       // Reset form after delay

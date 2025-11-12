@@ -47,9 +47,7 @@ async function createZendeskTicket(data: TicketData): Promise<boolean> {
       return false
     }
 
-    console.log(
-      `✅ Zendesk Ticket #${data.name.split(" ")[2]}: Created (ID: ${result.ticketId})`
-    )
+    console.log(`✅ Zendesk Ticket #${data.name.split(" ")[2]}: Created (ID: ${result.ticketId})`)
     return true
   } catch (error) {
     console.error("❌ Zendesk Error:", error instanceof Error ? error.message : error)
@@ -117,12 +115,6 @@ async function main() {
 
   if (!validTargets.includes(target)) {
     console.error(`Invalid target: ${target}. Valid options: ${validTargets.join(", ")}`)
-    process.exit(1)
-  }
-
-  // biome-ignore lint/complexity/useLiteralKeys: Required for TypeScript strict mode
-  if (!process.env["RESEND_API_KEY"]) {
-    console.error("❌ RESEND_API_KEY environment variable is not set")
     process.exit(1)
   }
 

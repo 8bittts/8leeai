@@ -1,11 +1,10 @@
 /**
- * Intercom Contacts API Route
+ * Intercom Conversations API Route
  *
- * POST /api/intercom/conversations - Create/register a contact
+ * POST /api/intercom/conversations - Create a contact and conversation
  *
- * Simplified approach: Just create contacts in Intercom.
- * Users then reach out via email (amihb4cq@8lee.intercom-mail.com)
- * for direct messaging. No webhook needed.
+ * Creates both a contact and a conversation (ticket) with the initial message.
+ * This allows visitors to submit support requests directly through the form.
  */
 
 import { type NextRequest, NextResponse } from "next/server"
@@ -14,7 +13,7 @@ import { IntercomConversationSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/intercom/conversations
- * Create a contact in Intercom
+ * Create a contact and conversation in Intercom
  */
 export async function POST(request: NextRequest) {
   try {
@@ -33,7 +32,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
     }
 
-    // Create or find the contact
+    // Step 1: Create or find the contact
     const contactUrl = "https://api.intercom.io/contacts"
 
     // Minimal payload - only email and name are required/supported
@@ -94,15 +93,46 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Success: Contact created or already exists
+    // Step 2: Create a conversation with the initial message
+    const conversationUrl = "https://api.intercom.io/conversations"
+
+    const conversationPayload = {
+      id: contactId,
+      body: validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
+    }
+
+    const conversationResponse = await fetch(conversationUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${intercomAccessToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Intercom-Version": "2.14",
+      },
+      body: JSON.stringify(conversationPayload),
+    })
+
+    const conversationData = await conversationResponse.json()
+
+    if (!conversationResponse.ok) {
+      console.error("Intercom conversation API error:", conversationData)
+      return NextResponse.json(
+        { error: "Failed to create conversation", details: conversationData },
+        { status: conversationResponse.status }
+      )
+    }
+
+    const conversationId = conversationData.id
+
+    // Success: Contact and conversation created
     return NextResponse.json(
       {
         success: true,
         contactId,
+        conversationId,
         visitorEmail: validatedData.visitorEmail,
         visitorName: validatedData.visitorName,
-        message:
-          "Contact registered. You can now email amihb4cq@8lee.intercom-mail.com to start a conversation.",
+        message: "Conversation created successfully. Your support request has been received.",
       },
       { status: 201 }
     )
