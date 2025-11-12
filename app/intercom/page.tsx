@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { TerminalContainer } from "@/components/terminal-container"
-import { IntercomContactForm } from "./components/intercom-contact-form"
 import { AIMessageSuggester } from "./components/ai-message-suggester"
+import { IntercomContactForm } from "./components/intercom-contact-form"
 import { LiveChatWidget } from "./components/live-chat-widget"
 
 export default function IntercomDemo() {
@@ -35,12 +35,14 @@ export default function IntercomDemo() {
           </p>
           <div className="flex gap-2 flex-wrap">
             <button
+              type="button"
               onClick={() => setShowContactForm(!showContactForm)}
               className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
             >
               {showContactForm ? "[Hide]" : "[Start Conversation]"}
             </button>
             <button
+              type="button"
               onClick={() => setShowAISuggestions(!showAISuggestions)}
               className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
             >

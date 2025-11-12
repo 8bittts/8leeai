@@ -22,8 +22,11 @@ export async function POST(request: NextRequest) {
     const validatedData = ZendeskTicketSchema.parse(body)
 
     // Ensure Zendesk credentials exist
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskToken = process.env["ZENDESK_API_TOKEN"]
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskSubdomain = process.env["ZENDESK_SUBDOMAIN"]
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskEmail = process.env["ZENDESK_EMAIL"]
 
     if (!(zendeskToken && zendeskSubdomain && zendeskEmail)) {
@@ -125,8 +128,11 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskToken = process.env["ZENDESK_API_TOKEN"]
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskSubdomain = process.env["ZENDESK_SUBDOMAIN"]
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskEmail = process.env["ZENDESK_EMAIL"]
 
     if (!(zendeskToken && zendeskSubdomain && zendeskEmail)) {
