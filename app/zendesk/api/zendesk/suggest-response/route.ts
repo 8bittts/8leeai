@@ -12,7 +12,7 @@ import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { AISuggestionsResponseSchema, ZendeskResponseSuggestionSchema } from "../../lib/schemas"
+import { AISuggestionsResponseSchema, ZendeskResponseSuggestionSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/zendesk/suggest-response
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     } = validatedData
 
     // Validate OpenAI API key
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env["OPENAI_API_KEY"]) {
       console.error("Missing OPENAI_API_KEY environment variable")
       return NextResponse.json({ error: "AI service not configured" }, { status: 500 })
     }
@@ -70,7 +70,6 @@ Generate a ${tone} support response that acknowledges their issue and offers hel
           system: systemPrompt,
           prompt: userPrompt,
           temperature: 0.7 + index * 0.1, // Increase creativity for variation
-          maxTokens: 150,
         })
 
         return {

@@ -9,7 +9,7 @@
 
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { IntercomConversationSchema } from "../../lib/schemas"
+import { IntercomConversationSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/intercom/conversations
@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
     const validatedData = IntercomConversationSchema.parse(body)
 
     // Ensure Intercom credentials exist
-    const intercomAccessToken = process.env.INTERCOM_ACCESS_TOKEN
-    const intercomWorkspaceId = process.env.INTERCOM_WORKSPACE_ID
+    const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
+    const intercomWorkspaceId = process.env["INTERCOM_WORKSPACE_ID"]
 
     if (!(intercomAccessToken && intercomWorkspaceId)) {
       console.error("Missing Intercom credentials in environment")
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
-    const intercomAccessToken = process.env.INTERCOM_ACCESS_TOKEN
+    const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
 
     if (!intercomAccessToken) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
