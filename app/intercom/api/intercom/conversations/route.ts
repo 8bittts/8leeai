@@ -22,7 +22,9 @@ export async function POST(request: NextRequest) {
     const validatedData = IntercomConversationSchema.parse(body)
 
     // Ensure Intercom credentials exist
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const intercomWorkspaceId = process.env["INTERCOM_WORKSPACE_ID"]
 
     if (!(intercomAccessToken && intercomWorkspaceId)) {
@@ -148,6 +150,7 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
+    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
 
     if (!intercomAccessToken) {

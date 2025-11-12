@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { TerminalContainer } from "@/components/terminal-container"
-import { ZendeskTicketForm } from "./components/zendesk-ticket-form"
 import { AIResponseViewer } from "./components/ai-response-viewer"
+import { ZendeskTicketForm } from "./components/zendesk-ticket-form"
 
 export default function ZendeskDemo() {
   const [showTicketForm, setShowTicketForm] = useState(false)
@@ -27,12 +27,14 @@ export default function ZendeskDemo() {
           </p>
           <div className="flex gap-2 flex-wrap">
             <button
+              type="button"
               onClick={() => setShowTicketForm(!showTicketForm)}
               className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
             >
               {showTicketForm ? "[Hide]" : "[Create Ticket]"}
             </button>
             <button
+              type="button"
               onClick={() => {
                 setSelectedTicket({
                   id: "123456",

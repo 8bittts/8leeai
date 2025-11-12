@@ -127,7 +127,7 @@ export function AIMessageSuggester({
             <select
               id="msg-count"
               value={suggestionCount}
-              onChange={(e) => setSuggestionCount(parseInt(e.target.value))}
+              onChange={(e) => setSuggestionCount(Number.parseInt(e.target.value, 10))}
               className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
               disabled={isLoading}
             >
@@ -157,10 +157,7 @@ export function AIMessageSuggester({
       {suggestions.length > 0 && (
         <div className="space-y-3">
           {suggestions.map((suggestion, index) => (
-            <div
-              key={index}
-              className="bg-black border border-green-500 rounded p-3 text-sm"
-            >
+            <div key={index} className="bg-black border border-green-500 rounded p-3 text-sm">
               <div className="flex justify-between items-start mb-2">
                 <p className="font-bold text-green-500">Option {index + 1}</p>
                 <span className="text-xs text-gray-400">
@@ -170,9 +167,7 @@ export function AIMessageSuggester({
 
               <p className="mb-2 text-green-400">{suggestion.message}</p>
 
-              <p className="text-xs text-gray-400 italic">
-                Why: {suggestion.reasoning}
-              </p>
+              <p className="text-xs text-gray-400 italic">Why: {suggestion.reasoning}</p>
 
               <div className="mt-2 flex gap-2">
                 <button
