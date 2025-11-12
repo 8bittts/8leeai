@@ -14,9 +14,9 @@
     "format": "bunx biome format --write .",
     "check": "bunx biome check --write .",
     "clean": "rm -rf .next node_modules/.cache .turbo",
-    "packages": "bun scripts/package-monitor.js",
-    "packages:watch": "bun scripts/package-monitor.js --watch",
-    "packages:critical": "bun scripts/package-monitor.js --critical"
+    "packages": "bun scripts/x-package-monitor.js",
+    "packages:watch": "bun scripts/x-package-monitor.js --watch",
+    "packages:critical": "bun scripts/x-package-monitor.js --critical"
   },
   "dependencies": {
     "@intercom/messenger-js-sdk": "^0.0.18",
