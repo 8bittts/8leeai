@@ -9,7 +9,7 @@
 
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { ZendeskTicketSchema } from "../../lib/schemas"
+import { ZendeskTicketSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/zendesk/tickets
