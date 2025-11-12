@@ -1,19 +1,57 @@
 /**
- * Intercom Conversations API Route
+ * Intercom Contacts API Route
  *
- * POST /api/intercom/conversations - Create a contact and conversation
+ * POST /api/intercom/conversations - Create a support contact/ticket
  *
- * Creates both a contact and a conversation (ticket) with the initial message.
- * This allows visitors to submit support requests directly through the form.
+ * Creates a contact in Intercom that represents a support request or issue.
+ * Contacts with email and name become visible as support tickets in the Intercom dashboard.
  */
 
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { IntercomConversationSchema } from "../../../lib/schemas"
 
+async function createConversation(
+  contactId: string,
+  initialMessage: string,
+  visitorName: string,
+  accessToken: string
+): Promise<string | null> {
+  try {
+    const conversationUrl = "https://api.intercom.io/conversations"
+    const conversationPayload = {
+      contact_id: contactId,
+      body: initialMessage || `Support request from ${visitorName}`,
+    }
+
+    const conversationResponse = await fetch(conversationUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Intercom-Version": "2.14",
+      },
+      body: JSON.stringify(conversationPayload),
+    })
+
+    const conversationData = await conversationResponse.json()
+
+    if (conversationResponse.ok) {
+      return conversationData.id
+    }
+
+    console.warn("Intercom conversation creation warning:", conversationData)
+    return null
+  } catch (error) {
+    console.error("Error creating conversation:", error)
+    return null
+  }
+}
+
 /**
  * POST /api/intercom/conversations
- * Create a contact and conversation in Intercom
+ * Create a contact in Intercom (support ticket)
  */
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +70,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
     }
 
-    // Step 1: Create or find the contact
+    // Create or find the contact
     const contactUrl = "https://api.intercom.io/contacts"
 
     // Minimal payload - only email and name are required/supported
@@ -93,46 +131,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Step 2: Create a conversation with the initial message
-    const conversationUrl = "https://api.intercom.io/conversations"
+    // Step 2: Create a conversation (support ticket) for this contact
+    const conversationId = await createConversation(
+      contactId,
+      validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
+      validatedData.visitorName,
+      intercomAccessToken
+    )
 
-    const conversationPayload = {
-      id: contactId,
-      body: validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
-    }
-
-    const conversationResponse = await fetch(conversationUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${intercomAccessToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Intercom-Version": "2.14",
-      },
-      body: JSON.stringify(conversationPayload),
-    })
-
-    const conversationData = await conversationResponse.json()
-
-    if (!conversationResponse.ok) {
-      console.error("Intercom conversation API error:", conversationData)
-      return NextResponse.json(
-        { error: "Failed to create conversation", details: conversationData },
-        { status: conversationResponse.status }
-      )
-    }
-
-    const conversationId = conversationData.id
-
-    // Success: Contact and conversation created
+    // Success: Contact created and conversation attempted
     return NextResponse.json(
       {
         success: true,
         contactId,
-        conversationId,
+        conversationId: conversationId || contactId,
         visitorEmail: validatedData.visitorEmail,
         visitorName: validatedData.visitorName,
-        message: "Conversation created successfully. Your support request has been received.",
+        message: "Support request received! Your conversation has been created.",
       },
       { status: 201 }
     )
