@@ -49,6 +49,78 @@ async function createConversation(
   }
 }
 
+async function createTicket(
+  contactEmail: string,
+  message: string,
+  visitorName: string,
+  accessToken: string
+): Promise<string | null> {
+  try {
+    // Get or create a default ticket type first
+    let ticketTypeId = "1" // Default to ID 1 (common default)
+
+    // Try to get existing ticket types to find one we can use
+    try {
+      const ticketTypesUrl = "https://api.intercom.io/ticket_types"
+      const typesResponse = await fetch(ticketTypesUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Intercom-Version": "2.14",
+        },
+      })
+
+      if (typesResponse.ok) {
+        const typesData = await typesResponse.json()
+        if (typesData.data && typesData.data.length > 0) {
+          ticketTypeId = typesData.data[0].id
+        }
+      }
+    } catch {
+      // If fetching fails, use default ID "1"
+      console.log("Could not fetch ticket types, using default ticket type ID")
+    }
+
+    // Create the ticket
+    const ticketUrl = "https://api.intercom.io/tickets"
+    const ticketPayload = {
+      contacts: [
+        {
+          email: contactEmail,
+        },
+      ],
+      ticket_type_id: ticketTypeId,
+      // Only include ticket_attributes if there are custom fields defined
+      // Most basic ticket types don't have custom attributes
+    }
+
+    const ticketResponse = await fetch(ticketUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Intercom-Version": "2.14",
+      },
+      body: JSON.stringify(ticketPayload),
+    })
+
+    const ticketData = await ticketResponse.json()
+
+    if (ticketResponse.ok) {
+      console.log(`[INTERCOM] Ticket created successfully: ${ticketData.id}`)
+      return ticketData.id
+    }
+
+    // If it fails, log but don't fail the whole request
+    console.warn("Intercom ticket creation warning:", ticketData)
+    return null
+  } catch (error) {
+    console.error("Error creating ticket:", error)
+    return null
+  }
+}
+
 /**
  * POST /api/intercom/conversations
  * Create a contact in Intercom (support ticket)
@@ -131,7 +203,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Step 2: Create a conversation (support ticket) for this contact
+    // Step 2: Create a conversation for this contact
     const conversationId = await createConversation(
       contactId,
       validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
@@ -139,15 +211,24 @@ export async function POST(request: NextRequest) {
       intercomAccessToken
     )
 
-    // Success: Contact created and conversation attempted
+    // Step 3: Create a ticket for this contact
+    const ticketId = await createTicket(
+      validatedData.visitorEmail,
+      validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
+      validatedData.visitorName,
+      intercomAccessToken
+    )
+
+    // Success: Contact created, conversation and ticket attempted
     return NextResponse.json(
       {
         success: true,
         contactId,
         conversationId: conversationId || contactId,
+        ticketId: ticketId || null,
         visitorEmail: validatedData.visitorEmail,
         visitorName: validatedData.visitorName,
-        message: "Support request received! Your conversation has been created.",
+        message: "Support request received! Your ticket has been created.",
       },
       { status: 201 }
     )
