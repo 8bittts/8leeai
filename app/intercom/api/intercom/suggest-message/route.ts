@@ -13,7 +13,7 @@ import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { IntercomAISuggestionSchema, IntercomAISuggestionsSchema } from "../../lib/schemas"
+import { IntercomAISuggestionSchema, IntercomAISuggestionsSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/intercom/suggest-message
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     } = validatedData
 
     // Validate OpenAI API key
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env["OPENAI_API_KEY"]) {
       console.error("Missing OPENAI_API_KEY environment variable")
       return NextResponse.json({ error: "AI service not configured" }, { status: 500 })
     }
@@ -88,7 +88,6 @@ Generate a ${messageType} message that continues this conversation naturally.`
           system: systemPrompt,
           prompt: userPrompt,
           temperature: 0.6 + index * 0.15, // Vary temperature for diversity
-          maxTokens: 100,
         })
 
         // Determine confidence based on message type and index

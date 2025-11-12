@@ -22,9 +22,9 @@ export async function POST(request: NextRequest) {
     const validatedData = ZendeskTicketSchema.parse(body)
 
     // Ensure Zendesk credentials exist
-    const zendeskToken = process.env.ZENDESK_API_TOKEN
-    const zendeskSubdomain = process.env.ZENDESK_SUBDOMAIN
-    const zendeskEmail = process.env.ZENDESK_EMAIL
+    const zendeskToken = process.env["ZENDESK_API_TOKEN"]
+    const zendeskSubdomain = process.env["ZENDESK_SUBDOMAIN"]
+    const zendeskEmail = process.env["ZENDESK_EMAIL"]
 
     if (!(zendeskToken && zendeskSubdomain && zendeskEmail)) {
       console.error("Missing Zendesk credentials in environment")
@@ -125,9 +125,9 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
-    const zendeskToken = process.env.ZENDESK_API_TOKEN
-    const zendeskSubdomain = process.env.ZENDESK_SUBDOMAIN
-    const zendeskEmail = process.env.ZENDESK_EMAIL
+    const zendeskToken = process.env["ZENDESK_API_TOKEN"]
+    const zendeskSubdomain = process.env["ZENDESK_SUBDOMAIN"]
+    const zendeskEmail = process.env["ZENDESK_EMAIL"]
 
     if (!(zendeskToken && zendeskSubdomain && zendeskEmail)) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
