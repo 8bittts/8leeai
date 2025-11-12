@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 /**
- * Test script to create 10 tickets/contacts for both Zendesk and Intercom
+ * Test script to create 1 ticket/contact for both Zendesk and Intercom
  * Creates real support tickets/contacts in each system
  * Usage: bun scripts/test-contact-forms.ts [zendesk|intercom|both]
  */
@@ -43,11 +43,11 @@ async function createZendeskTicket(data: TicketData): Promise<boolean> {
     const result = await response.json()
 
     if (!response.ok) {
-      console.error(`❌ Zendesk Ticket #${data.name.split(" ")[2]}: Failed - ${result.error}`)
+      console.error(`❌ Zendesk: Failed - ${result.error}`)
       return false
     }
 
-    console.log(`✅ Zendesk Ticket #${data.name.split(" ")[2]}: Created (ID: ${result.ticketId})`)
+    console.log(`✅ Zendesk: Ticket Created (ID: ${result.ticketId})`)
     return true
   } catch (error) {
     console.error("❌ Zendesk Error:", error instanceof Error ? error.message : error)
@@ -73,12 +73,12 @@ async function createIntercomContact(data: TicketData): Promise<boolean> {
     const result = await response.json()
 
     if (!response.ok) {
-      console.error(`❌ Intercom Contact #${data.name.split(" ")[2]}: Failed - ${result.error}`)
+      console.error(`❌ Intercom: Failed - ${result.error}`)
       return false
     }
 
     console.log(
-      `✅ Intercom Contact #${data.name.split(" ")[2]}: Created (ID: ${result.contactId})`
+      `✅ Intercom: Conversation/Issue Created (Contact ID: ${result.contactId}, Conversation ID: ${result.conversationId})`
     )
     return true
   } catch (error) {
@@ -91,22 +91,10 @@ async function createTestItems(
   service: "zendesk" | "intercom",
   createFn: (data: TicketData) => Promise<boolean>
 ): Promise<{ success: number; failed: number }> {
-  console.log(`🎫 Creating 10 test items in ${service.toUpperCase()}...\n`)
+  const data = generateTestTicket(1)
+  const result = await createFn(data)
 
-  let success = 0
-  let failed = 0
-
-  for (let i = 1; i <= 10; i++) {
-    const data = generateTestTicket(i)
-    const result = await createFn(data)
-    if (result) success++
-    else failed++
-    // Small delay between submissions to avoid rate limiting
-    await new Promise((resolve) => setTimeout(resolve, 300))
-  }
-
-  console.log()
-  return { success, failed }
+  return { success: result ? 1 : 0, failed: result ? 0 : 1 }
 }
 
 async function main() {
@@ -141,17 +129,17 @@ async function main() {
   }
 
   // Summary
-  console.log("📊 Test Results Summary")
+  console.log("\n📊 Test Results Summary")
   console.log("======================")
-  console.log(`✅ Successful tickets/contacts: ${totalSuccess}`)
-  console.log(`❌ Failed tickets/contacts: ${totalFailed}`)
+  console.log(`✅ Successful: ${totalSuccess}`)
+  console.log(`❌ Failed: ${totalFailed}`)
   const total = totalSuccess + totalFailed
   const successRate = total > 0 ? ((totalSuccess / total) * 100).toFixed(1) : "0"
   console.log(`📈 Success Rate: ${successRate}%\n`)
 
   if (totalFailed === 0 && totalSuccess > 0) {
-    console.log("🎉 All tickets/contacts created successfully!")
-    console.log("✨ Check your Zendesk and Intercom admin dashboards to see the created items.\n")
+    console.log("🎉 All tickets/issues created successfully!")
+    console.log("✨ Check your Zendesk and Intercom admin dashboards to verify.\n")
   } else if (totalFailed > 0) {
     console.log(`⚠️  ${totalFailed} item(s) failed. Check the error messages above.\n`)
     process.exit(1)
