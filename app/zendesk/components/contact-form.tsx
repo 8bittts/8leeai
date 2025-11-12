@@ -3,12 +3,10 @@
 import { useRef, useState } from "react"
 
 interface ContactFormProps {
-  recipientEmail: string
-  recipientName: string
   onClose: () => void
 }
 
-export function ContactForm({ recipientEmail, recipientName, onClose }: ContactFormProps) {
+export function ContactForm({ onClose }: ContactFormProps) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
@@ -19,7 +17,7 @@ export function ContactForm({ recipientEmail, recipientName, onClose }: ContactF
   } | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Validate inputs
@@ -45,19 +43,27 @@ export function ContactForm({ recipientEmail, recipientName, onClose }: ContactF
     setStatusMessage(null)
 
     try {
-      // Create mailto link with pre-filled subject and body
-      const subject = encodeURIComponent(`Support Request from ${name}`)
-      const body = encodeURIComponent(
-        `From: ${name} <${email}>\n\n${message}\n\n---\nPlease reply to ${email}`
-      )
-      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`
+      const response = await fetch("/api/contact/zendesk", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      })
 
-      // Open mail client
-      window.location.href = mailtoLink
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send contact form")
+      }
 
       setStatusMessage({
         type: "success",
-        message: `Opening your email client. Send to ${recipientName}...`,
+        message: "Email sent successfully!",
       })
 
       // Reset form after delay
@@ -70,7 +76,7 @@ export function ContactForm({ recipientEmail, recipientName, onClose }: ContactF
     } catch (error) {
       setStatusMessage({
         type: "error",
-        message: error instanceof Error ? error.message : "An error occurred",
+        message: error instanceof Error ? error.message : "Failed to send email",
       })
     } finally {
       setIsSubmitting(false)

@@ -261,13 +261,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         )}
 
         {/* Contact Form Section */}
-        {showContact && (
-          <ContactForm
-            recipientEmail="support@8lee.zendesk.com"
-            recipientName="Zendesk Support"
-            onClose={() => setShowContact(false)}
-          />
-        )}
+        {showContact && <ContactForm onClose={() => setShowContact(false)} />}
 
         {/* Education Section */}
         {showEducation && (
