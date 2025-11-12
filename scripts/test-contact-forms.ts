@@ -158,10 +158,10 @@ async function main() {
   console.log(`📈 Success Rate: ${successRate}%\n`)
 
   if (totalFailed === 0 && totalSuccess > 0) {
-    console.log("🎉 All emails sent successfully!")
-    console.log("✨ Check your Zendesk and Intercom email inboxes to verify delivery.\n")
+    console.log("🎉 All tickets/contacts created successfully!")
+    console.log("✨ Check your Zendesk and Intercom admin dashboards to see the created items.\n")
   } else if (totalFailed > 0) {
-    console.log(`⚠️  ${totalFailed} email(s) failed. Check the error messages above.\n`)
+    console.log(`⚠️  ${totalFailed} item(s) failed. Check the error messages above.\n`)
     process.exit(1)
   }
 }
