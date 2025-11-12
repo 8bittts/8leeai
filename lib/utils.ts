@@ -119,6 +119,7 @@ export const VALID_COMMANDS = [
   "twitter",
   "random",
   "clear",
+  "contact",
 ] as const
 
 export type Command = (typeof VALID_COMMANDS)[number]
@@ -159,4 +160,5 @@ export const COMMAND_ALIASES: Record<string, string> = {
   help: "help",
   clear: "clear",
   random: "random project",
+  contact: "contact form",
 } as const
