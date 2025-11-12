@@ -26,6 +26,9 @@ const ALLOWED_ORIGINS = [
   "https://8leeai.vercel.app",
   "https://8leeai-death-note.vercel.app",
   "https://8leeai-git-main-death-note.vercel.app",
+  // Development and localhost
+  "http://localhost:1333",
+  "http://127.0.0.1:1333",
 ]
 
 export function proxy(request: NextRequest) {
@@ -79,14 +82,14 @@ export function proxy(request: NextRequest) {
       "web-share=()"
   )
 
-  // CSP: Restrict resource loading, allow Vercel analytics/live only
+  // CSP: Restrict resource loading, allow Vercel analytics/live and third-party APIs
   const cspDirectives = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
-    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com",
+    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.zendesk.com https://api.intercom.io",
     "media-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
