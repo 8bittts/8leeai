@@ -43,27 +43,28 @@ export function ContactForm({ onClose }: ContactFormProps) {
     setStatusMessage(null)
 
     try {
-      const response = await fetch("/api/contact/intercom", {
+      const response = await fetch("/api/intercom/conversations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
-          email,
-          message,
+          visitorEmail: email,
+          visitorName: name,
+          initialMessage: message,
+          topic: "support",
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to send contact form")
+        throw new Error(data.error || "Failed to create contact")
       }
 
       setStatusMessage({
         type: "success",
-        message: "Email sent successfully!",
+        message: `Contact created successfully! (ID: ${data.contactId})`,
       })
 
       // Reset form after delay
@@ -162,7 +163,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
           disabled={isSubmitting}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? "Opening..." : "Send Email"}
+          {isSubmitting ? "Creating Contact..." : "Create Contact"}
         </button>
       </form>
     </section>
