@@ -253,54 +253,173 @@ Because all three sites reference the same files via relative imports, styling a
 
 ---
 
-## Phase 4: Core Logic Removal (Keep Structure)
+## Phase 4: Core Logic Removal & Architecture Review
 
-### Step 4.1: Remove Zendesk integration logic
+**Status:** ✅ COMPLETED
+- Main `app/` is clean (no Zendesk/Intercom references found)
+- Both demo sites ready for clean implementations
 
-In `zendesk/`:
-- Remove actual Zendesk API calls from components
-- Clear `api/zendesk/*` endpoints
-- Remove Zendesk credentials/secrets handling
-- Keep component structure and prop interfaces
+### What Was Found:
+- ✅ Zero integration code in main app (isolated as intended)
+- ✅ Demo sites (`app/zendesk`, `app/intercom`) structurally ready
+- ✅ All components copied but contain no third-party integration logic
 
-### Step 4.2: Remove Intercom integration logic
-
-In `intercom/`:
-- Remove actual Intercom API calls from components
-- Clear `api/intercom/*` endpoints
-- Remove Intercom credentials/secrets handling
-- Keep component structure and prop interfaces
-
-### Step 4.3: Remove shared integration references
-
-From main `app/`:
-- Remove any Zendesk/Intercom code that shouldn't be there
-- Keep main site as standalone terminal portfolio
+### Result:
+Clean slate for production-grade implementations in Phase 5
 
 ---
 
-## Phase 5: Development & Implementation
+## Phase 5: Production-Grade Implementations with AI Integration
 
-### Step 5.1: Zendesk implementation
+### Architecture Foundations (Recruiter-Impressing Standards)
 
-Once structure is clean:
-- Implement Zendesk API integration in `zendesk/app/api/zendesk/`
-- Add form submission logic in `zendesk/components/`
-- Test at `8lee.ai/zendesk`
+**OpenAI Integration Pattern** (from deathnote project):
+- ✅ Vercel AI SDK (`@ai-sdk/openai`) with GPT-4o
+- ✅ Structured prompts with modular architecture
+- ✅ Input validation via Zod schemas
+- ✅ Rate limiting for cost control
+- ✅ Post-processing for output quality
+- ✅ Metadata generation (word count, timing, etc.)
 
-### Step 5.2: Intercom implementation
+---
 
-Once structure is clean:
-- Implement Intercom API integration in `intercom/app/api/intercom/`
-- Add messenger widget integration in `intercom/components/`
-- Test at `8lee.ai/intercom`
+### Step 5.1: Zendesk Implementation - "Intelligent Ticketing System"
 
-### Step 5.3: Testing & QA
+**Core Features:**
+1. **Contact Form → Ticket Creation**
+   - User submits contact via terminal UI
+   - API: `POST /api/zendesk/tickets` creates Zendesk ticket
+   - Returns ticket ID, status, and auto-assigned team member
 
-- Verify main site unaffected: `8lee.ai`
-- Test Zendesk site: `8lee.ai/zendesk`
-- Test Intercom site: `8lee.ai/intercom`
-- All share identical styling/UX baseline
+2. **AI-Powered Initial Response** (Recruiter-Impressive)
+   - Uses GPT-4o to generate intelligent first response based on ticket subject
+   - Suggests 3 response templates ranked by relevance
+   - Team member can approve, edit, or regenerate
+   - System learns from approved responses (via tagged metadata)
+
+3. **Real-Time Ticket Status Dashboard**
+   - Shows pending tickets with priority indicators
+   - Updates via polling every 10 seconds
+   - Color-coded by status (pending, in-progress, resolved, closed)
+
+4. **Customer Satisfaction AI**
+   - After resolution, generates satisfaction survey
+   - Analyzes responses with sentiment analysis
+   - Flags urgent feedback for human review
+
+**API Endpoints:**
+```
+POST /api/zendesk/tickets - Create ticket
+GET /api/zendesk/tickets - List tickets
+GET /api/zendesk/tickets/:id - Get ticket details
+POST /api/zendesk/suggest-response - AI response suggestions
+POST /api/zendesk/feedback - Store customer feedback
+```
+
+**Tech Stack:**
+- Zod for validation
+- OpenAI GPT-4o for responses
+- Zendesk SDK for API calls
+- TypeScript strict mode
+- Unit tests for all API handlers
+
+---
+
+### Step 5.2: Intercom Implementation - "AI Conversational Messenger"
+
+**Core Features:**
+1. **Intelligent Chat Interface**
+   - Terminal-styled live chat widget
+   - Conversation history stored with context
+   - AI suggests next message topics based on conversation flow
+
+2. **AI-Powered Responses** (Recruiter-Impressive)
+   - First message: AI generates contextual response in style of brand
+   - Follow-ups: AI understands conversation context, suggests answers
+   - Button: "Escalate to Human" with context pre-populated
+   - System routes to most relevant human agent
+
+3. **Visitor Analytics & Personalization**
+   - Tracks visitor info: page time, bounce, return status
+   - AI generates greeting based on visit history
+   - Suggests help topics based on current page
+
+4. **Conversation Zoning**
+   - AI categorizes conversations (sales, support, feedback)
+   - Auto-routes to correct team
+   - Provides human with pre-written handoff context
+
+**API Endpoints:**
+```
+POST /api/intercom/conversations - Start new conversation
+GET /api/intercom/conversations/:id - Get conversation history
+POST /api/intercom/messages - Send message (human or AI)
+POST /api/intercom/suggest-message - AI message suggestions
+POST /api/intercom/route-to-human - Escalate to human agent
+GET /api/intercom/visitor-analytics - Get visitor data
+```
+
+**Tech Stack:**
+- Zod for validation
+- OpenAI GPT-4o for responses
+- Intercom API SDK
+- WebSocket for real-time updates
+- TypeScript strict mode
+- Unit tests + integration tests
+
+---
+
+### Step 5.3: Code Quality Standards (Recruiter Checklist)
+
+**All implementations MUST include:**
+
+✅ **Type Safety**
+- TypeScript strict mode
+- Zod runtime validation
+- No `any` types
+- Proper error types
+
+✅ **Error Handling**
+- Try-catch with specific error types
+- Structured error responses
+- Rate limit errors (429)
+- Timeout handling (>10s)
+
+✅ **Security**
+- Environment variables for all credentials
+- Request validation
+- CORS properly configured
+- Rate limiting (5-10 req/min per user)
+- No credentials in logs
+
+✅ **Testing**
+- Unit tests for API handlers
+- Happy path + error paths
+- Mocked external API calls
+- 80%+ code coverage
+
+✅ **Observability**
+- Structured logging (JSON format)
+- Request/response logging
+- Performance metrics
+- Error tracking
+
+✅ **Documentation**
+- JSDoc on all functions
+- README with setup instructions
+- Example requests/responses
+- Architecture diagrams (Mermaid)
+
+---
+
+### Step 5.4: Testing & QA
+
+- ✅ Verify main site unaffected: `8lee.ai`
+- ✅ Test Zendesk: `8lee.ai/zendesk` - create ticket, view status, test AI responses
+- ✅ Test Intercom: `8lee.ai/intercom` - start conversation, test routing, escalation
+- ✅ All share identical styling/UX baseline
+- ✅ Load test both with concurrent users (at least 50)
+- ✅ Test error states: API timeouts, invalid input, rate limits
 
 ---
 
@@ -345,10 +464,13 @@ Once structure is clean:
 ## Current Status
 
 - ✅ Phase 1 complete: Directory structure & copying (app/zendesk, app/intercom created with all files)
-- ✅ Phase 2 complete: Configuration & routing (Next.js routes `/zendesk` and `/intercom` working)
+- ✅ Phase 2 complete: Configuration & routing (Next.js routes `/zendesk` and `/intercom` working, proxy fixed)
 - ✅ Phase 3 complete: Styling & layout harmonization (skipped - automatic via shared imports)
-- ⏳ Phase 4: Core logic removal (strip incomplete integration code)
-- ⏳ Phase 5: Development & implementation (build out Zendesk/Intercom integrations)
+- ✅ Phase 4 complete: Core logic cleanup (main app verified clean, demo sites ready)
+- 🚀 Phase 5 IN PROGRESS: Production-grade AI-integrated implementations
+  - Zendesk: Intelligent Ticketing with AI response suggestions
+  - Intercom: AI Conversational Messenger with routing & analytics
+  - Both following recruiter-impressing code standards
 
 ---
 
