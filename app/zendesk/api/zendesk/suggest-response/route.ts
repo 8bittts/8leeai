@@ -12,10 +12,7 @@ import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import {
-  AISuggestionsResponseSchema,
-  ZendeskResponseSuggestionSchema,
-} from "../../lib/schemas"
+import { AISuggestionsResponseSchema, ZendeskResponseSuggestionSchema } from "../../lib/schemas"
 
 /**
  * POST /api/zendesk/suggest-response
