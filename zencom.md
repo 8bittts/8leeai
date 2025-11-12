@@ -344,9 +344,41 @@ Once structure is clean:
 
 ## Current Status
 
-- ✅ Plan created with shared styling architecture
-- ⏳ Phase 1.0-1.6 pending execution
-- ⏳ Phase 2-5 pending
+- ✅ Phase 1 complete: Directory structure & copying (app/zendesk, app/intercom created with all files)
+- ✅ Phase 2 complete: Configuration & routing (Next.js routes `/zendesk` and `/intercom` working)
+- ✅ Phase 3 complete: Styling & layout harmonization (skipped - automatic via shared imports)
+- ⏳ Phase 4: Core logic removal (strip incomplete integration code)
+- ⏳ Phase 5: Development & implementation (build out Zendesk/Intercom integrations)
+
+---
+
+## Phase 2 Completion: Configuration & Routing
+
+### Executed Tasks:
+1. ✅ Created `app/zendesk/` and `app/intercom/` subdirectories
+2. ✅ Copied all files (layout, page, not-found, components, hooks, lib) to both subdirectories
+3. ✅ Updated layout imports to reference shared `../globals.css`
+4. ✅ Simplified `next.config.ts` (no rewrites needed - Next.js routes naturally)
+5. ✅ Created `.env.local` template with environment variable placeholders
+6. ✅ Verified build output shows all three routes:
+   ```
+   Route (app)
+   ┌ ○ /
+   ├ ○ /_not-found
+   ├ ○ /intercom
+   └ ○ /zendesk
+   ```
+
+### Architecture Result:
+- **`/` (main)** - Portfolio (app/layout.tsx imports `./globals.css`)
+- **`/zendesk`** - Zendesk demo (app/zendesk/layout.tsx imports `../globals.css`)
+- **`/intercom`** - Intercom demo (app/intercom/layout.tsx imports `../globals.css`)
+
+### Cleanup Strategy:
+```bash
+rm -rf app/zendesk app/intercom
+```
+Removes all custom code while keeping main site 100% intact.
 
 ---
 
@@ -355,14 +387,14 @@ Once structure is clean:
 **Key Principle:** Keep root directory clean for easy cleanup
 
 Rather than creating new shared directories like `/styles`, reuse what already exists:
-- Zendesk and Intercom reference the existing `/app/globals.css` via relative path
+- Zendesk and Intercom reference the existing `app/globals.css` via relative path `../globals.css`
 - No new top-level directories created
-- **Cleanup:** Delete `/zendesk` and `/intercom` → entire project reversion is one command
+- **Cleanup:** Delete `app/zendesk` and `app/intercom` → entire project reversion is one command
 
 **Import Pattern:**
 - `app/layout.tsx` → `import './globals.css'` (unchanged)
-- `zendesk/app/layout.tsx` → `import '../app/globals.css'` (reference shared)
-- `intercom/app/layout.tsx` → `import '../app/globals.css'` (reference shared)
+- `app/zendesk/layout.tsx` → `import '../globals.css'` (reference shared)
+- `app/intercom/layout.tsx` → `import '../globals.css'` (reference shared)
 
 **Result:** One style change = instant updates everywhere. Easy cleanup when sites are removed.
 
