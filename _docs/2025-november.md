@@ -68,31 +68,47 @@
 #### Files Changed
 
 **New Files:**
-- `app/zendesk/components/contact-form.tsx`
-- `app/intercom/components/contact-form.tsx`
+- `app/zendesk/components/contact-form.tsx` - Email-based contact form (160 lines)
+- `app/intercom/components/contact-form.tsx` - Email-based contact form (160 lines)
 
 **Modified Files:**
-- `app/zendesk/components/command-prompt.tsx` - Added contact command support
-- `app/intercom/components/command-prompt.tsx` - Added contact command support
-- `lib/utils.ts` - Added "contact" to commands
+- `app/zendesk/components/command-prompt.tsx` - Added contact command handler
+- `app/intercom/components/command-prompt.tsx` - Added contact command handler
+- `app/zendesk/page.tsx` - Refactored to use local CommandPrompt with full terminal UI
+- `app/intercom/page.tsx` - Refactored to use local CommandPrompt with full terminal UI
+- `lib/utils.ts` - Added "contact" to VALID_COMMANDS and COMMAND_ALIASES
 
 **Commits:**
 - `d9431d5` - feat: Implement contact command with email-based contact forms
+- `dacc6b6` - feat: Wire contact command UI into zendesk and intercom demo pages
+
+#### Pages Implementation
+
+**Both `/zendesk` and `/intercom` demo pages now feature:**
+- Full terminal boot sequence animation
+- Complete portfolio CV content display
+- Command prompt with all commands including 'contact'
+- Terminal aesthetic consistent with main portfolio (green/black, IBM Plex Mono)
+- Keyboard shortcuts (Ctrl+L/Cmd+K to clear)
+- Project pagination and searching
 
 #### How to Use
 
 **For Visitors:**
-1. Type `contact` on `/zendesk` or `/intercom` page
-2. Fill in name, email, and message fields
-3. Click "Send Email" button
-4. Default email client opens with pre-filled form data
-5. Send email to submit the form
+1. Navigate to `/zendesk` or `/intercom`
+2. Wait for boot sequence to complete
+3. Type `contact` command in terminal
+4. Fill in name, email, and message fields in contact form
+5. Click "Send Email" button
+6. Default email client opens with pre-filled form data
+7. Send email to submit the form
 
 **For Developers:**
 - Contact form is fully reusable component in both `/zendesk` and `/intercom` directories
 - Customize recipient email and name via props
 - Form validation is built-in (email format, required fields)
 - Status messages provide user feedback
+- Pages inherit from main TerminalContainer pattern for consistency
 
 ---
 
