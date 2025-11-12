@@ -4,6 +4,7 @@
  * POST /api/zendesk/tickets - Create a new support ticket
  * GET /api/zendesk/tickets - List tickets (requires auth)
  *
+ * Uses the Zendesk Tickets API for creating support tickets
  * Handles ticket creation with proper validation, error handling, and logging
  */
 
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = ZendeskTicketSchema.parse(body)
 
-    // Ensure Zendesk credentials exist
+    // Ensure Zendesk Tickets API credentials exist
     // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     const zendeskToken = process.env["ZENDESK_API_TOKEN"]
     // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
@@ -30,35 +31,32 @@ export async function POST(request: NextRequest) {
     const zendeskEmail = process.env["ZENDESK_EMAIL"]
 
     if (!(zendeskToken && zendeskSubdomain && zendeskEmail)) {
-      console.error("Missing Zendesk credentials in environment")
+      console.error("Missing Zendesk API credentials in environment")
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
     }
 
-    // Construct Zendesk API request
+    // Create Basic Auth for Tickets API (email/token format)
+    const auth = Buffer.from(`${zendeskEmail}/token:${zendeskToken}`).toString("base64")
+
+    // Construct Zendesk Tickets API request
     const zendeskUrl = `https://${zendeskSubdomain}.zendesk.com/api/v2/tickets.json`
 
-    // Debug: Log credentials (without exposing full token)
-    console.log(
-      `[ZENDESK] Attempting auth with email: ${zendeskEmail}, subdomain: ${zendeskSubdomain}, token length: ${zendeskToken.length}`
-    )
+    console.log(`[ZENDESK] Creating ticket for: ${validatedData.requesterEmail}`)
 
+    // Zendesk Tickets API request format
     const ticketPayload = {
       ticket: {
+        subject: validatedData.subject,
+        description: validatedData.description,
+        requester_email: validatedData.requesterEmail,
+        requester_name: validatedData.requesterName,
         comment: {
           body: validatedData.description,
         },
-        subject: validatedData.subject,
-        requester: {
-          name: validatedData.requesterName,
-          email: validatedData.requesterEmail,
-        },
         priority: validatedData.priority,
-        tags: [validatedData.category, "web-form"],
+        tags: [validatedData.category, "api-created"],
       },
     }
-
-    // Send to Zendesk API with basic auth
-    const auth = Buffer.from(`${zendeskEmail}/token:${zendeskToken}`).toString("base64")
 
     const zendeskResponse = await fetch(zendeskUrl, {
       method: "POST",
@@ -70,8 +68,15 @@ export async function POST(request: NextRequest) {
     })
 
     if (!zendeskResponse.ok) {
-      const errorData = await zendeskResponse.json()
-      console.error("Zendesk API error:", errorData)
+      const errorText = await zendeskResponse.text()
+      console.error("Zendesk Tickets API error (status:", zendeskResponse.status, "):", errorText)
+
+      let errorData
+      try {
+        errorData = JSON.parse(errorText)
+      } catch {
+        errorData = { error: errorText }
+      }
 
       return NextResponse.json(
         {
@@ -89,8 +94,6 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         ticketId: ticketData.ticket.id,
-        status: ticketData.ticket.status,
-        priority: ticketData.ticket.priority,
         createdAt: ticketData.ticket.created_at,
         message: "Ticket created successfully",
       },

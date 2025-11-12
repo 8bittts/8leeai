@@ -88,7 +88,7 @@ async function createIntercomContact(data: TicketData): Promise<boolean> {
 }
 
 async function createTestItems(
-  service: "zendesk" | "intercom",
+  _service: "zendesk" | "intercom",
   createFn: (data: TicketData) => Promise<boolean>
 ): Promise<{ success: number; failed: number }> {
   const data = generateTestTicket(1)
