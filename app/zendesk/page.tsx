@@ -1,18 +1,16 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { TerminalContainer } from "@/components/terminal-container"
-import { AIResponseViewer } from "./components/ai-response-viewer"
-import { ZendeskTicketForm } from "./components/zendesk-ticket-form"
+import { useEffect, useRef, useState } from "react"
+import { BootSequence } from "@/components/boot-sequence"
+import { CVContent } from "@/components/cv-content"
+import { MatrixBackground } from "@/components/matrix-background"
+import { CommandPrompt, type CommandPromptRef } from "./components/command-prompt"
 
 export default function ZendeskDemo() {
-  const [showTicketForm, setShowTicketForm] = useState(false)
-  const [showAISuggestions, setShowAISuggestions] = useState(false)
-  const [selectedTicket, setSelectedTicket] = useState<{
-    id: string
-    subject: string
-    description: string
-  } | null>(null)
+  const [bootComplete, setBootComplete] = useState(false)
+  const [visibleProjects, setVisibleProjects] = useState(15)
+  const [command, setCommand] = useState("")
+  const commandPromptRef = useRef<CommandPromptRef>(null)
 
   // Load Zendesk Web Widget
   useEffect(() => {
@@ -31,71 +29,65 @@ export default function ZendeskDemo() {
     }
   }, [])
 
+  const clearToStart = () => {
+    setBootComplete(false)
+    setVisibleProjects(15)
+    setCommand("")
+  }
+
+  const triggerFlash = () => {
+    const terminal = document.querySelector("[data-terminal]")
+    if (terminal) {
+      terminal.classList.add("animate-flash")
+      setTimeout(() => {
+        terminal.classList.remove("animate-flash")
+      }, 200)
+    }
+  }
+
+  const openProject = (projectNumber: number) => {
+    const { projects } = require("@/lib/data")
+    const project = projects[projectNumber - 1]
+    if (project?.url) {
+      const newWindow = window.open(project.url, "_blank")
+      if (newWindow) {
+        newWindow.opener = null
+      }
+    }
+  }
+
   return (
-    <main className="h-full w-full bg-black overflow-auto">
-      <TerminalContainer />
+    <main
+      className="min-h-screen w-full bg-black text-green-500 font-mono relative flex flex-col lg:flex-row overflow-x-hidden"
+      data-terminal={true}
+    >
+      <MatrixBackground />
 
-      {/* Floating Controls Section */}
-      <section className="mt-8 mx-4 mb-8 p-4 border border-green-500 rounded max-w-2xl">
-        <h2 className="text-xl font-bold mb-4">Support Options</h2>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm text-gray-400">
-              Get help via Web Widget (bottom-right), email, or create a ticket:
-            </p>
-            <p className="text-sm">
-              📧 Email:{" "}
-              <a href="mailto:support@8lee.zendesk.com" className="text-green-400 hover:underline">
-                support@8lee.zendesk.com
-              </a>
-            </p>
-          </div>
+      <div className="relative z-10 flex-1 flex flex-col">
+        {bootComplete ? (
+          <>
+            <div className="flex-1 overflow-y-auto">
+              <CVContent visibleProjects={visibleProjects} />
+            </div>
 
-          <div className="flex gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={() => setShowTicketForm(!showTicketForm)}
-              className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
-            >
-              {showTicketForm ? "[Hide]" : "[Create Ticket]"}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedTicket({
-                  id: "123456",
-                  subject: "Login not working",
-                  description:
-                    "I cannot log into my account. The system says my password is incorrect, but I am sure it is right. I have tried resetting it but still no luck.",
-                })
-                setShowAISuggestions(!showAISuggestions)
-              }}
-              className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
-            >
-              {showAISuggestions ? "[Hide]" : "[AI Suggestions]"}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Ticket Form */}
-      {showTicketForm && (
-        <div className="mx-4 mb-8 max-w-2xl">
-          <ZendeskTicketForm onClose={() => setShowTicketForm(false)} />
-        </div>
-      )}
-
-      {/* AI Suggestions Viewer */}
-      {showAISuggestions && selectedTicket && (
-        <div className="mx-4 mb-8 max-w-2xl">
-          <AIResponseViewer
-            ticketId={selectedTicket.id}
-            subject={selectedTicket.subject}
-            description={selectedTicket.description}
-            onClose={() => setShowAISuggestions(false)}
-          />
-        </div>
-      )}
+            <div className="px-4 lg:px-6 pb-4">
+              <CommandPrompt
+                ref={commandPromptRef}
+                showMoreProjects={() => setVisibleProjects((prev) => prev + 15)}
+                openProject={openProject}
+                clearToStart={clearToStart}
+                triggerFlash={triggerFlash}
+                visibleProjects={visibleProjects}
+                totalProjects={64}
+                command={command}
+                setCommand={setCommand}
+              />
+            </div>
+          </>
+        ) : (
+          <BootSequence onComplete={() => setBootComplete(true)} />
+        )}
+      </div>
     </main>
   )
 }
