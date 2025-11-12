@@ -1,53 +1,76 @@
 "use client"
 
-import { useState } from "react"
-import { TerminalContainer } from "@/components/terminal-container"
-import { IntercomContactForm } from "./components/intercom-contact-form"
+import { useRef, useState } from "react"
+import { BootSequence } from "@/components/boot-sequence"
+import { CVContent } from "@/components/cv-content"
+import { MatrixBackground } from "@/components/matrix-background"
+import { CommandPrompt, type CommandPromptRef } from "./components/command-prompt"
 
 export default function IntercomDemo() {
-  const [showContactForm, setShowContactForm] = useState(false)
+  const [bootComplete, setBootComplete] = useState(false)
+  const [visibleProjects, setVisibleProjects] = useState(15)
+  const [command, setCommand] = useState("")
+  const commandPromptRef = useRef<CommandPromptRef>(null)
+
+  const clearToStart = () => {
+    setBootComplete(false)
+    setVisibleProjects(15)
+    setCommand("")
+  }
+
+  const triggerFlash = () => {
+    const terminal = document.querySelector("[data-terminal]")
+    if (terminal) {
+      terminal.classList.add("animate-flash")
+      setTimeout(() => {
+        terminal.classList.remove("animate-flash")
+      }, 200)
+    }
+  }
+
+  const openProject = (projectNumber: number) => {
+    const { projects } = require("@/lib/data")
+    const project = projects[projectNumber - 1]
+    if (project?.url) {
+      const newWindow = window.open(project.url, "_blank")
+      if (newWindow) {
+        newWindow.opener = null
+      }
+    }
+  }
 
   return (
-    <main className="h-full w-full bg-black overflow-auto">
-      <TerminalContainer />
+    <main
+      className="min-h-screen w-full bg-black text-green-500 font-mono relative flex flex-col lg:flex-row overflow-x-hidden"
+      data-terminal={true}
+    >
+      <MatrixBackground />
 
-      {/* Floating Controls Section */}
-      <section className="mt-8 mx-4 mb-8 p-4 border border-green-500 rounded max-w-2xl">
-        <h2 className="text-xl font-bold mb-4">Support Options</h2>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm text-gray-400">
-              Get help via direct email or register as a contact:
-            </p>
-            <p className="text-sm">
-              📧 Email:{" "}
-              <a
-                href="mailto:amihb4cq@8lee.intercom-mail.com"
-                className="text-green-400 hover:underline"
-              >
-                amihb4cq@8lee.intercom-mail.com
-              </a>
-            </p>
-          </div>
+      <div className="relative z-10 flex-1 flex flex-col">
+        {bootComplete ? (
+          <>
+            <div className="flex-1 overflow-y-auto">
+              <CVContent visibleProjects={visibleProjects} />
+            </div>
 
-          <div className="flex gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={() => setShowContactForm(!showContactForm)}
-              className="bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400"
-            >
-              {showContactForm ? "[Hide]" : "[Register Contact]"}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form */}
-      {showContactForm && (
-        <div className="mx-4 mb-8 max-w-2xl">
-          <IntercomContactForm onClose={() => setShowContactForm(false)} />
-        </div>
-      )}
+            <div className="px-4 lg:px-6 pb-4">
+              <CommandPrompt
+                ref={commandPromptRef}
+                showMoreProjects={() => setVisibleProjects((prev) => prev + 15)}
+                openProject={openProject}
+                clearToStart={clearToStart}
+                triggerFlash={triggerFlash}
+                visibleProjects={visibleProjects}
+                totalProjects={64}
+                command={command}
+                setCommand={setCommand}
+              />
+            </div>
+          </>
+        ) : (
+          <BootSequence onComplete={() => setBootComplete(true)} />
+        )}
+      </div>
     </main>
   )
 }
