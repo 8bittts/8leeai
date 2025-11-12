@@ -32,14 +32,18 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Legacy URL redirect strategy: Redirect semantic-looking 404s to homepage
-  // Skip redirect for homepage, Next.js internals, and API routes
+  // Skip redirect for homepage, Next.js internals, API routes, and demo sites (zendesk/intercom)
   const isHomepage = pathname === "/"
   const isNextInternal = pathname.startsWith("/_next") || pathname.startsWith("/__next")
   const isApiRoute = pathname.startsWith("/api")
+  const isDemoSite = pathname.startsWith("/zendesk") || pathname.startsWith("/intercom")
   const isPublicAsset = pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|m4a|mp3|wav)$/i)
 
   // If path looks semantic (legitimate URL slug) and isn't a known valid route, redirect to homepage
-  if (!(isHomepage || isNextInternal || isApiRoute || isPublicAsset) && isSemanticUrl(pathname)) {
+  if (
+    !(isHomepage || isNextInternal || isApiRoute || isDemoSite || isPublicAsset) &&
+    isSemanticUrl(pathname)
+  ) {
     return NextResponse.redirect(new URL("/", request.url), 301)
   }
 
