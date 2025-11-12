@@ -33,16 +33,12 @@ export async function POST(request: NextRequest) {
     }
 
     // First, create or find the contact (visitor)
+    // Only email is required; other fields are optional
     const contactUrl = "https://api.intercom.io/contacts"
 
     const contactPayload = {
-      role: "user",
       email: validatedData.visitorEmail,
       name: validatedData.visitorName,
-      custom_attributes: {
-        page_url: validatedData.pageUrl,
-        page_title: validatedData.pageTitle,
-      },
     }
 
     const contactResponse = await fetch(contactUrl, {
@@ -51,22 +47,34 @@ export async function POST(request: NextRequest) {
         Authorization: `Bearer ${intercomAccessToken}`,
         "Content-Type": "application/json",
         Accept: "application/json",
+        "Intercom-Version": "2.14",
       },
       body: JSON.stringify(contactPayload),
     })
 
+    let contactData
     if (!contactResponse.ok && contactResponse.status !== 409) {
       // 409 means contact already exists
       const errorData = await contactResponse.json()
       console.error("Intercom contact API error:", errorData)
       return NextResponse.json(
-        { error: "Failed to create contact" },
+        { error: "Failed to create contact", details: errorData },
         { status: contactResponse.status }
       )
     }
 
-    const contactData = await contactResponse.json()
-    const contactId = contactData.id
+    contactData = await contactResponse.json()
+
+    // Extract contact ID - handle both creation (201) and conflict (409) responses
+    const contactId = contactData.id || contactData.data?.id
+
+    if (!contactId) {
+      console.error("Could not extract contact ID from response:", contactData)
+      return NextResponse.json(
+        { error: "Could not extract contact ID from Intercom response" },
+        { status: 500 }
+      )
+    }
 
     // Now create a conversation with initial message
     const conversationUrl = "https://api.intercom.io/conversations"
@@ -89,15 +97,16 @@ export async function POST(request: NextRequest) {
         Authorization: `Bearer ${intercomAccessToken}`,
         "Content-Type": "application/json",
         Accept: "application/json",
+        "Intercom-Version": "2.14",
       },
       body: JSON.stringify(conversationPayload),
     })
 
     if (!conversationResponse.ok) {
       const errorData = await conversationResponse.json()
-      console.error("Intercom conversation API error:", errorData)
+      console.error("Intercom conversation API error:", { status: conversationResponse.status, error: errorData })
       return NextResponse.json(
-        { error: "Failed to create conversation" },
+        { error: "Failed to create conversation", details: errorData },
         { status: conversationResponse.status }
       )
     }
