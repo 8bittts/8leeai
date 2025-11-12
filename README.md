@@ -88,7 +88,7 @@ bun run check        # Lint and format with Biome (via bunx)
 bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
 ```
 
-**Package Update Monitoring** (via `scripts/package-monitor.js`):
+**Package Update Monitoring** (via `scripts/x-package-monitor.js`):
 ```bash
 bun run packages              # Check all packages with impact analysis
 bun run packages:watch        # Continuous monitoring (checks every 6 hours)
@@ -156,7 +156,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   ├── bitcoin.pdf                   # Bitcoin whitepaper (easter egg)
 │   └── 8-social.jpeg                 # Social share image
 ├── scripts/                          # Development utilities
-│   └── package-monitor.js            # Intelligent package update monitoring
+│   └── x-package-monitor.js          # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
 ├── _docs/                            # Release notes documentation
 │   ├── README.md                     # Documentation structure guide
