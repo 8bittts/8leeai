@@ -1,10 +1,11 @@
 /**
- * Intercom Conversations API Route
+ * Intercom Contacts API Route
  *
- * POST /api/intercom/conversations - Start a new conversation
- * GET /api/intercom/conversations - List conversations (requires auth)
+ * POST /api/intercom/conversations - Create/register a contact
  *
- * Handles conversation management with visitor tracking and context
+ * Simplified approach: Just create contacts in Intercom.
+ * Users then reach out via email (amihb4cq@8lee.intercom-mail.com)
+ * for direct messaging. No webhook needed.
  */
 
 import { type NextRequest, NextResponse } from "next/server"
@@ -13,7 +14,7 @@ import { IntercomConversationSchema } from "../../../lib/schemas"
 
 /**
  * POST /api/intercom/conversations
- * Start a new conversation with a visitor
+ * Create a contact in Intercom
  */
 export async function POST(request: NextRequest) {
   try {
@@ -32,10 +33,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
     }
 
-    // First, create or find the contact (visitor)
-    // Only email is required; other fields are optional
+    // Create or find the contact
     const contactUrl = "https://api.intercom.io/contacts"
 
+    // Minimal payload - only email and name are required/supported
     const contactPayload = {
       email: validatedData.visitorEmail,
       name: validatedData.visitorName,
@@ -52,21 +53,38 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(contactPayload),
     })
 
-    let contactData
-    if (!contactResponse.ok && contactResponse.status !== 409) {
-      // 409 means contact already exists
-      const errorData = await contactResponse.json()
-      console.error("Intercom contact API error:", errorData)
+    const contactData = await contactResponse.json()
+
+    // For 409 (conflict), need to fetch the existing contact
+    let contactId: string | null = null
+
+    if (contactResponse.status === 409) {
+      // Contact already exists - fetch it
+      console.log("Contact already exists, fetching...")
+      const getContactUrl = `https://api.intercom.io/contacts?email=${encodeURIComponent(validatedData.visitorEmail)}`
+      const getResponse = await fetch(getContactUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${intercomAccessToken}`,
+          "Intercom-Version": "2.14",
+        },
+      })
+
+      if (getResponse.ok) {
+        const contactsData = await getResponse.json()
+        contactId = contactsData.data?.[0]?.id
+      }
+    } else if (contactResponse.ok) {
+      // Contact created successfully
+      contactId = contactData.id
+    } else {
+      // Error
+      console.error("Intercom contact API error:", contactData)
       return NextResponse.json(
-        { error: "Failed to create contact", details: errorData },
+        { error: "Failed to create contact", details: contactData },
         { status: contactResponse.status }
       )
     }
-
-    contactData = await contactResponse.json()
-
-    // Extract contact ID - handle both creation (201) and conflict (409) responses
-    const contactId = contactData.id || contactData.data?.id
 
     if (!contactId) {
       console.error("Could not extract contact ID from response:", contactData)
@@ -76,53 +94,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Now create a conversation with initial message
-    const conversationUrl = "https://api.intercom.io/conversations"
-
-    const conversationPayload = {
-      from: {
-        type: "contact",
-        id: contactId,
-      },
-      body: validatedData.initialMessage,
-      type: "user",
-      custom_attributes: {
-        topic: validatedData.topic,
-      },
-    }
-
-    const conversationResponse = await fetch(conversationUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${intercomAccessToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Intercom-Version": "2.14",
-      },
-      body: JSON.stringify(conversationPayload),
-    })
-
-    if (!conversationResponse.ok) {
-      const errorData = await conversationResponse.json()
-      console.error("Intercom conversation API error:", { status: conversationResponse.status, error: errorData })
-      return NextResponse.json(
-        { error: "Failed to create conversation", details: errorData },
-        { status: conversationResponse.status }
-      )
-    }
-
-    const conversation = await conversationResponse.json()
-
-    // Return success response
+    // Success: Contact created or already exists
     return NextResponse.json(
       {
         success: true,
-        conversationId: conversation.id,
+        contactId,
         visitorEmail: validatedData.visitorEmail,
         visitorName: validatedData.visitorName,
-        createdAt: conversation.created_at,
-        topic: validatedData.topic,
-        status: "open",
+        message:
+          "Contact registered. You can now email amihb4cq@8lee.intercom-mail.com to start a conversation.",
       },
       { status: 201 }
     )
@@ -149,59 +129,6 @@ export async function POST(request: NextRequest) {
 
     // Handle unexpected errors
     console.error("Unexpected error in POST /api/intercom/conversations:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
-  }
-}
-
-/**
- * GET /api/intercom/conversations
- * List conversations for a specific contact/visitor
- */
-export async function GET(request: NextRequest) {
-  try {
-    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
-    const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
-
-    if (!intercomAccessToken) {
-      return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
-    }
-
-    // Get query parameters
-    const { searchParams } = new URL(request.url)
-    const contactId = searchParams.get("contactId")
-    const limit = searchParams.get("limit") || "10"
-
-    if (!contactId) {
-      return NextResponse.json({ error: "contactId query parameter is required" }, { status: 400 })
-    }
-
-    // Fetch conversations for the contact
-    const conversationsUrl = `https://api.intercom.io/contacts/${contactId}/conversations?per_page=${limit}`
-
-    const conversationsResponse = await fetch(conversationsUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${intercomAccessToken}`,
-        Accept: "application/json",
-      },
-    })
-
-    if (!conversationsResponse.ok) {
-      console.error("Intercom conversations fetch error:", conversationsResponse.status)
-      return NextResponse.json(
-        { error: "Failed to fetch conversations" },
-        { status: conversationsResponse.status }
-      )
-    }
-
-    const data = await conversationsResponse.json()
-
-    return NextResponse.json({
-      conversations: data.conversations || [],
-      count: data.conversations?.length || 0,
-    })
-  } catch (error) {
-    console.error("Unexpected error in GET /api/intercom/conversations:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

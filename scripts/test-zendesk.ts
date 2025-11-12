@@ -34,9 +34,42 @@ interface ApiResponse {
 }
 
 // Test data generators
-const firstNames = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Henry", "Iris", "Jack"]
-const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez"]
-const companies = ["Tech Corp", "StartUp Inc", "Digital Agency", "Cloud Solutions", "Data Systems", "Enterprise Co", "Innovation Labs", "Future Tech", "Smart Systems", "Digital First"]
+const firstNames = [
+  "Alice",
+  "Bob",
+  "Charlie",
+  "Diana",
+  "Eve",
+  "Frank",
+  "Grace",
+  "Henry",
+  "Iris",
+  "Jack",
+]
+const lastNames = [
+  "Smith",
+  "Johnson",
+  "Williams",
+  "Brown",
+  "Jones",
+  "Garcia",
+  "Miller",
+  "Davis",
+  "Rodriguez",
+  "Martinez",
+]
+const _companies = [
+  "Tech Corp",
+  "StartUp Inc",
+  "Digital Agency",
+  "Cloud Solutions",
+  "Data Systems",
+  "Enterprise Co",
+  "Innovation Labs",
+  "Future Tech",
+  "Smart Systems",
+  "Digital First",
+]
 const domains = ["gmail.com", "company.com", "outlook.com", "work.email", "dev.io"]
 
 const subjects = [
@@ -137,10 +170,9 @@ async function submitTicket(ticket: TicketSubmission, index: number): Promise<Ap
     if (response.ok) {
       console.log(`   ✅ Success! Ticket ID: ${data.ticketId}`)
       return { success: true, ticketId: data.ticketId }
-    } else {
-      console.log(`   ❌ Error: ${data.error || data.message || "Unknown error"}`)
-      return { success: false, error: data.error || "Unknown error" }
     }
+    console.log(`   ❌ Error: ${data.error || data.message || "Unknown error"}`)
+    return { success: false, error: data.error || "Unknown error" }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error"
     console.log(`   ❌ Network error: ${errorMessage}`)
@@ -158,7 +190,7 @@ async function main() {
 
   // Check environment variables
   const baseUrl = process.env.API_BASE_URL || "http://localhost:3000"
-  console.log(`\n🔧 Configuration:`)
+  console.log("\n🔧 Configuration:")
   console.log(`   API Base URL: ${baseUrl}`)
   console.log(`   Using local API endpoint: ${baseUrl}/api/zendesk/tickets`)
 
@@ -166,12 +198,12 @@ async function main() {
   const tickets: TicketSubmission[] = []
   const results: ApiResponse[] = []
 
-  console.log(`\n🎲 Generating 10 random tickets...`)
+  console.log("\n🎲 Generating 10 random tickets...")
   for (let i = 0; i < 10; i++) {
     tickets.push(generateRandomTicket())
   }
 
-  console.log(`\n📬 Submitting tickets to API...`)
+  console.log("\n📬 Submitting tickets to API...")
   for (let i = 0; i < tickets.length; i++) {
     const result = await submitTicket(tickets[i], i)
     results.push(result)
@@ -186,20 +218,22 @@ async function main() {
   const successful = results.filter((r) => r.success).length
   const failed = results.filter((r) => !r.success).length
 
-  console.log(`\n╔════════════════════════════════════════════════════════════════╗`)
-  console.log(`║                        TEST RESULTS                            ║`)
-  console.log(`╠════════════════════════════════════════════════════════════════╣`)
+  console.log("\n╔════════════════════════════════════════════════════════════════╗")
+  console.log("║                        TEST RESULTS                            ║")
+  console.log("╠════════════════════════════════════════════════════════════════╣")
   console.log(`║ Total Submitted:  ${String(tickets.length).padEnd(50)} ║`)
   console.log(`║ Successful:       ${String(successful).padEnd(50)} ║`)
   console.log(`║ Failed:           ${String(failed).padEnd(50)} ║`)
-  console.log(`║ Success Rate:     ${String(`${Math.round((successful / tickets.length) * 100)}%`).padEnd(50)} ║`)
-  console.log(`╚════════════════════════════════════════════════════════════════╝`)
+  console.log(
+    `║ Success Rate:     ${String(`${Math.round((successful / tickets.length) * 100)}%`).padEnd(50)} ║`
+  )
+  console.log("╚════════════════════════════════════════════════════════════════╝")
 
   if (failed > 0) {
-    console.log(`\n⚠️  Some submissions failed. Check the logs above for details.`)
+    console.log("\n⚠️  Some submissions failed. Check the logs above for details.")
     process.exit(1)
   } else {
-    console.log(`\n✅ All submissions successful! Check your Zendesk account.`)
+    console.log("\n✅ All submissions successful! Check your Zendesk account.")
     process.exit(0)
   }
 }

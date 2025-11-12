@@ -55,7 +55,8 @@ export function IntercomContactForm({ onClose }: IntercomContactFormProps) {
       if (response.ok) {
         setSubmitStatus({
           type: "success",
-          message: `Conversation started! ID: ${data.conversationId}`,
+          message:
+            "Contact registered! Now email amihb4cq@8lee.intercom-mail.com to start a conversation.",
         })
         // Reset form
         setName("")
@@ -87,7 +88,7 @@ export function IntercomContactForm({ onClose }: IntercomContactFormProps) {
   return (
     <section className="mb-8 p-4 border border-green-500 rounded" aria-label="Contact Form">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Start a Conversation</h2>
+        <h2 className="text-xl font-bold">Register as Contact</h2>
         <button
           type="button"
           onClick={onClose}
@@ -97,6 +98,10 @@ export function IntercomContactForm({ onClose }: IntercomContactFormProps) {
           [close]
         </button>
       </div>
+      <p className="text-xs text-gray-400 mb-3">
+        Register your contact information. After submission, email amihb4cq@8lee.intercom-mail.com
+        to start a conversation.
+      </p>
 
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
         <div>
@@ -149,14 +154,14 @@ export function IntercomContactForm({ onClose }: IntercomContactFormProps) {
 
         <div>
           <label htmlFor="contact-message" className="text-sm block mb-1">
-            Message: *
+            Initial Message: *
           </label>
           <textarea
             id="contact-message"
             value={initialMessage}
             onChange={(e) => setInitialMessage(e.target.value)}
             className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none resize-none"
-            placeholder="Start the conversation (5-1000 chars)"
+            placeholder="Describe your inquiry (5-1000 chars)"
             rows={5}
             disabled={isSubmitting}
             required={true}
@@ -203,7 +208,7 @@ export function IntercomContactForm({ onClose }: IntercomContactFormProps) {
           disabled={isSubmitting}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? "Starting..." : "Start Conversation"}
+          {isSubmitting ? "Registering..." : "Register Contact"}
         </button>
       </form>
     </section>
