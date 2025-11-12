@@ -1,10 +1,10 @@
 # November 2025 Release Notes
 
-## November 12, 2025 (Latest) - Contact Command Implementation & Code Quality Pass
+## November 12, 2025 (Latest) - Contact Command with Real Email Service
 
-### Contact Command: Email-Based Support Forms
+### Contact Command: Email-Based Support Forms with Resend
 
-**Successfully implemented "contact" command for both Zendesk and Intercom demo sites with email-based contact forms.**
+**Successfully implemented "contact" command for both Zendesk and Intercom demo sites with real email sending via Resend API.**
 
 #### What Was Delivered
 
@@ -43,10 +43,15 @@
 - Form resets after successful submission
 - Styled with terminal aesthetic (green/black borders and text)
 
-**Generated Email:**
+**Email Sending (via Resend):**
+- **Service**: Resend API (v6.4.2)
 - **Subject**: `Support Request from [Visitor Name]`
-- **Body**: Includes visitor name, email, message, and instruction to reply to visitor's email
-- **All data properly URL-encoded** for mailto: links
+- **Body**: HTML formatted with visitor details and message
+- **Reply-To**: Set to visitor's email for easy responses
+- **From Address**: `onboarding@resend.dev` (Resend default sandbox sender)
+- **API Endpoints**:
+  - `POST /api/contact/zendesk` - Sends to `support@8lee.zendesk.com`
+  - `POST /api/contact/intercom` - Sends to `amihb4cq@8lee.intercom-mail.com`
 
 #### Code Quality
 
@@ -68,8 +73,10 @@
 #### Files Changed
 
 **New Files:**
-- `app/zendesk/components/contact-form.tsx` - Email-based contact form (160 lines)
-- `app/intercom/components/contact-form.tsx` - Email-based contact form (160 lines)
+- `app/zendesk/components/contact-form.tsx` - Contact form with Resend submission (160 lines)
+- `app/intercom/components/contact-form.tsx` - Contact form with Resend submission (160 lines)
+- `app/api/contact/zendesk/route.ts` - Zendesk email endpoint (~70 lines)
+- `app/api/contact/intercom/route.ts` - Intercom email endpoint (~70 lines)
 
 **Modified Files:**
 - `app/zendesk/components/command-prompt.tsx` - Added contact command handler
@@ -77,10 +84,13 @@
 - `app/zendesk/page.tsx` - Refactored to use local CommandPrompt with full terminal UI
 - `app/intercom/page.tsx` - Refactored to use local CommandPrompt with full terminal UI
 - `lib/utils.ts` - Added "contact" to VALID_COMMANDS and COMMAND_ALIASES
+- `package.json` - Added resend@6.4.2 dependency
+- `bun.lock` - Updated with Resend and dependencies
 
 **Commits:**
 - `d9431d5` - feat: Implement contact command with email-based contact forms
 - `dacc6b6` - feat: Wire contact command UI into zendesk and intercom demo pages
+- `1990f55` - feat: Add Resend email service for contact form submissions
 
 #### Pages Implementation
 
@@ -100,15 +110,23 @@
 3. Type `contact` command in terminal
 4. Fill in name, email, and message fields in contact form
 5. Click "Send Email" button
-6. Default email client opens with pre-filled form data
-7. Send email to submit the form
+6. Email is sent immediately via Resend API
+7. Success message confirms delivery
+8. Form closes automatically
 
 **For Developers:**
-- Contact form is fully reusable component in both `/zendesk` and `/intercom` directories
-- Customize recipient email and name via props
+- Contact forms are reusable components in both `/zendesk` and `/intercom` directories
+- API endpoints handle email submission and Resend integration
 - Form validation is built-in (email format, required fields)
-- Status messages provide user feedback
-- Pages inherit from main TerminalContainer pattern for consistency
+- Email includes HTML formatting and reply-to headers
+- Status messages provide user feedback (success/error)
+- Requires `RESEND_API_KEY` environment variable to be set
+- API automatically routes to appropriate support email addresses
+
+**To Configure Emails:**
+- Set `RESEND_API_KEY` in `.env.local` (get from https://resend.com)
+- Currently uses `onboarding@resend.dev` sender (sandbox - upgrade for custom domain)
+- Routes to `support@8lee.zendesk.com` and `amihb4cq@8lee.intercom-mail.com`
 
 ---
 
