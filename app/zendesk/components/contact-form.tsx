@@ -43,27 +43,30 @@ export function ContactForm({ onClose }: ContactFormProps) {
     setStatusMessage(null)
 
     try {
-      const response = await fetch("/api/contact/zendesk", {
+      const response = await fetch("/api/zendesk/tickets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,
-          email,
-          message,
+          subject: `Support Request from ${name}`,
+          description: message,
+          requesterEmail: email,
+          requesterName: name,
+          category: "support",
+          priority: "normal",
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to send contact form")
+        throw new Error(data.error || "Failed to create ticket")
       }
 
       setStatusMessage({
         type: "success",
-        message: "Email sent successfully!",
+        message: `Ticket created successfully! (ID: ${data.ticketId})`,
       })
 
       // Reset form after delay
@@ -162,7 +165,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
           disabled={isSubmitting}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? "Opening..." : "Send Email"}
+          {isSubmitting ? "Creating Ticket..." : "Create Ticket"}
         </button>
       </form>
     </section>
