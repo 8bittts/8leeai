@@ -13,10 +13,7 @@ import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import {
-  IntercomAISuggestionSchema,
-  IntercomAISuggestionsSchema,
-} from "../../lib/schemas"
+import { IntercomAISuggestionSchema, IntercomAISuggestionsSchema } from "../../lib/schemas"
 
 /**
  * POST /api/intercom/suggest-message
