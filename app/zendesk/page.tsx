@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TerminalContainer } from "@/components/terminal-container"
 import { AIResponseViewer } from "./components/ai-response-viewer"
 import { ZendeskTicketForm } from "./components/zendesk-ticket-form"
@@ -14,17 +14,43 @@ export default function ZendeskDemo() {
     description: string
   } | null>(null)
 
+  // Load Zendesk Web Widget
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.id = "ze-snippet"
+    script.src =
+      "https://static.zdassets.com/ekr/snippet.js?key=af64a072-5f19-47f4-9f3e-b6108435e64b"
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      const existingScript = document.getElementById("ze-snippet")
+      if (existingScript) {
+        existingScript.remove()
+      }
+    }
+  }, [])
+
   return (
     <main className="h-full w-full bg-black overflow-auto">
       <TerminalContainer />
 
       {/* Floating Controls Section */}
       <section className="mt-8 mx-4 mb-8 p-4 border border-green-500 rounded max-w-2xl">
-        <h2 className="text-xl font-bold mb-4">Demo Controls</h2>
-        <div className="space-y-2">
-          <p className="text-sm text-gray-400 mb-3">
-            Try creating a support ticket or testing AI response suggestions:
-          </p>
+        <h2 className="text-xl font-bold mb-4">Support Options</h2>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-sm text-gray-400">
+              Get help via Web Widget (bottom-right), email, or create a ticket:
+            </p>
+            <p className="text-sm">
+              📧 Email:{" "}
+              <a href="mailto:support@8lee.zendesk.com" className="text-green-400 hover:underline">
+                support@8lee.zendesk.com
+              </a>
+            </p>
+          </div>
+
           <div className="flex gap-2 flex-wrap">
             <button
               type="button"

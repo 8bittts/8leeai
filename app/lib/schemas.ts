@@ -87,7 +87,8 @@ export type AISuggestionsResponse = z.infer<typeof AISuggestionsResponseSchema>
 
 /**
  * Intercom Conversation Schema
- * Validates conversation start requests
+ * Validates contact registration requests (email + name only)
+ * Other fields are optional for future API expansion
  */
 export const IntercomConversationSchema = z.object({
   visitorEmail: z.string().email("Invalid email address"),
@@ -100,9 +101,10 @@ export const IntercomConversationSchema = z.object({
   initialMessage: z
     .string()
     .min(5, "Message must be at least 5 characters")
-    .max(1000, "Message must be less than 1000 characters"),
+    .max(1000, "Message must be less than 1000 characters")
+    .optional(),
 
-  topic: z.enum(["sales", "support", "feedback", "general"]).default("general"),
+  topic: z.enum(["sales", "support", "feedback", "general"]).optional().default("general"),
 
   pageUrl: z.string().url("Invalid URL").optional(),
 

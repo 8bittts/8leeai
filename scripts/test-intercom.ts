@@ -33,10 +33,32 @@ interface ApiResponse {
 }
 
 // Test data generators
-const firstNames = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Henry", "Iris", "Jack"]
-const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez"]
+const firstNames = [
+  "Alice",
+  "Bob",
+  "Charlie",
+  "Diana",
+  "Eve",
+  "Frank",
+  "Grace",
+  "Henry",
+  "Iris",
+  "Jack",
+]
+const lastNames = [
+  "Smith",
+  "Johnson",
+  "Williams",
+  "Brown",
+  "Jones",
+  "Garcia",
+  "Miller",
+  "Davis",
+  "Rodriguez",
+  "Martinez",
+]
 const domains = ["gmail.com", "company.com", "outlook.com", "work.email", "dev.io"]
-const companies = ["Tech Corp", "StartUp Inc", "Digital Agency", "Cloud Solutions", "Data Systems"]
+const _companies = ["Tech Corp", "StartUp Inc", "Digital Agency", "Cloud Solutions", "Data Systems"]
 
 const topics = ["general", "sales", "support", "feedback"] as const
 
@@ -131,7 +153,10 @@ function generateRandomConversation(): ConversationSubmission {
 /**
  * Submit a conversation to the local API endpoint
  */
-async function submitConversation(conversation: ConversationSubmission, index: number): Promise<ApiResponse> {
+async function submitConversation(
+  conversation: ConversationSubmission,
+  index: number
+): Promise<ApiResponse> {
   const apiBaseUrl = process.env.API_BASE_URL || "http://localhost:3000"
 
   try {
@@ -154,10 +179,9 @@ async function submitConversation(conversation: ConversationSubmission, index: n
     if (response.ok) {
       console.log(`   ✅ Success! Conversation ID: ${data.conversationId}`)
       return { success: true, conversationId: data.conversationId }
-    } else {
-      console.log(`   ❌ Error: ${data.error || data.message || "Unknown error"}`)
-      return { success: false, error: data.error || "Unknown error" }
     }
+    console.log(`   ❌ Error: ${data.error || data.message || "Unknown error"}`)
+    return { success: false, error: data.error || "Unknown error" }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error"
     console.log(`   ❌ Network error: ${errorMessage}`)
@@ -175,7 +199,7 @@ async function main() {
 
   // Check environment variables
   const baseUrl = process.env.API_BASE_URL || "http://localhost:3000"
-  console.log(`\n🔧 Configuration:`)
+  console.log("\n🔧 Configuration:")
   console.log(`   API Base URL: ${baseUrl}`)
   console.log(`   Using local API endpoint: ${baseUrl}/api/intercom/conversations`)
 
@@ -183,12 +207,12 @@ async function main() {
   const conversations: ConversationSubmission[] = []
   const results: ApiResponse[] = []
 
-  console.log(`\n🎲 Generating 10 random conversations...`)
+  console.log("\n🎲 Generating 10 random conversations...")
   for (let i = 0; i < 10; i++) {
     conversations.push(generateRandomConversation())
   }
 
-  console.log(`\n📬 Submitting conversations to API...`)
+  console.log("\n📬 Submitting conversations to API...")
   for (let i = 0; i < conversations.length; i++) {
     const result = await submitConversation(conversations[i], i)
     results.push(result)
@@ -203,20 +227,22 @@ async function main() {
   const successful = results.filter((r) => r.success).length
   const failed = results.filter((r) => !r.success).length
 
-  console.log(`\n╔════════════════════════════════════════════════════════════════╗`)
-  console.log(`║                        TEST RESULTS                            ║`)
-  console.log(`╠════════════════════════════════════════════════════════════════╣`)
+  console.log("\n╔════════════════════════════════════════════════════════════════╗")
+  console.log("║                        TEST RESULTS                            ║")
+  console.log("╠════════════════════════════════════════════════════════════════╣")
   console.log(`║ Total Submitted:  ${String(conversations.length).padEnd(50)} ║`)
   console.log(`║ Successful:       ${String(successful).padEnd(50)} ║`)
   console.log(`║ Failed:           ${String(failed).padEnd(50)} ║`)
-  console.log(`║ Success Rate:     ${String(`${Math.round((successful / conversations.length) * 100)}%`).padEnd(50)} ║`)
-  console.log(`╚════════════════════════════════════════════════════════════════╝`)
+  console.log(
+    `║ Success Rate:     ${String(`${Math.round((successful / conversations.length) * 100)}%`).padEnd(50)} ║`
+  )
+  console.log("╚════════════════════════════════════════════════════════════════╝")
 
   if (failed > 0) {
-    console.log(`\n⚠️  Some submissions failed. Check the logs above for details.`)
+    console.log("\n⚠️  Some submissions failed. Check the logs above for details.")
     process.exit(1)
   } else {
-    console.log(`\n✅ All submissions successful! Check your Intercom account.`)
+    console.log("\n✅ All submissions successful! Check your Intercom account.")
     process.exit(0)
   }
 }

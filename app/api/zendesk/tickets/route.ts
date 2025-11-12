@@ -38,7 +38,9 @@ export async function POST(request: NextRequest) {
     const zendeskUrl = `https://${zendeskSubdomain}.zendesk.com/api/v2/tickets.json`
 
     // Debug: Log credentials (without exposing full token)
-    console.log(`[ZENDESK] Attempting auth with email: ${zendeskEmail}, subdomain: ${zendeskSubdomain}, token length: ${zendeskToken.length}`)
+    console.log(
+      `[ZENDESK] Attempting auth with email: ${zendeskEmail}, subdomain: ${zendeskSubdomain}, token length: ${zendeskToken.length}`
+    )
 
     const ticketPayload = {
       ticket: {
