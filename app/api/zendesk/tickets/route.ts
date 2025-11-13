@@ -71,22 +71,30 @@ export async function POST(request: NextRequest) {
 
     if (!zendeskResponse.ok) {
       const errorText = await zendeskResponse.text()
-      console.error("Zendesk Sunshine Conversations API error (status:", zendeskResponse.status, "):", errorText)
+      console.error(
+        "Zendesk Sunshine Conversations API error (status:",
+        zendeskResponse.status,
+        "):",
+        errorText
+      )
 
       // Check for redirect responses (301, 302, etc.) - indicates auth failure
       if (zendeskResponse.status >= 300 && zendeskResponse.status < 400) {
-        console.error("Received redirect response - this likely indicates invalid credentials or app configuration")
+        console.error(
+          "Received redirect response - this likely indicates invalid credentials or app configuration"
+        )
         return NextResponse.json(
           {
             error: "Zendesk configuration error",
-            details: "Invalid App ID, Key ID, or Secret. Please verify credentials in Zendesk Admin panel.",
+            details:
+              "Invalid App ID, Key ID, or Secret. Please verify credentials in Zendesk Admin panel.",
             status: zendeskResponse.status,
           },
           { status: 500 }
         )
       }
 
-      let errorData
+      let errorData: { error?: string; [key: string]: unknown }
       try {
         errorData = JSON.parse(errorText)
       } catch {
