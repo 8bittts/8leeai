@@ -122,6 +122,110 @@ async function createTicket(
 }
 
 /**
+ * Validate Intercom credentials from environment
+ */
+function validateIntercomCredentials(): {
+  accessToken: string
+  workspaceId: string
+} | null {
+  // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
+  const accessToken = process.env["INTERCOM_ACCESS_TOKEN"]
+  // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
+  const workspaceId = process.env["INTERCOM_WORKSPACE_ID"]
+
+  if (!(accessToken && workspaceId)) {
+    console.error("Missing Intercom credentials in environment")
+    return null
+  }
+
+  return { accessToken, workspaceId }
+}
+
+/**
+ * Create or fetch existing contact in Intercom
+ */
+async function getOrCreateContact(
+  email: string,
+  name: string,
+  accessToken: string
+): Promise<{ contactId: string | null; error?: NextResponse }> {
+  const contactUrl = "https://api.intercom.io/contacts"
+  const contactPayload = { email, name }
+
+  const contactResponse = await fetch(contactUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Intercom-Version": "2.14",
+    },
+    body: JSON.stringify(contactPayload),
+  })
+
+  const contactData = await contactResponse.json()
+
+  // Contact already exists - fetch it
+  if (contactResponse.status === 409) {
+    console.log("Contact already exists, fetching...")
+    const getContactUrl = `https://api.intercom.io/contacts?email=${encodeURIComponent(email)}`
+    const getResponse = await fetch(getContactUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Intercom-Version": "2.14",
+      },
+    })
+
+    if (getResponse.ok) {
+      const contactsData = await getResponse.json()
+      return { contactId: contactsData.data?.[0]?.id }
+    }
+  }
+
+  // Contact created successfully
+  if (contactResponse.ok) {
+    return { contactId: contactData.id }
+  }
+
+  // Error creating contact
+  console.error("Intercom contact API error:", contactData)
+  return {
+    contactId: null,
+    error: NextResponse.json(
+      { error: "Failed to create contact", details: contactData },
+      { status: contactResponse.status }
+    ),
+  }
+}
+
+/**
+ * Handle different error types for Intercom API
+ */
+function handleIntercomError(error: unknown): NextResponse {
+  if (error instanceof z.ZodError) {
+    console.warn("Validation error:", error.issues)
+    return NextResponse.json(
+      {
+        error: "Invalid request data",
+        issues: error.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        })),
+      },
+      { status: 400 }
+    )
+  }
+
+  if (error instanceof SyntaxError) {
+    return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 })
+  }
+
+  console.error("Unexpected error in POST /api/intercom/conversations:", error)
+  return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+}
+
+/**
  * POST /api/intercom/conversations
  * Create a contact in Intercom (support ticket)
  */
@@ -131,95 +235,46 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = IntercomConversationSchema.parse(body)
 
-    // Ensure Intercom credentials exist
-    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
-    const intercomAccessToken = process.env["INTERCOM_ACCESS_TOKEN"]
-    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
-    const intercomWorkspaceId = process.env["INTERCOM_WORKSPACE_ID"]
-
-    if (!(intercomAccessToken && intercomWorkspaceId)) {
-      console.error("Missing Intercom credentials in environment")
+    // Validate credentials
+    const credentials = validateIntercomCredentials()
+    if (!credentials) {
       return NextResponse.json({ error: "Service configuration error" }, { status: 500 })
     }
 
-    // Create or find the contact
-    const contactUrl = "https://api.intercom.io/contacts"
+    // Get or create contact
+    const { contactId, error } = await getOrCreateContact(
+      validatedData.visitorEmail,
+      validatedData.visitorName,
+      credentials.accessToken
+    )
 
-    // Minimal payload - only email and name are required/supported
-    const contactPayload = {
-      email: validatedData.visitorEmail,
-      name: validatedData.visitorName,
-    }
-
-    const contactResponse = await fetch(contactUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${intercomAccessToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Intercom-Version": "2.14",
-      },
-      body: JSON.stringify(contactPayload),
-    })
-
-    const contactData = await contactResponse.json()
-
-    // For 409 (conflict), need to fetch the existing contact
-    let contactId: string | null = null
-
-    if (contactResponse.status === 409) {
-      // Contact already exists - fetch it
-      console.log("Contact already exists, fetching...")
-      const getContactUrl = `https://api.intercom.io/contacts?email=${encodeURIComponent(validatedData.visitorEmail)}`
-      const getResponse = await fetch(getContactUrl, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${intercomAccessToken}`,
-          "Intercom-Version": "2.14",
-        },
-      })
-
-      if (getResponse.ok) {
-        const contactsData = await getResponse.json()
-        contactId = contactsData.data?.[0]?.id
-      }
-    } else if (contactResponse.ok) {
-      // Contact created successfully
-      contactId = contactData.id
-    } else {
-      // Error
-      console.error("Intercom contact API error:", contactData)
-      return NextResponse.json(
-        { error: "Failed to create contact", details: contactData },
-        { status: contactResponse.status }
-      )
-    }
+    if (error) return error
 
     if (!contactId) {
-      console.error("Could not extract contact ID from response:", contactData)
+      console.error("Could not extract contact ID from response")
       return NextResponse.json(
         { error: "Could not extract contact ID from Intercom response" },
         { status: 500 }
       )
     }
 
-    // Step 2: Create a conversation for this contact
+    // Create conversation and ticket
+    const message =
+      validatedData.initialMessage || `Support request from ${validatedData.visitorName}`
     const conversationId = await createConversation(
       contactId,
-      validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
+      message,
       validatedData.visitorName,
-      intercomAccessToken
+      credentials.accessToken
     )
-
-    // Step 3: Create a ticket for this contact
     const ticketId = await createTicket(
       validatedData.visitorEmail,
-      validatedData.initialMessage || `Support request from ${validatedData.visitorName}`,
+      message,
       validatedData.visitorName,
-      intercomAccessToken
+      credentials.accessToken
     )
 
-    // Success: Contact created, conversation and ticket attempted
+    // Return success response
     return NextResponse.json(
       {
         success: true,
@@ -233,28 +288,6 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    // Handle validation errors
-    if (error instanceof z.ZodError) {
-      console.warn("Validation error:", error.issues)
-      return NextResponse.json(
-        {
-          error: "Invalid request data",
-          issues: error.issues.map((issue) => ({
-            field: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
-        { status: 400 }
-      )
-    }
-
-    // Handle JSON parsing errors
-    if (error instanceof SyntaxError) {
-      return NextResponse.json({ error: "Invalid JSON in request body" }, { status: 400 })
-    }
-
-    // Handle unexpected errors
-    console.error("Unexpected error in POST /api/intercom/conversations:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return handleIntercomError(error)
   }
 }
