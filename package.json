@@ -23,7 +23,7 @@
     "@intercom/messenger-js-sdk": "^0.0.18",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "ai": "^5.0.92",
+    "ai": "^5.0.93",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
