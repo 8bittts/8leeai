@@ -51,8 +51,8 @@ async function createConversation(
 
 async function createTicket(
   contactEmail: string,
-  message: string,
-  visitorName: string,
+  _message: string,
+  _visitorName: string,
   accessToken: string
 ): Promise<string | null> {
   try {
