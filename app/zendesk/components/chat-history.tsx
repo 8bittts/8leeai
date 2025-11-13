@@ -34,7 +34,7 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
   return (
     <div
       ref={scrollContainerRef}
-      className="flex-1 overflow-y-auto px-4 lg:px-6 py-4 space-y-2 pr-2"
+      className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-2 pr-2"
       role="log"
       aria-label="Chat history"
       aria-live="polite"
