@@ -101,91 +101,94 @@ Polished, professional layout matching main site aesthetics with proper spacing 
 
 ---
 
-## Phase 2.6: Test Data & AI Integration Setup (NEXT)
+## Phase 2.6: AI Integration Setup (NEXT)
 
 ### Tasks
 
-#### A. Create Mock Data Generation Script
-- [ ] **Build `scripts/generate-zendesk-tickets.ts`**
-  - Generates fake support tickets for testing
-  - Creates 50-200 realistic ticket entries
-  - Includes:
-    - Ticket ID (incremental)
-    - Subject (realistic support topics)
-    - Description (varied length)
-    - Status (open, closed, pending, solved)
-    - Priority (urgent, high, normal, low)
-    - Created date (varied timestamps)
-    - Updated date
-    - Assignee (random from mock agents)
-    - Tags (support, billing, technical, etc.)
-    - Customer info (name, email, org)
-  - Exports as JSON to `public/mock-data/tickets.json`
-  - Script runs: `bun run scripts:generate-tickets`
+#### A. OpenAI Integration Setup
+- [x] **Review OpenAI Credentials Pattern**
+  - Study existing implementation in `/api/zendesk/suggest-response/route.ts` ✅
+  - Uses `@ai-sdk/openai` and `ai` package (already installed) ✅
+  - API key: `OPENAI_API_KEY` from `.env.local` (already configured) ✅
+  - Pattern: `openai("gpt-4o")` with `generateText()` ✅
+  - Error handling: timeout, rate limit, validation ✅
 
-#### B. OpenAI Integration Setup
-- [ ] **Review OpenAI Credentials Pattern**
-  - Study existing implementation in `/api/zendesk/suggest-response/route.ts`
-  - Note: Uses `@ai-sdk/openai` and `ai` package (already installed)
-  - API key: `OPENAI_API_KEY` from `.env.local` (already configured)
-  - Pattern: `openai("gpt-4o")` with `generateText()`
-  - Error handling: timeout, rate limit, validation
+- [x] **Create Query Interpreter AI Bridge**
+  - Built `app/zendesk/lib/openai-client.ts` ✅
+  - Exported `interpretComplexQuery()` function ✅
+  - Uses pattern from `/api/zendesk/suggest-response/route.ts` ✅
+  - System prompt for query interpretation ✅
+  - Validates response format ✅
 
-- [ ] **Create Query Interpreter AI Bridge**
-  - Build `app/zendesk/lib/openai-client.ts`
-  - Export `interpretComplexQuery()` function
-  - Use pattern from `/api/zendesk/suggest-response/route.ts`
-  - For queries that don't match patterns: "Interpret this support query: {query}"
-  - Validate response matches expected format
+- [x] **Add AI Query Route**
+  - Created `/api/zendesk/interpret-query/route.ts` ✅
+  - Accepts: `{ query: string }` ✅
+  - Returns: `{ intent, filters, confidence, method, reasoning }` ✅
+  - Dual-tier strategy:
+    - Pattern matching first (80% of queries, instant)
+    - OpenAI fallback for complex queries (20%)
+  - In-memory caching to minimize API calls ✅
 
-- [ ] **Add AI Query Route**
-  - Create `/api/zendesk/interpret-query/route.ts`
-  - Accept: `{ query: string }`
-  - Response: `{ intent, filters, confidence }`
-  - Use OpenAI when pattern matching fails
-  - Cache responses to minimize API calls
+#### B. Production Readiness
+- [ ] **Connect API to Zendesk Client**
+  - Build `app/zendesk/lib/zendesk-api-client.ts`
+  - Authentication with `ZENDESK_API_TOKEN`
+  - Fetch real tickets from Zendesk API
+  - Error handling (401, 403, 404, 429)
 
-#### C. Mock Data Testing
-- [ ] **Test Pattern Matching Against Mock Data**
-  - Load mock tickets into chat interface
-  - Test queries:
-    - "show open tickets" → formats as table
-    - "find high-priority issues" → filters correctly
-    - "what's our average resolution time?" → calculates metrics
-    - "tickets from Acme Corp" → filters by organization
-  - Verify response formatting matches ASCII output styles
+- [ ] **Integration with Chat Interface**
+  - Hook up chat input to `/api/zendesk/interpret-query`
+  - Pass interpreted query to Zendesk API client
+  - Format real results with response-formatter
+  - Display in chat with proper styling
+
+- [ ] **Real Data Testing**
+  - Test with actual Zendesk account tickets
+  - Verify query interpretation accuracy
+  - Test response formatting with real data
+  - Validate caching behavior
 
 ### Expected Outcome
-Fully testable system with:
-- Realistic mock data for demonstration
-- OpenAI integration ready for complex queries
-- Test suite verifying all patterns against live-like data
-- No need for real Zendesk account during development
+Production-ready system with:
+- OpenAI integration for complex queries ✅
+- Dual-tier architecture (pattern match + AI fallback) ✅
+- Ready to connect real Zendesk API data
+- Cost-optimized (80% queries free via patterns)
+- Graceful fallback handling
 
 ---
 
-## Phase 3: Query Interpretation Engine
+## Phase 3: Chat Interface Integration
 
-### Query Pattern Matching (80% coverage)
-Already implemented patterns for:
-- ✅ Ticket queries (`show open tickets`)
-- ✅ Analytics queries (`what's our average response time`)
-- ✅ User queries (`find agents`)
-- ✅ Organization queries (`list customers`)
-- ✅ Help articles (`find articles about X`)
-- ✅ Automation queries (`show automations`)
+### Integration Tasks
+- [ ] **Connect Chat to Query Interpretation API**
+  - Update `zendesk-chat-container.tsx` to call `/api/zendesk/interpret-query`
+  - Pass interpreted queries to Zendesk API client
+  - Display results in chat with proper formatting
 
-### Next Tasks
-- [ ] Test pattern matching with real queries
-- [ ] Fine-tune filter extraction
-- [ ] Implement Claude fallback for complex queries
-- [ ] Add query caching to reduce API calls
-- [ ] Create unit tests for pattern matching
+- [ ] **Build Zendesk API Client**
+  - Create `app/zendesk/lib/zendesk-api-client.ts`
+  - Authentication with `ZENDESK_API_TOKEN` from env
+  - Methods for common endpoints:
+    - `getTickets()` - List tickets with filters
+    - `getTicket(id)` - Get single ticket
+    - `getUsers()` - List support agents
+    - `getOrganizations()` - List customers
+    - `getAnalytics()` - Fetch metrics
+  - Error handling (401, 403, 404, 429 rate limit)
+  - Retry logic with exponential backoff
 
-### Expected Coverage
-- Simple queries: 90%+ accuracy (pattern matching)
-- Complex queries: 70%+ accuracy (fallback to Claude)
-- Overall: 85%+ user satisfaction
+- [ ] **Test Real API Integration**
+  - Query actual Zendesk account data
+  - Verify interpretation accuracy with real tickets
+  - Test response formatting with real results
+  - Validate error handling
+  - Monitor API rate limits
+
+### Expected Outcome
+- Fully functional chat interface querying real Zendesk data
+- End-to-end workflow: user query → interpret → API call → format → display
+- Production-ready error handling and caching
 
 ---
 
