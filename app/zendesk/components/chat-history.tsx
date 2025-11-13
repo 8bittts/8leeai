@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { ChatMessage } from "@/app/zendesk/lib/types"
+import type { ChatMessage } from "@/app/zendesk/lib/types"
 import { MessageBubble } from "./message-bubble"
 
 interface ChatHistoryProps {
@@ -43,9 +43,7 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
       {messages.length === 0 && (
         <div className="text-green-400 opacity-60 text-sm font-mono">
           <div>$ Zendesk Intelligence Terminal v1.0</div>
-          <div className="mt-2 text-green-500">
-            Welcome to the Zendesk API Chat Interface
-          </div>
+          <div className="mt-2 text-green-500">Welcome to the Zendesk API Chat Interface</div>
           <div className="mt-2 text-xs opacity-50">
             Try: "show open tickets" or "what's our average response time?"
           </div>
@@ -54,10 +52,7 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
 
       {messages.map((message, index) => (
         <div key={message.id} ref={index === messages.length - 1 ? lastMessageRef : undefined}>
-          <MessageBubble
-            message={message}
-            onCopy={() => handleCopy(message.content)}
-          />
+          <MessageBubble message={message} onCopy={() => handleCopy(message.content)} />
         </div>
       ))}
     </div>

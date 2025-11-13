@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { getZendeskClient } from "@/app/zendesk/lib/zendesk-api-client"
 
@@ -12,7 +12,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body = await request.json()
     const { filters, stats } = TicketsRequestSchema.parse(body)
 
-    console.log(`[TicketsAPI] Request - filters: ${"${JSON.stringify(filters)}"}, stats: ${"${stats}"}`)
+    console.log(
+      `[TicketsAPI] Request - filters: ${"${JSON.stringify(filters)}"}, stats: ${"${stats}"}`
+    )
 
     const client = getZendeskClient()
 
@@ -41,13 +43,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       if (filters) {
         if (typeof filters["status"] === "string") apiFilters.status = filters["status"] as string
-        if (typeof filters["priority"] === "string") apiFilters.priority = filters["priority"] as string
+        if (typeof filters["priority"] === "string")
+          apiFilters.priority = filters["priority"] as string
         if (typeof filters["limit"] === "number") apiFilters.limit = filters["limit"] as number
       }
 
       if (!apiFilters.limit) apiFilters.limit = 25
 
-      console.log(`[TicketsAPI] Fetching tickets with filters:`, apiFilters)
+      console.log("[TicketsAPI] Fetching tickets with filters:", apiFilters)
       const tickets = await client.getTickets(apiFilters)
 
       return NextResponse.json({
@@ -63,7 +66,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           return NextResponse.json(
             {
               success: false,
-              error: "Zendesk authentication failed. Check your ZENDESK_EMAIL and ZENDESK_API_TOKEN.",
+              error:
+                "Zendesk authentication failed. Check your ZENDESK_EMAIL and ZENDESK_API_TOKEN.",
             },
             { status: 401 }
           )
@@ -72,7 +76,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           return NextResponse.json(
             {
               success: false,
-              error: "Zendesk subdomain not configured. Set ZENDESK_SUBDOMAIN environment variable.",
+              error:
+                "Zendesk subdomain not configured. Set ZENDESK_SUBDOMAIN environment variable.",
             },
             { status: 500 }
           )

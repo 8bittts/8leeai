@@ -1,6 +1,6 @@
 "use client"
 
-import { SuggestionButton } from "@/app/zendesk/lib/types"
+import type { SuggestionButton } from "@/app/zendesk/lib/types"
 
 interface SuggestionBarProps {
   onSuggestionClick: (query: string) => void

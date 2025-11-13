@@ -9,7 +9,7 @@ export function ZendeskHeader() {
     <div className="w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-2 border-b border-green-500/20">
       {/* ASCII Art Logo */}
       <pre className="text-green-500 font-mono text-xs md:text-sm leading-tight">
-{`███████╗███████╗███╗   ██╗██████╗ ███████╗███████╗██╗  ██╗
+        {`███████╗███████╗███╗   ██╗██████╗ ███████╗███████╗██╗  ██╗
 ╚══███╔╝██╔════╝████╗  ██║██╔══██╗██╔════╝██╔════╝██║ ██╔╝
   ███╔╝ █████╗  ██╔██╗ ██║██║  ██║█████╗  ███████╗█████╔╝
  ███╔╝  ██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ╚════██║██╔═██╗
@@ -19,9 +19,7 @@ export function ZendeskHeader() {
 
       {/* Welcome Message */}
       <div className="mt-3 space-y-1 text-sm">
-        <p className="text-green-500">
-          Welcome to Zendesk Intelligence Terminal
-        </p>
+        <p className="text-green-500">Welcome to Zendesk Intelligence Terminal</p>
         <p className="text-green-400 opacity-70 text-xs">
           Ask questions about your support tickets, customers, analytics, and more.
         </p>

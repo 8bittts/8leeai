@@ -208,7 +208,11 @@ export class ZendeskAPIClient {
   /**
    * Get tickets with optional filters
    */
-  async getTickets(filters?: { status?: string; priority?: string; limit?: number }): Promise<ZendeskTicket[]> {
+  async getTickets(filters?: {
+    status?: string
+    priority?: string
+    limit?: number
+  }): Promise<ZendeskTicket[]> {
     const cacheKey = this.getCacheKey("/tickets.json", filters)
     const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
     if (cached) return cached as ZendeskTicket[]
@@ -295,7 +299,9 @@ export class ZendeskAPIClient {
     if (cached) return cached as ZendeskOrganization[]
 
     try {
-      const response = await this.request<{ organizations: ZendeskOrganization[] }>("/organizations.json")
+      const response = await this.request<{ organizations: ZendeskOrganization[] }>(
+        "/organizations.json"
+      )
       const orgs = response.organizations || []
 
       this.setCache(cacheKey, orgs)
@@ -343,7 +349,7 @@ export class ZendeskAPIClient {
   /**
    * Search tickets using Zendesk Query Language
    */
-  async searchTickets(query: string, limit: number = 25): Promise<ZendeskTicket[]> {
+  async searchTickets(query: string, limit = 25): Promise<ZendeskTicket[]> {
     const cacheKey = this.getCacheKey("/search.json", { query, limit })
     const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
     if (cached) return cached as ZendeskTicket[]
