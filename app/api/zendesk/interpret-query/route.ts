@@ -6,10 +6,10 @@
  * Uses pattern matching for 80% of queries, falls back to OpenAI for complex ones.
  */
 
-import { NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { interpretQuery } from "@/app/zendesk/lib/query-interpreter"
 import { interpretComplexQuery, testConnection } from "@/app/zendesk/lib/openai-client"
+import { interpretQuery } from "@/app/zendesk/lib/query-interpreter"
 
 // Request validation schema
 const QueryRequestSchema = z.object({
@@ -41,9 +41,7 @@ function getCacheKey(query: string): string {
 /**
  * Interpret a query using pattern matching first, then fallback to OpenAI
  */
-async function interpretQueryWithFallback(
-  query: string
-): Promise<QueryInterpretationResponse> {
+async function interpretQueryWithFallback(query: string): Promise<QueryInterpretationResponse> {
   // Check cache first
   const cacheKey = getCacheKey(query)
   const cached = interpretationCache.get(cacheKey)
@@ -72,7 +70,9 @@ async function interpretQueryWithFallback(
     }
 
     // Step 2: Pattern matching confidence too low, try OpenAI
-    console.log(`[QueryInterpreter] Pattern match confidence low (${patternResult.confidence}), using OpenAI`)
+    console.log(
+      `[QueryInterpreter] Pattern match confidence low (${patternResult.confidence}), using OpenAI`
+    )
 
     const openaiResult = await interpretComplexQuery(query)
 
@@ -109,7 +109,9 @@ async function interpretQueryWithFallback(
 /**
  * POST handler for query interpretation
  */
-export async function POST(request: NextRequest): Promise<NextResponse<QueryInterpretationResponse>> {
+export async function POST(
+  request: NextRequest
+): Promise<NextResponse<QueryInterpretationResponse>> {
   try {
     // Parse and validate request
     const body = await request.json()
@@ -157,7 +159,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<QueryInte
  * GET handler for testing/health check
  * Returns cache size and OpenAI connection status
  */
-export async function GET(): Promise<NextResponse<{ status: string; cacheSize: number; openaiConnected: boolean }>> {
+export async function GET(): Promise<
+  NextResponse<{ status: string; cacheSize: number; openaiConnected: boolean }>
+> {
   try {
     // Test OpenAI connection
     const { success } = await testConnection()

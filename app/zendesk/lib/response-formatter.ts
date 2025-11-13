@@ -12,10 +12,7 @@ interface Column {
 /**
  * Formats array of objects as an ASCII table
  */
-function formatTable(
-  data: Record<string, unknown>[],
-  columns: Column[]
-): string {
+function formatTable(data: Record<string, unknown>[], columns: Column[]): string {
   if (data.length === 0) {
     return "No results found."
   }
@@ -23,9 +20,7 @@ function formatTable(
   // Calculate column widths
   const widths: Record<string, number> = {}
   columns.forEach((col) => {
-    const cellWidths = data.map((row) =>
-      String(row[col.key] || "").substring(0, 50).length
-    )
+    const cellWidths = data.map((row) => String(row[col.key] || "").substring(0, 50).length)
     widths[col.key] = Math.max(
       col.label.length,
       col.width || 20,
@@ -34,21 +29,15 @@ function formatTable(
   })
 
   // Build top border
-  const topBorder = columns
-    .map((col) => "─".repeat((widths[col.key] ?? 20) + 2))
-    .join("┬")
+  const topBorder = columns.map((col) => "─".repeat((widths[col.key] ?? 20) + 2)).join("┬")
   const top = `┌${topBorder}┐`
 
   // Build header
-  const header = columns
-    .map((col) => ` ${col.label.padEnd(widths[col.key] ?? 20)} `)
-    .join("│")
+  const header = columns.map((col) => ` ${col.label.padEnd(widths[col.key] ?? 20)} `).join("│")
   const headerRow = `│${header}│`
 
   // Build header separator
-  const headerSep = columns
-    .map((col) => "─".repeat((widths[col.key] ?? 20) + 2))
-    .join("┼")
+  const headerSep = columns.map((col) => "─".repeat((widths[col.key] ?? 20) + 2)).join("┼")
   const sepRow = `├${headerSep}┤`
 
   // Build data rows
@@ -63,9 +52,7 @@ function formatTable(
   })
 
   // Build bottom border
-  const bottomBorder = columns
-    .map((col) => "─".repeat((widths[col.key] ?? 20) + 2))
-    .join("┴")
+  const bottomBorder = columns.map((col) => "─".repeat((widths[col.key] ?? 20) + 2)).join("┴")
   const bottom = `└${bottomBorder}┘`
 
   return [top, headerRow, sepRow, ...dataRows, bottom].join("\n")
@@ -129,9 +116,7 @@ export function formatTimeline(
 /**
  * Formats ticket data as a table
  */
-export function formatTickets(
-  tickets: Record<string, unknown>[]
-): string {
+export function formatTickets(tickets: Record<string, unknown>[]): string {
   if (tickets.length === 0) {
     return "No tickets found."
   }
@@ -149,9 +134,7 @@ export function formatTickets(
 /**
  * Formats user data as a table
  */
-export function formatUsers(
-  users: Record<string, unknown>[]
-): string {
+export function formatUsers(users: Record<string, unknown>[]): string {
   if (users.length === 0) {
     return "No users found."
   }
@@ -169,9 +152,7 @@ export function formatUsers(
 /**
  * Formats organization data as a table
  */
-export function formatOrganizations(
-  orgs: Record<string, unknown>[]
-): string {
+export function formatOrganizations(orgs: Record<string, unknown>[]): string {
   if (orgs.length === 0) {
     return "No organizations found."
   }
@@ -188,16 +169,12 @@ export function formatOrganizations(
 /**
  * Formats article/help content as a list
  */
-export function formatArticles(
-  articles: Record<string, unknown>[]
-): string {
+export function formatArticles(articles: Record<string, unknown>[]): string {
   if (articles.length === 0) {
     return "No articles found."
   }
 
-  const items = articles.map(
-    (article) => `${article["title"]} (ID: ${article["id"]})`
-  )
+  const items = articles.map((article) => `${article["title"]} (ID: ${article["id"]})`)
   return formatList(items)
 }
 
@@ -292,10 +269,7 @@ export function addSummary(
 /**
  * Paginates large output for terminal display
  */
-export function paginateOutput(
-  output: string,
-  pageSize: number = 20
-): string[] {
+export function paginateOutput(output: string, pageSize = 20): string[] {
   const lines = output.split("\n")
   const pages: string[] = []
 

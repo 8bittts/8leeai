@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useCallback } from "react"
+import { useCallback, useEffect, useRef } from "react"
 
 interface ChatInputProps {
   value: string
@@ -99,11 +99,7 @@ export function ChatInput({
           spellCheck="false"
           aria-label="Chat input"
         />
-        {isLoading && (
-          <span className="text-green-400 text-xs animate-pulse">
-            processing...
-          </span>
-        )}
+        {isLoading && <span className="text-green-400 text-xs animate-pulse">processing...</span>}
       </div>
       <div className="mt-2 text-xs text-green-400 opacity-50">
         Press Enter to submit • ↑↓ for history • Ctrl+C to clear

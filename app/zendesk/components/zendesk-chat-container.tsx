@@ -1,12 +1,12 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import type { ChatMessage } from "@/app/zendesk/lib/types"
 import { MatrixBackground } from "@/components/matrix-background"
 import { ChatHistory } from "./chat-history"
 import { ChatInput } from "./chat-input"
 import { SuggestionBar } from "./suggestion-bar"
 import { ZendeskHeader } from "./zendesk-header"
-import { ChatMessage } from "@/app/zendesk/lib/types"
 
 /**
  * Simple UUID v4 generator for message IDs
@@ -87,7 +87,6 @@ export function ZendeskChatContainer() {
     [addMessage]
   )
 
-
   const handleSubmit = useCallback(
     async (query: string) => {
       if (!query.trim() || isLoading) return
@@ -117,117 +116,158 @@ export function ZendeskChatContainer() {
           throw new Error(`Failed to interpret query: ${interpretResponse.statusText}`)
         }
 
-        const { intent, filters, confidence, method } =
-          (await interpretResponse.json()) as {
-            intent: string
-            filters: Record<string, unknown>
-            confidence: number
-            method: string
-          }
+        const { intent, filters, confidence, method } = (await interpretResponse.json()) as {
+          intent: string
+          filters: Record<string, unknown>
+          confidence: number
+          method: string
+        }
 
-        console.log(`[Chat] Interpreted as: ${intent} (${method}, ${(confidence * 100).toFixed(0)}% confidence)`)
+        console.log(
+          `[Chat] Interpreted as: ${intent} (${method}, ${(confidence * 100).toFixed(0)}% confidence)`
+        )
 
         // Step 2: Build response based on intent
         let responseContent = ""
         let recordCount = 0
 
-        switch (intent) {
-          case "ticket_list":
-          case "ticket_filter": {
-            try {
-              // Fetch tickets from API
-              const ticketsResponse = await fetch("/api/zendesk/tickets", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ filters }),
-              })
+        // Route to analysis endpoint for complex queries
+        const analyticsIntents = [
+          "help",
+          "ticket_status",
+          "recent_tickets",
+          "problem_areas",
+          "raw_data",
+        ]
 
-              if (ticketsResponse.ok) {
-                const { tickets } = (await ticketsResponse.json()) as {
-                  tickets: Array<{ id: number; subject: string; status: string; priority: string }>
-                }
-                recordCount = tickets.length
+        if (analyticsIntents.includes(intent)) {
+          try {
+            const analysisResponse = await fetch("/api/zendesk/analyze", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ intent, query, filters }),
+            })
 
-                if (tickets.length === 0) {
-                  responseContent = "No tickets found matching your criteria."
-                } else {
-                  // Format as ASCII table
-                  responseContent = `Found ${tickets.length} ticket(s):\n\n`
-                  responseContent += "ID    | Subject                              | Status    | Priority\n"
-                  responseContent += "------+--------------------------------------+-----------+----------\n"
-
-                  tickets.slice(0, 10).forEach((ticket) => {
-                    const id = String(ticket.id).padEnd(4)
-                    const subject = ticket.subject.substring(0, 34).padEnd(34)
-                    const status = ticket.status.padEnd(9)
-                    const priority = ticket.priority
-                    responseContent += `${id}  | ${subject} | ${status} | ${priority}\n`
-                  })
-
-                  if (tickets.length > 10) {
-                    responseContent += `\n... and ${tickets.length - 10} more tickets`
-                  }
-                }
-              } else {
-                responseContent = "Unable to fetch tickets. Please check your Zendesk configuration."
+            if (analysisResponse.ok) {
+              const { content } = (await analysisResponse.json()) as {
+                content: string
               }
-            } catch (error) {
-              responseContent = `Error fetching tickets: ${error instanceof Error ? error.message : "Unknown error"}`
+              responseContent = content
+            } else {
+              responseContent = "Unable to process analysis request."
             }
-            break
+          } catch (error) {
+            responseContent = `Error processing request: ${error instanceof Error ? error.message : "Unknown error"}`
           }
-
-          case "analytics": {
-            try {
-              const statsResponse = await fetch("/api/zendesk/tickets", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ stats: true }),
-              })
-
-              if (statsResponse.ok) {
-                const { stats } = (await statsResponse.json()) as {
-                  stats: Record<string, number>
-                }
-
-                responseContent = "Ticket Statistics:\n\n"
-                responseContent += "Status    | Count\n"
-                responseContent += "----------+-------\n"
-
-                Object.entries(stats).forEach(([status, count]) => {
-                  const statusPad = status.padEnd(9)
-                  responseContent += `${statusPad} | ${count}\n`
+        } else {
+          // Original ticket/analytics queries
+          switch (intent) {
+            case "ticket_list":
+            case "ticket_filter": {
+              try {
+                // Fetch tickets from API
+                const ticketsResponse = await fetch("/api/zendesk/tickets", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ filters }),
                 })
 
-                const total = Object.values(stats).reduce((a, b) => a + b, 0)
-                responseContent += `----------+-------\n`
-                responseContent += `Total    | ${total}\n`
-              } else {
-                responseContent = "Unable to fetch statistics. Please check your Zendesk configuration."
+                if (ticketsResponse.ok) {
+                  const { tickets } = (await ticketsResponse.json()) as {
+                    tickets: Array<{
+                      id: number
+                      subject: string
+                      status: string
+                      priority: string
+                    }>
+                  }
+                  recordCount = tickets.length
+
+                  if (tickets.length === 0) {
+                    responseContent = "No tickets found matching your criteria."
+                  } else {
+                    // Format as ASCII table
+                    responseContent = `Found ${tickets.length} ticket(s):\n\n`
+                    responseContent +=
+                      "ID    | Subject                              | Status    | Priority\n"
+                    responseContent +=
+                      "------+--------------------------------------+-----------+----------\n"
+
+                    tickets.slice(0, 10).forEach((ticket) => {
+                      const id = String(ticket.id).padEnd(4)
+                      const subject = ticket.subject.substring(0, 34).padEnd(34)
+                      const status = ticket.status.padEnd(9)
+                      const priority = ticket.priority
+                      responseContent += `${id}  | ${subject} | ${status} | ${priority}\n`
+                    })
+
+                    if (tickets.length > 10) {
+                      responseContent += `\n... and ${tickets.length - 10} more tickets`
+                    }
+                  }
+                } else {
+                  responseContent =
+                    "Unable to fetch tickets. Please check your Zendesk configuration."
+                }
+              } catch (error) {
+                responseContent = `Error fetching tickets: ${error instanceof Error ? error.message : "Unknown error"}`
               }
-            } catch (error) {
-              responseContent = `Error fetching statistics: ${error instanceof Error ? error.message : "Unknown error"}`
+              break
             }
-            break
-          }
 
-          case "user_query": {
-            responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for user queries coming soon.`
-            break
-          }
+            case "analytics": {
+              try {
+                const statsResponse = await fetch("/api/zendesk/tickets", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ stats: true }),
+                })
 
-          case "organization_query": {
-            responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for organization queries coming soon.`
-            break
-          }
+                if (statsResponse.ok) {
+                  const { stats } = (await statsResponse.json()) as {
+                    stats: Record<string, number>
+                  }
 
-          case "help_article": {
-            responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for help article search coming soon.`
-            break
-          }
+                  responseContent = "Ticket Statistics:\n\n"
+                  responseContent += "Status    | Count\n"
+                  responseContent += "----------+-------\n"
 
-          default: {
-            responseContent = `Query: "${query}"\nIntent: ${intent}\nMethod: ${method} (${(confidence * 100).toFixed(0)}% confidence)\nFilters: ${JSON.stringify(filters)}\n\nQuery interpretation complete. Full query handling coming soon.`
+                  Object.entries(stats).forEach(([status, count]) => {
+                    const statusPad = status.padEnd(9)
+                    responseContent += `${statusPad} | ${count}\n`
+                  })
+
+                  const total = Object.values(stats).reduce((a, b) => a + b, 0)
+                  responseContent += "----------+-------\n"
+                  responseContent += `Total    | ${total}\n`
+                } else {
+                  responseContent =
+                    "Unable to fetch statistics. Please check your Zendesk configuration."
+                }
+              } catch (error) {
+                responseContent = `Error fetching statistics: ${error instanceof Error ? error.message : "Unknown error"}`
+              }
+              break
+            }
+
+            case "user_query": {
+              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for user queries coming soon.`
+              break
+            }
+
+            case "organization_query": {
+              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for organization queries coming soon.`
+              break
+            }
+
+            case "help_article": {
+              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for help article search coming soon.`
+              break
+            }
+
+            default: {
+              responseContent = `Query: "${query}"\nIntent: ${intent}\nMethod: ${method} (${(confidence * 100).toFixed(0)}% confidence)\nFilters: ${JSON.stringify(filters)}\n\nQuery interpretation complete.`
+            }
           }
         }
 
@@ -239,8 +279,7 @@ export function ZendeskChatContainer() {
           apiEndpoint: intent,
         })
       } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Unknown error occurred"
+        const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
         addErrorMessage(errorMessage)
       } finally {
         setIsLoading(false)
@@ -300,10 +339,7 @@ export function ZendeskChatContainer() {
         <ZendeskHeader />
 
         {/* Chat history */}
-        <ChatHistory
-          messages={messages}
-          onCopyMessage={handleCopyMessage}
-        />
+        <ChatHistory messages={messages} onCopyMessage={handleCopyMessage} />
 
         {/* Suggestion bar */}
         <SuggestionBar onSuggestionClick={handleSuggestionClick} />

@@ -20,8 +20,7 @@ interface QueryInterpretationResult {
 function validateEnvironment(): void {
   if (!process.env["OPENAI_API_KEY"]) {
     throw new Error(
-      "OPENAI_API_KEY environment variable is not set. " +
-        "Please configure it in .env.local"
+      "OPENAI_API_KEY environment variable is not set. " + "Please configure it in .env.local"
     )
   }
 }
@@ -67,9 +66,7 @@ Focus on extracting all relevant filters. If something is ambiguous, note lower 
  * Interpret a complex query using OpenAI
  * Falls back when pattern matching doesn't provide full clarity
  */
-export async function interpretComplexQuery(
-  query: string
-): Promise<QueryInterpretationResult> {
+export async function interpretComplexQuery(query: string): Promise<QueryInterpretationResult> {
   validateEnvironment()
 
   try {

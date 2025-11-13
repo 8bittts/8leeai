@@ -1,6 +1,6 @@
 "use client"
 
-import { ChatMessage } from "@/app/zendesk/lib/types"
+import type { ChatMessage } from "@/app/zendesk/lib/types"
 
 interface MessageBubbleProps {
   message: ChatMessage
@@ -13,18 +13,15 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
   const isSystem = message.type === "system"
 
   return (
-    <div
-      className={`mb-3 font-mono text-sm ${
-        isSystem ? "opacity-60" : ""
-      }`}
-    >
+    <div className={`mb-3 font-mono text-sm ${isSystem ? "opacity-60" : ""}`}>
       {isUser && (
         <div className="text-green-500 mb-1">
-          {"> "}{message.content}
+          {"> "}
+          {message.content}
         </div>
       )}
 
-      {!isUser && !isError && !isSystem && (
+      {!(isUser || isError || isSystem) && (
         <div
           className={`text-green-500 whitespace-pre-wrap break-words ${
             message.metadata?.isStreaming ? "animate-pulse" : ""

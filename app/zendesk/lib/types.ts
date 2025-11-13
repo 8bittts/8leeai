@@ -1,6 +1,6 @@
 // Zendesk chat interface types
 
-export type MessageType = 'user' | 'assistant' | 'system' | 'error'
+export type MessageType = "user" | "assistant" | "system" | "error"
 
 export interface ChatMessageMetadata {
   apiEndpoint?: string
@@ -28,7 +28,7 @@ export interface ChatState {
 }
 
 export interface APICall {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method: "GET" | "POST" | "PUT" | "DELETE"
   endpoint: string
   params?: Record<string, unknown>
   query?: string
@@ -48,21 +48,21 @@ export interface APIResponse {
 }
 
 export type QueryIntent =
-  | 'ticket_list'
-  | 'ticket_filter'
-  | 'analytics'
-  | 'user_query'
-  | 'organization_query'
-  | 'chat_query'
-  | 'call_query'
-  | 'help_article'
-  | 'automation'
-  | 'unknown'
+  | "ticket_list"
+  | "ticket_filter"
+  | "analytics"
+  | "user_query"
+  | "organization_query"
+  | "chat_query"
+  | "call_query"
+  | "help_article"
+  | "automation"
+  | "unknown"
 
 export interface ParsedQuery {
   intent: QueryIntent
   apiCall: APICall
-  suggestedFormat: 'table' | 'metrics' | 'list' | 'timeline'
+  suggestedFormat: "table" | "metrics" | "list" | "timeline"
   confidence: number
   filters: Record<string, unknown>
 }

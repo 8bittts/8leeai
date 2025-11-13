@@ -1,4 +1,4 @@
-import { ParsedQuery, QueryIntent, APICall } from "./types"
+import type { APICall, ParsedQuery, QueryIntent } from "./types"
 
 /**
  * Query Interpreter
@@ -8,9 +8,18 @@ import { ParsedQuery, QueryIntent, APICall } from "./types"
 
 // Query patterns for different intents
 const QUERY_PATTERNS = {
-  ticket_list: /^(show|list|get|display)\s+(all\s+)?(open|closed|pending|solved)?\s*(support\s+)?(tickets|issues)/i,
+  help: /^(help|commands|what can|show commands|list commands|available commands)/i,
+  ticket_status:
+    /^(how many|count|total).*(tickets?|issues?).*(open|close[d]?|pending|solved|on.hold|new)/i,
+  recent_tickets: /^(show|get|last|recent).*(convo|conversation|ticket|message|activity|update)/i,
+  problem_areas:
+    /(area|areas|topic|topics|tag|category).*(need|help|attention|focus|issues?|problem)/i,
+  raw_data: /^(show|display|return).*(raw|json|data|response)/i,
+  ticket_list:
+    /^(show|list|get|display)\s+(all\s+)?(open|closed|pending|solved)?\s*(support\s+)?(tickets|issues)/i,
   ticket_filter: /ticket.*(status|priority|type|assignee|tag|organization)/i,
-  analytics: /^(show|what's|whats|what is|display).*(statistic|metric|average|total|count|performance|analytics)/i,
+  analytics:
+    /^(show|what's|whats|what is|display).*(statistic|metric|average|total|count|performance|analytics|summary)/i,
   user_query: /(find|show|list).*(user|agent|customer|contact)/i,
   organization_query: /(find|show|list).*(organization|customer|account|company)/i,
   chat_query: /(chat|conversation|message).*(session|history|active)/i,
@@ -81,9 +90,7 @@ function extractFilters(query: string): Record<string, unknown> {
 /**
  * Determines the suggested display format for results
  */
-function suggestFormat(
-  intent: QueryIntent
-): "table" | "metrics" | "list" | "timeline" {
+function suggestFormat(intent: QueryIntent): "table" | "metrics" | "list" | "timeline" {
   switch (intent) {
     case "analytics":
       return "metrics"
@@ -100,10 +107,7 @@ function suggestFormat(
 /**
  * Builds Zendesk API call from parsed query
  */
-function buildAPICall(
-  intent: QueryIntent,
-  filters: Record<string, unknown>
-): APICall {
+function buildAPICall(intent: QueryIntent, filters: Record<string, unknown>): APICall {
   switch (intent) {
     case "ticket_list":
     case "ticket_filter":
