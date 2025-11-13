@@ -327,10 +327,11 @@ export class ZendeskAPIClient {
       // Fetch count for each status in parallel
       const promises = statuses.map(async (status) => {
         try {
-          const response = await this.request<{ count: number }>("/tickets/count.json", {
+          const response = await this.request<{ count: { value: number } }>("/tickets/count.json", {
             params: { query: `status:${status}` },
           })
-          stats[status] = response.count || 0
+          // The Zendesk API returns count as an object with a 'value' property
+          stats[status] = response.count?.value || 0
         } catch {
           stats[status] = 0
         }
