@@ -1,11 +1,11 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { BootSequence } from "@/components/boot-sequence"
 import { MatrixBackground } from "@/components/matrix-background"
 import { ChatHistory } from "./chat-history"
 import { ChatInput } from "./chat-input"
 import { SuggestionBar } from "./suggestion-bar"
+import { ZendeskHeader } from "./zendesk-header"
 import { ChatMessage } from "@/app/zendesk/lib/types"
 
 /**
@@ -20,7 +20,7 @@ function generateId(): string {
  * Manages state, boot sequence, and message flow.
  */
 export function ZendeskChatContainer() {
-  const [bootComplete, setBootComplete] = useState(false)
+  // Boot screen removed - show interface immediately
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [currentInput, setCurrentInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -41,21 +41,14 @@ export function ZendeskChatContainer() {
     }
   }, [])
 
-  const handleBootComplete = useCallback(() => {
-    setBootComplete(true)
-    // Play audio on boot-to-content transition
+  const initializeInterface = useCallback(() => {
+    // Play audio on initialization
     if (!audioPlayedRef.current && audioRef.current) {
       audioRef.current.play().catch(() => {
         // Intentionally empty - audio is optional enhancement
       })
       audioPlayedRef.current = true
     }
-
-    // Welcome message after boot
-    addSystemMessage("Welcome to Zendesk Intelligence Terminal")
-    addSystemMessage(
-      'Try: "show open tickets" or "what\'s our average response time?"'
-    )
   }, [])
 
   const addMessage = useCallback(
@@ -94,12 +87,6 @@ export function ZendeskChatContainer() {
     [addMessage]
   )
 
-  const addSystemMessage = useCallback(
-    (content: string) => {
-      return addMessage("system", content)
-    },
-    [addMessage]
-  )
 
   const handleSubmit = useCallback(
     async (query: string) => {
@@ -155,7 +142,6 @@ export function ZendeskChatContainer() {
   }, [])
 
   const clearToStart = useCallback(() => {
-    setBootComplete(false)
     setMessages([])
     setCurrentInput("")
     setCommandHistory([])
@@ -164,8 +150,6 @@ export function ZendeskChatContainer() {
 
   // Keyboard shortcuts
   useEffect(() => {
-    if (!bootComplete) return
-
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ctrl+L (clear terminal) or Cmd+K (macOS clear)
       if ((e.ctrlKey || e.metaKey) && (e.key === "l" || e.key === "k")) {
@@ -176,7 +160,12 @@ export function ZendeskChatContainer() {
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [bootComplete, clearToStart])
+  }, [clearToStart])
+
+  // Initialize on mount
+  useEffect(() => {
+    initializeInterface()
+  }, [initializeInterface])
 
   return (
     <main className="h-full w-full bg-black text-green-500 font-mono relative flex flex-col overflow-hidden">
@@ -185,33 +174,30 @@ export function ZendeskChatContainer() {
 
       {/* Main content area */}
       <div className="relative z-10 flex-1 flex flex-col overflow-hidden">
-        {!bootComplete ? (
-          <BootSequence onComplete={handleBootComplete} />
-        ) : (
-          <>
-            {/* Chat history */}
-            <ChatHistory
-              messages={messages}
-              onCopyMessage={handleCopyMessage}
-            />
+        {/* Zendesk Header with ASCII Art */}
+        <ZendeskHeader />
 
-            {/* Suggestion bar */}
-            <SuggestionBar onSuggestionClick={handleSuggestionClick} />
+        {/* Chat history */}
+        <ChatHistory
+          messages={messages}
+          onCopyMessage={handleCopyMessage}
+        />
 
-            {/* Input area */}
-            <div className="px-4 lg:px-6 pb-4">
-              <ChatInput
-                value={currentInput}
-                onChange={setCurrentInput}
-                onSubmit={handleSubmit}
-                isLoading={isLoading}
-                commandHistory={commandHistory}
-                historyIndex={historyIndex}
-                onHistoryNavigate={setHistoryIndex}
-              />
-            </div>
-          </>
-        )}
+        {/* Suggestion bar */}
+        <SuggestionBar onSuggestionClick={handleSuggestionClick} />
+
+        {/* Input area */}
+        <div className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
+          <ChatInput
+            value={currentInput}
+            onChange={setCurrentInput}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            commandHistory={commandHistory}
+            historyIndex={historyIndex}
+            onHistoryNavigate={setHistoryIndex}
+          />
+        </div>
       </div>
     </main>
   )

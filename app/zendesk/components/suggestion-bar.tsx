@@ -39,7 +39,7 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
   ]
 
   return (
-    <div className="px-4 lg:px-6 py-2 border-t border-green-500/20">
+    <div className="px-4 sm:px-6 lg:px-8 py-2 border-t border-green-500/20">
       <div className="text-xs text-green-400 opacity-60 mb-2">Quick queries:</div>
       <div className="flex flex-wrap gap-2">
         {suggestions.map((suggestion) => (
