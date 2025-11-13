@@ -16,8 +16,7 @@
     "clean": "rm -rf .next node_modules/.cache .turbo",
     "packages": "bun scripts/x-package-monitor.js",
     "packages:watch": "bun scripts/x-package-monitor.js --watch",
-    "packages:critical": "bun scripts/x-package-monitor.js --critical",
-    "scripts:generate-tickets": "bun scripts/generate-zendesk-tickets.ts"
+    "packages:critical": "bun scripts/x-package-monitor.js --critical"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.65",
