@@ -45,3 +45,19 @@ Active release note files:
 - [2025-november.md](2025-november.md) - November 2025
 - [2025-october.md](2025-october.md) - October 2025
 - [2025-september.md](2025-september.md) - September 2025
+
+## Project Documentation
+
+### ZenCom Project (Zendesk + Intercom Integration)
+- [zencom-master-plan.md](zencom-master-plan.md) - Complete project plan and architecture
+- [FORM_COMPONENTS.md](FORM_COMPONENTS.md) - UI components reference guide
+
+### Zendesk Intelligence Portal
+- [ZENDESK_IMPLEMENTATION_STATUS.md](ZENDESK_IMPLEMENTATION_STATUS.md) - Implementation status and progress
+- [zendesk-capability-matrix.md](zendesk-capability-matrix.md) - API capability reference
+- [zendesk-chat-architecture.md](zendesk-chat-architecture.md) - Technical architecture design
+- [zendesk-hiring-pitch.md](zendesk-hiring-pitch.md) - Feature highlights for hiring managers
+
+### Planning & Ideas
+- [PLAN_UPDATE_SUMMARY.md](PLAN_UPDATE_SUMMARY.md) - High-level plan summaries
+- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Future enhancement ideas
