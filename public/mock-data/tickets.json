@@ -1,0 +1,2916 @@
+[
+  {
+    "id": 1,
+    "subject": "Payment processing failed",
+    "description": "The export feature is missing some fields we need.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-15T03:12:35.028Z",
+    "updated_at": "2025-12-08T00:00:50.232Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "training",
+      "internal-issue",
+      "security"
+    ],
+    "customer": {
+      "name": "Michael Garcia",
+      "email": "michael.garcia@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 2,
+    "subject": "Mobile app crashes",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-11-04T01:11:52.213Z",
+    "updated_at": "2025-12-24T23:25:10.247Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "feature-request",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "Robert Smith",
+      "email": "robert.smith@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 3,
+    "subject": "Reports not generating",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-24T18:15:59.531Z",
+    "updated_at": "2025-10-26T20:00:30.568Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "integration"
+    ],
+    "customer": {
+      "name": "Jennifer Anderson",
+      "email": "jennifer.anderson@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 4,
+    "subject": "Automation rule not triggering",
+    "description": "The API response is slower than expected. Can you optimize it?",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-10-04T14:42:25.992Z",
+    "updated_at": "2025-11-19T15:06:25.570Z",
+    "assignee": null,
+    "tags": [
+      "billing",
+      "feature-request",
+      "training",
+      "migration"
+    ],
+    "customer": {
+      "name": "Jessica Moore",
+      "email": "jessica.moore@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 5,
+    "subject": "Data retention policy question",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-12T14:30:17.850Z",
+    "updated_at": "2025-10-31T20:01:06.083Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "api",
+      "integration",
+      "urgent"
+    ],
+    "customer": {
+      "name": "James Moore",
+      "email": "james.moore@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 6,
+    "subject": "API documentation outdated",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-09-23T10:13:22.891Z",
+    "updated_at": "2025-10-16T10:04:50.271Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "support"
+    ],
+    "customer": {
+      "name": "David Johnson",
+      "email": "david.johnson@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 7,
+    "subject": "Account verification stuck",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-09-24T06:02:34.697Z",
+    "updated_at": "2025-10-02T22:17:15.051Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Jennifer Thomas",
+      "email": "jennifer.thomas@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 8,
+    "subject": "Authentication token expired",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-02T05:56:02.176Z",
+    "updated_at": "2025-10-08T14:27:06.745Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "billing",
+      "internal-issue",
+      "technical",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Jessica Smith",
+      "email": "jessica.smith@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 9,
+    "subject": "How to configure SAML",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-09-07T14:20:33.887Z",
+    "updated_at": "2025-09-29T10:10:19.752Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Jessica Rodriguez",
+      "email": "jessica.rodriguez@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 10,
+    "subject": "Unable to upload files",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-29T04:46:26.074Z",
+    "updated_at": "2025-10-11T19:04:30.688Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "migration"
+    ],
+    "customer": {
+      "name": "Barbara Jackson",
+      "email": "barbara.jackson@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 11,
+    "subject": "Unable to upload files",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-08-19T11:02:33.012Z",
+    "updated_at": "2025-09-15T08:48:02.935Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "api",
+      "training"
+    ],
+    "customer": {
+      "name": "Susan Martin",
+      "email": "susan.martin@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 12,
+    "subject": "Rate limiting too strict",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-11-06T04:43:27.759Z",
+    "updated_at": "2025-12-21T05:08:13.963Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "migration",
+      "support"
+    ],
+    "customer": {
+      "name": "Lisa Jackson",
+      "email": "lisa.jackson@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 13,
+    "subject": "Reports not generating",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-18T09:08:08.359Z",
+    "updated_at": "2025-09-27T23:45:28.299Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "security",
+      "documentation",
+      "support"
+    ],
+    "customer": {
+      "name": "Susan Brown",
+      "email": "susan.brown@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 14,
+    "subject": "Rate limiting too strict",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-08-25T20:39:38.822Z",
+    "updated_at": "2025-08-31T22:32:45.372Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "performance",
+      "support",
+      "api",
+      "migration"
+    ],
+    "customer": {
+      "name": "Lisa Davis",
+      "email": "lisa.davis@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 15,
+    "subject": "Integration with Slack not syncing",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-10T11:13:08.325Z",
+    "updated_at": "2025-10-24T00:15:21.535Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "performance"
+    ],
+    "customer": {
+      "name": "Richard Rodriguez",
+      "email": "richard.rodriguez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 16,
+    "subject": "Billing question about subscription",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-09-09T05:43:39.394Z",
+    "updated_at": "2025-10-12T20:18:18.330Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "billing",
+      "high-priority",
+      "support"
+    ],
+    "customer": {
+      "name": "James Garcia",
+      "email": "james.garcia@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 17,
+    "subject": "Webhook delivery failing",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-15T22:58:28.862Z",
+    "updated_at": "2025-11-05T11:30:04.465Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "support",
+      "billing"
+    ],
+    "customer": {
+      "name": "Patricia Jones",
+      "email": "patricia.jones@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 18,
+    "subject": "Rate limiting too strict",
+    "description": "The API response is slower than expected. Can you optimize it?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-09-18T02:13:43.852Z",
+    "updated_at": "2025-11-09T13:22:23.187Z",
+    "assignee": null,
+    "tags": [
+      "feature-request",
+      "billing",
+      "migration"
+    ],
+    "customer": {
+      "name": "Robert Martin",
+      "email": "robert.martin@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 19,
+    "subject": "Reports not generating",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-11-08T16:44:02.354Z",
+    "updated_at": "2025-12-29T00:50:10.536Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "billing",
+      "migration",
+      "internal-issue",
+      "technical"
+    ],
+    "customer": {
+      "name": "Robert Davis",
+      "email": "robert.davis@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 20,
+    "subject": "Reports not generating",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-10-28T13:56:32.834Z",
+    "updated_at": "2025-12-20T07:33:35.715Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "customer-complaint",
+      "feature-request",
+      "high-priority",
+      "training"
+    ],
+    "customer": {
+      "name": "Susan Wilson",
+      "email": "susan.wilson@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 21,
+    "subject": "Automation rule not triggering",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "open",
+    "priority": "urgent",
+    "created_at": "2025-10-29T03:26:10.376Z",
+    "updated_at": "2025-12-21T13:04:23.238Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "customer-complaint",
+      "api",
+      "migration"
+    ],
+    "customer": {
+      "name": "Emma Moore",
+      "email": "emma.moore@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 22,
+    "subject": "Authentication token expired",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-08-31T08:53:41.625Z",
+    "updated_at": "2025-09-28T12:33:30.971Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "security",
+      "training",
+      "internal-issue"
+    ],
+    "customer": {
+      "name": "Sarah Moore",
+      "email": "sarah.moore@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 23,
+    "subject": "Automation rule not triggering",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-08-20T03:25:42.009Z",
+    "updated_at": "2025-10-02T08:26:40.635Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Sarah Jones",
+      "email": "sarah.jones@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 24,
+    "subject": "Integration with Slack not syncing",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-31T13:07:25.792Z",
+    "updated_at": "2025-11-29T12:25:10.413Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "technical",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Thomas Martin",
+      "email": "thomas.martin@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 25,
+    "subject": "Cannot login to account",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-10-08T20:27:31.817Z",
+    "updated_at": "2025-11-06T10:04:38.018Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "support",
+      "internal-issue",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Jennifer Hernandez",
+      "email": "jennifer.hernandez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 26,
+    "subject": "Password reset not working",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-09-27T18:20:38.447Z",
+    "updated_at": "2025-10-02T16:00:07.797Z",
+    "assignee": null,
+    "tags": [
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Robert Hernandez",
+      "email": "robert.hernandez@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 27,
+    "subject": "Email notifications not arriving",
+    "description": "User is having trouble accessing their dashboard and needs immediate assistance.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-17T22:58:26.148Z",
+    "updated_at": "2025-10-22T16:35:16.494Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "documentation",
+      "training",
+      "internal-issue"
+    ],
+    "customer": {
+      "name": "Sarah Jones",
+      "email": "sarah.jones@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 28,
+    "subject": "Mobile app crashes",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-08-29T16:02:42.286Z",
+    "updated_at": "2025-10-19T23:26:37.876Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "high-priority",
+      "customer-complaint",
+      "technical",
+      "integration"
+    ],
+    "customer": {
+      "name": "Karen Hernandez",
+      "email": "karen.hernandez@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 29,
+    "subject": "Rate limiting too strict",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-15T21:53:05.687Z",
+    "updated_at": "2025-09-27T18:20:21.893Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "high-priority"
+    ],
+    "customer": {
+      "name": "James Wilson",
+      "email": "james.wilson@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 30,
+    "subject": "Payment processing failed",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-16T11:12:50.682Z",
+    "updated_at": "2025-10-16T20:45:12.073Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "billing",
+      "performance",
+      "migration",
+      "security"
+    ],
+    "customer": {
+      "name": "Charles Taylor",
+      "email": "charles.taylor@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 31,
+    "subject": "Authentication token expired",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-09-06T04:39:45.950Z",
+    "updated_at": "2025-10-16T14:59:58.585Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "high-priority",
+      "api"
+    ],
+    "customer": {
+      "name": "Lisa Miller",
+      "email": "lisa.miller@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 32,
+    "subject": "Missing data in exports",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-09-13T19:48:14.877Z",
+    "updated_at": "2025-11-09T15:44:02.222Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "training",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Maria Williams",
+      "email": "maria.williams@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 33,
+    "subject": "Need help with migration",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-28T07:08:19.004Z",
+    "updated_at": "2025-11-01T09:52:49.866Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "billing",
+      "security",
+      "technical"
+    ],
+    "customer": {
+      "name": "Robert Martinez",
+      "email": "robert.martinez@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 34,
+    "subject": "Reports not generating",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-14T13:13:01.655Z",
+    "updated_at": "2025-12-11T21:43:18.606Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "urgent",
+      "high-priority",
+      "migration"
+    ],
+    "customer": {
+      "name": "Emma Gonzalez",
+      "email": "emma.gonzalez@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 35,
+    "subject": "Missing data in exports",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-26T01:27:25.222Z",
+    "updated_at": "2025-12-03T02:45:10.497Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "technical",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "James Garcia",
+      "email": "james.garcia@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 36,
+    "subject": "Export format issue",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-09-17T22:55:05.222Z",
+    "updated_at": "2025-09-18T11:33:33.296Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "training",
+      "api",
+      "feature-request",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Barbara Williams",
+      "email": "barbara.williams@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 37,
+    "subject": "Billing question about subscription",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "open",
+    "priority": "urgent",
+    "created_at": "2025-08-23T15:23:23.913Z",
+    "updated_at": "2025-10-20T10:41:24.632Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "feature-request",
+      "billing",
+      "customer-complaint",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Barbara Wilson",
+      "email": "barbara.wilson@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 38,
+    "subject": "Payment processing failed",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-09-30T10:15:11.416Z",
+    "updated_at": "2025-10-25T18:36:39.776Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "support",
+      "integration",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Emma Wilson",
+      "email": "emma.wilson@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 39,
+    "subject": "Export format issue",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-11-11T17:17:40.000Z",
+    "updated_at": "2025-11-22T16:12:07.966Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "support",
+      "billing",
+      "integration",
+      "migration"
+    ],
+    "customer": {
+      "name": "Jessica Brown",
+      "email": "jessica.brown@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 40,
+    "subject": "Payment processing failed",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-10-07T20:14:05.579Z",
+    "updated_at": "2025-10-14T04:35:59.792Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training"
+    ],
+    "customer": {
+      "name": "James Jones",
+      "email": "james.jones@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 41,
+    "subject": "Automation rule not triggering",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-11-01T18:35:28.885Z",
+    "updated_at": "2025-11-30T00:42:12.153Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "high-priority",
+      "api"
+    ],
+    "customer": {
+      "name": "Richard Hernandez",
+      "email": "richard.hernandez@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 42,
+    "subject": "Unable to upload files",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-27T19:11:27.298Z",
+    "updated_at": "2025-12-02T09:08:26.032Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "urgent",
+      "technical",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "William Lopez",
+      "email": "william.lopez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 43,
+    "subject": "Mobile app crashes",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "pending",
+    "priority": "low",
+    "created_at": "2025-10-20T15:10:43.923Z",
+    "updated_at": "2025-11-04T01:26:38.686Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "feature-request",
+      "performance"
+    ],
+    "customer": {
+      "name": "Emma Lopez",
+      "email": "emma.lopez@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 44,
+    "subject": "Webhook delivery failing",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-10-08T19:27:08.574Z",
+    "updated_at": "2025-11-18T11:35:49.320Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "migration"
+    ],
+    "customer": {
+      "name": "William Lopez",
+      "email": "william.lopez@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 45,
+    "subject": "Need help with migration",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-10-08T05:27:31.283Z",
+    "updated_at": "2025-12-04T11:48:56.391Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "feature-request",
+      "high-priority",
+      "migration"
+    ],
+    "customer": {
+      "name": "Robert Martinez",
+      "email": "robert.martinez@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 46,
+    "subject": "Payment processing failed",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "pending",
+    "priority": "low",
+    "created_at": "2025-11-10T10:17:57.846Z",
+    "updated_at": "2026-01-06T21:26:42.019Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "billing",
+      "api"
+    ],
+    "customer": {
+      "name": "Susan Gonzalez",
+      "email": "susan.gonzalez@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 47,
+    "subject": "Performance issue with dashboard",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-09-21T09:22:49.908Z",
+    "updated_at": "2025-10-22T02:33:09.907Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training",
+      "documentation",
+      "support"
+    ],
+    "customer": {
+      "name": "Jessica Moore",
+      "email": "jessica.moore@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 48,
+    "subject": "How to configure SAML",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-11-06T14:36:13.503Z",
+    "updated_at": "2025-12-18T00:25:54.207Z",
+    "assignee": null,
+    "tags": [
+      "training",
+      "urgent",
+      "performance"
+    ],
+    "customer": {
+      "name": "Joseph Rodriguez",
+      "email": "joseph.rodriguez@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 49,
+    "subject": "Missing data in exports",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-12T06:32:48.110Z",
+    "updated_at": "2025-10-30T13:33:00.070Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "migration",
+      "api",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Michael Lopez",
+      "email": "michael.lopez@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 50,
+    "subject": "Payment processing failed",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-11-02T00:29:46.189Z",
+    "updated_at": "2025-12-15T17:16:45.174Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "documentation",
+      "integration",
+      "security"
+    ],
+    "customer": {
+      "name": "Joseph Miller",
+      "email": "joseph.miller@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 51,
+    "subject": "Rate limiting too strict",
+    "description": "User is having trouble accessing their dashboard and needs immediate assistance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-24T15:37:12.382Z",
+    "updated_at": "2025-11-23T02:11:30.122Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "feature-request",
+      "high-priority",
+      "performance",
+      "internal-issue"
+    ],
+    "customer": {
+      "name": "Patricia Hernandez",
+      "email": "patricia.hernandez@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 52,
+    "subject": "Feature request: dark mode",
+    "description": "The API response is slower than expected. Can you optimize it?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-27T12:25:06.620Z",
+    "updated_at": "2025-10-28T07:53:27.066Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "performance",
+      "feature-request",
+      "migration"
+    ],
+    "customer": {
+      "name": "Robert Johnson",
+      "email": "robert.johnson@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 53,
+    "subject": "Missing data in exports",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-31T23:19:09.283Z",
+    "updated_at": "2025-09-12T11:34:05.311Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "internal-issue"
+    ],
+    "customer": {
+      "name": "Barbara Garcia",
+      "email": "barbara.garcia@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 54,
+    "subject": "Export format issue",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-05T16:11:46.959Z",
+    "updated_at": "2025-11-01T08:50:52.587Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "technical",
+      "urgent",
+      "billing"
+    ],
+    "customer": {
+      "name": "Susan Anderson",
+      "email": "susan.anderson@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 55,
+    "subject": "Feature request: dark mode",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-11-04T16:55:31.135Z",
+    "updated_at": "2025-11-14T19:17:04.517Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Jennifer Garcia",
+      "email": "jennifer.garcia@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 56,
+    "subject": "Authentication token expired",
+    "description": "User is having trouble accessing their dashboard and needs immediate assistance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-08T08:41:26.533Z",
+    "updated_at": "2025-09-24T09:24:05.024Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Thomas Jones",
+      "email": "thomas.jones@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 57,
+    "subject": "Custom field not saving",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-06T02:18:41.577Z",
+    "updated_at": "2025-11-04T12:50:28.910Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "feature-request",
+      "documentation"
+    ],
+    "customer": {
+      "name": "Thomas Lopez",
+      "email": "thomas.lopez@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 58,
+    "subject": "Data retention policy question",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-11-08T05:27:43.117Z",
+    "updated_at": "2025-12-24T20:57:03.784Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "migration"
+    ],
+    "customer": {
+      "name": "David Brown",
+      "email": "david.brown@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 59,
+    "subject": "API documentation outdated",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-06T20:02:10.452Z",
+    "updated_at": "2025-11-18T20:23:25.427Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "documentation",
+      "billing",
+      "internal-issue",
+      "api"
+    ],
+    "customer": {
+      "name": "Emma Garcia",
+      "email": "emma.garcia@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 60,
+    "subject": "Email notifications not arriving",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-05T15:17:02.953Z",
+    "updated_at": "2025-10-29T21:11:25.441Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "urgent",
+      "feature-request",
+      "security"
+    ],
+    "customer": {
+      "name": "Jennifer Davis",
+      "email": "jennifer.davis@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 61,
+    "subject": "Export format issue",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "urgent",
+    "created_at": "2025-08-28T07:38:02.678Z",
+    "updated_at": "2025-09-13T15:54:52.074Z",
+    "assignee": null,
+    "tags": [
+      "documentation",
+      "api",
+      "performance",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Barbara Wilson",
+      "email": "barbara.wilson@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 62,
+    "subject": "How to configure SAML",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-11-03T02:54:49.148Z",
+    "updated_at": "2025-12-04T15:11:38.698Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "migration",
+      "integration",
+      "security",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Charles Davis",
+      "email": "charles.davis@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 63,
+    "subject": "Password reset not working",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-08-20T18:48:54.365Z",
+    "updated_at": "2025-09-26T21:03:32.997Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "support",
+      "billing",
+      "customer-complaint",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Jennifer Garcia",
+      "email": "jennifer.garcia@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 64,
+    "subject": "Custom field not saving",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "on-hold",
+    "priority": "normal",
+    "created_at": "2025-10-12T10:16:16.628Z",
+    "updated_at": "2025-10-28T07:51:32.277Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "feature-request",
+      "customer-complaint",
+      "billing",
+      "technical"
+    ],
+    "customer": {
+      "name": "Charles Martin",
+      "email": "charles.martin@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 65,
+    "subject": "Authentication token expired",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-11T00:44:23.962Z",
+    "updated_at": "2025-12-06T10:02:28.393Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "customer-complaint",
+      "integration",
+      "migration",
+      "technical"
+    ],
+    "customer": {
+      "name": "Jennifer Miller",
+      "email": "jennifer.miller@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 66,
+    "subject": "Feature request: dark mode",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-11-12T03:35:25.290Z",
+    "updated_at": "2025-12-31T20:04:10.690Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "migration",
+      "integration",
+      "customer-complaint",
+      "performance"
+    ],
+    "customer": {
+      "name": "Jessica Miller",
+      "email": "jessica.miller@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 67,
+    "subject": "Email notifications not arriving",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-10-27T07:58:17.237Z",
+    "updated_at": "2025-11-26T23:41:48.941Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training",
+      "api",
+      "integration",
+      "migration"
+    ],
+    "customer": {
+      "name": "Lisa Martinez",
+      "email": "lisa.martinez@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 68,
+    "subject": "Integration with Slack not syncing",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-08-27T02:45:40.078Z",
+    "updated_at": "2025-09-12T21:39:50.989Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "feature-request",
+      "migration"
+    ],
+    "customer": {
+      "name": "Charles Wilson",
+      "email": "charles.wilson@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 69,
+    "subject": "Rate limiting too strict",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-24T03:22:12.419Z",
+    "updated_at": "2025-10-21T21:52:12.418Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "internal-issue",
+      "billing",
+      "migration",
+      "technical"
+    ],
+    "customer": {
+      "name": "David Johnson",
+      "email": "david.johnson@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 70,
+    "subject": "Rate limiting too strict",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-11-01T06:38:10.592Z",
+    "updated_at": "2025-12-08T15:18:43.015Z",
+    "assignee": null,
+    "tags": [
+      "performance"
+    ],
+    "customer": {
+      "name": "Susan Williams",
+      "email": "susan.williams@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 71,
+    "subject": "Mobile app crashes",
+    "description": "The API response is slower than expected. Can you optimize it?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-23T21:36:22.450Z",
+    "updated_at": "2025-11-10T22:23:19.864Z",
+    "assignee": null,
+    "tags": [
+      "performance",
+      "technical",
+      "migration",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Charles Smith",
+      "email": "charles.smith@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 72,
+    "subject": "Missing data in exports",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-11-02T09:16:31.955Z",
+    "updated_at": "2025-11-29T01:49:01.266Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "urgent"
+    ],
+    "customer": {
+      "name": "David Brown",
+      "email": "david.brown@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 73,
+    "subject": "Mobile app crashes",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-19T04:49:41.072Z",
+    "updated_at": "2025-10-20T16:43:26.345Z",
+    "assignee": null,
+    "tags": [
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Sarah Williams",
+      "email": "sarah.williams@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 74,
+    "subject": "Cannot login to account",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-05T11:18:34.250Z",
+    "updated_at": "2025-09-12T12:37:55.215Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Emma Wilson",
+      "email": "emma.wilson@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 75,
+    "subject": "Payment processing failed",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-09-09T23:42:59.362Z",
+    "updated_at": "2025-09-19T08:38:17.291Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "high-priority",
+      "migration",
+      "billing"
+    ],
+    "customer": {
+      "name": "William Gonzalez",
+      "email": "william.gonzalez@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 76,
+    "subject": "Payment processing failed",
+    "description": "The export feature is missing some fields we need.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-04T05:15:20.204Z",
+    "updated_at": "2025-11-11T04:32:41.794Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "migration",
+      "integration",
+      "billing"
+    ],
+    "customer": {
+      "name": "Robert Moore",
+      "email": "robert.moore@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 77,
+    "subject": "Custom field not saving",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-09-04T16:57:15.090Z",
+    "updated_at": "2025-09-29T00:00:52.074Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "technical",
+      "security"
+    ],
+    "customer": {
+      "name": "Karen Gonzalez",
+      "email": "karen.gonzalez@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 78,
+    "subject": "Unable to upload files",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-08-25T06:05:16.352Z",
+    "updated_at": "2025-09-21T23:34:50.950Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "training",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "Jennifer Hernandez",
+      "email": "jennifer.hernandez@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 79,
+    "subject": "Webhook delivery failing",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "solved",
+    "priority": "urgent",
+    "created_at": "2025-10-01T09:28:23.203Z",
+    "updated_at": "2025-11-09T10:47:11.542Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "training"
+    ],
+    "customer": {
+      "name": "David Taylor",
+      "email": "david.taylor@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 80,
+    "subject": "Cannot login to account",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-09T05:19:30.688Z",
+    "updated_at": "2025-12-03T21:53:48.505Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "technical",
+      "documentation"
+    ],
+    "customer": {
+      "name": "John Williams",
+      "email": "john.williams@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 81,
+    "subject": "Reports not generating",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-09-02T02:24:39.278Z",
+    "updated_at": "2025-10-03T01:10:24.827Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training",
+      "support",
+      "technical"
+    ],
+    "customer": {
+      "name": "William Martinez",
+      "email": "william.martinez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 82,
+    "subject": "Missing data in exports",
+    "description": "One of our users reported data loss. Can you look into this urgently?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-26T13:29:15.115Z",
+    "updated_at": "2025-10-02T14:00:11.098Z",
+    "assignee": null,
+    "tags": [
+      "high-priority",
+      "feature-request",
+      "training",
+      "billing"
+    ],
+    "customer": {
+      "name": "John Rodriguez",
+      "email": "john.rodriguez@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 83,
+    "subject": "Automation rule not triggering",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "pending",
+    "priority": "high",
+    "created_at": "2025-11-04T04:16:49.010Z",
+    "updated_at": "2025-12-10T04:16:19.029Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "security"
+    ],
+    "customer": {
+      "name": "Jessica Jones",
+      "email": "jessica.jones@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 84,
+    "subject": "Billing question about subscription",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-03T16:19:32.383Z",
+    "updated_at": "2025-10-12T20:44:21.426Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "internal-issue",
+      "migration",
+      "feature-request",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "David Williams",
+      "email": "david.williams@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 85,
+    "subject": "Mobile app crashes",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "on-hold",
+    "priority": "normal",
+    "created_at": "2025-08-18T14:10:54.710Z",
+    "updated_at": "2025-10-14T03:27:21.160Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "security",
+      "technical",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "John Anderson",
+      "email": "john.anderson@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 86,
+    "subject": "Account verification stuck",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-08-20T13:46:38.148Z",
+    "updated_at": "2025-10-05T03:59:20.666Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "security",
+      "integration"
+    ],
+    "customer": {
+      "name": "James Davis",
+      "email": "james.davis@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 87,
+    "subject": "Automation rule not triggering",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-09-20T09:57:41.142Z",
+    "updated_at": "2025-10-23T12:59:38.160Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "security",
+      "technical"
+    ],
+    "customer": {
+      "name": "Sarah Rodriguez",
+      "email": "sarah.rodriguez@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 88,
+    "subject": "Cannot login to account",
+    "description": "User is having trouble accessing their dashboard and needs immediate assistance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-16T12:20:32.380Z",
+    "updated_at": "2025-09-17T19:19:19.012Z",
+    "assignee": null,
+    "tags": [
+      "performance",
+      "integration",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Michael Rodriguez",
+      "email": "michael.rodriguez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 89,
+    "subject": "Data retention policy question",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-19T23:51:29.000Z",
+    "updated_at": "2025-11-24T06:01:43.257Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "api",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Jessica Thomas",
+      "email": "jessica.thomas@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 90,
+    "subject": "Automation rule not triggering",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-08-24T05:21:52.527Z",
+    "updated_at": "2025-10-04T14:15:10.661Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "urgent"
+    ],
+    "customer": {
+      "name": "Barbara Williams",
+      "email": "barbara.williams@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 91,
+    "subject": "Integration with Slack not syncing",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-09-07T00:57:00.110Z",
+    "updated_at": "2025-10-27T10:37:15.284Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "documentation",
+      "security",
+      "integration"
+    ],
+    "customer": {
+      "name": "Michael Gonzalez",
+      "email": "michael.gonzalez@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 92,
+    "subject": "Billing question about subscription",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-04T18:40:18.950Z",
+    "updated_at": "2025-11-01T13:28:55.573Z",
+    "assignee": null,
+    "tags": [
+      "documentation",
+      "customer-complaint",
+      "integration",
+      "performance"
+    ],
+    "customer": {
+      "name": "Jennifer Brown",
+      "email": "jennifer.brown@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 93,
+    "subject": "Missing data in exports",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-10-22T19:44:19.426Z",
+    "updated_at": "2025-11-26T16:52:44.349Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Michael Garcia",
+      "email": "michael.garcia@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 94,
+    "subject": "Custom field not saving",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-10-24T10:57:52.089Z",
+    "updated_at": "2025-11-27T03:46:47.392Z",
+    "assignee": null,
+    "tags": [
+      "migration",
+      "support",
+      "training"
+    ],
+    "customer": {
+      "name": "Susan Martinez",
+      "email": "susan.martinez@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 95,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-11-04T03:05:45.783Z",
+    "updated_at": "2025-12-16T03:25:16.489Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Susan Anderson",
+      "email": "susan.anderson@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 96,
+    "subject": "Payment processing failed",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "on-hold",
+    "priority": "normal",
+    "created_at": "2025-09-24T16:09:50.897Z",
+    "updated_at": "2025-10-15T15:49:45.247Z",
+    "assignee": null,
+    "tags": [
+      "documentation",
+      "technical",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Richard Williams",
+      "email": "richard.williams@example.com",
+      "organization": "Acme Corporation"
+    }
+  },
+  {
+    "id": 97,
+    "subject": "Integration with Slack not syncing",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-09-03T23:37:25.740Z",
+    "updated_at": "2025-09-11T00:02:11.437Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "billing",
+      "feature-request",
+      "customer-complaint",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "James Miller",
+      "email": "james.miller@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 98,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-21T16:15:07.648Z",
+    "updated_at": "2025-12-14T05:53:15.350Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training",
+      "support",
+      "technical"
+    ],
+    "customer": {
+      "name": "Lisa Miller",
+      "email": "lisa.miller@example.com",
+      "organization": "Quantum Computing Labs"
+    }
+  },
+  {
+    "id": 99,
+    "subject": "How to configure SAML",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-21T10:41:40.291Z",
+    "updated_at": "2025-11-22T12:21:30.742Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "api"
+    ],
+    "customer": {
+      "name": "Maria Moore",
+      "email": "maria.moore@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 100,
+    "subject": "Export format issue",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "solved",
+    "priority": "low",
+    "created_at": "2025-09-28T10:44:51.214Z",
+    "updated_at": "2025-11-04T15:00:57.133Z",
+    "assignee": null,
+    "tags": [
+      "migration",
+      "integration",
+      "performance",
+      "api"
+    ],
+    "customer": {
+      "name": "Robert Davis",
+      "email": "robert.davis@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 101,
+    "subject": "API documentation outdated",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "on-hold",
+    "priority": "normal",
+    "created_at": "2025-08-17T15:26:01.795Z",
+    "updated_at": "2025-08-25T00:22:25.259Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "migration",
+      "billing",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Richard Martin",
+      "email": "richard.martin@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 102,
+    "subject": "Feature request: dark mode",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-09-30T20:12:21.587Z",
+    "updated_at": "2025-11-11T17:03:48.656Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "migration",
+      "performance"
+    ],
+    "customer": {
+      "name": "Thomas Smith",
+      "email": "thomas.smith@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 103,
+    "subject": "Dashboard not loading",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-08-27T10:20:01.531Z",
+    "updated_at": "2025-09-26T13:56:39.392Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "feature-request",
+      "high-priority",
+      "customer-complaint",
+      "technical"
+    ],
+    "customer": {
+      "name": "Jennifer Lopez",
+      "email": "jennifer.lopez@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 104,
+    "subject": "Payment processing failed",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-17T05:10:52.228Z",
+    "updated_at": "2025-10-30T22:30:01.820Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Thomas Williams",
+      "email": "thomas.williams@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 105,
+    "subject": "Account verification stuck",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "solved",
+    "priority": "high",
+    "created_at": "2025-09-28T02:21:54.225Z",
+    "updated_at": "2025-11-21T11:49:02.677Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "technical",
+      "feature-request",
+      "billing"
+    ],
+    "customer": {
+      "name": "John Smith",
+      "email": "john.smith@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 106,
+    "subject": "Email notifications not arriving",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-11-01T16:17:27.390Z",
+    "updated_at": "2025-12-12T04:09:12.996Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "support"
+    ],
+    "customer": {
+      "name": "Barbara Rodriguez",
+      "email": "barbara.rodriguez@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 107,
+    "subject": "Feature request: dark mode",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "solved",
+    "priority": "urgent",
+    "created_at": "2025-08-30T03:52:09.675Z",
+    "updated_at": "2025-10-02T21:28:13.948Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "high-priority",
+      "security",
+      "performance"
+    ],
+    "customer": {
+      "name": "Barbara Hernandez",
+      "email": "barbara.hernandez@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 108,
+    "subject": "Dashboard not loading",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-16T02:52:55.556Z",
+    "updated_at": "2025-11-15T07:20:36.682Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Emma Jackson",
+      "email": "emma.jackson@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 109,
+    "subject": "Mobile app crashes",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-28T22:34:44.238Z",
+    "updated_at": "2025-09-28T07:51:33.558Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "internal-issue",
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Jennifer Garcia",
+      "email": "jennifer.garcia@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 110,
+    "subject": "Feature request: dark mode",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-15T04:17:20.853Z",
+    "updated_at": "2025-10-30T13:35:44.083Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "urgent"
+    ],
+    "customer": {
+      "name": "Lisa Martin",
+      "email": "lisa.martin@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 111,
+    "subject": "Dashboard not loading",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "on-hold",
+    "priority": "high",
+    "created_at": "2025-10-02T03:23:00.420Z",
+    "updated_at": "2025-11-03T20:22:13.982Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "training",
+      "api",
+      "documentation",
+      "integration"
+    ],
+    "customer": {
+      "name": "Joseph Martinez",
+      "email": "joseph.martinez@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 112,
+    "subject": "Authentication token expired",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-28T18:01:59.305Z",
+    "updated_at": "2025-12-09T08:01:56.819Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "api"
+    ],
+    "customer": {
+      "name": "Maria Rodriguez",
+      "email": "maria.rodriguez@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 113,
+    "subject": "Billing question about subscription",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "on-hold",
+    "priority": "low",
+    "created_at": "2025-09-20T20:04:26.104Z",
+    "updated_at": "2025-11-10T23:02:09.661Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "integration"
+    ],
+    "customer": {
+      "name": "Jennifer Thomas",
+      "email": "jennifer.thomas@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 114,
+    "subject": "Missing data in exports",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "urgent",
+    "created_at": "2025-08-22T11:05:30.813Z",
+    "updated_at": "2025-10-21T09:47:25.869Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "feature-request",
+      "migration",
+      "support",
+      "performance"
+    ],
+    "customer": {
+      "name": "Sarah Anderson",
+      "email": "sarah.anderson@example.com",
+      "organization": "Innovation Labs"
+    }
+  },
+  {
+    "id": 115,
+    "subject": "Need help with migration",
+    "description": "User is having trouble accessing their dashboard and needs immediate assistance.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-21T10:18:21.178Z",
+    "updated_at": "2025-11-08T15:32:02.474Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Karen Garcia",
+      "email": "karen.garcia@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 116,
+    "subject": "Missing data in exports",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-03T07:04:28.810Z",
+    "updated_at": "2025-09-05T10:08:09.012Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "api",
+      "urgent",
+      "technical",
+      "training"
+    ],
+    "customer": {
+      "name": "Lisa Anderson",
+      "email": "lisa.anderson@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 117,
+    "subject": "Rate limiting too strict",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-09-24T16:44:46.948Z",
+    "updated_at": "2025-10-11T14:03:12.283Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "high-priority",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "Maria Johnson",
+      "email": "maria.johnson@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 118,
+    "subject": "Feature request: dark mode",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-10T08:34:54.987Z",
+    "updated_at": "2025-11-08T22:35:11.177Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "urgent",
+      "technical",
+      "internal-issue",
+      "billing"
+    ],
+    "customer": {
+      "name": "James Lopez",
+      "email": "james.lopez@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 119,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-10-09T07:38:40.011Z",
+    "updated_at": "2025-11-26T01:16:57.677Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "documentation"
+    ],
+    "customer": {
+      "name": "Lisa Rodriguez",
+      "email": "lisa.rodriguez@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 120,
+    "subject": "Reports not generating",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-08T22:19:12.025Z",
+    "updated_at": "2025-10-05T00:28:59.257Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "billing",
+      "high-priority",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "Joseph Martin",
+      "email": "joseph.martin@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 121,
+    "subject": "Password reset not working",
+    "description": "We're hitting rate limits. Can we increase our quota?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-30T23:12:43.649Z",
+    "updated_at": "2025-11-20T08:36:47.455Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "integration",
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "Barbara Jackson",
+      "email": "barbara.jackson@example.com",
+      "organization": "Cloud Services Pro"
+    }
+  },
+  {
+    "id": 122,
+    "subject": "Webhook delivery failing",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-09-10T12:21:45.045Z",
+    "updated_at": "2025-10-07T16:49:50.983Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "feature-request"
+    ],
+    "customer": {
+      "name": "Jessica Jones",
+      "email": "jessica.jones@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 123,
+    "subject": "How to configure SAML",
+    "description": "The API response is slower than expected. Can you optimize it?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-10-10T16:53:41.120Z",
+    "updated_at": "2025-11-23T12:28:41.254Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "api"
+    ],
+    "customer": {
+      "name": "Lisa Davis",
+      "email": "lisa.davis@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 124,
+    "subject": "Rate limiting too strict",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "solved",
+    "priority": "urgent",
+    "created_at": "2025-10-07T16:57:19.987Z",
+    "updated_at": "2025-11-16T21:14:22.636Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "migration",
+      "internal-issue",
+      "security"
+    ],
+    "customer": {
+      "name": "Richard Martinez",
+      "email": "richard.martinez@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 125,
+    "subject": "Performance issue with dashboard",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-11-09T19:25:14.195Z",
+    "updated_at": "2025-12-17T13:23:52.412Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "training"
+    ],
+    "customer": {
+      "name": "William Brown",
+      "email": "william.brown@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 126,
+    "subject": "Custom field not saving",
+    "description": "We need to set up two-factor authentication for security compliance.",
+    "status": "on-hold",
+    "priority": "low",
+    "created_at": "2025-10-05T17:23:48.209Z",
+    "updated_at": "2025-11-20T05:55:06.585Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "urgent",
+      "integration",
+      "migration",
+      "security"
+    ],
+    "customer": {
+      "name": "John Wilson",
+      "email": "john.wilson@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 127,
+    "subject": "Payment processing failed",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "closed",
+    "priority": "low",
+    "created_at": "2025-10-08T04:56:31.533Z",
+    "updated_at": "2025-10-12T08:03:29.345Z",
+    "assignee": null,
+    "tags": [
+      "billing"
+    ],
+    "customer": {
+      "name": "Jessica Anderson",
+      "email": "jessica.anderson@example.com",
+      "organization": "NextGen Software"
+    }
+  },
+  {
+    "id": 128,
+    "subject": "Payment processing failed",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-29T19:20:17.924Z",
+    "updated_at": "2025-10-25T18:35:14.109Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "high-priority",
+      "billing"
+    ],
+    "customer": {
+      "name": "Maria Williams",
+      "email": "maria.williams@example.com",
+      "organization": "Smart Business Solutions"
+    }
+  },
+  {
+    "id": 129,
+    "subject": "Rate limiting too strict",
+    "description": "We're seeing occasional performance issues during peak hours. Can you investigate?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-02T10:22:45.876Z",
+    "updated_at": "2025-10-22T07:29:58.983Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Patricia Lopez",
+      "email": "patricia.lopez@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 130,
+    "subject": "Payment processing failed",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-09T23:35:32.033Z",
+    "updated_at": "2025-11-01T10:54:46.571Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "billing"
+    ],
+    "customer": {
+      "name": "William Wilson",
+      "email": "william.wilson@example.com",
+      "organization": "Enterprise Systems"
+    }
+  },
+  {
+    "id": 131,
+    "subject": "Data retention policy question",
+    "description": "Our team is considering upgrading. Can we discuss pricing options?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-11-03T07:51:05.359Z",
+    "updated_at": "2025-12-23T19:09:50.382Z",
+    "assignee": null,
+    "tags": [
+      "security",
+      "performance"
+    ],
+    "customer": {
+      "name": "Charles Moore",
+      "email": "charles.moore@example.com",
+      "organization": "Digital Ventures"
+    }
+  },
+  {
+    "id": 132,
+    "subject": "Missing data in exports",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-12T08:48:42.367Z",
+    "updated_at": "2025-11-11T16:47:49.661Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "training"
+    ],
+    "customer": {
+      "name": "Lisa Jackson",
+      "email": "lisa.jackson@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 133,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "Please provide documentation on how to set up SSO authentication.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-08-17T15:26:29.139Z",
+    "updated_at": "2025-10-13T13:26:51.833Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "api",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Jessica Miller",
+      "email": "jessica.miller@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 134,
+    "subject": "Billing question about subscription",
+    "description": "Can you provide an audit log of all account changes?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-08-17T13:19:59.547Z",
+    "updated_at": "2025-10-09T09:38:15.215Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "feature-request",
+      "training"
+    ],
+    "customer": {
+      "name": "Robert Taylor",
+      "email": "robert.taylor@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 135,
+    "subject": "Performance issue with dashboard",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-11-02T02:21:30.872Z",
+    "updated_at": "2025-11-17T06:35:27.949Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "integration"
+    ],
+    "customer": {
+      "name": "John Williams",
+      "email": "john.williams@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 136,
+    "subject": "Performance issue with dashboard",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-10-13T09:53:39.168Z",
+    "updated_at": "2025-10-22T06:13:45.523Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "urgent",
+      "internal-issue"
+    ],
+    "customer": {
+      "name": "Robert Gonzalez",
+      "email": "robert.gonzalez@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 137,
+    "subject": "Integration with Slack not syncing",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "closed",
+    "priority": "normal",
+    "created_at": "2025-10-30T08:16:10.484Z",
+    "updated_at": "2025-11-08T23:50:21.653Z",
+    "assignee": null,
+    "tags": [
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "William Moore",
+      "email": "william.moore@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 138,
+    "subject": "Email notifications not arriving",
+    "description": "Need guidance on best practices for managing large teams.",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-09-02T06:25:57.435Z",
+    "updated_at": "2025-10-15T17:06:28.113Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "integration",
+      "support",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Susan Davis",
+      "email": "susan.davis@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 139,
+    "subject": "Password reset not working",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-08-19T11:55:44.919Z",
+    "updated_at": "2025-10-13T04:40:55.020Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "technical",
+      "high-priority",
+      "urgent"
+    ],
+    "customer": {
+      "name": "Barbara Martin",
+      "email": "barbara.martin@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 140,
+    "subject": "Cannot login to account",
+    "description": "I've been trying to log in for the past hour but keep getting an error message.",
+    "status": "closed",
+    "priority": "high",
+    "created_at": "2025-10-16T03:24:00.567Z",
+    "updated_at": "2025-11-16T00:44:30.172Z",
+    "assignee": null,
+    "tags": [
+      "urgent"
+    ],
+    "customer": {
+      "name": "Charles Gonzalez",
+      "email": "charles.gonzalez@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 141,
+    "subject": "Rate limiting too strict",
+    "description": "Can you help configure webhooks for our custom integration?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-12T15:26:15.126Z",
+    "updated_at": "2025-10-08T13:15:21.297Z",
+    "assignee": "alice.chen@company.com",
+    "tags": [
+      "performance",
+      "urgent",
+      "support",
+      "security"
+    ],
+    "customer": {
+      "name": "John Moore",
+      "email": "john.moore@example.com",
+      "organization": "TechStart Inc"
+    }
+  },
+  {
+    "id": 142,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-23T05:41:50.821Z",
+    "updated_at": "2025-10-05T01:48:59.293Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "internal-issue",
+      "integration",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "Susan Garcia",
+      "email": "susan.garcia@example.com",
+      "organization": "Digital Transform"
+    }
+  },
+  {
+    "id": 143,
+    "subject": "Bug: API endpoint returning 500 error",
+    "description": "We're having issues with the search functionality returning incorrect results.",
+    "status": "solved",
+    "priority": "normal",
+    "created_at": "2025-10-09T20:32:45.089Z",
+    "updated_at": "2025-10-11T02:15:45.447Z",
+    "assignee": "bob.martinez@company.com",
+    "tags": [
+      "customer-complaint"
+    ],
+    "customer": {
+      "name": "David Jones",
+      "email": "david.jones@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 144,
+    "subject": "Custom field not saving",
+    "description": "Can you help with our backup and disaster recovery plan?",
+    "status": "solved",
+    "priority": "urgent",
+    "created_at": "2025-09-06T10:14:11.083Z",
+    "updated_at": "2025-10-24T21:00:55.459Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "api",
+      "performance",
+      "integration"
+    ],
+    "customer": {
+      "name": "Thomas Smith",
+      "email": "thomas.smith@example.com",
+      "organization": "Data Insights Co"
+    }
+  },
+  {
+    "id": 145,
+    "subject": "Feature request: dark mode",
+    "description": "The integration stopped working after the last update. Can you help debug?",
+    "status": "open",
+    "priority": "high",
+    "created_at": "2025-10-18T02:17:13.915Z",
+    "updated_at": "2025-12-16T18:51:39.619Z",
+    "assignee": "emma.johnson@company.com",
+    "tags": [
+      "migration",
+      "support",
+      "urgent",
+      "performance"
+    ],
+    "customer": {
+      "name": "Karen Gonzalez",
+      "email": "karen.gonzalez@example.com",
+      "organization": "Global Solutions Ltd"
+    }
+  },
+  {
+    "id": 146,
+    "subject": "Password reset not working",
+    "description": "The mobile app is crashing when trying to view large reports.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-09-19T04:44:38.507Z",
+    "updated_at": "2025-10-29T16:44:54.619Z",
+    "assignee": "carol.williams@company.com",
+    "tags": [
+      "integration",
+      "support",
+      "high-priority"
+    ],
+    "customer": {
+      "name": "John Moore",
+      "email": "john.moore@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 147,
+    "subject": "Password reset not working",
+    "description": "Our organization needs custom branding options. Is this available?",
+    "status": "open",
+    "priority": "low",
+    "created_at": "2025-10-28T16:14:33.120Z",
+    "updated_at": "2025-12-13T07:46:09.294Z",
+    "assignee": null,
+    "tags": [
+      "api",
+      "migration"
+    ],
+    "customer": {
+      "name": "Joseph Miller",
+      "email": "joseph.miller@example.com",
+      "organization": "Cloud Native Corp"
+    }
+  },
+  {
+    "id": 148,
+    "subject": "Webhook delivery failing",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-08-28T14:45:19.960Z",
+    "updated_at": "2025-10-17T14:50:51.133Z",
+    "assignee": null,
+    "tags": [
+      "security"
+    ],
+    "customer": {
+      "name": "Joseph Jackson",
+      "email": "joseph.jackson@example.com",
+      "organization": "AI Research Institute"
+    }
+  },
+  {
+    "id": 149,
+    "subject": "Need help with migration",
+    "description": "I'd like to request a new feature for bulk operations. This would save us significant time.",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-10-25T08:29:06.876Z",
+    "updated_at": "2025-11-25T22:08:12.486Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "support",
+      "urgent",
+      "billing"
+    ],
+    "customer": {
+      "name": "Michael Lopez",
+      "email": "michael.lopez@example.com",
+      "organization": "Future Tech Group"
+    }
+  },
+  {
+    "id": 150,
+    "subject": "Missing data in exports",
+    "description": "We need to migrate from our old system. Can you provide migration support?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-09-16T22:39:51.764Z",
+    "updated_at": "2025-10-23T23:21:21.051Z",
+    "assignee": "david.kumar@company.com",
+    "tags": [
+      "customer-complaint",
+      "training"
+    ],
+    "customer": {
+      "name": "Sarah Rodriguez",
+      "email": "sarah.rodriguez@example.com",
+      "organization": "Digital Transform"
+    }
+  }
+]
