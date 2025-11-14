@@ -1,0 +1,10 @@
+{
+  "exclusions": {
+    "packages": [
+      "example-pinned-package"
+    ],
+    "reasons": {
+      "example-pinned-package": "Pinned for stability - custom modifications in place"
+    }
+  }
+}
