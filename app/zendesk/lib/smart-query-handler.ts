@@ -242,7 +242,6 @@ ${ticketSummaries}
 Answer the user's question based on this data. Be accurate with numbers.`,
       prompt: query,
       temperature: 0.7,
-      maxTokens: 1024,
     })
 
     const processingTime = Date.now() - startTime

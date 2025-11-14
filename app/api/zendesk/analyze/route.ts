@@ -143,6 +143,7 @@ async function getRecentActivity(client: ZendeskClient): Promise<string> {
 
     for (let i = 0; i < Math.min(5, tickets.length); i++) {
       const ticket = tickets[i]
+      if (!ticket) continue
       const updated = new Date(ticket.updated_at).toLocaleString()
       output += `[${ticket.status.toUpperCase()}] Ticket #${ticket.id}\n`
       output += `  Subject: ${ticket.subject}\n`

@@ -7,6 +7,8 @@ export interface ChatMessageMetadata {
   executionTime?: number
   recordCount?: number
   isStreaming?: boolean
+  source?: "cache" | "live" | "ai"
+  confidence?: number
 }
 
 export interface ChatMessage {
