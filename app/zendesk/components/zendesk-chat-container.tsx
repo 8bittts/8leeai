@@ -101,182 +101,41 @@ export function ZendeskChatContainer() {
 
       // Start loading
       setIsLoading(true)
-      const startTime = Date.now()
 
       try {
-        // Step 1: Interpret the query using pattern matching + OpenAI fallback
-        console.log(`[Chat] Interpreting query: "${query}"`)
-        const interpretResponse = await fetch("/api/zendesk/interpret-query", {
+        // Use the new unified smart query endpoint
+        console.log(`[Chat] Processing query: "${query}"`)
+        const queryResponse = await fetch("/api/zendesk/query", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query }),
         })
 
-        if (!interpretResponse.ok) {
-          throw new Error(`Failed to interpret query: ${interpretResponse.statusText}`)
+        if (!queryResponse.ok) {
+          throw new Error(`Failed to process query: ${queryResponse.statusText}`)
         }
 
-        const { intent, filters, confidence, method } = (await interpretResponse.json()) as {
-          intent: string
-          filters: Record<string, unknown>
+        const {
+          answer,
+          source,
+          confidence,
+          processingTime,
+        } = (await queryResponse.json()) as {
+          answer: string
+          source: "cache" | "live" | "ai"
           confidence: number
-          method: string
+          processingTime: number
         }
 
         console.log(
-          `[Chat] Interpreted as: ${intent} (${method}, ${(confidence * 100).toFixed(0)}% confidence)`
+          `[Chat] Response from ${source} (${(confidence * 100).toFixed(0)}% confidence, ${processingTime}ms)`
         )
 
-        // Step 2: Build response based on intent
-        let responseContent = ""
-        let recordCount = 0
-
-        // Route to analysis endpoint for complex queries
-        const analyticsIntents = [
-          "help",
-          "ticket_status",
-          "recent_tickets",
-          "problem_areas",
-          "raw_data",
-        ]
-
-        if (analyticsIntents.includes(intent)) {
-          try {
-            const analysisResponse = await fetch("/api/zendesk/analyze", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ intent, query, filters }),
-            })
-
-            if (analysisResponse.ok) {
-              const { content } = (await analysisResponse.json()) as {
-                content: string
-              }
-              responseContent = content
-            } else {
-              responseContent = "Unable to process analysis request."
-            }
-          } catch (error) {
-            responseContent = `Error processing request: ${error instanceof Error ? error.message : "Unknown error"}`
-          }
-        } else {
-          // Original ticket/analytics queries
-          switch (intent) {
-            case "ticket_list":
-            case "ticket_filter": {
-              try {
-                // Fetch tickets from API
-                const ticketsResponse = await fetch("/api/zendesk/tickets", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ filters }),
-                })
-
-                if (ticketsResponse.ok) {
-                  const { tickets } = (await ticketsResponse.json()) as {
-                    tickets: Array<{
-                      id: number
-                      subject: string
-                      status: string
-                      priority: string
-                    }>
-                  }
-                  recordCount = tickets.length
-
-                  if (tickets.length === 0) {
-                    responseContent = "No tickets found matching your criteria."
-                  } else {
-                    // Format as ASCII table
-                    responseContent = `Found ${tickets.length} ticket(s):\n\n`
-                    responseContent +=
-                      "ID    | Subject                              | Status    | Priority\n"
-                    responseContent +=
-                      "------+--------------------------------------+-----------+----------\n"
-
-                    tickets.slice(0, 10).forEach((ticket) => {
-                      const id = String(ticket.id).padEnd(4)
-                      const subject = ticket.subject.substring(0, 34).padEnd(34)
-                      const status = ticket.status.padEnd(9)
-                      const priority = ticket.priority
-                      responseContent += `${id}  | ${subject} | ${status} | ${priority}\n`
-                    })
-
-                    if (tickets.length > 10) {
-                      responseContent += `\n... and ${tickets.length - 10} more tickets`
-                    }
-                  }
-                } else {
-                  responseContent =
-                    "Unable to fetch tickets. Please check your Zendesk configuration."
-                }
-              } catch (error) {
-                responseContent = `Error fetching tickets: ${error instanceof Error ? error.message : "Unknown error"}`
-              }
-              break
-            }
-
-            case "analytics": {
-              try {
-                const statsResponse = await fetch("/api/zendesk/tickets", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ stats: true }),
-                })
-
-                if (statsResponse.ok) {
-                  const { stats } = (await statsResponse.json()) as {
-                    stats: Record<string, number>
-                  }
-
-                  responseContent = "Ticket Statistics:\n\n"
-                  responseContent += "Status    | Count\n"
-                  responseContent += "----------+-------\n"
-
-                  Object.entries(stats).forEach(([status, count]) => {
-                    const statusPad = status.padEnd(9)
-                    responseContent += `${statusPad} | ${count}\n`
-                  })
-
-                  const total = Object.values(stats).reduce((a, b) => a + b, 0)
-                  responseContent += "----------+-------\n"
-                  responseContent += `Total    | ${total}\n`
-                } else {
-                  responseContent =
-                    "Unable to fetch statistics. Please check your Zendesk configuration."
-                }
-              } catch (error) {
-                responseContent = `Error fetching statistics: ${error instanceof Error ? error.message : "Unknown error"}`
-              }
-              break
-            }
-
-            case "user_query": {
-              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for user queries coming soon.`
-              break
-            }
-
-            case "organization_query": {
-              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for organization queries coming soon.`
-              break
-            }
-
-            case "help_article": {
-              responseContent = `Query intent: ${intent}\nYour question: "${query}"\n\nSupport for help article search coming soon.`
-              break
-            }
-
-            default: {
-              responseContent = `Query: "${query}"\nIntent: ${intent}\nMethod: ${method} (${(confidence * 100).toFixed(0)}% confidence)\nFilters: ${JSON.stringify(filters)}\n\nQuery interpretation complete.`
-            }
-          }
-        }
-
-        // Add assistant response
-        const executionTime = Date.now() - startTime
-        addAssistantMessage(responseContent, {
-          executionTime,
-          recordCount,
-          apiEndpoint: intent,
+        // Add assistant response with metadata
+        addAssistantMessage(answer, {
+          executionTime: processingTime,
+          source,
+          confidence,
         })
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
