@@ -15,6 +15,31 @@ interface QueryResponse {
   processingTime: number
 }
 
+interface TicketStats {
+  byStatus: Record<string, number>
+  byPriority: Record<string, number>
+  byAge: {
+    lessThan24h: number
+    lessThan7d: number
+    lessThan30d: number
+    olderThan30d: number
+  }
+}
+
+interface Ticket {
+  id: number
+  subject: string
+  priority: string
+  status: string
+}
+
+interface TicketCacheData {
+  lastUpdated: string
+  ticketCount: number
+  tickets: Ticket[]
+  stats: TicketStats
+}
+
 /**
  * Check if query is asking for a refresh
  */
@@ -82,7 +107,7 @@ Examples:
 /**
  * Format ticket statistics for display
  */
-function formatTicketStats(cache: any): string {
+function formatTicketStats(cache: TicketCacheData | null): string {
   if (!cache?.stats) return ""
 
   let output = "TICKET STATISTICS\n"
@@ -187,7 +212,7 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
     // Build context for AI
     const ticketSummaries = cache.tickets
       .slice(0, 50) // Use first 50 for context (to keep token count reasonable)
-      .map((t: any) => `[${t.priority}/${t.status}] #${t.id}: ${t.subject}`)
+      .map((t: Ticket) => `[${t.priority}/${t.status}] #${t.id}: ${t.subject}`)
       .join("\n")
 
     const totalCount = cache.ticketCount
