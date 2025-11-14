@@ -147,41 +147,6 @@ function formatTicketStats(cache: TicketCacheData | null): string {
 }
 
 /**
- * Load and validate cache for queries
- */
-async function loadAndValidateCache(startTime: number): Promise<QueryResponse | null> {
-  console.log("[SmartQuery] Loading ticket cache...")
-  let cache = await loadTicketCache()
-
-  if (!cache) {
-    console.log("[SmartQuery] Cache not found, refreshing from Zendesk...")
-    const refreshResult = await refreshTicketCache()
-    if (!refreshResult.success) {
-      const processingTime = Date.now() - startTime
-      return {
-        answer: `❌ Unable to load ticket data\n\nError: ${refreshResult.error}\n\nPlease try the 'refresh' command to sync with Zendesk.`,
-        source: "live",
-        confidence: 0,
-        processingTime,
-      }
-    }
-    cache = await loadTicketCache()
-  }
-
-  if (!cache || cache.tickets.length === 0) {
-    const processingTime = Date.now() - startTime
-    return {
-      answer: "❌ No tickets found in cache\n\nTry 'refresh' to sync with Zendesk",
-      source: "cache",
-      confidence: 0,
-      processingTime,
-    }
-  }
-
-  return null
-}
-
-/**
  * Main smart query handler - Two-tier approach for fast responses
  * Tier 1: Instant answers from cache (discrete queries)
  * Tier 2: AI-powered analysis with cached context (complex queries)
