@@ -99,7 +99,8 @@ async function getTicketStatusInfo(client: any): Promise<string> {
 
     let total = 0
     for (const [status, countValue] of Object.entries(stats)) {
-      const count = typeof countValue === "number" ? countValue : parseInt(String(countValue), 10) || 0
+      const count =
+        typeof countValue === "number" ? countValue : Number.parseInt(String(countValue), 10) || 0
       output += `${String(status).padEnd(10)} | ${count}\n`
       total += count
     }

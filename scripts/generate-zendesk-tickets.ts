@@ -50,14 +50,49 @@ interface TicketData {
 
 // Rich data sets for realistic variations
 const firstNames = [
-  "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Henry", "Iris", "Jack",
-  "Karen", "Leo", "Maya", "Noah", "Olivia", "Peter", "Quinn", "Rachel", "Sam", "Tina",
+  "Alice",
+  "Bob",
+  "Charlie",
+  "Diana",
+  "Eve",
+  "Frank",
+  "Grace",
+  "Henry",
+  "Iris",
+  "Jack",
+  "Karen",
+  "Leo",
+  "Maya",
+  "Noah",
+  "Olivia",
+  "Peter",
+  "Quinn",
+  "Rachel",
+  "Sam",
+  "Tina",
 ]
 
 const lastNames = [
-  "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
-  "Rodriguez", "Martinez", "Anderson", "Taylor", "Thomas", "Moore", "Jackson",
-  "Martin", "Lee", "Thompson", "White", "Harris",
+  "Smith",
+  "Johnson",
+  "Williams",
+  "Brown",
+  "Jones",
+  "Garcia",
+  "Miller",
+  "Davis",
+  "Rodriguez",
+  "Martinez",
+  "Anderson",
+  "Taylor",
+  "Thomas",
+  "Moore",
+  "Jackson",
+  "Martin",
+  "Lee",
+  "Thompson",
+  "White",
+  "Harris",
 ]
 
 const domains = ["gmail.com", "company.com", "outlook.com", "work.email", "dev.io", "startup.co"]
@@ -285,11 +320,11 @@ function parseArgs() {
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case "--count":
-        options.count = Math.min(parseInt(args[i + 1]) || 10, 100)
+        options.count = Math.min(Number.parseInt(args[i + 1]) || 10, 100)
         i++
         break
       case "--delay":
-        options.delay = Math.max(parseInt(args[i + 1]) || 500, 100)
+        options.delay = Math.max(Number.parseInt(args[i + 1]) || 500, 100)
         i++
         break
       case "--priority":
@@ -323,8 +358,18 @@ function generateRandomTicket(): TicketData {
   const description = descriptionList[Math.floor(Math.random() * descriptionList.length)]
   const selectedTags = tagList.slice(0, Math.floor(Math.random() * 3) + 1)
 
-  const priorities: Array<"low" | "normal" | "high" | "urgent"> = ["low", "normal", "high", "urgent"]
-  const statuses: Array<"new" | "open" | "pending" | "solved"> = ["new", "open", "pending", "solved"]
+  const priorities: Array<"low" | "normal" | "high" | "urgent"> = [
+    "low",
+    "normal",
+    "high",
+    "urgent",
+  ]
+  const statuses: Array<"new" | "open" | "pending" | "solved"> = [
+    "new",
+    "open",
+    "pending",
+    "solved",
+  ]
 
   return {
     subject,
@@ -349,7 +394,7 @@ async function createZendeskTicket(
   const token = process.env.ZENDESK_API_TOKEN
   const subdomain = process.env.ZENDESK_SUBDOMAIN
 
-  if (!email || !token || !subdomain) {
+  if (!(email && token && subdomain)) {
     return { success: false, error: "Missing required environment variables" }
   }
 
@@ -362,8 +407,8 @@ async function createZendeskTicket(
       description: ticket.description,
       requester_email: ticket.requesterEmail,
       requester_name: ticket.requesterName,
-      priority: options.priority as any || ticket.priority,
-      status: options.status as any || ticket.status,
+      priority: (options.priority as any) || ticket.priority,
+      status: (options.status as any) || ticket.status,
       tags: ticket.tags,
     },
   }
@@ -384,7 +429,7 @@ async function createZendeskTicket(
       body: JSON.stringify(payload),
     })
 
-    const data = await response.json() as any
+    const data = (await response.json()) as any
 
     if (response.ok && data.ticket?.id) {
       console.log(`   ✅ Created! Ticket ID: ${data.ticket.id}`)
@@ -411,7 +456,9 @@ async function main() {
   console.log("╚═══════════════════════════════════════════════════════════════════╝")
 
   // Validate environment variables
-  if (!process.env.ZENDESK_EMAIL || !process.env.ZENDESK_API_TOKEN || !process.env.ZENDESK_SUBDOMAIN) {
+  if (
+    !(process.env.ZENDESK_EMAIL && process.env.ZENDESK_API_TOKEN && process.env.ZENDESK_SUBDOMAIN)
+  ) {
     console.error("\n❌ Error: Missing required environment variables")
     console.error("   Set: ZENDESK_EMAIL, ZENDESK_API_TOKEN, ZENDESK_SUBDOMAIN")
     process.exit(1)

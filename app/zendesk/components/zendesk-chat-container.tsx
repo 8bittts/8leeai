@@ -115,12 +115,7 @@ export function ZendeskChatContainer() {
           throw new Error(`Failed to process query: ${queryResponse.statusText}`)
         }
 
-        const {
-          answer,
-          source,
-          confidence,
-          processingTime,
-        } = (await queryResponse.json()) as {
+        const { answer, source, confidence, processingTime } = (await queryResponse.json()) as {
           answer: string
           source: "cache" | "live" | "ai"
           confidence: number

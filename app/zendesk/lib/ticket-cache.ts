@@ -4,8 +4,8 @@
  * Can be refreshed on-demand via "refresh" or "update" commands
  */
 
-import { readFile, writeFile } from "fs/promises"
 import { existsSync, mkdirSync } from "fs"
+import { readFile, writeFile } from "fs/promises"
 import { join } from "path"
 import { getZendeskClient } from "./zendesk-api-client"
 
