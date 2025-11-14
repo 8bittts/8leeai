@@ -141,7 +141,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 export async function GET(): Promise<NextResponse> {
   try {
     const client = getZendeskClient()
-    const cacheStats = client.getCacheStats()
+    const cacheStats = await client.getCacheStats()
 
     return NextResponse.json({
       status: "ok",
