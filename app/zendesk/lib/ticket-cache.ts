@@ -180,7 +180,9 @@ export async function refreshTicketCache(): Promise<{
         }
 
         // Convert to cached format
-        const cachedTickets = pageTickets.map((t: any) => ({
+        const cachedTickets = pageTickets.map((t: unknown) => {
+          const ticket = t as Record<string, unknown>
+          return {
           id: t.id,
           subject: t.subject,
           description: t.description || "",
