@@ -182,7 +182,7 @@ export async function refreshTicketCache(): Promise<{
         // Convert to cached format
         const cachedTickets = pageTickets.map((t: unknown) => {
           const ticket = t as Record<string, unknown>
-          return {
+          const cached: CachedTicket = {
             id: ticket["id"] as number,
             subject: ticket["subject"] as string,
             description: (ticket["description"] as string) || "",
@@ -193,9 +193,17 @@ export async function refreshTicketCache(): Promise<{
             assignee_id: ticket["assignee_id"] as number | null,
             requester_id: ticket["requester_id"] as number,
             tags: (ticket["tags"] as string[]) || [],
-            organization_id: ticket["organization_id"] as number | undefined,
-            group_id: ticket["group_id"] as number | undefined,
           }
+
+          // Only add optional fields if they have values
+          if (ticket["organization_id"]) {
+            cached.organization_id = ticket["organization_id"] as number
+          }
+          if (ticket["group_id"]) {
+            cached.group_id = ticket["group_id"] as number
+          }
+
+          return cached
         })
 
         tickets.push(...cachedTickets)
