@@ -7,49 +7,103 @@ const TicketsRequestSchema = z.object({
   stats: z.boolean().optional(),
 })
 
+interface ApiFilters {
+  status?: string
+  priority?: string
+  limit?: number
+}
+
+/**
+ * Extract and validate filter parameters from request
+ */
+function parseFilters(filters?: Record<string, unknown>): ApiFilters {
+  const apiFilters: ApiFilters = {}
+
+  if (!filters) return apiFilters
+
+  if (typeof filters.status === "string") {
+    apiFilters.status = filters.status
+  }
+  if (typeof filters.priority === "string") {
+    apiFilters.priority = filters.priority
+  }
+  if (typeof filters.limit === "number") {
+    apiFilters.limit = filters.limit
+  }
+
+  if (!apiFilters.limit) {
+    apiFilters.limit = 25
+  }
+
+  return apiFilters
+}
+
+/**
+ * Handle error responses with appropriate status codes
+ */
+function handleError(error: unknown): NextResponse {
+  console.error("[TicketsAPI] Error fetching tickets:", error)
+
+  if (error instanceof Error) {
+    if (error.message.includes("Unauthorized")) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Zendesk authentication failed. Check your ZENDESK_EMAIL and ZENDESK_API_TOKEN.",
+        },
+        { status: 401 }
+      )
+    }
+    if (error.message.includes("ZENDESK_SUBDOMAIN")) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Zendesk subdomain not configured. Set ZENDESK_SUBDOMAIN environment variable.",
+        },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      { status: 500 }
+    )
+  }
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: "Failed to fetch tickets",
+    },
+    { status: 500 }
+  )
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json()
     const { filters, stats } = TicketsRequestSchema.parse(body)
 
-    console.log(
-      `[TicketsAPI] Request - filters: ${JSON.stringify(filters)}, stats: ${stats}`
-    )
+    console.log(`[TicketsAPI] Request - filters: ${JSON.stringify(filters)}, stats: ${stats}`)
 
     const client = getZendeskClient()
 
+    // Handle stats request
     if (stats) {
       try {
         const ticketStats = await client.getTicketStats()
         return NextResponse.json({ success: true, stats: ticketStats })
       } catch (error) {
-        console.error("[TicketsAPI] Error fetching stats:", error)
-        return NextResponse.json(
-          {
-            success: false,
-            error: error instanceof Error ? error.message : "Failed to fetch statistics",
-          },
-          { status: 500 }
-        )
+        return handleError(error)
       }
     }
 
+    // Handle ticket fetch request
     try {
-      const apiFilters: {
-        status?: string
-        priority?: string
-        limit?: number
-      } = {}
-
-      if (filters) {
-        if (typeof filters["status"] === "string") apiFilters.status = filters["status"] as string
-        if (typeof filters["priority"] === "string")
-          apiFilters.priority = filters["priority"] as string
-        if (typeof filters["limit"] === "number") apiFilters.limit = filters["limit"] as number
-      }
-
-      if (!apiFilters.limit) apiFilters.limit = 25
-
+      const apiFilters = parseFilters(filters)
       console.log("[TicketsAPI] Fetching tickets with filters:", apiFilters)
       const tickets = await client.getTickets(apiFilters)
 
@@ -59,38 +113,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         count: tickets.length,
       })
     } catch (error) {
-      console.error("[TicketsAPI] Error fetching tickets:", error)
-
-      if (error instanceof Error) {
-        if (error.message.includes("Unauthorized")) {
-          return NextResponse.json(
-            {
-              success: false,
-              error:
-                "Zendesk authentication failed. Check your ZENDESK_EMAIL and ZENDESK_API_TOKEN.",
-            },
-            { status: 401 }
-          )
-        }
-        if (error.message.includes("ZENDESK_SUBDOMAIN")) {
-          return NextResponse.json(
-            {
-              success: false,
-              error:
-                "Zendesk subdomain not configured. Set ZENDESK_SUBDOMAIN environment variable.",
-            },
-            { status: 500 }
-          )
-        }
-      }
-
-      return NextResponse.json(
-        {
-          success: false,
-          error: error instanceof Error ? error.message : "Failed to fetch tickets",
-        },
-        { status: 500 }
-      )
+      return handleError(error)
     }
   } catch (error) {
     console.error("[TicketsAPI] Request validation failed:", error)

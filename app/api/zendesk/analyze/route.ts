@@ -25,6 +25,19 @@ const AnalysisRequestSchema = z.object({
   filters: z.record(z.string(), z.unknown()).optional(),
 })
 
+interface Ticket {
+  id: number
+  subject: string
+  priority: string
+  status: string
+  updated_at: string
+}
+
+interface ZendeskClient {
+  getTicketStats(): Promise<Record<string, number>>
+  getTickets(options: { limit: number }): Promise<Ticket[]>
+}
+
 /**
  * Generate help documentation with all available commands
  */
@@ -88,7 +101,7 @@ EXAMPLES:
 /**
  * Get ticket status breakdown
  */
-async function getTicketStatusInfo(client: any): Promise<string> {
+async function getTicketStatusInfo(client: ZendeskClient): Promise<string> {
   try {
     const stats = await client.getTicketStats()
 
@@ -117,7 +130,7 @@ async function getTicketStatusInfo(client: any): Promise<string> {
 /**
  * Get recent ticket activity
  */
-async function getRecentActivity(client: any): Promise<string> {
+async function getRecentActivity(client: ZendeskClient): Promise<string> {
   try {
     const tickets = await client.getTickets({ limit: 5 })
 
@@ -146,7 +159,7 @@ async function getRecentActivity(client: any): Promise<string> {
 /**
  * Analyze problem areas using AI
  */
-async function analyzeProblemAreas(client: any): Promise<string> {
+async function analyzeProblemAreas(client: ZendeskClient): Promise<string> {
   try {
     const tickets = await client.getTickets({ limit: 50 })
 
@@ -155,21 +168,21 @@ async function analyzeProblemAreas(client: any): Promise<string> {
     }
 
     // Extract key information
-    const subjects = tickets.map((t: any) => t.subject).join("\n")
+    const subjects = tickets.map((t: Ticket) => t.subject).join("\n")
     const priorityCount = {
-      urgent: tickets.filter((t: any) => t.priority === "urgent").length,
-      high: tickets.filter((t: any) => t.priority === "high").length,
-      normal: tickets.filter((t: any) => t.priority === "normal").length,
-      low: tickets.filter((t: any) => t.priority === "low").length,
+      urgent: tickets.filter((t: Ticket) => t.priority === "urgent").length,
+      high: tickets.filter((t: Ticket) => t.priority === "high").length,
+      normal: tickets.filter((t: Ticket) => t.priority === "normal").length,
+      low: tickets.filter((t: Ticket) => t.priority === "low").length,
     }
 
     const statusCount = {
-      new: tickets.filter((t: any) => t.status === "new").length,
-      open: tickets.filter((t: any) => t.status === "open").length,
-      pending: tickets.filter((t: any) => t.status === "pending").length,
-      hold: tickets.filter((t: any) => t.status === "hold").length,
-      solved: tickets.filter((t: any) => t.status === "solved").length,
-      closed: tickets.filter((t: any) => t.status === "closed").length,
+      new: tickets.filter((t: Ticket) => t.status === "new").length,
+      open: tickets.filter((t: Ticket) => t.status === "open").length,
+      pending: tickets.filter((t: Ticket) => t.status === "pending").length,
+      hold: tickets.filter((t: Ticket) => t.status === "hold").length,
+      solved: tickets.filter((t: Ticket) => t.status === "solved").length,
+      closed: tickets.filter((t: Ticket) => t.status === "closed").length,
     }
 
     // Use OpenAI to analyze problem areas
@@ -208,10 +221,10 @@ Keep the analysis brief and actionable.`,
     output += "====================\n\n"
     output += analysis
     output += "\n\nPRIORITY DISTRIBUTION:\n"
-    output += "- Urgent: " + priorityCount.urgent + "\n"
-    output += "- High: " + priorityCount.high + "\n"
-    output += "- Normal: " + priorityCount.normal + "\n"
-    output += "- Low: " + priorityCount.low + "\n"
+    output += `- Urgent: ${priorityCount.urgent}\n`
+    output += `- High: ${priorityCount.high}\n`
+    output += `- Normal: ${priorityCount.normal}\n`
+    output += `- Low: ${priorityCount.low}\n`
 
     return output
   } catch (error) {
@@ -222,7 +235,7 @@ Keep the analysis brief and actionable.`,
 /**
  * Get raw data response
  */
-async function getRawData(client: any): Promise<string> {
+async function getRawData(client: ZendeskClient): Promise<string> {
   try {
     const stats = await client.getTicketStats()
     const tickets = await client.getTickets({ limit: 10 })
