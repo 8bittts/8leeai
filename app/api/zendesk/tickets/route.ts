@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { filters, stats } = TicketsRequestSchema.parse(body)
 
     console.log(
-      `[TicketsAPI] Request - filters: ${"${JSON.stringify(filters)}"}, stats: ${"${stats}"}`
+      `[TicketsAPI] Request - filters: ${JSON.stringify(filters)}, stats: ${stats}`
     )
 
     const client = getZendeskClient()
@@ -99,7 +99,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json(
         {
           success: false,
-          error: `Validation error: ${"${error.issues[0]?.message}"}`,
+          error: `Validation error: ${error.issues[0]?.message}`,
         },
         { status: 400 }
       )

@@ -6,10 +6,10 @@
  * Returns status of the refresh operation
  */
 
-import { NextRequest, NextResponse } from "next/server"
-import { refreshTicketCache, loadTicketCache } from "@/app/zendesk/lib/ticket-cache"
+import { type NextRequest, NextResponse } from "next/server"
+import { loadTicketCache, refreshTicketCache } from "@/app/zendesk/lib/ticket-cache"
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(_request: NextRequest): Promise<NextResponse> {
   try {
     console.log("[RefreshEndpoint] Cache refresh requested")
 
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 /**
  * GET endpoint - returns current cache status without refreshing
  */
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   try {
     const cache = await loadTicketCache()
 

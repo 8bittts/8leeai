@@ -9,7 +9,7 @@
  * 4. Returns intelligent responses based on full dataset
  */
 
-import { NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { handleSmartQuery } from "@/app/zendesk/lib/smart-query-handler"
 
