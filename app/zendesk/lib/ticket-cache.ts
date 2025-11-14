@@ -183,18 +183,19 @@ export async function refreshTicketCache(): Promise<{
         const cachedTickets = pageTickets.map((t: unknown) => {
           const ticket = t as Record<string, unknown>
           return {
-          id: t.id,
-          subject: t.subject,
-          description: t.description || "",
-          status: t.status,
-          priority: t.priority,
-          created_at: t.created_at,
-          updated_at: t.updated_at,
-          assignee_id: t.assignee_id,
-          requester_id: t.requester_id,
-          tags: t.tags || [],
-          organization_id: t.organization_id,
-          group_id: t.group_id,
+            id: ticket.id,
+            subject: ticket.subject,
+            description: (ticket.description as string) || "",
+            status: ticket.status,
+            priority: ticket.priority,
+            created_at: ticket.created_at,
+            updated_at: ticket.updated_at,
+            assignee_id: ticket.assignee_id,
+            requester_id: ticket.requester_id,
+            tags: (ticket.tags as string[]) || [],
+            organization_id: ticket.organization_id,
+            group_id: ticket.group_id,
+          }
         }))
 
         tickets.push(...cachedTickets)
