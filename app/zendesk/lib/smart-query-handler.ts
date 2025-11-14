@@ -1,11 +1,14 @@
 /**
  * Smart Query Handler
- * Uses cached ticket data + OpenAI to answer ANY natural language query
- * Intelligent fallback system for queries about support tickets
+ * Fast response system with two-tier approach:
+ * 1. Instant: Check classifier for discrete answers from cache (<100ms)
+ * 2. Fallback: Use OpenAI with cached context for complex queries (2-3s)
  */
 
 import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
+import { classifyQuery } from "./classify-query"
+import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
 
 interface QueryResponse {
@@ -179,8 +182,9 @@ async function loadAndValidateCache(startTime: number): Promise<QueryResponse | 
 }
 
 /**
- * Main smart query handler
- * Uses cached data + AI to understand and answer queries
+ * Main smart query handler - Two-tier approach for fast responses
+ * Tier 1: Instant answers from cache (discrete queries)
+ * Tier 2: AI-powered analysis with cached context (complex queries)
  */
 export async function handleSmartQuery(query: string): Promise<QueryResponse> {
   const startTime = Date.now()
@@ -190,6 +194,7 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
     if (isRefreshQuery(query)) {
       console.log("[SmartQuery] Handling refresh request")
       const refreshResult = await refreshTicketCache()
+      invalidateCache() // Clear cached context after refresh
       const processingTime = Date.now() - startTime
 
       return {
@@ -215,55 +220,42 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
       }
     }
 
-    // Load and validate cache
-    const validationError = await loadAndValidateCache(startTime)
-    if (validationError) {
-      return validationError
+    // TIER 1: Try instant answer from classifier
+    console.log("[SmartQuery] Checking cache classifier for instant answer...")
+    const classified = await classifyQuery(query)
+
+    if (classified.matched && classified.answer) {
+      console.log(`[SmartQuery] Instant answer matched (${classified.processingTime}ms)`)
+      return {
+        answer: classified.answer,
+        source: "cache",
+        confidence: classified.confidence,
+        processingTime: classified.processingTime,
+      }
     }
 
+    // TIER 2: Fall back to AI with cached context
+    console.log("[SmartQuery] Falling back to AI analysis with cached context...")
+
+    // Validate cache exists before AI processing
     const cache = await loadTicketCache()
-    if (!cache) {
-      // Should not reach here after validation, but satisfy TypeScript
+    if (!cache || cache.tickets.length === 0) {
       const processingTime = Date.now() - startTime
       return {
-        answer: "❌ Cache validation failed",
+        answer:
+          "❌ No tickets found in cache\n\nTry 'refresh' or 'update' to sync with Zendesk",
         source: "cache",
         confidence: 0,
         processingTime,
       }
     }
 
-    // Build context for AI
-    const ticketSummaries = cache.tickets
-      .slice(0, 50) // Use first 50 for context (to keep token count reasonable)
-      .map((t: Ticket) => `[${t.priority}/${t.status}] #${t.id}: ${t.subject}`)
-      .join("\n")
+    // Build AI prompt with cached context
+    const systemPrompt = await buildSystemPromptWithContext()
 
-    const totalCount = cache.ticketCount
-    const stats = cache.stats
-
-    // Use AI to understand and answer the query
-    console.log("[SmartQuery] Using AI to process query...")
     const { text: aiAnswer } = await generateText({
       model: openai("gpt-4o-mini"),
-      system: `You are a helpful support analytics assistant. Answer questions about support tickets based on the data provided.
-
-Be concise and direct. If asked for statistics, provide specific numbers. If asked to analyze, provide actionable insights.
-
-CONTEXT DATA:
-- Total tickets: ${totalCount}
-- Status breakdown: ${Object.entries(stats?.byStatus || {})
-        .map(([k, v]) => `${k}: ${v}`)
-        .join(", ")}
-- Priority breakdown: ${Object.entries(stats?.byPriority || {})
-        .map(([k, v]) => `${k}: ${v}`)
-        .join(", ")}
-- Age distribution: <24h: ${stats?.byAge?.lessThan24h}, <7d: ${stats?.byAge?.lessThan7d}, <30d: ${stats?.byAge?.lessThan30d}, >30d: ${stats?.byAge?.olderThan30d}
-
-Recent ticket subjects for reference:
-${ticketSummaries}
-
-Answer the user's question based on this data. Be accurate with numbers.`,
+      system: systemPrompt,
       prompt: query,
       temperature: 0.7,
     })

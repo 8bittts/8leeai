@@ -164,21 +164,16 @@ export async function refreshTicketCache(): Promise<{
   try {
     console.log("[TicketCache] Starting refresh from Zendesk API...")
     const client = getZendeskClient()
-
-    // Fetch all tickets (Zendesk API supports pagination, we'll get them in batches)
     const tickets: CachedTicket[] = []
-    let page = 1
-    let hasMore = true
 
-    while (hasMore) {
-      try {
-        const pageTickets = await client.getTickets({ limit: 100 })
+    // Fetch all tickets from Zendesk API
+    // Note: getTickets() returns all available tickets, no pagination needed
+    try {
+      const pageTickets = await client.getTickets({ limit: 100 })
 
-        if (!pageTickets || pageTickets.length === 0) {
-          hasMore = false
-          break
-        }
-
+      if (!pageTickets || pageTickets.length === 0) {
+        console.log("[TicketCache] No tickets found from Zendesk API")
+      } else {
         // Convert to cached format
         const cachedTickets = pageTickets.map((t: unknown) => {
           const ticket = t as Record<string, unknown>
@@ -207,17 +202,11 @@ export async function refreshTicketCache(): Promise<{
         })
 
         tickets.push(...cachedTickets)
-
-        // If we got fewer than the limit, we've reached the end
-        if (pageTickets.length < 100) {
-          hasMore = false
-        }
-
-        page++
-      } catch (error) {
-        console.error(`[TicketCache] Error fetching page ${page}:`, error)
-        hasMore = false
+        console.log(`[TicketCache] Fetched ${cachedTickets.length} tickets from Zendesk API`)
       }
+    } catch (error) {
+      console.error("[TicketCache] Error fetching tickets from Zendesk API:", error)
+      throw error
     }
 
     // Save to cache
