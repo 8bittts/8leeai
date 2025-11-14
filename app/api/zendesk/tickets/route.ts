@@ -21,14 +21,14 @@ function parseFilters(filters?: Record<string, unknown>): ApiFilters {
 
   if (!filters) return apiFilters
 
-  if (typeof filters.status === "string") {
-    apiFilters.status = filters.status
+  if (typeof filters["status"] === "string") {
+    apiFilters.status = filters["status"] as string
   }
-  if (typeof filters.priority === "string") {
-    apiFilters.priority = filters.priority
+  if (typeof filters["priority"] === "string") {
+    apiFilters.priority = filters["priority"] as string
   }
-  if (typeof filters.limit === "number") {
-    apiFilters.limit = filters.limit
+  if (typeof filters["limit"] === "number") {
+    apiFilters.limit = filters["limit"] as number
   }
 
   if (!apiFilters.limit) {
