@@ -222,6 +222,16 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
     }
 
     const cache = await loadTicketCache()
+    if (!cache) {
+      // Should not reach here after validation, but satisfy TypeScript
+      const processingTime = Date.now() - startTime
+      return {
+        answer: "❌ Cache validation failed",
+        source: "cache",
+        confidence: 0,
+        processingTime,
+      }
+    }
 
     // Build context for AI
     const ticketSummaries = cache.tickets
