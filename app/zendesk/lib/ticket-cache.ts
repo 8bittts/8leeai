@@ -1,11 +1,11 @@
 /**
  * Zendesk Ticket Cache Manager - SIMPLIFIED
- * Stores ticket data in /public/data/zendesk-cache.json
- * No Edge Config, no complexity - just simple file I/O
+ * Stores ticket data in /tmp/zendesk-cache.json
+ * Uses /tmp for Vercel compatibility (writable in serverless)
+ * Cache survives warm container, resets on cold starts
  */
 
-import { readFileSync, writeFileSync } from "fs"
-import { join } from "path"
+import { readFileSync, writeFileSync, existsSync } from "fs"
 import { getZendeskClient } from "./zendesk-api-client"
 
 interface CachedTicket {
@@ -39,7 +39,7 @@ interface TicketCacheData {
   }
 }
 
-const CACHE_FILE = join(process.cwd(), "public", "data", "zendesk-cache.json")
+const CACHE_FILE = "/tmp/zendesk-cache.json"
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour in milliseconds
 
 /**
@@ -91,12 +91,18 @@ function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
  */
 export async function loadTicketCache(): Promise<TicketCacheData | null> {
   try {
+    // Check if cache file exists (might not on cold start)
+    if (!existsSync(CACHE_FILE)) {
+      console.log("[TicketCache] No cache file found (cold start or first run)")
+      return null
+    }
+
     console.log(`[TicketCache] Loading from ${CACHE_FILE}`)
     const content = readFileSync(CACHE_FILE, "utf-8")
     const cache = JSON.parse(content) as TicketCacheData
 
     if (!cache.lastUpdated) {
-      console.log("[TicketCache] No cache found (never refreshed)")
+      console.log("[TicketCache] Cache file exists but no data (corrupted?)")
       return null
     }
 
@@ -107,7 +113,7 @@ export async function loadTicketCache(): Promise<TicketCacheData | null> {
       return cache // Return it anyway, but it's marked as stale
     }
 
-    console.log(`[TicketCache] Loaded ${cache.tickets.length} cached tickets`)
+    console.log(`[TicketCache] ✅ Loaded ${cache.tickets.length} cached tickets (${Math.round(cacheAge / 1000)}s old)`)
     return cache
   } catch (error) {
     console.error("[TicketCache] Error loading cache:", error)
