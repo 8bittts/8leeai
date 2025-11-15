@@ -68,6 +68,14 @@ export async function loadCacheFromStorage<T>(defaultValue: T | null = null): Pr
  */
 export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
   try {
+    // Log environment status for debugging
+    console.log("[EdgeConfig] Environment check:", {
+      isVercel: isVercel(),
+      hasToken: !!process.env["VERCEL_TOKEN"],
+      hasConfigId: !!process.env["EDGE_CONFIG_ID"],
+      configId: process.env["EDGE_CONFIG_ID"]?.substring(0, 15) + "...",
+    })
+
     // Try Edge Config first if available and on Vercel (via REST API)
     if (isVercel() && process.env["VERCEL_TOKEN"] && process.env["EDGE_CONFIG_ID"]) {
       try {
@@ -95,6 +103,11 @@ export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
 
         if (!response.ok) {
           const error = await response.text()
+          console.error("[EdgeConfig] API Response Error:", {
+            status: response.status,
+            statusText: response.statusText,
+            body: error,
+          })
           throw new Error(`API error: ${response.status} - ${error}`)
         }
 
@@ -104,6 +117,8 @@ export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
         console.error("[EdgeConfig] Error saving to Edge Config:", error)
         // Fall through to try filesystem fallback
       }
+    } else {
+      console.log("[EdgeConfig] Skipping Edge Config (not on Vercel or missing credentials)")
     }
 
     // Fall back to filesystem (local dev or Edge Config not available)
