@@ -1,11 +1,11 @@
 /**
- * Zendesk Ticket Cache Manager
- * Persists full ticket dataset using Vercel Edge Config (production)
- * Falls back to filesystem for local development
- * Can be refreshed on-demand via "refresh" or "update" commands
+ * Zendesk Ticket Cache Manager - SIMPLIFIED
+ * Stores ticket data in /public/data/zendesk-cache.json
+ * No Edge Config, no complexity - just simple file I/O
  */
 
-import { loadCacheFromStorage, saveCacheToStorage } from "./edge-config-store"
+import { readFileSync, writeFileSync } from "fs"
+import { join } from "path"
 import { getZendeskClient } from "./zendesk-api-client"
 
 interface CachedTicket {
@@ -39,6 +39,7 @@ interface TicketCacheData {
   }
 }
 
+const CACHE_FILE = join(process.cwd(), "public", "data", "zendesk-cache.json")
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour in milliseconds
 
 /**
@@ -54,13 +55,12 @@ function calculateAgeStats(tickets: CachedTicket[]): TicketCacheData["stats"]["b
   }
 
   for (const ticket of tickets) {
-    const createdTime = new Date(ticket.created_at).getTime()
-    const ageMs = now - createdTime
-    const ageDays = ageMs / (1000 * 60 * 60 * 24)
+    const age = now - new Date(ticket.created_at).getTime()
+    const days = age / (1000 * 60 * 60 * 24)
 
-    if (ageDays < 1) stats.lessThan24h++
-    else if (ageDays < 7) stats.lessThan7d++
-    else if (ageDays < 30) stats.lessThan30d++
+    if (days < 1) stats.lessThan24h++
+    else if (days < 7) stats.lessThan7d++
+    else if (days < 30) stats.lessThan30d++
     else stats.olderThan30d++
   }
 
@@ -68,7 +68,7 @@ function calculateAgeStats(tickets: CachedTicket[]): TicketCacheData["stats"]["b
 }
 
 /**
- * Calculate statistics for the cached tickets
+ * Calculate ticket statistics
  */
 function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
   const byStatus: Record<string, number> = {}
@@ -87,14 +87,16 @@ function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
 }
 
 /**
- * Load cached tickets from Vercel Edge Config or filesystem fallback
+ * Load tickets from cache file
  */
 export async function loadTicketCache(): Promise<TicketCacheData | null> {
   try {
-    const cache = await loadCacheFromStorage<TicketCacheData>()
+    console.log(`[TicketCache] Loading from ${CACHE_FILE}`)
+    const content = readFileSync(CACHE_FILE, "utf-8")
+    const cache = JSON.parse(content) as TicketCacheData
 
-    if (!cache) {
-      console.log("[TicketCache] No cache found")
+    if (!cache.lastUpdated) {
+      console.log("[TicketCache] No cache found (never refreshed)")
       return null
     }
 
@@ -114,7 +116,7 @@ export async function loadTicketCache(): Promise<TicketCacheData | null> {
 }
 
 /**
- * Save tickets to Vercel Edge Config or filesystem fallback
+ * Save tickets to cache file
  */
 export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean> {
   try {
@@ -125,15 +127,10 @@ export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean>
       stats: calculateStats(tickets),
     }
 
-    const success = await saveCacheToStorage(cacheData)
-
-    if (success) {
-      console.log(`[TicketCache] Saved ${tickets.length} tickets to cache`)
-      return true
-    }
-
-    console.error("[TicketCache] Failed to save cache")
-    return false
+    console.log(`[TicketCache] Saving ${tickets.length} tickets to ${CACHE_FILE}`)
+    writeFileSync(CACHE_FILE, JSON.stringify(cacheData, null, 2), "utf-8")
+    console.log(`[TicketCache] ✅ Saved successfully`)
+    return true
   } catch (error) {
     console.error("[TicketCache] Error saving cache:", error)
     return false
@@ -142,7 +139,7 @@ export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean>
 
 /**
  * Refresh cache from Zendesk API
- * Fetches ALL tickets and updates local cache
+ * Fetches ALL tickets using pagination and saves to cache file
  */
 export async function refreshTicketCache(): Promise<{
   success: boolean
@@ -156,8 +153,6 @@ export async function refreshTicketCache(): Promise<{
     const tickets: CachedTicket[] = []
 
     // Fetch all tickets from Zendesk API
-    // Note: getTickets() now implements proper pagination internally
-    // and fetches ALL tickets across all pages
     try {
       const pageTickets = await client.getTickets()
 
@@ -199,14 +194,14 @@ export async function refreshTicketCache(): Promise<{
       throw error
     }
 
-    // Save to cache
+    // Save to cache file
     const saved = await saveTicketCache(tickets)
 
     if (!saved) {
       return {
         success: false,
         ticketCount: 0,
-        message: "Failed to save tickets to cache",
+        message: "Failed to save tickets to cache file",
         error: "Write error",
       }
     }
@@ -227,28 +222,6 @@ export async function refreshTicketCache(): Promise<{
     }
   }
 }
-
-/**
- * Get cache file path (for debugging/inspection)
- * NOTE: Commented out - uses old filesystem implementation
- */
-// export function getCacheFilePath(): string {
-//   return CACHE_FILE
-// }
-
-/**
- * Check if cache exists and is fresh
- * NOTE: Commented out - uses old filesystem implementation
- */
-// export async function isCacheFresh(): Promise<boolean> {
-//   if (!existsSync(CACHE_FILE)) return false
-//
-//   const cache = await loadTicketCache()
-//   if (!cache) return false
-//
-//   const cacheAge = Date.now() - new Date(cache.lastUpdated).getTime()
-//   return cacheAge < CACHE_TTL
-// }
 
 /**
  * Get cache stats without loading all tickets
