@@ -18,7 +18,7 @@ const FALLBACK_CACHE_FILE = join(FALLBACK_CACHE_DIR, "tickets.json")
  * Check if we're running on Vercel (production)
  */
 function isVercel(): boolean {
-  return process.env.VERCEL === "1"
+  return process.env["VERCEL"] === "1"
 }
 
 /**
@@ -27,7 +27,7 @@ function isVercel(): boolean {
 export async function loadCacheFromStorage<T>(defaultValue: T | null = null): Promise<T | null> {
   try {
     // Try Edge Config first if available and on Vercel
-    if (isVercel() && process.env.EDGE_CONFIG) {
+    if (isVercel() && process.env["EDGE_CONFIG"]) {
       try {
         console.log("[EdgeConfig] Attempting to load from Edge Config...")
         const data = await edgeConfigGet(CACHE_KEY)
@@ -69,16 +69,16 @@ export async function loadCacheFromStorage<T>(defaultValue: T | null = null): Pr
 export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
   try {
     // Try Edge Config first if available and on Vercel (via REST API)
-    if (isVercel() && process.env.VERCEL_TOKEN && process.env.EDGE_CONFIG_ID) {
+    if (isVercel() && process.env["VERCEL_TOKEN"] && process.env["EDGE_CONFIG_ID"]) {
       try {
         console.log("[EdgeConfig] Attempting to save to Edge Config via REST API...")
 
         const response = await fetch(
-          `https://api.vercel.com/v1/edge-config/${process.env.EDGE_CONFIG_ID}/items`,
+          `https://api.vercel.com/v1/edge-config/${process.env["EDGE_CONFIG_ID"]}/items`,
           {
             method: "PATCH",
             headers: {
-              Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
+              Authorization: `Bearer ${process.env["VERCEL_TOKEN"]}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -133,7 +133,7 @@ export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
  */
 export function isStorageConfigured(): boolean {
   if (isVercel()) {
-    return !!(process.env.EDGE_CONFIG || process.env.VERCEL_TOKEN)
+    return !!(process.env["EDGE_CONFIG"] || process.env["VERCEL_TOKEN"])
   }
   return true // Always available locally (filesystem)
 }
@@ -143,10 +143,10 @@ export function isStorageConfigured(): boolean {
  */
 export function getStorageInfo(): string {
   if (isVercel()) {
-    if (process.env.EDGE_CONFIG) {
+    if (process.env["EDGE_CONFIG"]) {
       return "Edge Config (SDK read-only)"
     }
-    if (process.env.VERCEL_TOKEN) {
+    if (process.env["VERCEL_TOKEN"]) {
       return "Edge Config (REST API)"
     }
     return "Vercel (no storage configured)"

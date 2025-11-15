@@ -230,23 +230,25 @@ export async function refreshTicketCache(): Promise<{
 
 /**
  * Get cache file path (for debugging/inspection)
+ * NOTE: Commented out - uses old filesystem implementation
  */
-export function getCacheFilePath(): string {
-  return CACHE_FILE
-}
+// export function getCacheFilePath(): string {
+//   return CACHE_FILE
+// }
 
 /**
  * Check if cache exists and is fresh
+ * NOTE: Commented out - uses old filesystem implementation
  */
-export async function isCacheFresh(): Promise<boolean> {
-  if (!existsSync(CACHE_FILE)) return false
-
-  const cache = await loadTicketCache()
-  if (!cache) return false
-
-  const cacheAge = Date.now() - new Date(cache.lastUpdated).getTime()
-  return cacheAge < CACHE_TTL
-}
+// export async function isCacheFresh(): Promise<boolean> {
+//   if (!existsSync(CACHE_FILE)) return false
+//
+//   const cache = await loadTicketCache()
+//   if (!cache) return false
+//
+//   const cacheAge = Date.now() - new Date(cache.lastUpdated).getTime()
+//   return cacheAge < CACHE_TTL
+// }
 
 /**
  * Get cache stats without loading all tickets
