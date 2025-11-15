@@ -1,12 +1,11 @@
 /**
  * Zendesk Ticket Cache Manager
- * Persists full ticket dataset locally for fast queries
+ * Persists full ticket dataset using Vercel Edge Config (production)
+ * Falls back to filesystem for local development
  * Can be refreshed on-demand via "refresh" or "update" commands
  */
 
-import { existsSync, mkdirSync } from "fs"
-import { readFile, writeFile } from "fs/promises"
-import { join } from "path"
+import { loadCacheFromStorage, saveCacheToStorage } from "./edge-config-store"
 import { getZendeskClient } from "./zendesk-api-client"
 
 interface CachedTicket {
@@ -40,18 +39,7 @@ interface TicketCacheData {
   }
 }
 
-const CACHE_DIR = join(process.cwd(), ".zendesk-cache")
-const CACHE_FILE = join(CACHE_DIR, "tickets.json")
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour in milliseconds
-
-/**
- * Ensure cache directory exists
- */
-function ensureCacheDir(): void {
-  if (!existsSync(CACHE_DIR)) {
-    mkdirSync(CACHE_DIR, { recursive: true })
-  }
-}
 
 /**
  * Calculate ticket age-based statistics
@@ -99,19 +87,16 @@ function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
 }
 
 /**
- * Load cached tickets from disk
+ * Load cached tickets from Vercel Edge Config or filesystem fallback
  */
 export async function loadTicketCache(): Promise<TicketCacheData | null> {
   try {
-    ensureCacheDir()
+    const cache = await loadCacheFromStorage<TicketCacheData>()
 
-    if (!existsSync(CACHE_FILE)) {
-      console.log("[TicketCache] No cache file found")
+    if (!cache) {
+      console.log("[TicketCache] No cache found")
       return null
     }
-
-    const data = await readFile(CACHE_FILE, "utf-8")
-    const cache = JSON.parse(data) as TicketCacheData
 
     // Check if cache is still fresh
     const cacheAge = Date.now() - new Date(cache.lastUpdated).getTime()
@@ -129,12 +114,10 @@ export async function loadTicketCache(): Promise<TicketCacheData | null> {
 }
 
 /**
- * Save tickets to cache
+ * Save tickets to Vercel Edge Config or filesystem fallback
  */
 export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean> {
   try {
-    ensureCacheDir()
-
     const cacheData: TicketCacheData = {
       lastUpdated: new Date().toISOString(),
       ticketCount: tickets.length,
@@ -142,9 +125,15 @@ export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean>
       stats: calculateStats(tickets),
     }
 
-    await writeFile(CACHE_FILE, JSON.stringify(cacheData, null, 2), "utf-8")
-    console.log(`[TicketCache] Saved ${tickets.length} tickets to cache`)
-    return true
+    const success = await saveCacheToStorage(cacheData)
+
+    if (success) {
+      console.log(`[TicketCache] Saved ${tickets.length} tickets to cache`)
+      return true
+    }
+
+    console.error("[TicketCache] Failed to save cache")
+    return false
   } catch (error) {
     console.error("[TicketCache] Error saving cache:", error)
     return false

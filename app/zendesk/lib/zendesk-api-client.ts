@@ -251,14 +251,18 @@ export class ZendeskAPIClient {
 
         const pageTickets = response.tickets || []
         allTickets.push(...pageTickets)
-        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageTickets.length} tickets (total: ${allTickets.length})`)
+        console.log(
+          `[ZendeskAPI] Page ${pageCount}: ${pageTickets.length} tickets (total: ${allTickets.length})`
+        )
 
         // Check for next page
         nextPageUrl = response.next_page || null
       }
 
       this.setCache(cacheKey, allTickets)
-      console.log(`[ZendeskAPI] Pagination complete: ${allTickets.length} total tickets across ${pageCount} pages`)
+      console.log(
+        `[ZendeskAPI] Pagination complete: ${allTickets.length} total tickets across ${pageCount} pages`
+      )
       return allTickets
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching tickets:", error)
@@ -318,14 +322,18 @@ export class ZendeskAPIClient {
 
         const pageUsers = response.users || []
         allUsers.push(...pageUsers)
-        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageUsers.length} users (total: ${allUsers.length})`)
+        console.log(
+          `[ZendeskAPI] Page ${pageCount}: ${pageUsers.length} users (total: ${allUsers.length})`
+        )
 
         // Check for next page
         nextPageUrl = response.next_page || null
       }
 
       this.setCache(cacheKey, allUsers)
-      console.log(`[ZendeskAPI] User pagination complete: ${allUsers.length} total users across ${pageCount} pages`)
+      console.log(
+        `[ZendeskAPI] User pagination complete: ${allUsers.length} total users across ${pageCount} pages`
+      )
       return allUsers
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching users:", error)
@@ -360,14 +368,18 @@ export class ZendeskAPIClient {
 
         const pageOrgs = response.organizations || []
         allOrgs.push(...pageOrgs)
-        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageOrgs.length} organizations (total: ${allOrgs.length})`)
+        console.log(
+          `[ZendeskAPI] Page ${pageCount}: ${pageOrgs.length} organizations (total: ${allOrgs.length})`
+        )
 
         // Check for next page
         nextPageUrl = response.next_page || null
       }
 
       this.setCache(cacheKey, allOrgs)
-      console.log(`[ZendeskAPI] Organizations pagination complete: ${allOrgs.length} total organizations across ${pageCount} pages`)
+      console.log(
+        `[ZendeskAPI] Organizations pagination complete: ${allOrgs.length} total organizations across ${pageCount} pages`
+      )
       return allOrgs
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching organizations:", error)
@@ -440,14 +452,18 @@ export class ZendeskAPIClient {
 
         const pageResults = response.results || []
         allResults.push(...pageResults)
-        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageResults.length} results (total: ${allResults.length})`)
+        console.log(
+          `[ZendeskAPI] Page ${pageCount}: ${pageResults.length} results (total: ${allResults.length})`
+        )
 
         // Check for next page
         nextPageUrl = response.next_page || null
       }
 
       this.setCache(cacheKey, allResults)
-      console.log(`[ZendeskAPI] Search pagination complete: ${allResults.length} total results across ${pageCount} pages`)
+      console.log(
+        `[ZendeskAPI] Search pagination complete: ${allResults.length} total results across ${pageCount} pages`
+      )
       return allResults
     } catch (error) {
       console.error("[ZendeskAPI] Error searching tickets:", error)
