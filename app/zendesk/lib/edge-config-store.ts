@@ -27,6 +27,11 @@ function isVercel(): boolean {
  */
 export async function loadCacheFromStorage<T>(defaultValue: T | null = null): Promise<T | null> {
   try {
+    // Construct Edge Config connection string if not already set
+    if (!process.env["EDGE_CONFIG"] && process.env["EDGE_CONFIG_ID"] && process.env["VERCEL_TOKEN"]) {
+      process.env["EDGE_CONFIG"] = `https://edge-config.vercel.com/${process.env["EDGE_CONFIG_ID"]}?token=${process.env["VERCEL_TOKEN"]}`
+    }
+
     // Try Edge Config first if available and on Vercel
     if (isVercel() && process.env["EDGE_CONFIG"]) {
       try {
@@ -69,11 +74,17 @@ export async function loadCacheFromStorage<T>(defaultValue: T | null = null): Pr
  */
 export async function saveCacheToStorage<T>(data: T): Promise<boolean> {
   try {
+    // Construct Edge Config connection string if not already set
+    if (!process.env["EDGE_CONFIG"] && process.env["EDGE_CONFIG_ID"] && process.env["VERCEL_TOKEN"]) {
+      process.env["EDGE_CONFIG"] = `https://edge-config.vercel.com/${process.env["EDGE_CONFIG_ID"]}?token=${process.env["VERCEL_TOKEN"]}`
+    }
+
     // Log environment status for debugging
     console.log("[EdgeConfig] Environment check:", {
       isVercel: isVercel(),
       hasToken: !!process.env["VERCEL_TOKEN"],
       hasConfigId: !!process.env["EDGE_CONFIG_ID"],
+      hasEdgeConfig: !!process.env["EDGE_CONFIG"],
       configId: process.env["EDGE_CONFIG_ID"]?.substring(0, 15) + "...",
     })
 
