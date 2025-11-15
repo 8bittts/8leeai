@@ -133,12 +133,25 @@ export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean>
       stats: calculateStats(tickets),
     }
 
-    console.log(`[TicketCache] Saving ${tickets.length} tickets to ${CACHE_FILE}`)
-    writeFileSync(CACHE_FILE, JSON.stringify(cacheData, null, 2), "utf-8")
-    console.log(`[TicketCache] ✅ Saved successfully`)
-    return true
+    const jsonData = JSON.stringify(cacheData, null, 2)
+    const sizeKB = (jsonData.length / 1024).toFixed(2)
+
+    console.log(`[TicketCache] Saving ${tickets.length} tickets to ${CACHE_FILE} (${sizeKB} KB)`)
+
+    try {
+      writeFileSync(CACHE_FILE, jsonData, "utf-8")
+      console.log(`[TicketCache] ✅ Saved successfully`)
+      return true
+    } catch (writeError) {
+      const errorMsg = writeError instanceof Error ? writeError.message : String(writeError)
+      console.error(`[TicketCache] ❌ Write failed: ${errorMsg}`)
+      console.error(`[TicketCache] Error details:`, writeError)
+      return false
+    }
   } catch (error) {
-    console.error("[TicketCache] Error saving cache:", error)
+    const errorMsg = error instanceof Error ? error.message : String(error)
+    console.error(`[TicketCache] ❌ Error preparing cache: ${errorMsg}`)
+    console.error(`[TicketCache] Error details:`, error)
     return false
   }
 }
