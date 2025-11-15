@@ -19,7 +19,9 @@ let cachedContext: CachedContext | null = null
 /**
  * Build serialized context from cache file
  */
-function buildContextFromCache(cacheData: Awaited<ReturnType<typeof loadTicketCache>>): CachedContext {
+function buildContextFromCache(
+  cacheData: Awaited<ReturnType<typeof loadTicketCache>>
+): CachedContext {
   if (!cacheData) {
     throw new Error("Cache data is required")
   }

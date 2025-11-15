@@ -736,14 +736,15 @@ class PackageMonitorAgent {
     content += "⚠️ **IMPORTANT:** After installing updates, you MUST update the following files:\n\n"
     content += "### 1. CLAUDE.md (Lines 62-67)\n"
     content += "- Location: `/CLAUDE.md`\n"
-    content += "- **Lines 62-67**: Update version numbers in \"Tech Stack\" section\n"
+    content += '- **Lines 62-67**: Update version numbers in "Tech Stack" section\n'
     content += "  - Pattern: `- Next.js X.Y.Z + React ...`\n"
-    content += "  - Update: Next.js, React, TypeScript, Tailwind CSS, Vercel Analytics/Insights, Biome, Bun, @types packages\n\n"
+    content +=
+      "  - Update: Next.js, React, TypeScript, Tailwind CSS, Vercel Analytics/Insights, Biome, Bun, @types packages\n\n"
     content += "### 2. README.md (Lines 18-22, 120-127)\n"
     content += "- Location: `/README.md`\n"
     content += "- **Lines 18-22**: Update badge versions if major versions change\n"
     content += "  - Badges: Next.js, React, Tailwind CSS, TypeScript, Bun\n"
-    content += "- **Lines 120-127**: Update \"Tech Stack\" section\n"
+    content += '- **Lines 120-127**: Update "Tech Stack" section\n'
     content += "  - Full tech stack with versions\n\n"
     content += "### 3. Release Notes\n"
     content += "- Location: `/_docs/2025-november.md` (or current month)\n"
@@ -757,7 +758,7 @@ class PackageMonitorAgent {
     content += "- Run: `bun test` - All tests pass\n"
     content += "- Run: `bun run check` - Biome linting passes\n"
     content += "- Run: `bun run build` - Production build succeeds\n"
-    content += "- Commit message format: \"Updates: [package] to [version] and [details]\"\n\n"
+    content += '- Commit message format: "Updates: [package] to [version] and [details]"\n\n'
     content += "### 5. Cleanup\n"
     content += "- ✅ This action plan file will be automatically deleted after you close it\n"
     content += "- ✅ No manual cleanup required\n\n"
@@ -827,9 +828,7 @@ class PackageMonitorAgent {
       try {
         fs.unlinkSync(this.generatedPlanFile)
         const filename = this.generatedPlanFile.split("/").pop()
-        console.log(
-          `\n${COLORS.cyan}🧹 Cleaned up generated plan file: ${filename}${COLORS.reset}`
-        )
+        console.log(`\n${COLORS.cyan}🧹 Cleaned up generated plan file: ${filename}${COLORS.reset}`)
       } catch (error) {
         console.log(
           `${COLORS.yellow}⚠️  Could not clean up plan file: ${error.message}${COLORS.reset}`

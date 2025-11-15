@@ -7,8 +7,8 @@
 
 import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
-import { classifyQuery } from "./classify-query"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
+import { classifyQuery } from "./classify-query"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
 
 interface QueryResponse {
@@ -207,8 +207,7 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
     if (!cache || cache.tickets.length === 0) {
       const processingTime = Date.now() - startTime
       return {
-        answer:
-          "❌ No tickets found in cache\n\nTry 'refresh' or 'update' to sync with Zendesk",
+        answer: "❌ No tickets found in cache\n\nTry 'refresh' or 'update' to sync with Zendesk",
         source: "cache",
         confidence: 0,
         processingTime,
