@@ -207,6 +207,7 @@ export class ZendeskAPIClient {
 
   /**
    * Get tickets with optional filters
+   * Implements pagination to fetch ALL tickets, not just first page
    */
   async getTickets(filters?: {
     status?: string
@@ -218,28 +219,47 @@ export class ZendeskAPIClient {
     if (cached) return cached as ZendeskTicket[]
 
     try {
-      const params: Record<string, unknown> = {}
+      const allTickets: ZendeskTicket[] = []
+      const perPage = filters?.limit || 100
+      let nextPageUrl: string | null = "/tickets.json"
 
-      // Build ZQL query if filters provided
+      // Build ZQL query params
+      const queryParams: Record<string, unknown> = {
+        per_page: perPage,
+      }
+
       if (filters) {
         const conditions: string[] = []
         if (filters.status) conditions.push(`status:${filters.status}`)
         if (filters.priority) conditions.push(`priority:${filters.priority}`)
 
         if (conditions.length > 0) {
-          params["query"] = conditions.join(" AND ")
-        }
-
-        if (filters.limit) {
-          params["per_page"] = filters.limit
+          queryParams["query"] = conditions.join(" AND ")
         }
       }
 
-      const response = await this.request<{ tickets: ZendeskTicket[] }>("/tickets.json", { params })
-      const tickets = response.tickets || []
+      // Paginate through all results
+      let pageCount = 0
+      while (nextPageUrl) {
+        pageCount++
+        console.log(`[ZendeskAPI] Fetching tickets page ${pageCount}...`)
 
-      this.setCache(cacheKey, tickets)
-      return tickets
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl, { params: pageCount === 1 ? queryParams : {} })
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageTickets.length} tickets (total: ${allTickets.length})`)
+
+        // Check for next page
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allTickets)
+      console.log(`[ZendeskAPI] Pagination complete: ${allTickets.length} total tickets across ${pageCount} pages`)
+      return allTickets
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching tickets:", error)
       throw error
@@ -268,6 +288,7 @@ export class ZendeskAPIClient {
 
   /**
    * Get all users (support agents, admins, etc.)
+   * Implements pagination to fetch ALL users
    */
   async getUsers(filters?: { role?: string; active?: boolean }): Promise<ZendeskUser[]> {
     const cacheKey = this.getCacheKey("/users.json", filters)
@@ -275,15 +296,37 @@ export class ZendeskAPIClient {
     if (cached) return cached as ZendeskUser[]
 
     try {
-      const params: Record<string, unknown> = {}
-      if (filters?.role) params["role"] = filters.role
-      if (filters?.active !== undefined) params["active"] = filters.active
+      const allUsers: ZendeskUser[] = []
+      let nextPageUrl: string | null = "/users.json"
+      const queryParams: Record<string, unknown> = {
+        per_page: 100,
+      }
 
-      const response = await this.request<{ users: ZendeskUser[] }>("/users.json", { params })
-      const users = response.users || []
+      if (filters?.role) queryParams["role"] = filters.role
+      if (filters?.active !== undefined) queryParams["active"] = filters.active
 
-      this.setCache(cacheKey, users)
-      return users
+      // Paginate through all results
+      let pageCount = 0
+      while (nextPageUrl) {
+        pageCount++
+        console.log(`[ZendeskAPI] Fetching users page ${pageCount}...`)
+
+        const response = await this.request<{
+          users: ZendeskUser[]
+          next_page?: string
+        }>(nextPageUrl, { params: pageCount === 1 ? queryParams : {} })
+
+        const pageUsers = response.users || []
+        allUsers.push(...pageUsers)
+        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageUsers.length} users (total: ${allUsers.length})`)
+
+        // Check for next page
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allUsers)
+      console.log(`[ZendeskAPI] User pagination complete: ${allUsers.length} total users across ${pageCount} pages`)
+      return allUsers
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching users:", error)
       throw error
@@ -292,6 +335,7 @@ export class ZendeskAPIClient {
 
   /**
    * Get all organizations
+   * Implements pagination to fetch ALL organizations
    */
   async getOrganizations(): Promise<ZendeskOrganization[]> {
     const cacheKey = this.getCacheKey("/organizations.json")
@@ -299,13 +343,32 @@ export class ZendeskAPIClient {
     if (cached) return cached as ZendeskOrganization[]
 
     try {
-      const response = await this.request<{ organizations: ZendeskOrganization[] }>(
-        "/organizations.json"
-      )
-      const orgs = response.organizations || []
+      const allOrgs: ZendeskOrganization[] = []
+      let nextPageUrl: string | null = "/organizations.json"
+      const queryParams: Record<string, unknown> = { per_page: 100 }
 
-      this.setCache(cacheKey, orgs)
-      return orgs
+      // Paginate through all results
+      let pageCount = 0
+      while (nextPageUrl) {
+        pageCount++
+        console.log(`[ZendeskAPI] Fetching organizations page ${pageCount}...`)
+
+        const response = await this.request<{
+          organizations: ZendeskOrganization[]
+          next_page?: string
+        }>(nextPageUrl, { params: pageCount === 1 ? queryParams : {} })
+
+        const pageOrgs = response.organizations || []
+        allOrgs.push(...pageOrgs)
+        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageOrgs.length} organizations (total: ${allOrgs.length})`)
+
+        // Check for next page
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allOrgs)
+      console.log(`[ZendeskAPI] Organizations pagination complete: ${allOrgs.length} total organizations across ${pageCount} pages`)
+      return allOrgs
     } catch (error) {
       console.error("[ZendeskAPI] Error fetching organizations:", error)
       throw error
@@ -349,6 +412,7 @@ export class ZendeskAPIClient {
 
   /**
    * Search tickets using Zendesk Query Language
+   * Implements pagination to fetch ALL search results
    */
   async searchTickets(query: string, limit = 25): Promise<ZendeskTicket[]> {
     const cacheKey = this.getCacheKey("/search.json", { query, limit })
@@ -356,16 +420,35 @@ export class ZendeskAPIClient {
     if (cached) return cached as ZendeskTicket[]
 
     try {
-      const response = await this.request<{ results: ZendeskTicket[] }>("/search.json", {
-        params: {
-          query,
-          per_page: limit,
-        },
-      })
+      const allResults: ZendeskTicket[] = []
+      let nextPageUrl: string | null = "/search.json"
+      const queryParams: Record<string, unknown> = {
+        query,
+        per_page: limit,
+      }
 
-      const tickets = response.results || []
-      this.setCache(cacheKey, tickets)
-      return tickets
+      // Paginate through all search results
+      let pageCount = 0
+      while (nextPageUrl) {
+        pageCount++
+        console.log(`[ZendeskAPI] Searching tickets page ${pageCount}...`)
+
+        const response = await this.request<{
+          results: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl, { params: pageCount === 1 ? queryParams : {} })
+
+        const pageResults = response.results || []
+        allResults.push(...pageResults)
+        console.log(`[ZendeskAPI] Page ${pageCount}: ${pageResults.length} results (total: ${allResults.length})`)
+
+        // Check for next page
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allResults)
+      console.log(`[ZendeskAPI] Search pagination complete: ${allResults.length} total results across ${pageCount} pages`)
+      return allResults
     } catch (error) {
       console.error("[ZendeskAPI] Error searching tickets:", error)
       throw error

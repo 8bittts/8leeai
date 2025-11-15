@@ -167,9 +167,10 @@ export async function refreshTicketCache(): Promise<{
     const tickets: CachedTicket[] = []
 
     // Fetch all tickets from Zendesk API
-    // Note: getTickets() returns all available tickets, no pagination needed
+    // Note: getTickets() now implements proper pagination internally
+    // and fetches ALL tickets across all pages
     try {
-      const pageTickets = await client.getTickets({ limit: 100 })
+      const pageTickets = await client.getTickets()
 
       if (!pageTickets || pageTickets.length === 0) {
         console.log("[TicketCache] No tickets found from Zendesk API")
