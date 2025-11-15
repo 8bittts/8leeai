@@ -15,10 +15,11 @@ const FALLBACK_CACHE_DIR = join(process.cwd(), ".zendesk-cache")
 const FALLBACK_CACHE_FILE = join(FALLBACK_CACHE_DIR, "tickets.json")
 
 /**
- * Check if we're running on Vercel (production)
+ * Check if we're running on Vercel (production or preview)
  */
 function isVercel(): boolean {
-  return process.env["VERCEL"] === "1"
+  // Vercel sets multiple environment variables we can check
+  return !!(process.env["VERCEL"] || process.env["VERCEL_ENV"])
 }
 
 /**
