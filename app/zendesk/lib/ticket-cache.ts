@@ -1,11 +1,9 @@
 /**
- * Zendesk Ticket Cache Manager - SIMPLIFIED
- * Stores ticket data in /tmp/zendesk-cache.json
- * Uses /tmp for Vercel compatibility (writable in serverless)
- * Cache survives warm container, resets on cold starts
+ * Zendesk Ticket Fetcher - ULTRA SIMPLIFIED
+ * No cache, no complexity - just fetch fresh data from Zendesk every time
+ * Perfect for experimental/demo purposes
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs"
 import { getZendeskClient } from "./zendesk-api-client"
 
 interface CachedTicket {
@@ -38,9 +36,6 @@ interface TicketCacheData {
     }
   }
 }
-
-const CACHE_FILE = "/tmp/zendesk-cache.json"
-const CACHE_TTL = 60 * 60 * 1000 // 1 hour in milliseconds
 
 /**
  * Calculate ticket age-based statistics
@@ -87,78 +82,72 @@ function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
 }
 
 /**
- * Load tickets from cache file
+ * Load tickets - ALWAYS fetches fresh from Zendesk API
+ * No cache, no file I/O, no complexity
  */
 export async function loadTicketCache(): Promise<TicketCacheData | null> {
   try {
-    // Check if cache file exists (might not on cold start)
-    if (!existsSync(CACHE_FILE)) {
-      console.log("[TicketCache] No cache file found (cold start or first run)")
+    console.log("[TicketFetcher] Fetching fresh data from Zendesk API...")
+    const client = getZendeskClient()
+
+    const pageTickets = await client.getTickets()
+
+    if (!pageTickets || pageTickets.length === 0) {
+      console.log("[TicketFetcher] No tickets found")
       return null
     }
 
-    console.log(`[TicketCache] Loading from ${CACHE_FILE}`)
-    const content = readFileSync(CACHE_FILE, "utf-8")
-    const cache = JSON.parse(content) as TicketCacheData
+    // Convert to cached format
+    const tickets = pageTickets.map((t: unknown) => {
+      const ticket = t as Record<string, unknown>
+      const cached: CachedTicket = {
+        id: ticket["id"] as number,
+        subject: ticket["subject"] as string,
+        description: (ticket["description"] as string) || "",
+        status: ticket["status"] as string,
+        priority: ticket["priority"] as string,
+        created_at: ticket["created_at"] as string,
+        updated_at: ticket["updated_at"] as string,
+        assignee_id: ticket["assignee_id"] as number | null,
+        requester_id: ticket["requester_id"] as number,
+        tags: (ticket["tags"] as string[]) || [],
+      }
 
-    if (!cache.lastUpdated) {
-      console.log("[TicketCache] Cache file exists but no data (corrupted?)")
-      return null
-    }
+      if (ticket["organization_id"]) {
+        cached.organization_id = ticket["organization_id"] as number
+      }
+      if (ticket["group_id"]) {
+        cached.group_id = ticket["group_id"] as number
+      }
 
-    // Check if cache is still fresh
-    const cacheAge = Date.now() - new Date(cache.lastUpdated).getTime()
-    if (cacheAge > CACHE_TTL) {
-      console.log(`[TicketCache] Cache is stale (${Math.round(cacheAge / 1000)}s old)`)
-      return cache // Return it anyway, but it's marked as stale
-    }
+      return cached
+    })
 
-    console.log(`[TicketCache] ✅ Loaded ${cache.tickets.length} cached tickets (${Math.round(cacheAge / 1000)}s old)`)
-    return cache
-  } catch (error) {
-    console.error("[TicketCache] Error loading cache:", error)
-    return null
-  }
-}
-
-/**
- * Save tickets to cache file
- */
-export async function saveTicketCache(tickets: CachedTicket[]): Promise<boolean> {
-  try {
-    const cacheData: TicketCacheData = {
+    const data: TicketCacheData = {
       lastUpdated: new Date().toISOString(),
       ticketCount: tickets.length,
       tickets,
       stats: calculateStats(tickets),
     }
 
-    const jsonData = JSON.stringify(cacheData, null, 2)
-    const sizeKB = (jsonData.length / 1024).toFixed(2)
-
-    console.log(`[TicketCache] Saving ${tickets.length} tickets to ${CACHE_FILE} (${sizeKB} KB)`)
-
-    try {
-      writeFileSync(CACHE_FILE, jsonData, "utf-8")
-      console.log(`[TicketCache] ✅ Saved successfully`)
-      return true
-    } catch (writeError) {
-      const errorMsg = writeError instanceof Error ? writeError.message : String(writeError)
-      console.error(`[TicketCache] ❌ Write failed: ${errorMsg}`)
-      console.error(`[TicketCache] Error details:`, writeError)
-      return false
-    }
+    console.log(`[TicketFetcher] ✅ Fetched ${tickets.length} tickets`)
+    return data
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error(`[TicketCache] ❌ Error preparing cache: ${errorMsg}`)
-    console.error(`[TicketCache] Error details:`, error)
-    return false
+    console.error("[TicketFetcher] Error fetching tickets:", error)
+    return null
   }
 }
 
 /**
- * Refresh cache from Zendesk API
- * Fetches ALL tickets using pagination and saves to cache file
+ * Get cache stats - same as loadTicketCache but different name for compatibility
+ */
+export async function getCacheStats(): Promise<TicketCacheData["stats"] | null> {
+  const data = await loadTicketCache()
+  return data?.stats || null
+}
+
+/**
+ * Refresh cache - just an alias for loadTicketCache (no actual caching)
  */
 export async function refreshTicketCache(): Promise<{
   success: boolean
@@ -167,85 +156,29 @@ export async function refreshTicketCache(): Promise<{
   error?: string
 }> {
   try {
-    console.log("[TicketCache] Starting refresh from Zendesk API...")
-    const client = getZendeskClient()
-    const tickets: CachedTicket[] = []
+    const data = await loadTicketCache()
 
-    // Fetch all tickets from Zendesk API
-    try {
-      const pageTickets = await client.getTickets()
-
-      if (!pageTickets || pageTickets.length === 0) {
-        console.log("[TicketCache] No tickets found from Zendesk API")
-      } else {
-        // Convert to cached format
-        const cachedTickets = pageTickets.map((t: unknown) => {
-          const ticket = t as Record<string, unknown>
-          const cached: CachedTicket = {
-            id: ticket["id"] as number,
-            subject: ticket["subject"] as string,
-            description: (ticket["description"] as string) || "",
-            status: ticket["status"] as string,
-            priority: ticket["priority"] as string,
-            created_at: ticket["created_at"] as string,
-            updated_at: ticket["updated_at"] as string,
-            assignee_id: ticket["assignee_id"] as number | null,
-            requester_id: ticket["requester_id"] as number,
-            tags: (ticket["tags"] as string[]) || [],
-          }
-
-          // Only add optional fields if they have values
-          if (ticket["organization_id"]) {
-            cached.organization_id = ticket["organization_id"] as number
-          }
-          if (ticket["group_id"]) {
-            cached.group_id = ticket["group_id"] as number
-          }
-
-          return cached
-        })
-
-        tickets.push(...cachedTickets)
-        console.log(`[TicketCache] Fetched ${cachedTickets.length} tickets from Zendesk API`)
-      }
-    } catch (error) {
-      console.error("[TicketCache] Error fetching tickets from Zendesk API:", error)
-      throw error
-    }
-
-    // Save to cache file
-    const saved = await saveTicketCache(tickets)
-
-    if (!saved) {
+    if (!data) {
       return {
         success: false,
         ticketCount: 0,
-        message: "Failed to save tickets to cache file",
-        error: "Write error",
+        message: "Failed to fetch tickets from Zendesk",
+        error: "No data returned",
       }
     }
 
     return {
       success: true,
-      ticketCount: tickets.length,
-      message: `Successfully refreshed cache with ${tickets.length} tickets`,
+      ticketCount: data.ticketCount,
+      message: `Successfully fetched ${data.ticketCount} tickets from Zendesk`,
     }
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error("[TicketCache] Refresh failed:", error)
     return {
       success: false,
       ticketCount: 0,
-      message: "Failed to refresh ticket cache",
+      message: "Failed to fetch tickets",
       error: errorMsg,
     }
   }
-}
-
-/**
- * Get cache stats without loading all tickets
- */
-export async function getCacheStats(): Promise<TicketCacheData["stats"] | null> {
-  const cache = await loadTicketCache()
-  return cache?.stats || null
 }
