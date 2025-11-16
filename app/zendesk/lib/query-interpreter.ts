@@ -244,11 +244,12 @@ export function interpretQuery(query: string): ParsedQuery {
 
 /**
  * Fallback: Send query to Claude for interpretation
- * (To be implemented with actual API call)
+ * Note: This function is not actively used. The main query system uses
+ * smart-query-handler.ts which leverages OpenAI GPT-4o-mini for complex queries.
  */
 export function interpretQueryWithAI(query: string): Promise<ParsedQuery> {
-  // TODO: Implement Claude API call for complex query interpretation
-  // This is the fallback for queries that don't match patterns
+  // Legacy function - not actively used in production
+  // Main query handling is done via smart-query-handler.ts
 
   console.log("Using AI interpretation for:", query)
 

@@ -16,8 +16,14 @@ export interface ClassifiedQuery {
 
 /**
  * Check if query is asking about total ticket count
+ * Excludes complex queries that need AI analysis
  */
 function isTotalCountQuery(query: string): boolean {
+  // Don't match if query has complex conditions (words, characters, contains, mention, etc.)
+  if (/\b(words?|characters?|contains?|mention|longer|shorter|more than|less than|review|analyze)\b/i.test(query)) {
+    return false
+  }
+
   return /\b(total|how many|count|altogether|in total)\b.*\b(tickets?|issues?|cases?|items?)\b/i.test(
     query
   )
@@ -51,8 +57,14 @@ function isStatusQuery(query: string): { matched: boolean; statuses: string[] } 
 
 /**
  * Check if query is asking about tickets by priority
+ * Excludes complex queries that need AI analysis (review, prioritize, analyze, etc.)
  */
 function isPriorityQuery(query: string): { matched: boolean; priorities: string[] } {
+  // Don't match if query asks for review, analysis, or prioritization
+  if (/\b(review|analyze|prioritize|which ones|tell me which|need attention|recommend)\b/i.test(query)) {
+    return { matched: false, priorities: [] }
+  }
+
   const priorityPatterns: Record<string, string[]> = {
     urgent: ["urgent", "critical", "asap"],
     high: ["high", "important", "major"],

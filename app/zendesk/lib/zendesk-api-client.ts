@@ -144,13 +144,21 @@ export class ZendeskAPIClient {
   ): Promise<T> {
     const { method = "GET", body, params } = options
 
-    // Build URL
-    let url = `${this.baseUrl}${endpoint}`
-    if (params && method === "GET") {
-      const queryString = new URLSearchParams(
-        Object.entries(params).map(([k, v]) => [k, String(v)])
-      ).toString()
-      url = `${url}?${queryString}`
+    // Build URL - handle both relative paths and full URLs
+    // next_page URLs from Zendesk are already complete URLs
+    let url: string
+    if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
+      // Already a full URL (like next_page) - use as-is
+      url = endpoint
+    } else {
+      // Relative path - append to base URL
+      url = `${this.baseUrl}${endpoint}`
+      if (params && method === "GET") {
+        const queryString = new URLSearchParams(
+          Object.entries(params).map(([k, v]) => [k, String(v)])
+        ).toString()
+        url = `${url}?${queryString}`
+      }
     }
 
     // Build request options

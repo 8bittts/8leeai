@@ -26,10 +26,14 @@ function buildContextFromCache(
     throw new Error("Cache data is required")
   }
 
-  // Build concise ticket summaries (first 50 tickets)
+  // Build comprehensive ticket summaries with descriptions and word counts
+  // Include ALL tickets (not just first 50) so AI can do complex analysis
   const ticketSummaries = cacheData.tickets
-    .slice(0, 50)
-    .map((t) => `#${t.id} [${t.priority}/${t.status}] ${t.subject}`)
+    .map((t) => {
+      const wordCount = t.description.split(/\s+/).length
+      const descPreview = t.description.substring(0, 100).replace(/\n/g, " ")
+      return `#${t.id} [${t.priority}/${t.status}] ${t.subject} | ${wordCount} words | "${descPreview}..."`
+    })
     .join("\n")
 
   // Build stats summary
@@ -109,13 +113,21 @@ Be concise and direct. If asked for statistics, provide specific numbers. If ask
 CURRENT TICKET DATA (automatically updated):
 ${context.statsSummary}
 
-RECENT TICKET SUBJECTS FOR REFERENCE:
+ALL TICKET DETAILS (with word counts and descriptions):
 ${context.ticketSummaries}
+
+CAPABILITIES:
+- You have access to ALL tickets with full metadata (subject, status, priority, word count, description preview)
+- You can count tickets based on any criteria (status, priority, word count, content, etc.)
+- You can analyze patterns, trends, and prioritize tickets based on context
+- You can search ticket content and identify common issues
 
 INSTRUCTIONS:
 - Answer the user's question based on the provided ticket data
-- Be accurate with numbers
-- When analyzing trends or problems, reference specific tickets
+- Be accurate with numbers - count carefully
+- When analyzing trends or problems, reference specific ticket IDs
+- For word count queries, use the "X words" metadata provided for each ticket
+- For prioritization queries, consider priority, status, subject, and description content
 - If you don't have data to answer a question, say so clearly`
 }
 
