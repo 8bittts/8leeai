@@ -1,7 +1,12 @@
 /**
- * Query Classifier
- * Identifies queries that can be answered instantly from cache without AI
- * Returns discrete answers for common questions in <100ms
+ * Enhanced Query Classifier - Research-Based Classification System
+ *
+ * Two-tier decision tree for support ticket queries:
+ * - TIER 1 (Fast Path <100ms): Discrete queries answered from pre-computed cache
+ * - TIER 2 (AI Path 2-10s): Complex queries requiring reasoning and analysis
+ *
+ * Based on research from Zendesk analytics patterns, customer support dashboards,
+ * and natural language query interfaces.
  */
 
 import { loadTicketCache } from "./ticket-cache"
@@ -12,102 +17,353 @@ export interface ClassifiedQuery {
   source: "cache" | "ai"
   confidence: number
   processingTime: number
+  reasoning?: string // Debug info: why this path was chosen
+}
+
+// ============================================
+// DISCRETE QUERY INDICATORS (Cache/Fast Path)
+// ============================================
+
+const DISCRETE_INDICATORS = {
+  // Counting queries - simple aggregation
+  counting: [
+    "how many",
+    "count",
+    "total",
+    "number of",
+    "altogether",
+    "in total",
+    "how much",
+    "quantity",
+  ],
+
+  // Showing/listing - display aggregated data
+  showing: ["show", "list", "display", "get", "give me", "what are", "tell me", "fetch"],
+
+  // Checking status - boolean or simple lookup
+  checking: ["what is", "is there", "do we have", "are there any", "check if"],
+
+  // Breakdown requests - group by aggregation
+  breakdown: ["breakdown", "distribution", "split", "categorize", "segment"],
+
+  // Simple attributes - filterable dimensions
+  status: [
+    "open",
+    "closed",
+    "pending",
+    "solved",
+    "on hold",
+    "active",
+    "resolved",
+    "new",
+    "waiting",
+  ],
+
+  priority: [
+    "urgent",
+    "high",
+    "critical",
+    "asap",
+    "important",
+    "normal",
+    "medium",
+    "low",
+    "minor",
+  ],
+
+  // Time periods - temporal filters
+  timeRecent: ["today", "recent", "new", "latest", "last 24", "yesterday"],
+  timeWeekly: ["this week", "past week", "last week", "last 7 days", "7d"],
+  timeMonthly: ["this month", "past month", "last month", "last 30 days", "30d"],
+  timeOld: ["old", "older", "ancient", "stale", "30+ days"],
+}
+
+// ============================================
+// COMPLEX QUERY INDICATORS (AI/Slow Path)
+// ============================================
+
+const COMPLEX_INDICATORS = {
+  // Analysis verbs - deep investigation needed
+  analysis: [
+    "analyze",
+    "review",
+    "investigate",
+    "examine",
+    "assess",
+    "evaluate",
+    "study",
+    "understand",
+  ],
+
+  // Content inspection - need to read ticket descriptions
+  contentSearch: [
+    "mentions",
+    "contains",
+    "includes",
+    "talks about",
+    "discusses",
+    "regarding",
+    "about",
+    "related to",
+  ],
+
+  // Length-based filters - require content analysis
+  lengthBased: [
+    "longer than",
+    "shorter than",
+    "more than",
+    "less than",
+    "words",
+    "characters",
+    "lengthy",
+    "detailed",
+  ],
+
+  // Comparative analysis - ranking/sorting
+  ranking: ["most", "least", "top", "bottom", "best", "worst", "highest", "lowest"],
+
+  // Trend detection - cross-ticket analysis
+  trends: [
+    "trending",
+    "trend",
+    "pattern",
+    "common",
+    "frequent",
+    "recurring",
+    "increasing",
+    "decreasing",
+  ],
+
+  // Recommendation queries - action suggestions
+  recommendations: [
+    "should",
+    "recommend",
+    "suggest",
+    "prioritize",
+    "focus on",
+    "needs attention",
+    "next steps",
+  ],
+
+  // Action verbs requiring reasoning
+  actionVerbs: [
+    "which ones",
+    "tell me which",
+    "need attention",
+    "require action",
+    "must address",
+  ],
+
+  // Why/insight questions
+  why: ["why", "what's causing", "reason for", "root cause", "explain"],
+
+  // Conditional logic - complex filtering
+  conditionals: ["if", "when", "where", "with more than", "with less than", "without"],
+
+  // Sentiment analysis
+  sentiment: [
+    "angry",
+    "frustrated",
+    "happy",
+    "satisfied",
+    "upset",
+    "negative",
+    "positive",
+  ],
 }
 
 /**
- * Check if query is asking about total ticket count
- * Excludes complex queries that need AI analysis
+ * Main decision tree: Should this query use AI or cache?
  */
-function isTotalCountQuery(query: string): boolean {
-  // Don't match if query has complex conditions (words, characters, contains, mention, etc.)
-  if (/\b(words?|characters?|contains?|mention|longer|shorter|more than|less than|review|analyze)\b/i.test(query)) {
-    return false
+function shouldUseAI(query: string): { useAI: boolean; reasoning: string } {
+  const q = query.toLowerCase()
+
+  // STAGE 1: Explicit exclusions (ALWAYS CACHE)
+  if (/^(refresh|update|sync|help|commands)\b/i.test(q)) {
+    return { useAI: false, reasoning: "System command handled by cache" }
   }
 
-  return /\b(total|how many|count|altogether|in total)\b.*\b(tickets?|issues?|cases?|items?)\b/i.test(
-    query
+  // STAGE 2: Strong AI signals (ALWAYS AI)
+
+  // Content inspection needed (mentions, contains, about, etc.)
+  if (COMPLEX_INDICATORS.contentSearch.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires content inspection" }
+  }
+
+  // Analysis/reasoning requests
+  if (COMPLEX_INDICATORS.analysis.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires analysis/reasoning" }
+  }
+
+  // Why/insight questions
+  if (COMPLEX_INDICATORS.why.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires explanation/insight" }
+  }
+
+  // Trend/pattern detection
+  if (COMPLEX_INDICATORS.trends.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires pattern recognition" }
+  }
+
+  // Sentiment analysis
+  if (COMPLEX_INDICATORS.sentiment.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires sentiment analysis" }
+  }
+
+  // STAGE 3: Complex modifiers on otherwise simple queries
+
+  // Length-based filtering (word count, character count)
+  if (COMPLEX_INDICATORS.lengthBased.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires length/word count analysis" }
+  }
+
+  // Action/recommendation verbs
+  if (
+    COMPLEX_INDICATORS.recommendations.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))
+  ) {
+    return { useAI: true, reasoning: "Requires recommendations/prioritization" }
+  }
+
+  if (COMPLEX_INDICATORS.actionVerbs.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires action recommendations" }
+  }
+
+  // Complex conditionals
+  if (COMPLEX_INDICATORS.conditionals.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return { useAI: true, reasoning: "Requires complex filtering logic" }
+  }
+
+  // STAGE 4: Ambiguous comparatives
+  // "most" is complex UNLESS it's a simple count comparison
+  if (COMPLEX_INDICATORS.ranking.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    // Check if it's a simple count comparison like "which status has most tickets"
+    const isSimpleCountComparison =
+      /\b(which|what)\b.*\b(status|priority|type)\b.*\b(has|have)\b.*\b(most|least)\b/i.test(
+        q
+      )
+
+    if (!isSimpleCountComparison) {
+      return { useAI: true, reasoning: "Requires comparative analysis" }
+    }
+    // Otherwise fall through to cache - it's a simple aggregation
+  }
+
+  // STAGE 5: Default to cache for performance
+  return { useAI: false, reasoning: "Simple discrete query" }
+}
+
+/**
+ * Try to match discrete patterns and generate instant answers
+ */
+async function tryDiscreteMatch(
+  query: string,
+  cache: Awaited<ReturnType<typeof loadTicketCache>>
+): Promise<{ answer: string; confidence: number; reasoning: string } | null> {
+  if (!cache) return null
+
+  const q = query.toLowerCase()
+
+  // Total count query
+  if (
+    DISCRETE_INDICATORS.counting.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q)) &&
+    /\b(tickets?|issues?|cases?)\b/i.test(q)
+  ) {
+    return {
+      answer: `We have **${cache.ticketCount}** tickets in total.`,
+      confidence: 0.99,
+      reasoning: "Total count from cache",
+    }
+  }
+
+  // Status query
+  const statusMatch = DISCRETE_INDICATORS.status.find((status) =>
+    new RegExp(`\\b${status}\\b`, "i").test(q)
   )
-}
-
-/**
- * Check if query is asking about tickets by status
- */
-function isStatusQuery(query: string): { matched: boolean; statuses: string[] } {
-  const statusPatterns: Record<string, string[]> = {
-    open: ["open", "active", "ongoing", "in progress", "waiting"],
-    closed: ["closed", "done", "finished", "resolved", "completed"],
-    pending: ["pending", "waiting", "hold", "on hold", "paused"],
-    solved: ["solved", "fixed", "resolved", "answer"],
-    new: ["new", "fresh", "recent", "just created"],
-  }
-
-  const matched: string[] = []
-
-  for (const [status, keywords] of Object.entries(statusPatterns)) {
-    if (keywords.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(query))) {
-      matched.push(status)
+  if (statusMatch && /\b(tickets?|issues?)\b/i.test(q)) {
+    const count = cache.stats.byStatus[statusMatch] || 0
+    return {
+      answer: `Status breakdown: **${statusMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Status filter: ${statusMatch}`,
     }
   }
 
-  return {
-    matched: matched.length > 0,
-    statuses: matched,
-  }
-}
-
-/**
- * Check if query is asking about tickets by priority
- * Excludes complex queries that need AI analysis (review, prioritize, analyze, etc.)
- */
-function isPriorityQuery(query: string): { matched: boolean; priorities: string[] } {
-  // Don't match if query asks for review, analysis, or prioritization
-  if (/\b(review|analyze|prioritize|which ones|tell me which|need attention|recommend)\b/i.test(query)) {
-    return { matched: false, priorities: [] }
-  }
-
-  const priorityPatterns: Record<string, string[]> = {
-    urgent: ["urgent", "critical", "asap"],
-    high: ["high", "important", "major"],
-    normal: ["normal", "medium", "regular", "standard"],
-    low: ["low", "minor", "trivial"],
-  }
-
-  const matched: string[] = []
-
-  for (const [priority, keywords] of Object.entries(priorityPatterns)) {
-    if (keywords.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(query))) {
-      matched.push(priority)
+  // Priority query
+  const priorityMatch = DISCRETE_INDICATORS.priority.find((priority) =>
+    new RegExp(`\\b${priority}\\b`, "i").test(q)
+  )
+  if (priorityMatch && /\b(tickets?|issues?)\b/i.test(q)) {
+    const count = cache.stats.byPriority[priorityMatch] || 0
+    return {
+      answer: `Priority breakdown: **${priorityMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Priority filter: ${priorityMatch}`,
     }
   }
 
-  return {
-    matched: matched.length > 0,
-    priorities: matched,
+  // Age-based query
+  if (DISCRETE_INDICATORS.timeRecent.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan24h}** tickets created in the last 24 hours.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 24 hours",
+    }
   }
+
+  if (DISCRETE_INDICATORS.timeWeekly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan7d}** tickets created in the last 7 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 7 days",
+    }
+  }
+
+  if (DISCRETE_INDICATORS.timeMonthly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan30d}** tickets created in the last 30 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 30 days",
+    }
+  }
+
+  if (DISCRETE_INDICATORS.timeOld.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.olderThan30d}** tickets older than 30 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: older than 30 days",
+    }
+  }
+
+  // Breakdown/distribution requests
+  if (DISCRETE_INDICATORS.breakdown.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    if (/\b(status|state)\b/i.test(q)) {
+      const breakdown = Object.entries(cache.stats.byStatus)
+        .map(([status, count]) => `**${status}**: ${count}`)
+        .join(" | ")
+      return {
+        answer: `Status breakdown: ${breakdown}`,
+        confidence: 0.95,
+        reasoning: "Status distribution",
+      }
+    }
+
+    if (/\b(priority|priorities)\b/i.test(q)) {
+      const breakdown = Object.entries(cache.stats.byPriority)
+        .map(([priority, count]) => `**${priority}**: ${count}`)
+        .join(" | ")
+      return {
+        answer: `Priority breakdown: ${breakdown}`,
+        confidence: 0.95,
+        reasoning: "Priority distribution",
+      }
+    }
+  }
+
+  return null
 }
 
 /**
- * Check if query is asking about ticket age/recency
- */
-function isAgeQuery(query: string): { matched: boolean; period: string | null } {
-  if (/\b(recent|new|today|last 24|24 hour|yesterday)\b/i.test(query)) {
-    return { matched: true, period: "lessThan24h" }
-  }
-  if (/\b(week|7 day|past week|last week|within 7)\b/i.test(query)) {
-    return { matched: true, period: "lessThan7d" }
-  }
-  if (/\b(month|30 day|past month|last month|within 30)\b/i.test(query)) {
-    return { matched: true, period: "lessThan30d" }
-  }
-  if (/\b(old|ancient|long|older|30\+ day)\b/i.test(query)) {
-    return { matched: true, period: "olderThan30d" }
-  }
-
-  return { matched: false, period: null }
-}
-
-/**
- * Classify query and attempt instant answer from cache
+ * Main classification function with comprehensive decision tree
  */
 export async function classifyQuery(query: string): Promise<ClassifiedQuery> {
   const startTime = Date.now()
@@ -121,85 +377,44 @@ export async function classifyQuery(query: string): Promise<ClassifiedQuery> {
         source: "ai",
         confidence: 0,
         processingTime: Date.now() - startTime,
+        reasoning: "No cache available",
       }
     }
 
-    // Check for total count query
-    if (isTotalCountQuery(query)) {
+    // Run decision tree
+    const decision = shouldUseAI(query)
+
+    if (decision.useAI) {
+      return {
+        matched: false,
+        source: "ai",
+        confidence: 0,
+        processingTime: Date.now() - startTime,
+        reasoning: decision.reasoning,
+      }
+    }
+
+    // Try discrete pattern matching
+    const discreteAnswer = await tryDiscreteMatch(query, cache)
+
+    if (discreteAnswer) {
       return {
         matched: true,
-        answer: `We have **${cache.ticketCount}** tickets in total.`,
+        answer: discreteAnswer.answer,
         source: "cache",
-        confidence: 0.99,
+        confidence: discreteAnswer.confidence,
         processingTime: Date.now() - startTime,
+        reasoning: discreteAnswer.reasoning,
       }
     }
 
-    // Check for status query
-    const statusMatch = isStatusQuery(query)
-    if (statusMatch.matched) {
-      const statusBreakdown = statusMatch.statuses
-        .map((status) => {
-          const count = cache.stats.byStatus[status] || 0
-          return `**${status}**: ${count}`
-        })
-        .join(" | ")
-
-      return {
-        matched: true,
-        answer: `Status breakdown: ${statusBreakdown}`,
-        source: "cache",
-        confidence: 0.95,
-        processingTime: Date.now() - startTime,
-      }
-    }
-
-    // Check for priority query
-    const priorityMatch = isPriorityQuery(query)
-    if (priorityMatch.matched) {
-      const priorityBreakdown = priorityMatch.priorities
-        .map((priority) => {
-          const count = cache.stats.byPriority[priority] || 0
-          return `**${priority}**: ${count}`
-        })
-        .join(" | ")
-
-      return {
-        matched: true,
-        answer: `Priority breakdown: ${priorityBreakdown}`,
-        source: "cache",
-        confidence: 0.95,
-        processingTime: Date.now() - startTime,
-      }
-    }
-
-    // Check for age query
-    const ageMatch = isAgeQuery(query)
-    if (ageMatch.matched && ageMatch.period) {
-      const ageKey = ageMatch.period as keyof typeof cache.stats.byAge
-      const count = cache.stats.byAge[ageKey] || 0
-      const periodLabel = {
-        lessThan24h: "in the last 24 hours",
-        lessThan7d: "in the last 7 days",
-        lessThan30d: "in the last 30 days",
-        olderThan30d: "older than 30 days",
-      }[ageMatch.period]
-
-      return {
-        matched: true,
-        answer: `**${count}** tickets created ${periodLabel}.`,
-        source: "cache",
-        confidence: 0.95,
-        processingTime: Date.now() - startTime,
-      }
-    }
-
-    // No discrete answer found - needs AI analysis
+    // No match - defer to AI
     return {
       matched: false,
       source: "ai",
       confidence: 0,
       processingTime: Date.now() - startTime,
+      reasoning: "No discrete pattern matched",
     }
   } catch (error) {
     console.error("[ClassifyQuery] Error:", error)
@@ -208,6 +423,7 @@ export async function classifyQuery(query: string): Promise<ClassifiedQuery> {
       source: "ai",
       confidence: 0,
       processingTime: Date.now() - startTime,
+      reasoning: "Error during classification",
     }
   }
 }
