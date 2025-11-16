@@ -41,7 +41,7 @@ CREDENTIAL VALIDATION TEST
 ✅ ZENDESK_EMAIL: jleekun@gmail.com
 ✅ ZENDESK_API_TOKEN: xhUpLvStmz...OM7qQOGrKY
 ✅ ZENDESK_SUBDOMAIN: 8lee
-✅ OPENAI_API_KEY: sk-proj-7u...Wt7NtXftUA
+✅ OPENAI_API_KEY: sk-proj-Dr...BiZbU-mwA
 
 ================================================
 🧪 TESTING ZENDESK API
