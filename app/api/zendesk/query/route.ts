@@ -13,19 +13,35 @@ import { type NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { handleSmartQuery } from "@/app/zendesk/lib/smart-query-handler"
 
+const ContextSchema = z.object({
+  lastTickets: z
+    .array(
+      z.object({
+        id: z.number(),
+        subject: z.string(),
+        description: z.string(),
+        status: z.string(),
+        priority: z.string(),
+      })
+    )
+    .optional(),
+  lastQuery: z.string().optional(),
+})
+
 const QueryRequestSchema = z.object({
   query: z.string().min(1).max(500),
+  context: ContextSchema.optional(),
 })
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json()
-    const { query } = QueryRequestSchema.parse(body)
+    const { query, context } = QueryRequestSchema.parse(body)
 
     console.log(`[QueryEndpoint] Processing: "${query}"`)
 
-    // Use smart query handler
-    const response = await handleSmartQuery(query)
+    // Use smart query handler with context
+    const response = await handleSmartQuery(query, context)
 
     console.log(
       `[QueryEndpoint] Completed in ${response.processingTime}ms (source: ${response.source}, confidence: ${response.confidence})`
@@ -37,6 +53,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       source: response.source,
       confidence: response.confidence,
       processingTime: response.processingTime,
+      tickets: response.tickets,
     })
   } catch (error) {
     console.error("[QueryEndpoint] Error:", error)

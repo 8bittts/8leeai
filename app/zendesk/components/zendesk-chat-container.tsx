@@ -19,6 +19,17 @@ function generateId(): string {
  * Main orchestrator for the Zendesk chat interface.
  * Manages state, boot sequence, and message flow.
  */
+interface ConversationContext {
+  lastTickets?: Array<{
+    id: number
+    subject: string
+    description: string
+    status: string
+    priority: string
+  }>
+  lastQuery?: string
+}
+
 export function ZendeskChatContainer() {
   // Boot screen removed - show interface immediately
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -26,8 +37,10 @@ export function ZendeskChatContainer() {
   const [isLoading, setIsLoading] = useState(false)
   const [commandHistory, setCommandHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
+  const [context, setContext] = useState<ConversationContext>({})
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioPlayedRef = useRef(false)
+  const inputRefForFocus = useRef<HTMLInputElement | null>(null)
 
   // Initialize audio on mount
   useEffect(() => {
@@ -108,23 +121,36 @@ export function ZendeskChatContainer() {
         const queryResponse = await fetch("/api/zendesk/query", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query }),
+          body: JSON.stringify({ query, context }),
         })
 
         if (!queryResponse.ok) {
           throw new Error(`Failed to process query: ${queryResponse.statusText}`)
         }
 
-        const { answer, source, confidence, processingTime } = (await queryResponse.json()) as {
-          answer: string
-          source: "cache" | "live" | "ai"
-          confidence: number
-          processingTime: number
-        }
+        const { answer, source, confidence, processingTime, tickets } =
+          (await queryResponse.json()) as {
+            answer: string
+            source: "cache" | "live" | "ai"
+            confidence: number
+            processingTime: number
+            tickets?: Array<{
+              id: number
+              subject: string
+              description: string
+              status: string
+              priority: string
+            }>
+          }
 
         console.log(
           `[Chat] Response from ${source} (${(confidence * 100).toFixed(0)}% confidence, ${processingTime}ms)`
         )
+
+        // Update context if tickets were returned
+        if (tickets && tickets.length > 0) {
+          setContext({ lastTickets: tickets, lastQuery: query })
+        }
 
         // Add assistant response with metadata
         addAssistantMessage(answer, {
@@ -139,7 +165,7 @@ export function ZendeskChatContainer() {
         setIsLoading(false)
       }
     },
-    [isLoading, addUserMessage, addAssistantMessage, addErrorMessage]
+    [isLoading, addUserMessage, addAssistantMessage, addErrorMessage, context]
   )
 
   const handleSuggestionClick = useCallback(
@@ -182,8 +208,16 @@ export function ZendeskChatContainer() {
     initializeInterface()
   }, [initializeInterface])
 
+  // Handle clicks anywhere to refocus input
+  const handleMainClick = useCallback(() => {
+    inputRefForFocus.current?.focus()
+  }, [])
+
   return (
-    <main className="h-full w-full bg-black text-green-500 font-mono relative flex flex-col overflow-hidden">
+    <main
+      className="h-full w-full bg-black text-green-500 font-mono relative flex flex-col overflow-hidden"
+      onClick={handleMainClick}
+    >
       {/* Matrix background effect */}
       <MatrixBackground />
 
@@ -208,6 +242,7 @@ export function ZendeskChatContainer() {
             commandHistory={commandHistory}
             historyIndex={historyIndex}
             onHistoryNavigate={setHistoryIndex}
+            inputRef={inputRefForFocus}
           />
         </div>
       </div>

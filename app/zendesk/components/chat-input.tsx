@@ -10,6 +10,7 @@ interface ChatInputProps {
   commandHistory: string[]
   historyIndex: number
   onHistoryNavigate: (index: number) => void
+  inputRef?: React.RefObject<HTMLInputElement | null>
 }
 
 /**
@@ -24,13 +25,36 @@ export function ChatInput({
   commandHistory,
   historyIndex,
   onHistoryNavigate,
+  inputRef: externalInputRef,
 }: ChatInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const localInputRef = useRef<HTMLInputElement>(null)
+
+  // Use callback ref to sync both refs
+  const setInputRef = useCallback(
+    (el: HTMLInputElement | null) => {
+      localInputRef.current = el
+      if (externalInputRef) {
+        // biome-ignore lint/suspicious/noExplicitAny: Need to assign to mutable ref
+        ;(externalInputRef as any).current = el
+      }
+    },
+    [externalInputRef]
+  )
 
   // Auto-focus on mount
   useEffect(() => {
-    inputRef.current?.focus()
+    localInputRef.current?.focus()
   }, [])
+
+  // Maintain focus after loading completes (after responses)
+  useEffect(() => {
+    if (!isLoading) {
+      // Small delay to ensure DOM updates are complete
+      setTimeout(() => {
+        localInputRef.current?.focus()
+      }, 50)
+    }
+  }, [isLoading])
 
   const handleEnter = useCallback(() => {
     if (value.trim()) {
@@ -91,7 +115,7 @@ export function ChatInput({
       <div className="flex items-center gap-2 font-mono text-sm">
         <span className="text-green-500">$</span>
         <input
-          ref={inputRef}
+          ref={setInputRef}
           type="text"
           value={value}
           onChange={(e) => {

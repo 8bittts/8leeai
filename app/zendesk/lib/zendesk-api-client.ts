@@ -434,6 +434,75 @@ export class ZendeskAPIClient {
   }
 
   /**
+   * Add a comment/reply to an existing ticket
+   * POST /api/v2/tickets/{ticket_id}.json
+   */
+  async addTicketComment(
+    ticketId: number,
+    commentBody: string,
+    isPublic = true
+  ): Promise<{
+    ticket: ZendeskTicket
+    comment: { id: number; body: string; public: boolean; created_at: string }
+  }> {
+    try {
+      console.log(`[ZendeskAPI] Adding comment to ticket ${ticketId}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+        audit: {
+          events: Array<{
+            type: string
+            id: number
+            body: string
+            public: boolean
+            created_at: string
+          }>
+        }
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            comment: {
+              body: commentBody,
+              public: isPublic,
+            },
+          },
+        },
+      })
+
+      // Extract the comment from the audit events
+      const commentEvent = response.audit.events.find((e) => e.type === "Comment")
+      const comment = commentEvent
+        ? {
+            id: commentEvent.id,
+            body: commentEvent.body,
+            public: commentEvent.public,
+            created_at: commentEvent.created_at,
+          }
+        : {
+            id: 0,
+            body: commentBody,
+            public: isPublic,
+            created_at: new Date().toISOString(),
+          }
+
+      console.log(`[ZendeskAPI] Comment added successfully to ticket ${ticketId}`)
+
+      // Clear cache for this ticket since it was updated
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+
+      return {
+        ticket: response.ticket,
+        comment,
+      }
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error adding comment to ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
    * Search tickets using Zendesk Query Language
    * Implements pagination to fetch ALL search results
    */
