@@ -155,6 +155,19 @@ export async function handleSmartQuery(query: string): Promise<QueryResponse> {
   const startTime = Date.now()
 
   try {
+    // Handle empty or whitespace-only queries
+    if (!query || query.trim().length === 0) {
+      console.log("[SmartQuery] Handling empty query")
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: generateHelpText(),
+        source: "cache",
+        confidence: 1,
+        processingTime,
+      }
+    }
+
     // Check for refresh command
     if (isRefreshQuery(query)) {
       console.log("[SmartQuery] Handling refresh request")
