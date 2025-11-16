@@ -4,6 +4,50 @@
 
 ### November 16, 2025
 
+#### Zendesk: Major UX improvements and deployment fixes
+
+**UI/UX Enhancements:**
+
+1. **Cleaned Up Interface:**
+   - Removed duplicate welcome message from chat history
+   - Eliminated crowded "$ Zendesk Intelligence Terminal v1.0" duplicate
+   - Interface now only shows ASCII logo and helpful tips in header
+   - Much cleaner, less repetitive user experience
+
+2. **Auto-Scroll Fixed:**
+   - Responses now automatically scroll to bottom of viewport
+   - Added `block: 'end'` positioning for proper scroll behavior
+   - Fixed dependency array to trigger on every new message (was only running once)
+   - Users no longer need to manually scroll after responses
+
+3. **Enhanced Help Command:**
+   - Complete rewrite with better organization and readability
+   - Added "Quick Start" section
+   - Categorized examples: Status & Counts, Priority Analysis, Time-Based, Content Search
+   - Included Pro Tips section (keyboard shortcuts, command history, performance expectations)
+   - Added example queries to try
+   - Better markdown formatting for cleaner display
+
+**Deployment Fixes:**
+
+4. **OpenAI API Key Issue Resolved:**
+   - Triggered fresh production deployment with `--force` flag
+   - Clears cached environment variables
+   - Now correctly loads `OPENAI_API_KEY` ending in "...ftUA" (not old "...3Blb")
+   - Fixes "Incorrect API key provided" errors in production
+
+**Impact:**
+- Better first-time user experience with cleaner interface
+- No more manual scrolling frustration
+- Comprehensive help text for self-service discovery
+- Production environment now using correct API credentials
+
+**Files Changed:** app/zendesk/components/chat-history.tsx, app/zendesk/lib/smart-query-handler.ts
+
+**Deployment:** https://8leeai-bue28ee01-8lee-team.vercel.app
+
+---
+
 #### Zendesk: Comprehensive test suite enhancement
 
 **Enhanced test suite to be production-grade, reusable, and comprehensive:**
