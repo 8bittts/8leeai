@@ -69,18 +69,17 @@ app/zendesk/
 │   ├── message-bubble.tsx            # Message renderer
 │   └── suggestion-bar.tsx            # Quick queries
 ├── lib/
-│   ├── ticket-cache.ts               # ⭐ Fetches fresh ticket data with stats
-│   ├── classify-query.ts             # ⭐ Research-based query classifier
-│   ├── smart-query-handler.ts        # ⭐ Two-tier query orchestrator
+│   ├── ticket-cache.ts               # Fetches fresh ticket data with stats
+│   ├── classify-query.ts             # Research-based query classifier
+│   ├── smart-query-handler.ts        # Two-tier query orchestrator
 │   ├── cached-ai-context.ts          # AI context builder (in-memory)
 │   ├── zendesk-api-client.ts         # API client with pagination
 │   ├── query-interpreter.ts          # Legacy - not actively used
 │   ├── response-formatter.ts         # Terminal formatting
 │   └── types.ts                      # TypeScript definitions
-├── QUERY-CLASSIFICATION.md           # ⭐ Comprehensive classification docs
 └── api/
     └── zendesk/
-        ├── query/route.ts            # ⭐ Main unified query endpoint
+        ├── query/route.ts            # Main unified query endpoint
         ├── analyze/route.ts          # AI-powered analysis (legacy)
         ├── interpret-query/route.ts  # Legacy query interpretation
         └── refresh/route.ts          # Manual refresh trigger
@@ -130,11 +129,11 @@ export async function loadTicketCache(): Promise<TicketCacheData | null>
 **Purpose**: Handle all Zendesk REST API v2 interactions
 
 **Key Features**:
-- ✅ Basic Auth with email/token credentials
-- ✅ Automatic pagination (fetches ALL results, not just first page)
-- ✅ In-memory caching (5-min TTL for tickets, 1-hour for users/orgs)
-- ✅ Rate limiting awareness (429 handling)
-- ✅ Error handling (401, 403, 404, 429, 500)
+-  Basic Auth with email/token credentials
+-  Automatic pagination (fetches ALL results, not just first page)
+-  In-memory caching (5-min TTL for tickets, 1-hour for users/orgs)
+-  Rate limiting awareness (429 handling)
+-  Error handling (401, 403, 404, 429, 500)
 
 **Main Methods**:
 ```typescript
@@ -171,8 +170,6 @@ ZENDESK_API_TOKEN=xhUpLvStmznUeLCN2HuYcj860W9HCfOM7qQOGrKY
 **Architecture**:
 - **TIER 1 (Fast Path <100ms)**: Discrete queries answered from pre-computed cache
 - **TIER 2 (AI Path 2-10s)**: Complex queries requiring reasoning via OpenAI GPT-4o-mini
-
-**Comprehensive Documentation**: See `app/zendesk/QUERY-CLASSIFICATION.md` for full details
 
 **Multi-Stage Decision Tree**:
 
@@ -225,14 +222,14 @@ Stage 5: Default → Cache for performance
 
 **Edge Case Examples**:
 ```
-✅ CACHE: "How many high priority tickets?"
-❌ AI: "How many high priority tickets need attention?" (action verb)
+ CACHE: "How many high priority tickets?"
+ AI: "How many high priority tickets need attention?" (action verb)
 
-✅ CACHE: "Show me urgent tickets"
-❌ AI: "Show me urgent tickets that mention billing" (content search)
+ CACHE: "Show me urgent tickets"
+ AI: "Show me urgent tickets that mention billing" (content search)
 
-✅ CACHE: "Which status has the most tickets?"
-❌ AI: "Which problems are most common?" (requires content analysis)
+ CACHE: "Which status has the most tickets?"
+ AI: "Which problems are most common?" (requires content analysis)
 ```
 
 **Returns**:
@@ -248,6 +245,47 @@ interface ClassifiedQuery {
 ```
 
 **Testing**: `scripts/test-zendesk-queries.ts` - 8 tests at 100% success rate
+
+**Extending the Classification System**:
+
+To add new discrete patterns:
+1. Add keywords to `DISCRETE_INDICATORS` in `classify-query.ts`
+2. Add pattern matching logic in `tryDiscreteMatch()`
+3. Add test case to `test-zendesk-queries.ts`
+
+To add new complex indicators:
+1. Add keywords to `COMPLEX_INDICATORS` in `classify-query.ts`
+2. Add decision logic in `shouldUseAI()` if needed
+3. Add test case to verify AI path is used
+
+**Debugging**:
+
+Enable reasoning output to see why each classification decision was made:
+```typescript
+const result = await classifyQuery("your query here")
+console.log(result.reasoning) // Shows why this path was chosen
+```
+
+Common issues:
+- Query goes to AI when it should be cached: Check if query contains complex indicator keywords
+- Query goes to cache when it needs AI: Check if pattern is too broad in `tryDiscreteMatch()`
+
+**Research Sources**:
+
+This classification system is based on:
+- Zendesk analytics query patterns
+- Customer support dashboard use cases
+- Common business intelligence questions
+- Support ticket KPIs and metrics
+- Natural language query patterns in analytics tools
+- Real-world testing with 316 support tickets
+
+Key insights:
+- 60-70% of queries are simple count/filter operations (cache optimization priority)
+- 30-40% require content analysis or reasoning (AI necessary)
+- Edge cases matter: "most tickets by status" (cache) vs "most common problems" (AI)
+- Performance over accuracy for simple queries (users expect instant answers)
+- Accuracy over performance for complex queries (users accept 5-10s for insights)
 
 ---
 
@@ -527,14 +565,14 @@ bun test
 
 ## Security Considerations
 
-✅ **Implemented**:
+ **Implemented**:
 - Environment variables for all credentials
 - Basic Auth over HTTPS
 - Input validation on all queries
 - Error messages don't expose internals
 - CORS properly configured
 
-⚠️ **Before Production**:
+ **Before Production**:
 - [ ] Add authentication layer for chat interface
 - [ ] Implement rate limiting per user
 - [ ] Add CSRF protection
@@ -639,17 +677,17 @@ bun run clean && bun run build
 ### Why No Cache?
 
 **Attempted**:
-1. ❌ Edge Config - Too complex, unnecessary for this use case
-2. ❌ /public directory - Read-only filesystem on Vercel
-3. ❌ /tmp directory - Still failed with write errors
-4. ✅ **No cache** - Simplest solution, acceptable latency
+1.  Edge Config - Too complex, unnecessary for this use case
+2.  /public directory - Read-only filesystem on Vercel
+3.  /tmp directory - Still failed with write errors
+4.  **No cache** - Simplest solution, acceptable latency
 
 **Trade-offs**:
-- ➕ Always fresh data
-- ➕ No stale cache issues
-- ➕ Simple architecture
-- ➖ 2-3 second latency per query
-- ➖ Multiple API calls on every request
+-  Always fresh data
+-  No stale cache issues
+-  Simple architecture
+-  2-3 second latency per query
+-  Multiple API calls on every request
 
 **Decision**: Accept latency for simplicity. This is a demo, not production scale.
 
@@ -658,9 +696,9 @@ bun run clean && bun run build
 **User feedback**: "haven't we over-complicated this?"
 
 **Response**: Pivoted from complex caching to simple always-fetch:
-1. Fetch from Zendesk ✅
-2. Calculate stats ✅
-3. Return to user ✅
+1. Fetch from Zendesk 
+2. Calculate stats 
+3. Return to user 
 
 No files, no cache, no complexity.
 
@@ -690,7 +728,7 @@ No files, no cache, no complexity.
 ## Contact & Support
 
 **Documentation**:
-- This file: `_docs/ZENDESK_MASTER.md`
+- This file: `_docs/zendesk.md`
 - Master plan: `_docs/zencom-master-plan.md`
 - Scripts: `scripts/README.md`
 
@@ -710,12 +748,12 @@ No files, no cache, no complexity.
 
 The Zendesk Intelligence Portal is a **production-ready terminal-styled interface** that:
 
-✅ Always fetches fresh data from Zendesk API
-✅ Uses AI for intelligent query processing
-✅ Provides terminal-formatted responses
-✅ Handles 316+ tickets with full pagination
-✅ Follows recruiter-impressing code standards
-✅ Simple architecture (no cache complexity)
-✅ Deployable to production immediately
+ Always fetches fresh data from Zendesk API
+ Uses AI for intelligent query processing
+ Provides terminal-formatted responses
+ Handles 316+ tickets with full pagination
+ Follows recruiter-impressing code standards
+ Simple architecture (no cache complexity)
+ Deployable to production immediately
 
 **Philosophy**: Keep it simple. Fetch fresh. Let AI do the thinking. Display beautifully.

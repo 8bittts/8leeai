@@ -226,15 +226,15 @@ Decide on one of two approaches:
 
 ## Phase 3: Styling & Layout Harmonization
 
-✅ **AUTOMATICALLY SOLVED BY PHASE 1 ARCHITECTURE**
+ **AUTOMATICALLY SOLVED BY PHASE 1 ARCHITECTURE**
 
 All three sites share:
-- ✅ Single `/styles/globals.css` (Tailwind-only, no custom CSS)
-- ✅ Single `tailwind.config.ts` at root (inherited by all sites)
-- ✅ Single `postcss.config.mjs` at root (inherited by all sites)
-- ✅ IBM Plex Mono font globally available
-- ✅ Terminal green theme (`text-green-500`, `bg-black`) globally available
-- ✅ Responsive breakpoints (`sm`, `lg`) globally available
+-  Single `/styles/globals.css` (Tailwind-only, no custom CSS)
+-  Single `tailwind.config.ts` at root (inherited by all sites)
+-  Single `postcss.config.mjs` at root (inherited by all sites)
+-  IBM Plex Mono font globally available
+-  Terminal green theme (`text-green-500`, `bg-black`) globally available
+-  Responsive breakpoints (`sm`, `lg`) globally available
 
 ### Style Change Workflow (Example)
 
@@ -255,14 +255,14 @@ Because all three sites reference the same files via relative imports, styling a
 
 ## Phase 4: Core Logic Removal & Architecture Review
 
-**Status:** ✅ COMPLETED
+**Status:**  COMPLETED
 - Main `app/` is clean (no Zendesk/Intercom references found)
 - Both demo sites ready for clean implementations
 
 ### What Was Found:
-- ✅ Zero integration code in main app (isolated as intended)
-- ✅ Demo sites (`app/zendesk`, `app/intercom`) structurally ready
-- ✅ All components copied but contain no third-party integration logic
+-  Zero integration code in main app (isolated as intended)
+-  Demo sites (`app/zendesk`, `app/intercom`) structurally ready
+-  All components copied but contain no third-party integration logic
 
 ### Result:
 Clean slate for production-grade implementations in Phase 5
@@ -274,12 +274,12 @@ Clean slate for production-grade implementations in Phase 5
 ### Architecture Foundations (Recruiter-Impressing Standards)
 
 **OpenAI Integration Pattern** (from deathnote project):
-- ✅ Vercel AI SDK (`@ai-sdk/openai`) with GPT-4o
-- ✅ Structured prompts with modular architecture
-- ✅ Input validation via Zod schemas
-- ✅ Rate limiting for cost control
-- ✅ Post-processing for output quality
-- ✅ Metadata generation (word count, timing, etc.)
+-  Vercel AI SDK (`@ai-sdk/openai`) with GPT-4o
+-  Structured prompts with modular architecture
+-  Input validation via Zod schemas
+-  Rate limiting for cost control
+-  Post-processing for output quality
+-  Metadata generation (word count, timing, etc.)
 
 ---
 
@@ -373,38 +373,38 @@ GET /api/intercom/visitor-analytics - Get visitor data
 
 **All implementations MUST include:**
 
-✅ **Type Safety**
+ **Type Safety**
 - TypeScript strict mode
 - Zod runtime validation
 - No `any` types
 - Proper error types
 
-✅ **Error Handling**
+ **Error Handling**
 - Try-catch with specific error types
 - Structured error responses
 - Rate limit errors (429)
 - Timeout handling (>10s)
 
-✅ **Security**
+ **Security**
 - Environment variables for all credentials
 - Request validation
 - CORS properly configured
 - Rate limiting (5-10 req/min per user)
 - No credentials in logs
 
-✅ **Testing**
+ **Testing**
 - Unit tests for API handlers
 - Happy path + error paths
 - Mocked external API calls
 - 80%+ code coverage
 
-✅ **Observability**
+ **Observability**
 - Structured logging (JSON format)
 - Request/response logging
 - Performance metrics
 - Error tracking
 
-✅ **Documentation**
+ **Documentation**
 - JSDoc on all functions
 - README with setup instructions
 - Example requests/responses
@@ -414,12 +414,12 @@ GET /api/intercom/visitor-analytics - Get visitor data
 
 ### Step 5.4: Testing & QA
 
-- ✅ Verify main site unaffected: `8lee.ai`
-- ✅ Test Zendesk: `8lee.ai/zendesk` - create ticket, view status, test AI responses
-- ✅ Test Intercom: `8lee.ai/intercom` - start conversation, test routing, escalation
-- ✅ All share identical styling/UX baseline
-- ✅ Load test both with concurrent users (at least 50)
-- ✅ Test error states: API timeouts, invalid input, rate limits
+-  Verify main site unaffected: `8lee.ai`
+-  Test Zendesk: `8lee.ai/zendesk` - create ticket, view status, test AI responses
+-  Test Intercom: `8lee.ai/intercom` - start conversation, test routing, escalation
+-  All share identical styling/UX baseline
+-  Load test both with concurrent users (at least 50)
+-  Test error states: API timeouts, invalid input, rate limits
 
 ---
 
@@ -439,8 +439,8 @@ GET /api/intercom/visitor-analytics - Get visitor data
 - [ ] `.gitignore` - Ensure no duplication issues
 
 ### No Changes Needed
-- ✅ `app/globals.css` - Stays in place, shared by all three sites
-- ✅ `app/layout.tsx` - Already imports `./globals.css`
+-  `app/globals.css` - Stays in place, shared by all three sites
+-  `app/layout.tsx` - Already imports `./globals.css`
 
 ### Remove (Later - Phase 4)
 - [ ] Zendesk/Intercom code from main `app/`
@@ -450,33 +450,33 @@ GET /api/intercom/visitor-analytics - Get visitor data
 
 ## Benefits of This Approach
 
-✅ **Clear Separation** - Each implementation is isolated and maintainable
-✅ **Zero Style Duplication** - Single `/styles/globals.css` synced everywhere
-✅ **Single Point of Change** - Modify style once, updates all 3 sites automatically
-✅ **Independent Logic** - Can work on Zendesk or Intercom separately
-✅ **Easy Demo** - Show two different integrations on one domain
-✅ **Credential Isolation** - Different env vars per service
-✅ **Future Proof** - Can add more integrations (Drift, HubSpot, etc.) without touching main site
-✅ **Zero Maintenance** - No risk of style drift between sites
+ **Clear Separation** - Each implementation is isolated and maintainable
+ **Zero Style Duplication** - Single `/styles/globals.css` synced everywhere
+ **Single Point of Change** - Modify style once, updates all 3 sites automatically
+ **Independent Logic** - Can work on Zendesk or Intercom separately
+ **Easy Demo** - Show two different integrations on one domain
+ **Credential Isolation** - Different env vars per service
+ **Future Proof** - Can add more integrations (Drift, HubSpot, etc.) without touching main site
+ **Zero Maintenance** - No risk of style drift between sites
 
 ---
 
 ## Current Status
 
-- ✅ Phase 1 complete: Directory structure & copying (app/zendesk, app/intercom created with all files)
-- ✅ Phase 2 complete: Configuration & routing (Next.js routes `/zendesk` and `/intercom` working, proxy fixed)
-- ✅ Phase 3 complete: Styling & layout harmonization (skipped - automatic via shared imports)
-- ✅ Phase 4 complete: Core logic cleanup (main app verified clean, demo sites ready)
-- ✅ Phase 5 COMPLETE: Production-grade implementations with strategic pivot
-  - ✅ Zendesk: Official Web Widget embed + ticket creation API + email contact
-  - ✅ Intercom: Contact registration API + email contact (simplified from complex conversations flow)
-  - ✅ Both following recruiter-impressing code standards
-  - ✅ All form components created and integrated into demo pages
-  - ✅ All linting and type issues resolved (0 errors)
-  - ✅ Build passing (96 tests, 100% pass rate)
-  - ✅ Intercom contact creation tested and verified working
-  - ✅ Email-based contact flows deployed (no webhook complexity)
-  - ✅ PHASE 5 FINALIZED: v2 Simplified Architecture Complete
+-  Phase 1 complete: Directory structure & copying (app/zendesk, app/intercom created with all files)
+-  Phase 2 complete: Configuration & routing (Next.js routes `/zendesk` and `/intercom` working, proxy fixed)
+-  Phase 3 complete: Styling & layout harmonization (skipped - automatic via shared imports)
+-  Phase 4 complete: Core logic cleanup (main app verified clean, demo sites ready)
+-  Phase 5 COMPLETE: Production-grade implementations with strategic pivot
+  -  Zendesk: Official Web Widget embed + ticket creation API + email contact
+  -  Intercom: Contact registration API + email contact (simplified from complex conversations flow)
+  -  Both following recruiter-impressing code standards
+  -  All form components created and integrated into demo pages
+  -  All linting and type issues resolved (0 errors)
+  -  Build passing (96 tests, 100% pass rate)
+  -  Intercom contact creation tested and verified working
+  -  Email-based contact flows deployed (no webhook complexity)
+  -  PHASE 5 FINALIZED: v2 Simplified Architecture Complete
 
 ---
 
@@ -484,7 +484,7 @@ GET /api/intercom/visitor-analytics - Get visitor data
 
 ### Executed Tasks
 
-✅ **API Implementations**
+ **API Implementations**
 - Created Zendesk schemas: `ZendeskTicketSchema`, `ZendeskResponseSuggestionSchema`
 - Created Intercom schemas: `IntercomConversationSchema`, `IntercomAISuggestionSchema`
 - Implemented 4 API routes with full error handling:
@@ -495,7 +495,7 @@ GET /api/intercom/visitor-analytics - Get visitor data
   - `GET /api/intercom/conversations` - List conversations
   - `POST /api/intercom/suggest-message` - AI message suggestions
 
-✅ **Form Components (5 Total)**
+ **Form Components (5 Total)**
 - **Zendesk:**
   - `ZendeskTicketForm` - Ticket creation with all fields (name, email, subject, description, category, priority)
   - `AIResponseViewer` - AI suggestions with tone/count customization
@@ -504,13 +504,13 @@ GET /api/intercom/visitor-analytics - Get visitor data
   - `LiveChatWidget` - Fixed bottom-right widget showing recent conversations
   - `AIMessageSuggester` - Context-aware message suggestions
 
-✅ **Page Integration**
+ **Page Integration**
 - Integrated all components into demo pages
 - Zendesk page: `/app/zendesk/page.tsx` with demo controls
 - Intercom page: `/app/intercom/page.tsx` with demo controls
 - Sample data pre-loaded for easy testing
 
-✅ **Code Quality**
+ **Code Quality**
 - TypeScript strict mode compliant
 - Zod validation on all inputs
 - Proper error handling (validation, timeouts, rate limits)
@@ -518,7 +518,7 @@ GET /api/intercom/visitor-analytics - Get visitor data
 - All 96 tests passing
 - Zero linting/formatting issues
 
-✅ **Documentation**
+ **Documentation**
 - Created `FORM_COMPONENTS.md` with complete reference
 - JSDoc comments on all functions
 - API endpoint specifications
@@ -549,12 +549,12 @@ GET /api/intercom/visitor-analytics - Get visitor data
 ## Phase 2 Completion: Configuration & Routing
 
 ### Executed Tasks:
-1. ✅ Created `app/zendesk/` and `app/intercom/` subdirectories
-2. ✅ Copied all files (layout, page, not-found, components, hooks, lib) to both subdirectories
-3. ✅ Updated layout imports to reference shared `../globals.css`
-4. ✅ Simplified `next.config.ts` (no rewrites needed - Next.js routes naturally)
-5. ✅ Created `.env.local` template with environment variable placeholders
-6. ✅ Verified build output shows all three routes:
+1.  Created `app/zendesk/` and `app/intercom/` subdirectories
+2.  Copied all files (layout, page, not-found, components, hooks, lib) to both subdirectories
+3.  Updated layout imports to reference shared `../globals.css`
+4.  Simplified `next.config.ts` (no rewrites needed - Next.js routes naturally)
+5.  Created `.env.local` template with environment variable placeholders
+6.  Verified build output shows all three routes:
    ```
    Route (app)
    ┌ ○ /
@@ -613,28 +613,28 @@ Rather than creating new shared directories like `/styles`, reuse what already e
 After thorough investigation of API credential issues and webhook complexity, pivoted to a simplified email-based contact architecture:
 
 ### Implementation Complete
-✅ **Zendesk Integration**
+ **Zendesk Integration**
 - Integrated official Zendesk Web Widget (script key: `af64a072-5f19-47f4-9f3e-b6108435e64b`)
 - Widget loads dynamically on component mount, appears bottom-right
 - Email contact option: `support@8lee.zendesk.com`
 - Ticket creation API still available for power users
 - Page: `/zendesk` with "Support Options" section
 
-✅ **Intercom Integration**
+ **Intercom Integration**
 - Simplified to contact registration only (email + name required)
 - Contact creation tested and verified working
 - Email contact option: `amihb4cq@8lee.intercom-mail.com`
 - Minimal form friction for user engagement
 - Page: `/intercom` with "Support Options" section
 
-✅ **Code Quality**
+ **Code Quality**
 - All linting errors fixed (2 unused variables corrected)
 - TypeScript strict mode: 100% compliant
 - Tests: 96/96 passing (297 assertions)
 - Build: All routes recognized, no errors
 - Commit: 2795b45 - "ZenCom: Simplify to email-based contact flows with Web Widget"
 
-✅ **Documentation**
+ **Documentation**
 - ZENCOM_READY.md updated to reflect v2 architecture
 - API Reference includes request/response examples
 - Key Features updated with actual implementations
@@ -662,26 +662,26 @@ After thorough investigation of API credential issues and webhook complexity, pi
 
 ## Phase 6: Zendesk Intelligence Portal (Current Focus)
 
-**Status**: ✅ FULLY OPERATIONAL (November 13, 2025)
+**Status**:  FULLY OPERATIONAL (November 13, 2025)
 
 ### What Was Built
 
 #### 6A: Zendesk API Intelligence System
-✅ **Core Infrastructure**
+ **Core Infrastructure**
 - Real-time Zendesk API integration (authenticated with jleekun@gmail.com)
 - OpenAI GPT-4o integration for intelligent analysis
 - Query interpreter with 5 intent patterns
 - Analysis endpoint (`/api/zendesk/analyze`) for AI-powered insights
 - Ticket statistics, analytics, and reporting
 
-✅ **Features Implemented**
+ **Features Implemented**
 - **Help Command**: Comprehensive documentation of all available queries
 - **Ticket Status Analytics**: "How many tickets are open?" → ASCII table breakdown
 - **Recent Activity**: Display last 5 tickets with details
 - **Problem Area Analysis**: AI-powered identification of support themes and recommendations
 - **Raw Data Display**: JSON format output for advanced users
 
-✅ **Test Data**
+ **Test Data**
 - **315 realistic support tickets** across all categories:
   - Support issues (30%): bugs, API questions, login problems
   - Sales inquiries (25%): quotes, demos, enterprise requests
@@ -691,13 +691,13 @@ After thorough investigation of API credential issues and webhook complexity, pi
 - **Realistic metadata**: Multiple email domains, varied priorities, all statuses
 
 #### 6B: Documentation & Scripts
-✅ **Comprehensive Documentation** (800+ lines)
+ **Comprehensive Documentation** (800+ lines)
 - `/scripts/README.md` (450+ lines) - Script usage guide
 - `/_docs/SYSTEM_DOCUMENTATION.md` (800+ lines) - Full system architecture
 - Performance benchmarks, troubleshooting guide, API reference
 - Rate limiting explanation, common workflows
 
-✅ **Utility Scripts**
+ **Utility Scripts**
 - `test-credentials.sh` - Validates all API credentials and connectivity
 - `generate-zendesk-tickets.ts` - Creates realistic test tickets in batches
   - 120+ unique subjects per category
@@ -706,18 +706,18 @@ After thorough investigation of API credential issues and webhook complexity, pi
   - Safe rate limiting (default 500ms between requests)
 
 #### 6C: System Status
-✅ **API Health**
-- Zendesk API: ✅ HTTP 200, Authenticated, 315 tickets
-- OpenAI API: ✅ HTTP 200, Authenticated, 108 models available
+ **API Health**
+- Zendesk API:  HTTP 200, Authenticated, 315 tickets
+- OpenAI API:  HTTP 200, Authenticated, 108 models available
 - Both APIs working at <1% of rate limits
 
-✅ **Build Status**
-- ✅ TypeScript compilation: PASS
-- ✅ All routes recognized
-- ✅ Production build: Ready
-- ✅ Zero type/lint errors
+ **Build Status**
+-  TypeScript compilation: PASS
+-  All routes recognized
+-  Production build: Ready
+-  Zero type/lint errors
 
-✅ **Performance**
+ **Performance**
 - Help command: ~347ms
 - Ticket status: ~250ms
 - Recent activity: ~280ms
@@ -762,28 +762,28 @@ Your system is **production-ready right now** with 316 tickets:
    - Complete documentation for future maintenance
 
 3. **Prepare for Deployment**
-   - Production build: `bun run build` ✅ Already tested
-   - All APIs authenticated ✅
-   - Rate limiting safe ✅
-   - Ready for Vercel/cloud deployment ✅
+   - Production build: `bun run build`  Already tested
+   - All APIs authenticated 
+   - Rate limiting safe 
+   - Ready for Vercel/cloud deployment 
 
 ### Key Accomplishments
 
-✅ **16+ Hours of Development Work**
+ **16+ Hours of Development Work**
 - Architecture design & implementation
 - Real API integrations (Zendesk + OpenAI)
 - Intelligent query processing
 - Realistic test data generation
 - Comprehensive documentation
 
-✅ **Production-Grade Code**
+ **Production-Grade Code**
 - TypeScript strict mode
 - Proper error handling
 - Rate limiting & caching
 - Full type safety
 - 96+ tests passing
 
-✅ **Complete Documentation**
+ **Complete Documentation**
 - System architecture
 - API reference
 - Troubleshooting guide
@@ -807,12 +807,12 @@ Your system is **production-ready right now** with 316 tickets:
 
 | File | Purpose | Status |
 |------|---------|--------|
-| `zencom-master-plan.md` | **THIS FILE** - Master plan (all phases) | ✅ Current |
-| `SYSTEM_DOCUMENTATION.md` | Complete system architecture & usage | ✅ Updated |
-| `ZENDESK_IMPLEMENTATION_STATUS.md` | Phase-by-phase status tracking | ⚠️ Outdated |
-| `FORM_COMPONENTS.md` | Form component reference (ZenCom v2) | ✅ Reference |
+| `zencom-master-plan.md` | **THIS FILE** - Master plan (all phases) |  Current |
+| `SYSTEM_DOCUMENTATION.md` | Complete system architecture & usage |  Updated |
+| `ZENDESK_IMPLEMENTATION_STATUS.md` | Phase-by-phase status tracking |  Outdated |
+| `FORM_COMPONENTS.md` | Form component reference (ZenCom v2) |  Reference |
 | `PLAN_UPDATE_SUMMARY.md` | Phase 2.5-2.6 planning notes | 📋 Archive |
-| `/scripts/README.md` | Script usage & examples | ✅ Comprehensive |
+| `/scripts/README.md` | Script usage & examples |  Comprehensive |
 
 **Recommendation**: Keep `zencom-master-plan.md` as single source of truth. Archive outdated status files.
 
@@ -826,7 +826,7 @@ Your system is **production-ready right now** with 316 tickets:
 
 ## Phase 6.1: Optimized Smart Query System (NEW - November 14, 2025)
 
-**Status**: ✅ FULLY IMPLEMENTED
+**Status**:  FULLY IMPLEMENTED
 
 ### What's New: Intelligent Cached Query Processing
 
@@ -850,11 +850,11 @@ The original rigid pattern-matching system has been replaced with a **smart, cac
    - Hybrid approach = fast + smart
 
 4. **Smart Features**
-   - ✅ `"help"` command shows comprehensive guide
-   - ✅ `"refresh"` or `"update"` command syncs latest tickets from Zendesk
-   - ✅ Natural language queries: "how many tickets do we have?" works perfectly
-   - ✅ AI-powered analysis: "what areas need help" generates insights
-   - ✅ Cache statistics: Shows breakdown by status, priority, age
+   -  `"help"` command shows comprehensive guide
+   -  `"refresh"` or `"update"` command syncs latest tickets from Zendesk
+   -  Natural language queries: "how many tickets do we have?" works perfectly
+   -  AI-powered analysis: "what areas need help" generates insights
+   -  Cache statistics: Shows breakdown by status, priority, age
 
 ### New Endpoints
 
@@ -890,9 +890,9 @@ Response shows current cache state without triggering update
 **Before (Rigid Pattern Matching)**:
 ```
 User Query → Regex Pattern Match → Hardcoded Handler → Response
-❌ "how many tickets do we have?" fails (pattern expects different phrasing)
-❌ Limited to ~10 predefined patterns
-❌ Can't handle query variations
+ "how many tickets do we have?" fails (pattern expects different phrasing)
+ Limited to ~10 predefined patterns
+ Can't handle query variations
 ```
 
 **After (Smart Caching + AI)**:
@@ -906,10 +906,10 @@ User Query
 [Send to OpenAI with context] → Smart analysis
   ↓
 [Format and return answer]
-✅ ANY natural language query works
-✅ Unlimited variations supported
-✅ Full dataset context available
-✅ Fast (cached) + Smart (AI)
+ ANY natural language query works
+ Unlimited variations supported
+ Full dataset context available
+ Fast (cached) + Smart (AI)
 ```
 
 ### Files Created/Modified
@@ -933,7 +933,7 @@ We have 316 tickets total. Status breakdown:
 - Pending: 203
 
 > refresh
-✅ Cache refreshed! Updated with 316 tickets from Zendesk.
+ Cache refreshed! Updated with 316 tickets from Zendesk.
 
 > what areas need help
 Based on analysis of recent tickets, the main problem areas are:
@@ -972,16 +972,16 @@ Recommendations: Focus support on API documentation and account security.
 
 ---
 
-## ✅ PROJECT COMPLETE - READY FOR NEXT PHASE
+##  PROJECT COMPLETE - READY FOR NEXT PHASE
 
 All 6.1 phases finalized. Zendesk Intelligence Portal is **production-ready** with:
-- ✅ 316 realistic test tickets with live data
-- ✅ Real Zendesk + OpenAI API integration
-- ✅ AI-powered support analysis
-- ✅ Optimized smart query system with caching
-- ✅ Comprehensive documentation
-- ✅ Production-grade code quality
-- ✅ Deployable to production immediately
+-  316 realistic test tickets with live data
+-  Real Zendesk + OpenAI API integration
+-  AI-powered support analysis
+-  Optimized smart query system with caching
+-  Comprehensive documentation
+-  Production-grade code quality
+-  Deployable to production immediately
 
 **Next Decision**: Deploy to production OR continue feature development?
 
@@ -989,7 +989,7 @@ All 6.1 phases finalized. Zendesk Intelligence Portal is **production-ready** wi
 
 ## Phase 6.2: Documentation Consolidation & Simplified Architecture (November 15, 2025)
 
-**Status**: ✅ COMPLETE
+**Status**:  COMPLETE
 
 ### What Changed
 
@@ -1002,16 +1002,16 @@ All 6.1 phases finalized. Zendesk Intelligence Portal is **production-ready** wi
   - Simple, maintainable code
 
 **Documentation Consolidation**:
-- ✅ Created comprehensive `ZENDESK_MASTER.md` (single source of truth)
-- ✅ Removed 4 duplicate/outdated files:
+-  Created comprehensive `zendesk.md` (single source of truth)
+-  Removed 4 duplicate/outdated files:
   - `ZENDESK_IMPLEMENTATION_STATUS.md`
   - `zendesk-capability-matrix.md`
   - `zendesk-chat-architecture.md`
   - `zendesk-hiring-pitch.md`
-- ✅ All Zendesk technical details now in one place
+-  All Zendesk technical details now in one place
 
 **Key Files**:
-- **`_docs/ZENDESK_MASTER.md`** - Complete technical reference (architecture, API, usage, troubleshooting)
+- **`_docs/zendesk.md`** - Complete technical reference (architecture, API, usage, troubleshooting)
 - **`_docs/zencom-master-plan.md`** - This file (project history, phases, decisions)
 - **`app/zendesk/lib/ticket-cache.ts`** - Simplified: Always fetches fresh data
 
@@ -1035,23 +1035,23 @@ export async function loadTicketCache(): Promise<TicketCacheData | null> {
 ```
 
 **Trade-offs Accepted**:
-- ➕ Always fresh data
-- ➕ Simple architecture
-- ➕ Easy to maintain
-- ➖ 2-3 second latency (acceptable for demo)
+-  Always fresh data
+-  Simple architecture
+-  Easy to maintain
+-  2-3 second latency (acceptable for demo)
 
 **User Feedback Applied**:
 > "haven't we over-complicated this?"
 
 Response: Yes. Simplified to essentials:
-1. Fetch from Zendesk ✅
-2. Calculate stats ✅
-3. Return to user ✅
+1. Fetch from Zendesk 
+2. Calculate stats 
+3. Return to user 
 
 ### Documentation Structure
 
 **For Technical Reference**:
-→ See `_docs/ZENDESK_MASTER.md`
+→ See `_docs/zendesk.md`
   - Architecture overview
   - File structure
   - API endpoints
@@ -1069,7 +1069,7 @@ Response: Yes. Simplified to essentials:
 
 ## Phase 6.3: Research-Based Query Classification System (November 16, 2025)
 
-**Status**: ✅ COMPLETE
+**Status**:  COMPLETE
 
 ### Motivation
 
@@ -1158,34 +1158,34 @@ Stage 5: Default to Cache
 **Examples of Correct Classification**:
 
 ```
-✅ CACHE: "How many tickets do we have?"
+ CACHE: "How many tickets do we have?"
    Reasoning: Simple count query
 
-❌ AI: "How many tickets have descriptions longer than 200 words?"
+ AI: "How many tickets have descriptions longer than 200 words?"
    Reasoning: Requires length/word count analysis
 
-✅ CACHE: "How many high priority tickets?"
+ CACHE: "How many high priority tickets?"
    Reasoning: Simple priority count
 
-❌ AI: "How many high priority tickets need attention?"
+ AI: "How many high priority tickets need attention?"
    Reasoning: "need attention" is action recommendation verb
 
-✅ CACHE: "Show me urgent tickets"
+ CACHE: "Show me urgent tickets"
    Reasoning: Simple filter by priority attribute
 
-❌ AI: "Show me urgent tickets that mention billing"
+ AI: "Show me urgent tickets that mention billing"
    Reasoning: "mention" requires content inspection
 
-✅ CACHE: "Which status has the most tickets?"
+ CACHE: "Which status has the most tickets?"
    Reasoning: Simple count comparison across status groups
 
-❌ AI: "Which problems are most common?"
+ AI: "Which problems are most common?"
    Reasoning: Requires content analysis to identify "problems"
 
-✅ CACHE: "Tickets created today"
+ CACHE: "Tickets created today"
    Reasoning: Simple time filter
 
-❌ AI: "Why did tickets increase today?"
+ AI: "Why did tickets increase today?"
    Reasoning: "why" requires causal explanation
 ```
 
@@ -1212,7 +1212,7 @@ Complex (AI Path):
 
 ### Documentation
 
-**Created**: `app/zendesk/QUERY-CLASSIFICATION.md`
+**Created**: `app/zendesk/zendesk.md (Query Classification section)`
 
 **Contents**:
 - Complete keyword lists for discrete and complex patterns
@@ -1244,7 +1244,7 @@ Complex (AI Path):
   - 430 lines total (746 lines changed from previous version)
 
 **Created**:
-- `app/zendesk/QUERY-CLASSIFICATION.md` - Comprehensive documentation (400+ lines)
+- `app/zendesk/zendesk.md (Query Classification section)` - Comprehensive documentation (400+ lines)
 
 ### Benefits
 
@@ -1263,7 +1263,7 @@ Complex (AI Path):
 
 ### Current Status
 
-**Query Classification**: ✅ Production-ready with research-backed decision tree
+**Query Classification**:  Production-ready with research-backed decision tree
 - All tests passing at 100%
 - Comprehensive keyword coverage
 - Clear decision logic for edge cases
@@ -1275,8 +1275,8 @@ Complex (AI Path):
 
 ## Final Status
 
-**Zendesk Integration**: ✅ Production-ready with intelligent query classification
-**Intercom Integration**: ✅ Email-based contact flows (v2)
-**Documentation**: ✅ Consolidated into single master files + QUERY-CLASSIFICATION.md
-**Code Quality**: ✅ 8 query tests passing at 100%, zero errors
-**Deployment**: ✅ Ready for production
+**Zendesk Integration**:  Production-ready with intelligent query classification
+**Intercom Integration**:  Email-based contact flows (v2)
+**Documentation**:  Consolidated into single master files + zendesk.md (Query Classification section)
+**Code Quality**:  8 query tests passing at 100%, zero errors
+**Deployment**:  Ready for production
