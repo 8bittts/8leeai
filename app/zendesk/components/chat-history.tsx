@@ -18,13 +18,14 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
   const lastMessageRef = useRef<HTMLDivElement>(null)
 
   // Auto-scroll to bottom on new messages
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Need to trigger on message count change for auto-scroll UX
   useEffect(() => {
     if (lastMessageRef.current && scrollContainerRef.current) {
       setTimeout(() => {
         lastMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
       }, 100)
     }
-  }, [messages])
+  }, [messages.length])
 
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content)
