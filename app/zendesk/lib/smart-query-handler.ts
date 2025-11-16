@@ -61,50 +61,50 @@ function isHelpQuery(query: string): boolean {
  * Generate help text
  */
 function generateHelpText(): string {
-  return `
-ZENDESK INTELLIGENCE PORTAL - HELP
-==================================
+  return `**ZENDESK INTELLIGENCE TERMINAL - HELP**
 
-EXAMPLE QUERIES YOU CAN ASK:
-────────────────────────────
+**QUICK START:**
+Ask natural language questions about your support tickets. The system uses AI to understand your intent and provide instant answers.
 
-📊 STATUS & COUNTS:
-  "How many tickets do we have?"
-  "How many tickets are open?"
-  "Show me ticket status breakdown"
-  "What's the total number of pending tickets?"
+**EXAMPLE QUERIES:**
 
-🏷️ PRIORITY & CLASSIFICATION:
-  "How many urgent tickets are there?"
-  "Show high priority tickets"
-  "What's the priority distribution?"
+**📊 Status & Counts**
+• How many tickets do we have in total?
+• How many tickets are open?
+• Show me ticket status breakdown
+• What's our pending ticket count?
 
-📅 TIME-BASED:
-  "Which tickets were created today?"
-  "Show recent tickets"
-  "What's the oldest ticket?"
+**🏷️ Priority Analysis**
+• How many urgent tickets?
+• Show high priority tickets
+• What's the priority distribution?
 
-🔍 SEARCH & FILTER:
-  "Find tickets about login"
-  "Show me support issues"
-  "What topics appear most?"
+**📅 Time-Based Queries**
+• Which tickets were created today?
+• Show tickets from the last 7 days
+• What tickets are older than 30 days?
 
-🤖 INTELLIGENT ANALYSIS:
-  "What are the main problems?"
-  "Which areas need attention?"
-  "Analyze our support trends"
+**🔍 Content Search (AI-Powered)**
+• Find tickets mentioning login issues
+• What are the most common problems?
+• Analyze ticket trends
+• Which tickets need immediate attention?
 
-🔄 DATA MANAGEMENT:
-  "refresh" - Update cache with latest tickets
-  "update" - Refresh ticket data from Zendesk
+**🔄 System Commands**
+• Type "refresh" or "update" to sync latest ticket data
+• Press Ctrl+L or Cmd+K to clear screen
 
-💡 TIP: Ask natural questions. The AI understands context!
+**💡 PRO TIPS:**
+• Use ↑↓ arrows to navigate command history
+• The system remembers your previous queries
+• Complex questions use AI analysis (2-10 seconds)
+• Simple counts are instant (<100ms)
 
-Examples:
-  "How many tickets do we have in total?"
-  "Show me all urgent tickets"
-  "What's been created in the last week?"
-`
+**EXAMPLES TO TRY:**
+> How many tickets have descriptions longer than 200 words?
+> Review all high priority tickets and prioritize them
+> What's the breakdown by status?
+> Show me recent urgent tickets`
 }
 
 /**

@@ -21,10 +21,10 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
   useEffect(() => {
     if (lastMessageRef.current && scrollContainerRef.current) {
       setTimeout(() => {
-        lastMessageRef.current?.scrollIntoView({ behavior: "smooth" })
-      }, 0)
+        lastMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
+      }, 100)
     }
-  }, [])
+  }, [messages])
 
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content)
@@ -40,16 +40,6 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
       aria-live="polite"
       aria-atomic="false"
     >
-      {messages.length === 0 && (
-        <div className="text-green-400 opacity-60 text-sm font-mono">
-          <div>$ Zendesk Intelligence Terminal v1.0</div>
-          <div className="mt-2 text-green-500">Welcome to the Zendesk API Chat Interface</div>
-          <div className="mt-2 text-xs opacity-50">
-            Try: "show open tickets" or "what's our average response time?"
-          </div>
-        </div>
-      )}
-
       {messages.map((message, index) => (
         <div key={message.id} ref={index === messages.length - 1 ? lastMessageRef : undefined}>
           <MessageBubble message={message} onCopy={() => handleCopy(message.content)} />
