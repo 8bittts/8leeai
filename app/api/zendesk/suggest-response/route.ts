@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
     } = validatedData
 
     // Validate OpenAI API key
-    // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
     if (!process.env["OPENAI_API_KEY"]) {
       console.error("Missing OPENAI_API_KEY environment variable")
       return NextResponse.json({ error: "AI service not configured" }, { status: 500 })

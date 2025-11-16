@@ -31,24 +31,25 @@ const QUERY_PATTERNS = {
 /**
  * Extracts filters from natural language query
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Filter extraction requires pattern matching
 function extractFilters(query: string): Record<string, unknown> {
   const filters: Record<string, unknown> = {}
 
   // Status filters
   const statusMatch = query.match(/\b(open|closed|pending|solved|on-hold)\b/i)
-  if (statusMatch && statusMatch[1]) {
+  if (statusMatch?.[1]) {
     filters["status"] = statusMatch[1].toLowerCase()
   }
 
   // Priority filters
   const priorityMatch = query.match(/\b(urgent|high|normal|low)\s+(priority)?\b/i)
-  if (priorityMatch && priorityMatch[1]) {
+  if (priorityMatch?.[1]) {
     filters["priority"] = priorityMatch[1].toLowerCase()
   }
 
   // Type filters
   const typeMatch = query.match(/\b(problem|incident|question|task)\b/i)
-  if (typeMatch && typeMatch[1]) {
+  if (typeMatch?.[1]) {
     filters["type"] = typeMatch[1].toLowerCase()
   }
 
@@ -245,14 +246,14 @@ export function interpretQuery(query: string): ParsedQuery {
  * Fallback: Send query to Claude for interpretation
  * (To be implemented with actual API call)
  */
-export async function interpretQueryWithAI(query: string): Promise<ParsedQuery> {
+export function interpretQueryWithAI(query: string): Promise<ParsedQuery> {
   // TODO: Implement Claude API call for complex query interpretation
   // This is the fallback for queries that don't match patterns
 
   console.log("Using AI interpretation for:", query)
 
   // For now, return the pattern-matched interpretation
-  return interpretQuery(query)
+  return Promise.resolve(interpretQuery(query))
 }
 
 /**

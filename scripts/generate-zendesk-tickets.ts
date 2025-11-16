@@ -320,11 +320,11 @@ function parseArgs() {
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case "--count":
-        options.count = Math.min(Number.parseInt(args[i + 1]) || 10, 100)
+        options.count = Math.min(Number.parseInt(args[i + 1], 10) || 10, 100)
         i++
         break
       case "--delay":
-        options.delay = Math.max(Number.parseInt(args[i + 1]) || 500, 100)
+        options.delay = Math.max(Number.parseInt(args[i + 1], 10) || 500, 100)
         i++
         break
       case "--priority":
@@ -390,9 +390,9 @@ async function createZendeskTicket(
   index: number,
   options: ReturnType<typeof parseArgs>
 ): Promise<{ success: boolean; ticketId?: string; error?: string }> {
-  const email = process.env.ZENDESK_EMAIL
-  const token = process.env.ZENDESK_API_TOKEN
-  const subdomain = process.env.ZENDESK_SUBDOMAIN
+  const email = process.env["ZENDESK_EMAIL"]
+  const token = process.env["ZENDESK_API_TOKEN"]
+  const subdomain = process.env["ZENDESK_SUBDOMAIN"]
 
   if (!(email && token && subdomain)) {
     return { success: false, error: "Missing required environment variables" }
@@ -407,8 +407,8 @@ async function createZendeskTicket(
       description: ticket.description,
       requester_email: ticket.requesterEmail,
       requester_name: ticket.requesterName,
-      priority: (options.priority as any) || ticket.priority,
-      status: (options.status as any) || ticket.status,
+      priority: (options.priority as string | undefined) || ticket.priority,
+      status: (options.status as string | undefined) || ticket.status,
       tags: ticket.tags,
     },
   }
@@ -429,7 +429,7 @@ async function createZendeskTicket(
       body: JSON.stringify(payload),
     })
 
-    const data = (await response.json()) as any
+    const data = (await response.json()) as { ticket?: { id?: number } }
 
     if (response.ok && data.ticket?.id) {
       console.log(`   ✅ Created! Ticket ID: ${data.ticket.id}`)
@@ -457,7 +457,11 @@ async function main() {
 
   // Validate environment variables
   if (
-    !(process.env.ZENDESK_EMAIL && process.env.ZENDESK_API_TOKEN && process.env.ZENDESK_SUBDOMAIN)
+    !(
+      process.env["ZENDESK_EMAIL"] &&
+      process.env["ZENDESK_API_TOKEN"] &&
+      process.env["ZENDESK_SUBDOMAIN"]
+    )
   ) {
     console.error("\n❌ Error: Missing required environment variables")
     console.error("   Set: ZENDESK_EMAIL, ZENDESK_API_TOKEN, ZENDESK_SUBDOMAIN")
@@ -465,8 +469,8 @@ async function main() {
   }
 
   console.log("\n🔧 Configuration:")
-  console.log(`   Subdomain: ${process.env.ZENDESK_SUBDOMAIN}`)
-  console.log(`   Email: ${process.env.ZENDESK_EMAIL}`)
+  console.log(`   Subdomain: ${process.env["ZENDESK_SUBDOMAIN"]}`)
+  console.log(`   Email: ${process.env["ZENDESK_EMAIL"]}`)
   console.log(`   Tickets to create: ${options.count}`)
   console.log(`   Delay between requests: ${options.delay}ms`)
   if (options.priority) console.log(`   Fixed priority: ${options.priority}`)

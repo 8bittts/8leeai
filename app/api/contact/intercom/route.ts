@@ -10,7 +10,6 @@ interface ContactFormData {
 export async function POST(request: NextRequest) {
   try {
     // Create Resend instance with API key from environment
-    // biome-ignore lint/complexity/useLiteralKeys: Required for TypeScript strict mode
     const resend = new Resend(process.env["RESEND_API_KEY"])
 
     const body: ContactFormData = await request.json()

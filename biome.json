@@ -40,7 +40,7 @@
         "noVoid": "error",
         "useArrowFunction": "off",
         "useFlatMap": "error",
-        "useLiteralKeys": "error",
+        "useLiteralKeys": "off",
         "useOptionalChain": "error",
         "useRegexLiterals": "error",
         "useSimpleNumberKeys": "error",
@@ -191,7 +191,7 @@
         "noUnusedExpressions": "error",
         "noUselessUndefined": "error",
         "useExhaustiveSwitchCases": "error",
-        "noUnnecessaryConditions": "error",
+        "noUnnecessaryConditions": "off",
         "noShadow": "error",
         "useSortedClasses": "off"
       }

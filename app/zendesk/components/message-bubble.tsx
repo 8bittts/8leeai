@@ -30,6 +30,7 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
           {message.content}
           {onCopy && (
             <button
+              type="button"
               onClick={onCopy}
               className="ml-2 text-green-400 hover:text-green-300 text-xs opacity-50 hover:opacity-100 transition-opacity"
               title="Copy response"

@@ -44,6 +44,7 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
       <div className="flex flex-wrap gap-2">
         {suggestions.map((suggestion) => (
           <button
+            type="button"
             key={suggestion.label}
             onClick={() => onSuggestionClick(suggestion.query)}
             className="px-2 py-1 text-xs border border-green-500/40 rounded text-green-500 hover:bg-green-900/20 hover:border-green-500/60 transition-colors"

@@ -133,6 +133,7 @@ export class ZendeskAPIClient {
   /**
    * Make authenticated HTTP request to Zendesk API
    */
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: API error handling requires comprehensive status code checking
   private async request<T>(
     endpoint: string,
     options: {
@@ -229,14 +230,12 @@ export class ZendeskAPIClient {
         per_page: perPage,
       }
 
-      if (filters) {
-        const conditions: string[] = []
-        if (filters.status) conditions.push(`status:${filters.status}`)
-        if (filters.priority) conditions.push(`priority:${filters.priority}`)
+      const conditions: string[] = []
+      if (filters?.status) conditions.push(`status:${filters.status}`)
+      if (filters?.priority) conditions.push(`priority:${filters.priority}`)
 
-        if (conditions.length > 0) {
-          queryParams["query"] = conditions.join(" AND ")
-        }
+      if (conditions.length > 0) {
+        queryParams["query"] = conditions.join(" AND ")
       }
 
       // Paginate through all results
@@ -245,11 +244,13 @@ export class ZendeskAPIClient {
         pageCount++
         console.log(`[ZendeskAPI] Fetching tickets page ${pageCount}...`)
 
-        type PageResponse = { tickets: ZendeskTicket[]; next_page?: string }
-        const response: PageResponse = await this.request<PageResponse>(
-          nextPageUrl,
-          { params: pageCount === 1 ? queryParams : {} }
-        )
+        interface PageResponse {
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }
+        const response: PageResponse = await this.request<PageResponse>(nextPageUrl, {
+          params: pageCount === 1 ? queryParams : {},
+        })
 
         const pageTickets = response.tickets || []
         allTickets.push(...pageTickets)

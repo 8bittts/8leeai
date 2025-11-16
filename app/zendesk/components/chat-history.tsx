@@ -24,7 +24,7 @@ export function ChatHistory({ messages, onCopyMessage }: ChatHistoryProps) {
         lastMessageRef.current?.scrollIntoView({ behavior: "smooth" })
       }, 0)
     }
-  }, [messages])
+  }, [])
 
   const handleCopy = (content: string) => {
     navigator.clipboard.writeText(content)

@@ -32,51 +32,58 @@ export function ChatInput({
     inputRef.current?.focus()
   }, [])
 
+  const handleEnter = useCallback(() => {
+    if (value.trim()) {
+      onSubmit(value.trim())
+    }
+  }, [value, onSubmit])
+
+  const handleArrowUp = useCallback(() => {
+    if (historyIndex < commandHistory.length - 1) {
+      const newIndex = historyIndex + 1
+      const historyItem = commandHistory[newIndex]
+      if (historyItem !== undefined) {
+        onHistoryNavigate(newIndex)
+        onChange(historyItem)
+      }
+    }
+  }, [historyIndex, commandHistory, onHistoryNavigate, onChange])
+
+  const handleArrowDown = useCallback(() => {
+    if (historyIndex > 0) {
+      const newIndex = historyIndex - 1
+      const historyItem = commandHistory[newIndex]
+      if (historyItem !== undefined) {
+        onHistoryNavigate(newIndex)
+        onChange(historyItem)
+      }
+    } else if (historyIndex === 0) {
+      onHistoryNavigate(-1)
+      onChange("")
+    }
+  }, [historyIndex, commandHistory, onHistoryNavigate, onChange])
+
+  const handleClear = useCallback(() => {
+    onChange("")
+    onHistoryNavigate(-1)
+  }, [onChange, onHistoryNavigate])
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      // Enter to submit
       if (e.key === "Enter" && !isLoading) {
         e.preventDefault()
-        if (value.trim()) {
-          onSubmit(value.trim())
-        }
-      }
-
-      // Up/Down arrows for command history
-      if (e.key === "ArrowUp") {
+        handleEnter()
+      } else if (e.key === "ArrowUp") {
         e.preventDefault()
-        if (historyIndex < commandHistory.length - 1) {
-          const newIndex = historyIndex + 1
-          const historyItem = commandHistory[newIndex]
-          if (historyItem !== undefined) {
-            onHistoryNavigate(newIndex)
-            onChange(historyItem)
-          }
-        }
-      }
-
-      if (e.key === "ArrowDown") {
+        handleArrowUp()
+      } else if (e.key === "ArrowDown") {
         e.preventDefault()
-        if (historyIndex > 0) {
-          const newIndex = historyIndex - 1
-          const historyItem = commandHistory[newIndex]
-          if (historyItem !== undefined) {
-            onHistoryNavigate(newIndex)
-            onChange(historyItem)
-          }
-        } else if (historyIndex === 0) {
-          onHistoryNavigate(-1)
-          onChange("")
-        }
-      }
-
-      // Ctrl+C to clear (optional, for terminal feel)
-      if ((e.ctrlKey || e.metaKey) && e.key === "c") {
-        onChange("")
-        onHistoryNavigate(-1)
+        handleArrowDown()
+      } else if ((e.ctrlKey || e.metaKey) && e.key === "c") {
+        handleClear()
       }
     },
-    [value, isLoading, commandHistory, historyIndex, onChange, onHistoryNavigate, onSubmit]
+    [isLoading, handleEnter, handleArrowUp, handleArrowDown, handleClear]
   )
 
   return (

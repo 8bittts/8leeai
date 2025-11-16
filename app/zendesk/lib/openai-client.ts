@@ -66,6 +66,7 @@ Focus on extracting all relevant filters. If something is ambiguous, note lower 
  * Interpret a complex query using OpenAI
  * Falls back when pattern matching doesn't provide full clarity
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: AI query interpretation requires complex branching logic
 export async function interpretComplexQuery(query: string): Promise<QueryInterpretationResult> {
   validateEnvironment()
 
@@ -114,9 +115,7 @@ export async function interpretComplexQuery(query: string): Promise<QueryInterpr
  * Batch interpret multiple queries
  * Useful for testing or processing multiple queries together
  */
-export async function interpretQueriesBatch(
-  queries: string[]
-): Promise<QueryInterpretationResult[]> {
+export function interpretQueriesBatch(queries: string[]): Promise<QueryInterpretationResult[]> {
   return Promise.all(queries.map((query) => interpretComplexQuery(query)))
 }
 

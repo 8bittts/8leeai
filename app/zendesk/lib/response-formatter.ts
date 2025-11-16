@@ -19,14 +19,14 @@ function formatTable(data: Record<string, unknown>[], columns: Column[]): string
 
   // Calculate column widths
   const widths: Record<string, number> = {}
-  columns.forEach((col) => {
+  for (const col of columns) {
     const cellWidths = data.map((row) => String(row[col.key] || "").substring(0, 50).length)
     widths[col.key] = Math.max(
       col.label.length,
       col.width || 20,
       ...(cellWidths.length > 0 ? cellWidths : [0])
     )
-  })
+  }
 
   // Build top border
   const topBorder = columns.map((col) => "─".repeat((widths[col.key] ?? 20) + 2)).join("┬")
@@ -78,19 +78,19 @@ function formatMetrics(metrics: Record<string, unknown>): string {
   const width = Math.max(40, maxKeyLength + 30)
 
   // Top border
-  lines.push("╔" + "═".repeat(width - 2) + "╗")
+  lines.push(`╔${"═".repeat(width - 2)}╗`)
 
   // Content
-  metricsArray.forEach(([key, value]) => {
+  for (const [key, value] of metricsArray) {
     const displayKey = key.replace(/_/g, " ").toUpperCase()
     const displayValue = String(value)
     const padding = width - displayKey.length - displayValue.length - 4
 
     lines.push(`║ ${displayKey}${" ".repeat(padding)}${displayValue} ║`)
-  })
+  }
 
   // Bottom border
-  lines.push("╚" + "═".repeat(width - 2) + "╝")
+  lines.push(`╚${"═".repeat(width - 2)}╝`)
 
   return lines.join("\n")
 }

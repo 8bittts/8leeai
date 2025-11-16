@@ -128,9 +128,7 @@ function validateIntercomCredentials(): {
   accessToken: string
   workspaceId: string
 } | null {
-  // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
   const accessToken = process.env["INTERCOM_ACCESS_TOKEN"]
-  // biome-ignore lint/complexity/useLiteralKeys: TypeScript strict mode requires bracket notation for process.env
   const workspaceId = process.env["INTERCOM_WORKSPACE_ID"]
 
   if (!(accessToken && workspaceId)) {
