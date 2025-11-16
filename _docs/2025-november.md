@@ -4,6 +4,61 @@
 
 ### November 16, 2025
 
+#### Zendesk: Research-based query classification system
+
+**Replaced ad-hoc keyword matching with comprehensive, research-backed decision tree:**
+
+**What Changed:**
+- Conducted deep research on Zendesk analytics patterns, customer support dashboards, and BI query patterns
+- Built comprehensive keyword lists covering all common support query patterns
+- Implemented multi-stage decision tree with clear logic for edge cases
+- Added reasoning field to explain why each classification decision was made
+
+**Discrete Query Indicators (Cache Path <100ms):**
+- **Counting queries**: how many, count, total, number of, altogether
+- **Showing/listing**: show, list, display, get, give me
+- **Status/priority filters**: open, closed, pending, urgent, high, low
+- **Time periods**: today, this week, last 7 days, last 30 days
+- **Breakdowns**: breakdown, distribution, split, segment
+
+**Complex Query Indicators (AI Path 2-10s):**
+- **Analysis requests**: analyze, review, investigate, examine, assess
+- **Content inspection**: mentions, contains, includes, talks about, regarding
+- **Length filtering**: longer than, more than X words, detailed
+- **Recommendations**: should, recommend, suggest, prioritize, needs attention
+- **Pattern detection**: common, frequent, recurring, trending, pattern
+- **Why questions**: why, what's causing, root cause, explain
+- **Sentiment analysis**: angry, frustrated, happy, satisfied, upset
+- **Complex conditionals**: if, when, where, with more than, without
+
+**Multi-Stage Decision Tree:**
+1. **Stage 1**: System commands (refresh, help) → Cache
+2. **Stage 2**: Strong AI signals (content search, analysis, why questions) → AI
+3. **Stage 3**: Complex modifiers (length-based, recommendations) → AI
+4. **Stage 4**: Ambiguous comparatives (context-dependent decision)
+5. **Stage 5**: Default to cache for performance
+
+**Edge Case Examples:**
+- ✅ "How many high priority tickets?" → Cache (simple count)
+- ❌ "How many high priority tickets need attention?" → AI (action recommendation)
+- ✅ "Which status has most tickets?" → Cache (simple count comparison)
+- ❌ "What are the most common problems?" → AI (requires content analysis)
+
+**Performance Impact:**
+- Expected cache hit rate: 60-70% (instant <100ms responses)
+- Expected AI usage: 30-40% (intelligent 2-10s responses)
+- All 8 existing tests still passing at 100%
+
+**Documentation:**
+- Created comprehensive `app/zendesk/QUERY-CLASSIFICATION.md`
+- Full keyword lists, decision tree logic, edge cases
+- Extension guide for adding new patterns
+- Debugging tips and performance tuning
+
+**Files Changed:** app/zendesk/lib/classify-query.ts (746 lines changed), app/zendesk/QUERY-CLASSIFICATION.md (new)
+
+---
+
 #### Zendesk integration tested and verified
 
 **Completed comprehensive testing of Zendesk query system with 100% success rate:**
