@@ -59,17 +59,7 @@ const DISCRETE_INDICATORS = {
     "waiting",
   ],
 
-  priority: [
-    "urgent",
-    "high",
-    "critical",
-    "asap",
-    "important",
-    "normal",
-    "medium",
-    "low",
-    "minor",
-  ],
+  priority: ["urgent", "high", "critical", "asap", "important", "normal", "medium", "low", "minor"],
 
   // Time periods - temporal filters
   timeRecent: ["today", "recent", "new", "latest", "last 24", "yesterday"],
@@ -146,13 +136,7 @@ const COMPLEX_INDICATORS = {
   ],
 
   // Action verbs requiring reasoning
-  actionVerbs: [
-    "which ones",
-    "tell me which",
-    "need attention",
-    "require action",
-    "must address",
-  ],
+  actionVerbs: ["which ones", "tell me which", "need attention", "require action", "must address"],
 
   // Why/insight questions
   why: ["why", "what's causing", "reason for", "root cause", "explain"],
@@ -161,15 +145,7 @@ const COMPLEX_INDICATORS = {
   conditionals: ["if", "when", "where", "with more than", "with less than", "without"],
 
   // Sentiment analysis
-  sentiment: [
-    "angry",
-    "frustrated",
-    "happy",
-    "satisfied",
-    "upset",
-    "negative",
-    "positive",
-  ],
+  sentiment: ["angry", "frustrated", "happy", "satisfied", "upset", "negative", "positive"],
 }
 
 /**
@@ -218,9 +194,7 @@ function shouldUseAI(query: string): { useAI: boolean; reasoning: string } {
   }
 
   // Action/recommendation verbs
-  if (
-    COMPLEX_INDICATORS.recommendations.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))
-  ) {
+  if (COMPLEX_INDICATORS.recommendations.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
     return { useAI: true, reasoning: "Requires recommendations/prioritization" }
   }
 
@@ -238,9 +212,7 @@ function shouldUseAI(query: string): { useAI: boolean; reasoning: string } {
   if (COMPLEX_INDICATORS.ranking.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
     // Check if it's a simple count comparison like "which status has most tickets"
     const isSimpleCountComparison =
-      /\b(which|what)\b.*\b(status|priority|type)\b.*\b(has|have)\b.*\b(most|least)\b/i.test(
-        q
-      )
+      /\b(which|what)\b.*\b(status|priority|type)\b.*\b(has|have)\b.*\b(most|least)\b/i.test(q)
 
     if (!isSimpleCountComparison) {
       return { useAI: true, reasoning: "Requires comparative analysis" }
@@ -253,12 +225,90 @@ function shouldUseAI(query: string): { useAI: boolean; reasoning: string } {
 }
 
 /**
+ * Check for time-based patterns and return matching result
+ */
+function tryTimeBasedMatch(
+  q: string,
+  cache: NonNullable<Awaited<ReturnType<typeof loadTicketCache>>>
+): { answer: string; confidence: number; reasoning: string } | null {
+  if (DISCRETE_INDICATORS.timeRecent.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan24h}** tickets created in the last 24 hours.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 24 hours",
+    }
+  }
+
+  if (DISCRETE_INDICATORS.timeWeekly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan7d}** tickets created in the last 7 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 7 days",
+    }
+  }
+
+  if (DISCRETE_INDICATORS.timeMonthly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.lessThan30d}** tickets created in the last 30 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: last 30 days",
+    }
+  }
+
+  if (DISCRETE_INDICATORS.timeOld.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return {
+      answer: `**${cache.stats.byAge.olderThan30d}** tickets older than 30 days.`,
+      confidence: 0.95,
+      reasoning: "Time filter: older than 30 days",
+    }
+  }
+
+  return null
+}
+
+/**
+ * Check for breakdown/distribution patterns and return matching result
+ */
+function tryBreakdownMatch(
+  q: string,
+  cache: NonNullable<Awaited<ReturnType<typeof loadTicketCache>>>
+): { answer: string; confidence: number; reasoning: string } | null {
+  if (!DISCRETE_INDICATORS.breakdown.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
+    return null
+  }
+
+  if (/\b(status|state)\b/i.test(q)) {
+    const breakdown = Object.entries(cache.stats.byStatus)
+      .map(([status, count]) => `**${status}**: ${count}`)
+      .join(" | ")
+    return {
+      answer: `Status breakdown: ${breakdown}`,
+      confidence: 0.95,
+      reasoning: "Status distribution",
+    }
+  }
+
+  if (/\b(priority|priorities)\b/i.test(q)) {
+    const breakdown = Object.entries(cache.stats.byPriority)
+      .map(([priority, count]) => `**${priority}**: ${count}`)
+      .join(" | ")
+    return {
+      answer: `Priority breakdown: ${breakdown}`,
+      confidence: 0.95,
+      reasoning: "Priority distribution",
+    }
+  }
+
+  return null
+}
+
+/**
  * Try to match discrete patterns and generate instant answers
  */
-async function tryDiscreteMatch(
+function tryDiscreteMatch(
   query: string,
   cache: Awaited<ReturnType<typeof loadTicketCache>>
-): Promise<{ answer: string; confidence: number; reasoning: string } | null> {
+): { answer: string; confidence: number; reasoning: string } | null {
   if (!cache) return null
 
   const q = query.toLowerCase()
@@ -301,63 +351,13 @@ async function tryDiscreteMatch(
     }
   }
 
-  // Age-based query
-  if (DISCRETE_INDICATORS.timeRecent.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
-    return {
-      answer: `**${cache.stats.byAge.lessThan24h}** tickets created in the last 24 hours.`,
-      confidence: 0.95,
-      reasoning: "Time filter: last 24 hours",
-    }
-  }
-
-  if (DISCRETE_INDICATORS.timeWeekly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
-    return {
-      answer: `**${cache.stats.byAge.lessThan7d}** tickets created in the last 7 days.`,
-      confidence: 0.95,
-      reasoning: "Time filter: last 7 days",
-    }
-  }
-
-  if (DISCRETE_INDICATORS.timeMonthly.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
-    return {
-      answer: `**${cache.stats.byAge.lessThan30d}** tickets created in the last 30 days.`,
-      confidence: 0.95,
-      reasoning: "Time filter: last 30 days",
-    }
-  }
-
-  if (DISCRETE_INDICATORS.timeOld.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
-    return {
-      answer: `**${cache.stats.byAge.olderThan30d}** tickets older than 30 days.`,
-      confidence: 0.95,
-      reasoning: "Time filter: older than 30 days",
-    }
-  }
+  // Time-based queries
+  const timeMatch = tryTimeBasedMatch(q, cache)
+  if (timeMatch) return timeMatch
 
   // Breakdown/distribution requests
-  if (DISCRETE_INDICATORS.breakdown.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q))) {
-    if (/\b(status|state)\b/i.test(q)) {
-      const breakdown = Object.entries(cache.stats.byStatus)
-        .map(([status, count]) => `**${status}**: ${count}`)
-        .join(" | ")
-      return {
-        answer: `Status breakdown: ${breakdown}`,
-        confidence: 0.95,
-        reasoning: "Status distribution",
-      }
-    }
-
-    if (/\b(priority|priorities)\b/i.test(q)) {
-      const breakdown = Object.entries(cache.stats.byPriority)
-        .map(([priority, count]) => `**${priority}**: ${count}`)
-        .join(" | ")
-      return {
-        answer: `Priority breakdown: ${breakdown}`,
-        confidence: 0.95,
-        reasoning: "Priority distribution",
-      }
-    }
-  }
+  const breakdownMatch = tryBreakdownMatch(q, cache)
+  if (breakdownMatch) return breakdownMatch
 
   return null
 }

@@ -105,7 +105,9 @@ async function runTest(test: TestQuery): Promise<{
     const hasAnswer = response.answer && response.answer.length > 0
 
     console.log(`\n${COLORS.bright}Results:${COLORS.reset}`)
-    console.log(`  Source: ${response.source} ${sourceMatch ? COLORS.green + "✓" : COLORS.red + "✗"} ${COLORS.reset}`)
+    console.log(
+      `  Source: ${response.source} ${sourceMatch ? `${COLORS.green}✓` : `${COLORS.red}✗`} ${COLORS.reset}`
+    )
     console.log(`  Processing time: ${response.processingTime}ms`)
     console.log(`  Confidence: ${response.confidence}`)
     console.log(`  Answer preview: ${response.answer.substring(0, 150)}...`)
