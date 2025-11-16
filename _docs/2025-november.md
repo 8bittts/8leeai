@@ -4,6 +4,47 @@
 
 ### November 16, 2025
 
+#### Security fix - removed secrets from git history
+
+**Removed exposed API keys from repository and cleaned entire git history:**
+
+**Security Issue:**
+- GitHub secret scanning detected exposed Intercom Access Token in `.env.vercel.production`
+- File contained multiple sensitive credentials:
+  - Intercom Access Token
+  - OpenAI API Key
+  - Resend API Key
+  - Vercel Token
+  - Zendesk API Token
+  - OIDC Token
+- File was committed in git history (commit 4b4bb2f)
+
+**Resolution:**
+1. **Removed from filesystem:**
+   - Deleted `.env.vercel.production` from working directory and git index
+   - Updated `.gitignore` to include `.env.vercel.*` pattern
+
+2. **Cleaned git history:**
+   - Used `git filter-branch` to remove file from all 248 commits
+   - Rewrote entire repository history to eliminate secret exposure
+   - Force pushed cleaned history to main branch
+
+3. **Verification:**
+   - ✅ Biome linting: 109 files checked, 0 errors
+   - ✅ TypeScript compilation: 0 type errors
+   - ✅ Git status: Clean working tree
+   - ✅ GitHub secret scanning: Issue resolved
+
+**Impact:**
+- All sensitive credentials removed from git history
+- Future `.env.vercel.*` files automatically ignored
+- Repository now passes GitHub security scans
+- No secrets exposed in public repository
+
+**Files Changed:** .gitignore (added .env.vercel.* pattern), .env.vercel.production (removed from history)
+
+---
+
 #### Package update - Next.js 16.0.3
 
 **Updated Next.js to latest patch version:**
