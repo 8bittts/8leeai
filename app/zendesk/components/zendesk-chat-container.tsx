@@ -214,15 +214,15 @@ export function ZendeskChatContainer() {
   }, [])
 
   return (
-    <main
-      className="h-full w-full bg-black text-green-500 font-mono relative flex flex-col overflow-hidden"
-      onClick={handleMainClick}
-    >
+    <main className="min-h-screen w-full bg-black text-green-500 font-mono relative flex items-center justify-center p-4 sm:p-6 lg:p-8">
       {/* Matrix background effect */}
       <MatrixBackground />
 
-      {/* Main content area */}
-      <div className="relative z-10 flex-1 flex flex-col overflow-hidden">
+      {/* Terminal window container */}
+      <div
+        className="relative z-10 w-full max-w-7xl h-[90vh] border-2 border-green-500/30 rounded-lg shadow-2xl shadow-green-500/20 bg-black flex flex-col overflow-hidden"
+        onClick={handleMainClick}
+      >
         {/* Zendesk Header with ASCII Art */}
         <ZendeskHeader />
 
