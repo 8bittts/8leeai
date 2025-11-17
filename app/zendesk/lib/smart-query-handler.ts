@@ -407,21 +407,69 @@ export async function handleSmartQuery(
     )
 
     if (isCreateTicketRequest) {
-      console.log("[SmartQuery] Handling create ticket request")
+      console.log("[SmartQuery] Handling create ticket request - using AI to extract parameters")
 
-      // Extract subject from query (basic extraction - AI can enhance later)
-      const subjectMatch = query.match(
-        /\b(?:about|regarding|for|subject:?)\s+"([^"]+)"|titled?\s+"([^"]+)"|:\s*(.+)$/i
-      )
-      const subject = subjectMatch?.[1] || subjectMatch?.[2] || subjectMatch?.[3] || query
+      try {
+        // Use AI to extract ticket details from natural language
+        const { text: ticketJson } = await generateText({
+          model: openai("gpt-4o-mini"),
+          system: `You are a ticket parameter extractor. Extract ticket creation parameters from natural language.
 
-      const processingTime = Date.now() - startTime
+**Your task**: Parse the user's request and output ONLY valid JSON with these fields:
+{
+  "subject": "Clear, concise subject line (max 100 chars)",
+  "description": "Detailed description of the issue (200-500 chars if user wants detailed, otherwise match query intent)",
+  "priority": "urgent" | "high" | "normal" | "low",
+  "requester_email": "email@example.com or null if not specified"
+}
 
-      return {
-        answer: `✅ **Ticket Creation Detected**\n\nSubject: "${subject.trim()}"\n\nTo create this ticket, I need a few more details:\n• Priority (urgent/high/normal/low)\n• Description of the issue\n• Requester email (optional)\n• Assignee (optional)\n\nExample: "create a ticket about login issues with priority high and description 'User cannot access dashboard after password reset'"`,
-        source: "cache",
-        confidence: 0.9,
-        processingTime,
+**Rules**:
+- If user says "at least X characters", make description that length
+- If user says "real meta information", include realistic details
+- Default priority to "normal" unless specified
+- Use "support@zendesk.com" as default requester if none specified
+- Make the ticket realistic and professional
+- Output ONLY the JSON, no markdown, no explanation`,
+          prompt: `Extract ticket parameters from: "${query}"`,
+          temperature: 0.7,
+        })
+
+        const ticketParams = JSON.parse(ticketJson)
+
+        // Create the ticket
+        const client = getZendeskClient()
+        const createdTicket = await client.createTicket({
+          subject: ticketParams.subject,
+          comment: {
+            body: ticketParams.description,
+          },
+          priority: ticketParams.priority,
+          requester_email: ticketParams.requester_email || "support@zendesk.com",
+        })
+
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${createdTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        return {
+          answer: `✅ **Ticket Created Successfully**\n\n**Ticket #${createdTicket.id}**\n\n**Subject:** ${createdTicket.subject}\n**Priority:** ${createdTicket.priority}\n**Status:** ${createdTicket.status}\n\n**Description:**\n${ticketParams.description}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been created in Zendesk and is ready for agent review.`,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        console.error("[SmartQuery] Error creating ticket:", error)
+
+        return {
+          answer: `❌ **Error Creating Ticket**\n\nFailed to create ticket from query.\n\nError: ${errorMsg}\n\nPlease try with more explicit parameters like:\n"create ticket about login issues with priority high and description 'User cannot access dashboard'"`,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
       }
     }
 
