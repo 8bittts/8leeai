@@ -20,7 +20,7 @@ export function ZendeskHeader() {
 
       {/* Welcome Message */}
       <div className="mt-3 space-y-1 text-sm">
-        <p className="text-green-500">Welcome to Zendesk Intelligence Terminal</p>
+        <p className="text-green-500">Zendesk Intelligence Portal - EXPERIMENTAL MODE ACTIVATED</p>
         <p className="text-green-400 opacity-70 text-xs">
           Ask questions about your support tickets, customers, analytics, and more.
         </p>
