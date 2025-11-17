@@ -1,14 +1,12 @@
 /**
- * Smart Query Handler
- * Fast response system with two-tier approach:
- * 1. Instant: Check classifier for discrete answers from cache (<100ms)
- * 2. Fallback: Use OpenAI with cached context for complex queries (2-3s)
+ * Smart Query Handler - Simplified Architecture
+ * All queries go directly to OpenAI with full ticket cache context
+ * Operation handlers detect specific actions (create, update, delete, etc.)
  */
 
 import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
-import { classifyQuery } from "./classify-query"
 import { addConversationEntry, getRecentConversationContext } from "./conversation-cache"
 import { extractEmails, extractPriority, extractStatus, extractTags } from "./query-patterns"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
@@ -43,228 +41,11 @@ interface ConversationContext {
   lastQuery?: string | undefined
 }
 
-interface TicketStats {
-  byStatus: Record<string, number>
-  byPriority: Record<string, number>
-  byAge: {
-    lessThan24h: number
-    lessThan7d: number
-    lessThan30d: number
-    olderThan30d: number
-  }
-}
-
-interface Ticket {
-  id: number
-  subject: string
-  priority: string
-  status: string
-}
-
-interface TicketCacheData {
-  lastUpdated: string
-  ticketCount: number
-  tickets: Ticket[]
-  stats: TicketStats
-}
-
 /**
- * Check if query is asking for a refresh
+ * Main smart query handler - Direct to OpenAI with cached context
+ * All queries handled by AI except specific operation handlers
  */
-function isRefreshQuery(query: string): boolean {
-  return /^(refresh|update|sync|reload|fetch|pull)\b/i.test(query)
-}
-
-/**
- * Check if query is asking for help
- */
-function isHelpQuery(query: string): boolean {
-  return /^(help|commands|what can|how do|available|guide)\b/i.test(query)
-}
-
-/**
- * Check if query is general conversation (non-Zendesk)
- * Detects questions about weather, personal feelings, general chitchat, etc.
- * CRITICAL: Patterns must be narrow to avoid blocking legitimate Zendesk queries
- */
-function isGeneralConversation(query: string): boolean {
-  const generalPatterns = [
-    // Weather queries (clearly off-topic)
-    /\b(weather|temperature|forecast|rain|sunny|cloudy|hot|cold)\b/i,
-
-    // Personal questions (clearly off-topic)
-    /\b(how are you|how do you feel|are you okay|what's up|how's it going)\b/i,
-
-    // Time/date queries ONLY if not about tickets
-    /\b(what time|what day|what date|current time|today's date)\b(?!.*(ticket|created|updated|modified))/i,
-
-    // Simple standalone greetings (no Zendesk context)
-    /^(hi|hello|hey|good morning|good afternoon|good evening|greetings)\.?$/i,
-
-    // Polite closures (clearly off-topic)
-    /\b(thank you|thanks|bye|goodbye|see you|farewell)\b/i,
-
-    // Entertainment requests (clearly off-topic)
-    /\b(joke|story|fun fact|sing)\b/i,
-
-    // REMOVED OVERLY BROAD PATTERN: /\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i
-    // These are legitimate query starters for Zendesk questions and MUST reach the AI tier
-    // Examples that must pass through: "what is the ticket count?", "explain high priority tickets", "tell me about recent tickets"
-  ]
-
-  return generalPatterns.some((pattern) => pattern.test(query))
-}
-
-/**
- * Generate professional, zen-like response to general conversation
- * Gently redirects to Zendesk-focused assistance
- */
-function generateGeneralResponse(query: string): string {
-  const lowerQuery = query.toLowerCase().trim()
-
-  // Greetings
-  if (/^(hi|hello|hey|good morning|good afternoon|good evening|greetings)\b/i.test(lowerQuery)) {
-    return `Greetings. I'm your Zendesk Intelligence Assistant, here to help you understand and manage your support tickets with clarity and focus.\n\nHow may I assist you with your Zendesk data today?`
-  }
-
-  // How are you / feelings
-  if (/\b(how are you|how do you feel|are you okay|what's up|how's it going)\b/i.test(lowerQuery)) {
-    return `I'm operating smoothly and ready to serve. My purpose is to bring clarity to your support operations and help you make informed decisions.\n\nWhat insights about your Zendesk tickets can I provide?`
-  }
-
-  // Thanks/appreciation
-  if (/\b(thank you|thanks)\b/i.test(lowerQuery)) {
-    return `You're welcome. It's my purpose to assist you with clarity and precision.\n\nIs there anything else about your support tickets I can help you understand?`
-  }
-
-  // Goodbye
-  if (/\b(bye|goodbye|see you|farewell)\b/i.test(lowerQuery)) {
-    return `Until next time. Remember, I'm here whenever you need insights into your support operations.\n\nType 'help' anytime to see what I can do.`
-  }
-
-  // Weather
-  if (/\b(weather|temperature|forecast|rain|sunny|cloudy|hot|cold)\b/i.test(lowerQuery)) {
-    return `I'm a Zendesk intelligence assistant focused on support ticket analysis. For weather information, I recommend checking weather.com or your local forecast service.\n\nHow can I help you analyze your support tickets instead?`
-  }
-
-  // Time/date
-  if (/\b(what time|what day|what date|current time)\b/i.test(lowerQuery)) {
-    const now = new Date()
-    return `The current time is ${now.toLocaleTimeString()} on ${now.toLocaleDateString()}.\n\nNow, what would you like to know about your Zendesk tickets?`
-  }
-
-  // General knowledge / off-topic
-  return `I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• "How many tickets are open?"\n• "What are the most common problems?"\n• "Show me high priority tickets"\n• Or type "help" for more examples`
-}
-
-/**
- * Generate help text
- */
-function generateHelpText(): string {
-  return `**ZENDESK INTELLIGENCE TERMINAL - HELP**
-
-**QUICK START:**
-Ask natural language questions about your support tickets. The system uses AI to understand your intent and provide instant answers.
-
-**EXAMPLE QUERIES:**
-
-**📊 Status & Counts**
-• How many tickets do we have in total?
-• How many tickets are open?
-• Show me ticket status breakdown
-• What's our pending ticket count?
-
-**🏷️ Priority & Type Analysis**
-• How many urgent tickets?
-• Show high priority tickets
-• What's the priority distribution?
-• How many incident tickets?
-• Show problem tickets
-• Breakdown by ticket type
-
-**📅 Time-Based Queries**
-• Which tickets were created today?
-• Show tickets from the last 7 days
-• What tickets are older than 30 days?
-
-**🏷️ Tag Operations**
-• How many tickets are tagged billing?
-• Show tickets with urgent tag
-• Add tag billing to first ticket
-• Remove tag spam from second ticket
-
-**👤 Assignment Operations**
-• Assign first ticket to sarah@8lee.ai
-• Reassign second ticket to john@8lee.ai
-
-**🔍 Content Search (AI-Powered)**
-• Find tickets mentioning login issues
-• What are the most common problems?
-• Analyze ticket trends
-• Which tickets need immediate attention?
-
-**🔄 System Commands**
-• Type "refresh" or "update" to sync latest ticket data
-• Press Ctrl+L or Cmd+K to clear screen
-
-**💡 PRO TIPS:**
-• Use ↑↓ arrows to navigate command history
-• The system remembers your previous queries
-• Complex questions use AI analysis (2-10 seconds)
-• Simple counts are instant (<100ms)
-
-**EXAMPLES TO TRY:**
-> How many tickets have descriptions longer than 200 words?
-> Review all high priority tickets and prioritize them
-> What's the breakdown by status?
-> Show me recent urgent tickets`
-}
-
-/**
- * Format ticket statistics for display
- */
-function formatTicketStats(cache: TicketCacheData | null): string {
-  if (!cache?.stats) return ""
-
-  let output = "TICKET STATISTICS\n"
-  output += "=================\n\n"
-
-  if (cache.stats.byStatus && Object.keys(cache.stats.byStatus).length > 0) {
-    output += "BY STATUS:\n"
-    for (const [status, count] of Object.entries(cache.stats.byStatus)) {
-      output += `  ${String(status).padEnd(12)} ${count}\n`
-    }
-    output += "\n"
-  }
-
-  if (cache.stats.byPriority && Object.keys(cache.stats.byPriority).length > 0) {
-    output += "BY PRIORITY:\n"
-    for (const [priority, count] of Object.entries(cache.stats.byPriority)) {
-      output += `  ${String(priority).padEnd(12)} ${count}\n`
-    }
-    output += "\n"
-  }
-
-  if (cache.stats.byAge) {
-    output += "BY AGE:\n"
-    output += `  < 24 hours      ${cache.stats.byAge.lessThan24h}\n`
-    output += `  < 7 days        ${cache.stats.byAge.lessThan7d}\n`
-    output += `  < 30 days       ${cache.stats.byAge.lessThan30d}\n`
-    output += `  > 30 days       ${cache.stats.byAge.olderThan30d}\n`
-  }
-
-  output += `\nLAST UPDATED: ${cache.lastUpdated}\n`
-  output += `TOTAL TICKETS: ${cache.ticketCount}\n`
-
-  return output
-}
-
-/**
- * Main smart query handler - Two-tier approach for fast responses
- * Tier 1: Instant answers from cache (discrete queries)
- * Tier 2: AI-powered analysis with cached context (complex queries)
- */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Function handles multiple query types with clear sections
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Function handles multiple operation types with clear sections
 export async function handleSmartQuery(
   query: string,
   context?: ConversationContext
@@ -272,24 +53,8 @@ export async function handleSmartQuery(
   const startTime = Date.now()
 
   try {
-    // Handle empty or whitespace-only queries
-    if (!query || query.trim().length === 0) {
-      console.log("[SmartQuery] Handling empty query")
-      const processingTime = Date.now() - startTime
-
-      const answer = generateHelpText()
-      addConversationEntry("", answer, "cache", 1)
-
-      return {
-        answer,
-        source: "cache",
-        confidence: 1,
-        processingTime,
-      }
-    }
-
-    // Check for refresh command
-    if (isRefreshQuery(query)) {
+    // Check for refresh command (special case - no AI needed)
+    if (/^(refresh|update|sync|reload|fetch|pull)\b/i.test(query)) {
       console.log("[SmartQuery] Handling refresh request")
       const refreshResult = await refreshTicketCache()
       invalidateCache() // Clear cached context after refresh
@@ -308,42 +73,6 @@ export async function handleSmartQuery(
         processingTime,
       }
     }
-
-    // Check for help command
-    if (isHelpQuery(query)) {
-      console.log("[SmartQuery] Handling help request")
-      const processingTime = Date.now() - startTime
-
-      const answer = generateHelpText()
-      addConversationEntry(query, answer, "cache", 1)
-
-      return {
-        answer,
-        source: "cache",
-        confidence: 1,
-        processingTime,
-      }
-    }
-
-    // Check for general conversation (non-Zendesk queries)
-    if (isGeneralConversation(query)) {
-      console.log("[SmartQuery] Handling general conversation")
-      const processingTime = Date.now() - startTime
-
-      const answer = generateGeneralResponse(query)
-      addConversationEntry(query, answer, "cache", 1)
-
-      return {
-        answer,
-        source: "cache",
-        confidence: 1,
-        processingTime,
-      }
-    }
-
-    // Check if query is asking for ticket list (to populate context)
-    const isTicketListQuery =
-      /\b(show|list|display|top|recent|latest|first)\s+\d*\s*(tickets?|issues?)\b/i.test(query)
 
     // Check if query is asking to build/send a reply
     const isReplyRequest =
@@ -1159,24 +888,11 @@ export async function handleSmartQuery(
       }
     }
 
-    // TIER 1: Try instant answer from classifier
-    console.log("[SmartQuery] Checking cache classifier for instant answer...")
-    const classified = await classifyQuery(query)
+    // ========================================================================
+    // ALL OTHER QUERIES → DIRECT TO OPENAI WITH FULL CONTEXT
+    // ========================================================================
 
-    if (classified.matched && classified.answer) {
-      console.log(`[SmartQuery] Instant answer matched (${classified.processingTime}ms)`)
-      addConversationEntry(query, classified.answer, "cache", classified.confidence)
-
-      return {
-        answer: classified.answer,
-        source: "cache",
-        confidence: classified.confidence,
-        processingTime: classified.processingTime,
-      }
-    }
-
-    // TIER 2: Fall back to AI with cached context
-    console.log("[SmartQuery] Falling back to AI analysis with cached context...")
+    console.log("[SmartQuery] Sending query to OpenAI with full ticket cache context...")
 
     // Validate cache exists before AI processing
     const cache = await loadTicketCache()
@@ -1217,7 +933,10 @@ export async function handleSmartQuery(
 
     const processingTime = Date.now() - startTime
 
-    // If this was a ticket list query, extract and return ticket data
+    // Check if query is asking for ticket list (to populate context for follow-up queries)
+    const isTicketListQuery =
+      /\b(show|list|display|top|recent|latest|first)\s+\d*\s*(tickets?|issues?)\b/i.test(query)
+
     let ticketsToReturn: QueryResponse["tickets"]
 
     if (isTicketListQuery && cache) {
@@ -1249,7 +968,7 @@ export async function handleSmartQuery(
 
     console.error("[SmartQuery] Error:", error)
 
-    const answer = `❌ Error processing query\n\nError: ${errorMsg}\n\nPlease try again or use 'help' for available commands.`
+    const answer = `❌ Error processing query\n\nError: ${errorMsg}\n\nPlease try again or ask for help with 'help'.`
     addConversationEntry(query, answer, "live", 0)
 
     return {
@@ -1268,5 +987,35 @@ export async function getQuickStats(): Promise<string | null> {
   const cache = await loadTicketCache()
   if (!cache) return null
 
-  return formatTicketStats(cache)
+  let output = "TICKET STATISTICS\n"
+  output += "=================\n\n"
+
+  if (cache.stats.byStatus && Object.keys(cache.stats.byStatus).length > 0) {
+    output += "BY STATUS:\n"
+    for (const [status, count] of Object.entries(cache.stats.byStatus)) {
+      output += `  ${String(status).padEnd(12)} ${count}\n`
+    }
+    output += "\n"
+  }
+
+  if (cache.stats.byPriority && Object.keys(cache.stats.byPriority).length > 0) {
+    output += "BY PRIORITY:\n"
+    for (const [priority, count] of Object.entries(cache.stats.byPriority)) {
+      output += `  ${String(priority).padEnd(12)} ${count}\n`
+    }
+    output += "\n"
+  }
+
+  if (cache.stats.byAge) {
+    output += "BY AGE:\n"
+    output += `  < 24 hours      ${cache.stats.byAge.lessThan24h}\n`
+    output += `  < 7 days        ${cache.stats.byAge.lessThan7d}\n`
+    output += `  < 30 days       ${cache.stats.byAge.lessThan30d}\n`
+    output += `  > 30 days       ${cache.stats.byAge.olderThan30d}\n`
+  }
+
+  output += `\nLAST UPDATED: ${cache.lastUpdated}\n`
+  output += `TOTAL TICKETS: ${cache.ticketCount}\n`
+
+  return output
 }
