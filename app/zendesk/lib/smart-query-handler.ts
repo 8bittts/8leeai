@@ -400,6 +400,171 @@ export async function handleSmartQuery(
       }
     }
 
+    // Check if query is asking to create a ticket
+    const isCreateTicketRequest = /\b(create|make|new|open|submit)\s+(a\s+)?(ticket|issue)\b/i.test(
+      query
+    )
+
+    if (isCreateTicketRequest) {
+      console.log("[SmartQuery] Handling create ticket request")
+
+      // Extract subject from query (basic extraction - AI can enhance later)
+      const subjectMatch = query.match(
+        /\b(?:about|regarding|for|subject:?)\s+"([^"]+)"|titled?\s+"([^"]+)"|:\s*(.+)$/i
+      )
+      const subject = subjectMatch?.[1] || subjectMatch?.[2] || subjectMatch?.[3] || query
+
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `✅ **Ticket Creation Detected**\n\nSubject: "${subject.trim()}"\n\nTo create this ticket, I need a few more details:\n• Priority (urgent/high/normal/low)\n• Description of the issue\n• Requester email (optional)\n• Assignee (optional)\n\nExample: "create a ticket about login issues with priority high and description 'User cannot access dashboard after password reset'"`,
+        source: "cache",
+        confidence: 0.9,
+        processingTime,
+      }
+    }
+
+    // Check if query is asking to update ticket status
+    const isUpdateStatusRequest =
+      /\b(close|solve|resolve|reopen|set status|update status|mark as|change status)\b/i.test(
+        query
+      ) &&
+      context?.lastTickets &&
+      context.lastTickets.length > 0
+
+    if (isUpdateStatusRequest) {
+      console.log("[SmartQuery] Handling update status request with context")
+
+      // Extract target status
+      let targetStatus: "new" | "open" | "pending" | "hold" | "solved" | "closed" | null = null
+      if (/\b(close|closed)\b/i.test(query)) targetStatus = "closed"
+      else if (/\b(solve|solved|resolve|resolved)\b/i.test(query)) targetStatus = "solved"
+      else if (/\b(open|reopen|reopened)\b/i.test(query)) targetStatus = "open"
+      else if (/\b(pending)\b/i.test(query)) targetStatus = "pending"
+      else if (/\b(hold)\b/i.test(query)) targetStatus = "hold"
+      else if (/\b(new)\b/i.test(query)) targetStatus = "new"
+
+      // Extract which ticket
+      let ticketIndex = 0
+      const indexMatch = query.match(/\b(first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th)\b/i)
+      if (indexMatch?.[1]) {
+        const indexWord = indexMatch[1].toLowerCase()
+        const indexMap: Record<string, number> = {
+          first: 0,
+          "1st": 0,
+          second: 1,
+          "2nd": 1,
+          third: 2,
+          "3rd": 2,
+          fourth: 3,
+          "4th": 3,
+          fifth: 4,
+          "5th": 4,
+        }
+        ticketIndex = indexMap[indexWord] ?? 0
+      }
+
+      const targetTicket = context.lastTickets[ticketIndex]
+
+      if (!(targetTicket && targetStatus)) {
+        const processingTime = Date.now() - startTime
+        return {
+          answer: `❌ **Cannot Update Status**\n\n${targetTicket ? "Could not determine target status from query." : `Ticket at position ${ticketIndex + 1} not found in context.`}\n\nExamples:\n• "close the first ticket"\n• "mark second ticket as solved"\n• "set status to pending for first ticket"`,
+          source: "cache",
+          confidence: 0.5,
+          processingTime,
+        }
+      }
+
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `✅ **Status Update Detected**\n\n**Ticket:** #${targetTicket.id} - ${targetTicket.subject}\n**Current Status:** ${targetTicket.status}\n**New Status:** ${targetStatus}\n\n⚠️ Status update functionality coming soon! This will update the ticket in Zendesk and return a confirmation link.`,
+        source: "cache",
+        confidence: 0.85,
+        processingTime,
+      }
+    }
+
+    // Check if query is asking to delete or mark as spam
+    const isDeleteRequest =
+      /\b(delete|remove|spam|archive)\s+(ticket|the (first|second|third|fourth|fifth))\b/i.test(
+        query
+      ) &&
+      context?.lastTickets &&
+      context.lastTickets.length > 0
+
+    if (isDeleteRequest) {
+      console.log("[SmartQuery] Handling delete/spam request with context")
+
+      const isSpamRequest = /\b(spam|junk)\b/i.test(query)
+
+      // Extract which ticket
+      let ticketIndex = 0
+      const indexMatch = query.match(/\b(first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th)\b/i)
+      if (indexMatch?.[1]) {
+        const indexWord = indexMatch[1].toLowerCase()
+        const indexMap: Record<string, number> = {
+          first: 0,
+          "1st": 0,
+          second: 1,
+          "2nd": 1,
+          third: 2,
+          "3rd": 2,
+          fourth: 3,
+          "4th": 3,
+          fifth: 4,
+          "5th": 4,
+        }
+        ticketIndex = indexMap[indexWord] ?? 0
+      }
+
+      const targetTicket = context.lastTickets[ticketIndex]
+
+      if (!targetTicket) {
+        const processingTime = Date.now() - startTime
+        return {
+          answer: `❌ **Cannot ${isSpamRequest ? "Mark as Spam" : "Delete"}**\n\nTicket at position ${ticketIndex + 1} not found in context.`,
+          source: "cache",
+          confidence: 0.5,
+          processingTime,
+        }
+      }
+
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `⚠️ **${isSpamRequest ? "Spam Detection" : "Deletion"} Detected**\n\n**Ticket:** #${targetTicket.id} - ${targetTicket.subject}\n\n${isSpamRequest ? "This will mark the ticket as spam and suspend the requester." : "This will soft-delete the ticket (can be restored later)."}\n\n✋ **Confirmation Required**\n\nTo proceed, please explicitly confirm:\n• "${isSpamRequest ? "confirm spam" : "confirm delete"} ticket #${targetTicket.id}"\n\nDestructive operations require explicit confirmation for safety.`,
+        source: "cache",
+        confidence: 0.95,
+        processingTime,
+      }
+    }
+
+    // Check if query is asking to merge tickets
+    const isMergeRequest =
+      /\b(merge|combine|consolidate)\s+(tickets?|the (first|second|third))\b/i.test(query) &&
+      context?.lastTickets &&
+      context.lastTickets.length >= 2
+
+    if (isMergeRequest) {
+      console.log("[SmartQuery] Handling merge request with context")
+
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `✅ **Ticket Merge Detected**\n\n**Available tickets:**\n${context.lastTickets
+          .slice(0, 5)
+          .map((t, i) => `${i + 1}. #${t.id} - ${t.subject}`)
+          .join(
+            "\n"
+          )}\n\nTo merge tickets, specify:\n• Target ticket (where comments will be merged to)\n• Source tickets (will be closed after merge)\n\nExample: "merge tickets 2 and 3 into ticket 1"\n\n⚠️ Merge functionality coming soon!`,
+        source: "cache",
+        confidence: 0.85,
+        processingTime,
+      }
+    }
+
     // TIER 1: Try instant answer from classifier
     console.log("[SmartQuery] Checking cache classifier for instant answer...")
     const classified = await classifyQuery(query)

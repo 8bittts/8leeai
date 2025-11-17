@@ -71,7 +71,8 @@ Support Team`
     const { text: replyBody } = await generateText({
       model: openai("gpt-4o-mini"),
       system: systemPrompt,
-      prompt: "Write the support ticket reply now. Output ONLY the reply text with no additional commentary.",
+      prompt:
+        "Write the support ticket reply now. Output ONLY the reply text with no additional commentary.",
       temperature: 0.7,
     })
 

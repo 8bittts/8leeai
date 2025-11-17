@@ -552,6 +552,290 @@ export class ZendeskAPIClient {
   }
 
   /**
+   * Create a new ticket
+   * POST /api/v2/tickets.json
+   */
+  async createTicket(ticketData: {
+    subject: string
+    comment: { body: string; html_body?: string }
+    requester_id?: number
+    requester_email?: string
+    assignee_id?: number
+    assignee_email?: string
+    group_id?: number
+    priority?: "urgent" | "high" | "normal" | "low"
+    status?: "new" | "open" | "pending" | "hold" | "solved" | "closed"
+    type?: "problem" | "incident" | "question" | "task"
+    tags?: string[]
+    custom_fields?: Array<{ id: number; value: string | number | boolean }>
+    organization_id?: number
+  }): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Creating ticket: ${ticketData.subject}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+        audit: { events: Array<{ type: string }> }
+      }>("/tickets.json", {
+        method: "POST",
+        body: { ticket: ticketData },
+      })
+
+      console.log(`[ZendeskAPI] Ticket created successfully: #${response.ticket.id}`)
+
+      // Clear tickets cache since we added a new ticket
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error("[ZendeskAPI] Error creating ticket:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Update an existing ticket
+   * PUT /api/v2/tickets/{ticket_id}.json
+   */
+  async updateTicket(
+    ticketId: number,
+    updates: {
+      subject?: string
+      comment?: { body: string; public?: boolean; html_body?: string }
+      assignee_id?: number | null
+      assignee_email?: string
+      group_id?: number | null
+      priority?: "urgent" | "high" | "normal" | "low"
+      status?: "new" | "open" | "pending" | "hold" | "solved" | "closed"
+      type?: "problem" | "incident" | "question" | "task"
+      tags?: string[]
+      custom_fields?: Array<{ id: number; value: string | number | boolean }>
+      organization_id?: number
+      due_at?: string
+    }
+  ): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Updating ticket ${ticketId}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+        audit: { events: Array<{ type: string }> }
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: { ticket: updates },
+      })
+
+      console.log(`[ZendeskAPI] Ticket ${ticketId} updated successfully`)
+
+      // Clear cache for this ticket and ticket lists
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error updating ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Delete a ticket (soft delete - can be restored)
+   * DELETE /api/v2/tickets/{ticket_id}.json
+   */
+  async deleteTicket(ticketId: number): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Deleting ticket ${ticketId}`)
+
+      await this.request<void>(`/tickets/${ticketId}.json`, {
+        method: "DELETE",
+      })
+
+      console.log(`[ZendeskAPI] Ticket ${ticketId} deleted successfully`)
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error deleting ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Restore a deleted ticket
+   * PUT /api/v2/tickets/{ticket_id}/restore.json
+   */
+  async restoreTicket(ticketId: number): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Restoring ticket ${ticketId}`)
+
+      const response = await this.request<{ ticket: ZendeskTicket }>(
+        `/tickets/${ticketId}/restore.json`,
+        {
+          method: "PUT",
+        }
+      )
+
+      console.log(`[ZendeskAPI] Ticket ${ticketId} restored successfully`)
+
+      // Clear cache
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error restoring ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Merge tickets into a target ticket
+   * PUT /api/v2/tickets/{target_ticket_id}/merge.json
+   */
+  async mergeTickets(targetTicketId: number, sourceTicketIds: number[]): Promise<ZendeskTicket> {
+    try {
+      console.log(
+        `[ZendeskAPI] Merging tickets ${sourceTicketIds.join(", ")} into ${targetTicketId}`
+      )
+
+      const response = await this.request<{ ticket: ZendeskTicket }>(
+        `/tickets/${targetTicketId}/merge.json`,
+        {
+          method: "PUT",
+          body: {
+            ids: sourceTicketIds,
+            target_id: targetTicketId,
+          },
+        }
+      )
+
+      console.log(`[ZendeskAPI] Tickets merged successfully into ${targetTicketId}`)
+
+      // Clear cache for all affected tickets
+      this.cache.delete(this.getCacheKey(`/tickets/${targetTicketId}.json`))
+      for (const id of sourceTicketIds) {
+        this.cache.delete(this.getCacheKey(`/tickets/${id}.json`))
+      }
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error("[ZendeskAPI] Error merging tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Mark a ticket as spam
+   * PUT /api/v2/tickets/{ticket_id}/mark_as_spam.json
+   */
+  async markAsSpam(ticketId: number): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Marking ticket ${ticketId} as spam`)
+
+      await this.request<void>(`/tickets/${ticketId}/mark_as_spam.json`, {
+        method: "PUT",
+      })
+
+      console.log(`[ZendeskAPI] Ticket ${ticketId} marked as spam`)
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error marking ticket ${ticketId} as spam:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Bulk update multiple tickets
+   * PUT /api/v2/tickets/update_many.json
+   */
+  async updateManyTickets(
+    ticketIds: number[],
+    updates: {
+      status?: "new" | "open" | "pending" | "hold" | "solved" | "closed"
+      priority?: "urgent" | "high" | "normal" | "low"
+      assignee_id?: number | null
+      group_id?: number | null
+      additional_tags?: string[]
+      remove_tags?: string[]
+    }
+  ): Promise<{ job_status_id: string }> {
+    try {
+      console.log(`[ZendeskAPI] Bulk updating ${ticketIds.length} tickets`)
+
+      const response = await this.request<{ job_status: { id: string } }>(
+        `/tickets/update_many.json?ids=${ticketIds.join(",")}`,
+        {
+          method: "PUT",
+          body: { ticket: updates },
+        }
+      )
+
+      console.log(`[ZendeskAPI] Bulk update job started: ${response.job_status.id}`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return { job_status_id: response.job_status.id }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error bulk updating tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Get multiple tickets by IDs
+   * GET /api/v2/tickets/show_many.json?ids=1,2,3
+   */
+  async getTicketsByIds(ticketIds: number[]): Promise<ZendeskTicket[]> {
+    try {
+      console.log(`[ZendeskAPI] Fetching ${ticketIds.length} tickets by IDs`)
+
+      const response = await this.request<{ tickets: ZendeskTicket[] }>(
+        `/tickets/show_many.json?ids=${ticketIds.join(",")}`
+      )
+
+      console.log(`[ZendeskAPI] Retrieved ${response.tickets.length} tickets`)
+
+      return response.tickets
+    } catch (error) {
+      console.error("[ZendeskAPI] Error fetching tickets by IDs:", error)
+      throw error
+    }
+  }
+
+  /**
    * Clear cache
    */
   clearCache(): void {
