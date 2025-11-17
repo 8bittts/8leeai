@@ -1,174 +1,6 @@
 {
   "entries": [
     {
-      "timestamp": "2025-11-17T06:52:16.971Z",
-      "query": "Tell me about high priority tickets",
-      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
-      "source": "cache",
-      "confidence": 1
-    },
-    {
-      "timestamp": "2025-11-17T06:52:24.707Z",
-      "query": "What about urgent priority?",
-      "response": "### Urgent Priority Ticket Overview\n\n- **Total Urgent Tickets**: 84\n\n#### **Status Breakdown**\n- **Open**: 47\n- **Pending**: 27\n- **Solved**: 10\n\n#### **Recent Urgent Tickets (Open and Pending)**\n1. **Open**:\n   - **#3**: Onboarding process too complex (29 words)\n   - **#14**: Migration assistance needed (23 words)\n   - **#22**: Multi-language UI support (181 words)\n   - **#58**: Can't attach files to tickets (108 words)\n   - **#101**: Error message on profile page (39 words)\n   - **#126**: Fast",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:53:34.712Z",
-      "query": "What are the top 3 most common problems across all tickets?",
-      "response": "The top 3 most common problems across all tickets are:\n\n1. **Onboarding Process Complexity**: Multiple tickets mention confusion during the onboarding process, particularly regarding API credentials and overall navigation. (e.g., Ticket IDs: 3, 6, 12, 33, 128)\n\n2. **API Issues**: Several tickets report issues related to API responses, authentication, and connectivity, indicating challenges with integration. (e.g., Ticket IDs: 58, 93, 210, 267)\n\n3. **Data Sync Problems**: A number of tickets ment",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:53:48.972Z",
-      "query": "Analyze ticket trends and provide detailed recommendations for improvement",
-      "response": "### Ticket Trends Analysis\n\n#### **Total Tickets: 316**\n\n### 1. **Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n### 2. **Priority Distribution**\n- **Urgent**: 84 (27%)\n- **High**: 77 (24%)\n- **Normal**: 74 (23%)\n- **Low**: 81 (26%)\n\n### 3. **Common Issues Identified**\n1. **Onboarding Process Complexity**: Multiple tickets (e.g., #3, #33, #128) indicate confusion, particularly around API credentials and setup steps.\n2. **Integration Problems**: Issues wi",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:53:48.975Z",
-      "query": "What tickets need urgent attention?",
-      "response": "Priority breakdown: **urgent**: 84",
-      "source": "cache",
-      "confidence": 0.95
-    },
-    {
-      "timestamp": "2025-11-17T06:53:51.905Z",
-      "query": "Show me statistics about ticket priority distribution",
-      "response": "### Ticket Priority Distribution\n\n- **Total Tickets**: 316\n\n#### Priority Breakdown:\n- **Urgent**: 84 (27%)\n- **High**: 77 (24%)\n- **Normal**: 74 (23%)\n- **Low**: 81 (26%) \n\nThis distribution indicates a balanced focus across different priority levels, with urgent and low priority tickets being nearly equal in count.",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:53:53.238Z",
-      "query": "Analyze average response time across all tickets",
-      "response": "The current ticket data does not provide specific timestamps or response times for individual tickets, making it impossible to calculate the average response time across all tickets. \n\nIf you have additional data or metrics regarding response times, please provide that for analysis.",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:53:53.239Z",
-      "query": "Tell me about high priority ticket patterns",
-      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
-      "source": "cache",
-      "confidence": 1
-    },
-    {
-      "timestamp": "2025-11-17T06:54:04.606Z",
-      "query": "Analyze the distribution of tickets by status and priority",
-      "response": "### Ticket Distribution Analysis\n\n#### **Total Tickets: 316**\n\n### **1. Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n### **2. Priority Distribution**\n- **Urgent**: 84 (27%)\n- **High**: 77 (24%)\n- **Normal**: 74 (23%)\n- **Low**: 81 (26%)\n\n### **3. Combined Status and Priority Insights**\n- **Open Urgent Tickets**: 47 (28% of urgent)\n- **Pending Urgent Tickets**: 27 (32% of urgent)\n- **Solved Urgent Tickets**: 10 (12% of urgent)\n\n- **Open High Tickets**: ",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:04.608Z",
-      "query": "Provide comprehensive analysis of ticket patterns including status breakdown, priority distribution, and age analysis",
-      "response": "Status breakdown: **pending**: 79 | **open**: 161 | **solved**: 76",
-      "source": "cache",
-      "confidence": 0.95
-    },
-    {
-      "timestamp": "2025-11-17T06:54:05.701Z",
-      "query": "Which tickets are the oldest?",
-      "response": "All tickets are currently less than 7 days old. Therefore, there are no tickets older than 7 days in the dataset.",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:11.472Z",
-      "query": "What tickets are at risk of missing SLA and what should we do?",
-      "response": "### Tickets at Risk of Missing SLA\n\n#### **Total Tickets at Risk**\n- **Urgent/Pending**: 27\n- **High/Pending**: 5\n- **Normal/Pending**: 47\n- **Low/Pending**: 0\n\n### **Total Pending Tickets**: 79\n\n#### **Recommendations for Improvement**\n1. **Prioritize Urgent Tickets**: Focus on the 27 urgent tickets that are currently pending. These need immediate attention. For example:\n   - Ticket #2: Compliance certification status\n   - Ticket #4: Licensing for internal tools\n   - Ticket #36: SOC 2 complianc",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:11.473Z",
-      "query": "Tell me about recent ticket activity",
-      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
-      "source": "cache",
-      "confidence": 1
-    },
-    {
-      "timestamp": "2025-11-17T06:54:15.678Z",
-      "query": "Show me tickets with status 'invalid_status_12345' from year 1900",
-      "response": "There are no tickets with the status 'invalid_status_12345' from the year 1900 in the current dataset. All tickets are less than 7 days old and have valid statuses (pending, open, or solved).",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:26.534Z",
-      "query": "Analyze the most common support problems in our system",
-      "response": "### Analysis of Common Support Problems\n\n#### 1. **Onboarding Complexity**\n   - Tickets: **#3**, **#33**, **#128**\n   - Description: Users frequently express confusion during the onboarding process, particularly around API credentials and setup steps.\n\n#### 2. **Performance Issues**\n   - Tickets: **#6**, **#28**, **#101**\n   - Description: Users report slow performance, especially with dashboard loading and search functions.\n\n#### 3. **Integration Problems**\n   - Tickets: **#58**, **#82**, **#27",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:28.265Z",
-      "query": "When were the most recent tickets created and how old are they?",
-      "response": "All tickets in the current dataset are less than 7 days old, with no tickets older than 24 hours. Therefore, the most recent tickets were created within the last week, and they are all in the age category of less than 7 days.",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:36.549Z",
-      "query": "Analyze tickets mentioning special characters or symbols in their content",
-      "response": "### Analysis of Tickets with Special Characters or Symbols\n\n#### **Total Tickets Analyzed**: 316\n\n#### **Identified Tickets with Special Characters or Symbols**:\n1. **Ticket #5**: \"Demo request for team evaluation\" - Description: \"We're interested in the enterprise plan for 500+ users. Can you provide a custom quote? We also need...\"\n2. **Ticket #14**: \"Migration assistance needed\" - Description: \"Will the system be down for maintenance this weekend? Our team needs to plan work schedules accordi",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:54:48.523Z",
-      "query": "Provide detailed analysis of all ticket data with full breakdown",
-      "response": "### Comprehensive Ticket Data Analysis\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n#### **Insights:**\n- The majority of tickets are in the **open** status, indicating ongoing issues that may need urgent attention.\n- **Pending** tickets represent a significant portion, suggesting potential delays in response or resolution.\n\n---\n\n### **2. Priority Distribution**\n- **Urgent**: 84 (27%)\n- **High**: 77 (24%)\n- **",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:55:01.202Z",
-      "query": "Analyze all ticket data comprehensively",
-      "response": "### Comprehensive Ticket Data Analysis\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n#### **Insights:**\n- The majority of tickets are currently open, indicating a potential backlog that may require immediate attention.\n- Pending tickets, while fewer, still represent a significant portion and may also need prioritization.\n\n---\n\n### **2. Priority Distribution**\n- **Urgent**: 84 (27%)\n- **High**: 77 (24%)\n- **Nor",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:55:16.360Z",
-      "query": "Provide comprehensive analysis of all ticket trends, patterns, and recommendations",
-      "response": "### Comprehensive Analysis of Ticket Trends and Patterns\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n#### **Insights:**\n- A significant portion of tickets are still open (51%), indicating potential bottlenecks in resolution.\n- **Recommendation**: Focus on expediting the resolution of open tickets, particularly those marked as urgent or high priority.\n\n---\n\n### **2. Priority Distribution**\n- **Urgent**: 84 (2",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:55:26.638Z",
-      "query": "Analyze ticket resolution time patterns and trends",
-      "response": "### Analysis of Ticket Resolution Time Patterns and Trends\n\n#### **Total Tickets**: 316\n\n---\n\n### **1. Status Breakdown**\n- **Open**: 161 (51%)\n- **Pending**: 79 (25%)\n- **Solved**: 76 (24%)\n\n### **2. Resolution Time Insights**\n- **Average Resolution Time**: Given the current dataset, we can't calculate an exact average resolution time since all tickets are less than 7 days old. \n\n- **Solved Tickets**: \n  - **Total Solved**: 76\n  - **Time to Resolve**: While specific resolution times are not ava",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:55:30.647Z",
-      "query": "Analyze ticket age distribution",
-      "response": "### Ticket Age Distribution Analysis\n\n#### **Total Tickets**: 316\n\n#### **Age Breakdown**:\n- **<24 hours**: 0\n- **<7 days**: 316\n- **<30 days**: 0\n- **>30 days**: 0\n\n### **Insights**:\n- **All tickets are less than 7 days old**, indicating a very recent influx of requests.\n- There are **no tickets older than 7 days**, which suggests that the support team is currently addressing issues promptly.\n\n### **Recommendations**:\n- **Monitor the volume of incoming tickets** to ensure timely resolutions as ",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T06:55:30.649Z",
-      "query": "Show me urgent tickets",
-      "response": "Priority breakdown: **urgent**: 84",
-      "source": "cache",
-      "confidence": 0.95
-    },
-    {
-      "timestamp": "2025-11-17T06:55:32.251Z",
-      "query": "How many of those are unassigned?",
-      "response": "The current ticket data does not specify the assignment status of the tickets (i.e., whether they are assigned or unassigned). Therefore, I cannot provide the number of unassigned tickets.",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
       "timestamp": "2025-11-17T06:55:32.252Z",
       "query": "Tell me about high priority tickets",
       "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
@@ -349,8 +181,176 @@
       "response": "### Urgent Priority Ticket Statistics:\n\n- **Total Urgent Tickets:** 84\n- **Status Breakdown:**\n  - **Pending:** 21\n  - **Open:** 48\n  - **Solved:** 15\n\n#### Key Insights:\n1. **Open Tickets:** A significant portion (57%) of urgent tickets are still open, indicating they require immediate attention.\n2. **Pending Tickets:** 25% are pending, which may require follow-ups to ensure resolution.\n3. **Solved Tickets:** Only 18% of urgent tickets have been resolved, highlighting a potential backlog.\n\n####",
       "source": "ai",
       "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:43:52.939Z",
+      "query": "What are the top 3 most common problems across all tickets?",
+      "response": "### Top 3 Most Common Problems Across All Tickets\n\n1. **Onboarding Process Complexity**\n   - Several tickets highlight confusion during the onboarding process, with users frequently getting stuck at specific steps.\n   - **Examples:** \n     - Ticket #3: \"The onboarding process was confusing.\"\n     - Ticket #12: \"The onboarding process was confusing. I got stuck on step 3...\"\n\n2. **API and Integration Issues**\n   - Many users report problems related to API usage, including authentication failures ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:07.716Z",
+      "query": "Analyze ticket trends and provide detailed recommendations for improvement",
+      "response": "### Ticket Trends Analysis\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown:**\n- **Open:** 161 (51%)\n- **Pending:** 79 (25%)\n- **Solved:** 76 (24%)\n\n### **2. Priority Breakdown:**\n- **Urgent:** 84 (27%)\n- **High:** 77 (24%)\n- **Normal:** 74 (23%)\n- **Low:** 81 (26%)\n\n### **3. Age Distribution:**\n- **<24 hours:** 0 tickets\n- **<7 days:** 316 tickets\n- **<30 days:** 0 tickets\n- **>30 days:** 0 tickets\n\n---\n\n### **Key Trends Identified:**\n\n1. **High Volume of Open Tickets:**\n   - Over 5",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:07.718Z",
+      "query": "What tickets need urgent attention?",
+      "response": "Priority breakdown: **urgent**: 84",
+      "source": "cache",
+      "confidence": 0.95
+    },
+    {
+      "timestamp": "2025-11-17T12:44:11.550Z",
+      "query": "Show me statistics about ticket priority distribution",
+      "response": "### Ticket Priority Distribution Statistics\n\n#### **Total Tickets: 316**\n\n- **Urgent:** 84 (27%)\n- **High:** 77 (24%)\n- **Normal:** 74 (23%)\n- **Low:** 81 (26%)\n\n### Summary\n- The **urgent** and **low** priorities have a similar distribution, each comprising about a quarter of the total tickets.\n- **High** and **normal** priorities are slightly lower in count, indicating a balanced approach to ticket prioritization. \n\nThis distribution can help inform resource allocation and focus areas for reso",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:25.629Z",
+      "query": "Analyze average response time across all tickets",
+      "response": "### Average Response Time Analysis\n\n#### **Total Tickets: 316**\n\n- **Response Time Breakdown:**\n  - **Pending:** 79 tickets (response time not yet measured)\n  - **Open:** 161 tickets (response time not yet measured)\n  - **Solved:** 76 tickets (response time measured)\n\n#### **Key Insights:**\n- **Average Response Time for Solved Tickets:**\n  - Unfortunately, specific response time data for solved tickets is not provided in the current dataset, making it impossible to calculate an average response ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:25.631Z",
+      "query": "Tell me about high priority ticket patterns",
+      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
+      "source": "cache",
+      "confidence": 1
+    },
+    {
+      "timestamp": "2025-11-17T12:44:37.111Z",
+      "query": "Analyze the distribution of tickets by status and priority",
+      "response": "### Ticket Distribution Analysis by Status and Priority\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown:**\n\n- **Open:** 161 (51%)\n- **Pending:** 79 (25%)\n- **Solved:** 76 (24%)\n\n### **2. Priority Breakdown:**\n\n- **Urgent:** 84 (27%)\n- **High:** 77 (24%)\n- **Normal:** 74 (23%)\n- **Low:** 81 (26%)\n\n---\n\n### **3. Status by Priority:**\n\n| Priority | Open | Pending | Solved | Total |\n|----------|------|---------|--------|-------|\n| Urgent   | 48   | 21      | 15     | 84    |\n| High     ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:37.112Z",
+      "query": "Provide comprehensive analysis of ticket patterns including status breakdown, priority distribution, and age analysis",
+      "response": "Status breakdown: **pending**: 79 | **open**: 161 | **solved**: 76",
+      "source": "cache",
+      "confidence": 0.95
+    },
+    {
+      "timestamp": "2025-11-17T12:44:50.554Z",
+      "query": "Which tickets are the oldest?",
+      "response": "### Oldest Tickets\n\nAll tickets currently fall under the age category of **<7 days**, meaning there are no tickets older than 7 days.\n\nHowever, here is a summary of the **current ticket statuses** based on the provided data:\n\n- **Total Tickets:** 316\n  - **Pending:** 79\n  - **Open:** 161\n  - **Solved:** 76\n\nIf you're looking for specific details or patterns within these tickets, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:59.421Z",
+      "query": "What tickets are at risk of missing SLA and what should we do?",
+      "response": "### Tickets at Risk of Missing SLA\n\n#### **Current Status of Tickets**\n- **Total Tickets:** 316\n- **Pending:** 79\n- **Open:** 161\n- **Solved:** 76\n\n#### **Urgent and High-Priority Tickets (Potential SLA Risk)**\n- **Urgent Tickets:**\n  - **Total:** 84\n  - **Pending:** 21\n  - **Open:** 48\n  - **Solved:** 15\n\n- **High-Priority Tickets:**\n  - **Total:** 77\n  - **Pending:** 10\n  - **Open:** 47\n  - **Solved:** 20\n\n### **Recommendations for Improvement**\n\n1. **Prioritize Ticket Resolution:**\n   - Focus",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:44:59.423Z",
+      "query": "Tell me about recent ticket activity",
+      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
+      "source": "cache",
+      "confidence": 1
+    },
+    {
+      "timestamp": "2025-11-17T12:45:01.702Z",
+      "query": "Show me tickets with status 'invalid_status_12345' from year 1900",
+      "response": "There are no tickets with the status 'invalid_status_12345' from the year 1900 in the current dataset. All tickets fall within the current status categories of **pending**, **open**, or **solved** and are dated within the past 7 days.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:45:10.235Z",
+      "query": "Analyze the most common support problems in our system",
+      "response": "### Analysis of Most Common Support Problems\n\n#### **Top Categories of Issues:**\n\n1. **Onboarding Process Complexity**\n   - **Tickets:** #3, #6, #33, #116, #128\n   - **Summary:** Multiple users report confusion during the onboarding process, particularly when entering API credentials or navigating through setup steps.\n\n2. **Integration Issues**\n   - **Tickets:** #58, #82, #205, #276\n   - **Summary:** Users are experiencing problems with integrations, including issues with API authentication and ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:45:12.631Z",
+      "query": "When were the most recent tickets created and how old are they?",
+      "response": "### Most Recent Tickets Created\n\nAll current tickets fall under the category of **<7 days**, meaning they were all created within the last week. \n\n#### **Age Breakdown:**\n- **Age:** All tickets are less than 7 days old.\n- **Total Tickets:** 316\n\nSince there are no tickets older than 7 days, they are all recent and actively being addressed.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:45:22.665Z",
+      "query": "Analyze tickets mentioning special characters or symbols in their content",
+      "response": "### Analysis of Tickets Mentioning Special Characters or Symbols\n\n#### **Total Tickets Analyzed: 316**\n\n**Tickets with Special Characters/Symbols:**\n- **Total:** 42 tickets\n\n#### **Examples of Tickets with Special Characters/Symbols:**\n\n- **Ticket #10**: \"Can you schedule a demo for our team next week? We want to see how this integrates with our existing...\"\n- **Ticket #14**: \"Will the system be down for maintenance this weekend? Our team needs to plan work schedules accordin...\"\n- **Ticket #22*",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:45:38.015Z",
+      "query": "Provide detailed analysis of all ticket data with full breakdown",
+      "response": "### Comprehensive Ticket Data Analysis\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open:** 161 tickets (51%)\n- **Pending:** 79 tickets (25%)\n- **Solved:** 76 tickets (24%)\n\n---\n\n### **2. Priority Distribution**\n- **Urgent:** 84 tickets (27%)\n- **High:** 77 tickets (24%)\n- **Normal:** 74 tickets (23%)\n- **Low:** 81 tickets (26%)\n\n---\n\n### **3. Age Analysis**\n- **<24 hours:** 0 tickets\n- **<7 days:** 316 tickets (100%)\n- **<30 days:** 0 tickets\n- **>30 days:** 0 tickets\n\n---",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:45:49.623Z",
+      "query": "Analyze all ticket data comprehensively",
+      "response": "### Comprehensive Ticket Data Analysis\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open:** 161 tickets (51%)\n- **Pending:** 79 tickets (25%)\n- **Solved:** 76 tickets (24%)\n\n### **2. Priority Distribution**\n- **Urgent:** 84 tickets (27%)\n- **High:** 77 tickets (24%)\n- **Normal:** 74 tickets (23%)\n- **Low:** 81 tickets (26%)\n\n### **3. Age Analysis**\n- **<24 hours:** 0 tickets\n- **<7 days:** 316 tickets (100%)\n- **<30 days:** 0 tickets\n- **>30 days:** 0 tickets\n\n### **4. Comm",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:46:06.875Z",
+      "query": "Provide comprehensive analysis of all ticket trends, patterns, and recommendations",
+      "response": "### Comprehensive Analysis of Ticket Trends and Patterns\n\n#### **Total Tickets: 316**\n\n---\n\n### **1. Status Breakdown**\n- **Open:** 161 tickets (51%)\n- **Pending:** 79 tickets (25%)\n- **Solved:** 76 tickets (24%)\n\n---\n\n### **2. Priority Distribution**\n- **Urgent:** 84 tickets (27%)\n- **High:** 77 tickets (24%)\n- **Normal:** 74 tickets (23%)\n- **Low:** 81 tickets (26%)\n\n---\n\n### **3. Age Analysis**\n- **All Tickets:** <7 days: 316 tickets (100%)\n- **Older Tickets:** None (>30 days)\n\n---\n\n### **4. ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:46:17.590Z",
+      "query": "Analyze ticket resolution time patterns and trends",
+      "response": "### Ticket Resolution Time Patterns and Trends\n\n#### **Current Status of Tickets**\n- **Total Tickets:** 316\n- **Status Breakdown:**\n  - **Open:** 161 tickets (51%)\n  - **Pending:** 79 tickets (25%)\n  - **Solved:** 76 tickets (24%)\n\n### **1. Resolution Time Insights**\n- **Total Solved Tickets:** 76\n- **Average Resolution Time:**\n  - Since all tickets are less than 7 days old, we can't calculate exact average resolution times. However, we can infer that the resolution is relatively quick given the",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:46:22.622Z",
+      "query": "Analyze ticket age distribution",
+      "response": "### Ticket Age Distribution Analysis\n\n#### **Total Tickets: 316**\n\n#### **Age Breakdown:**\n- **<24 hours:** 0 tickets\n- **<7 days:** 316 tickets (100%)\n- **<30 days:** 0 tickets\n- **>30 days:** 0 tickets\n\n### **Insights:**\n- **All tickets are less than 7 days old**, indicating a fresh workload. \n- **No tickets older than 7 days** suggests that the support team is actively addressing issues in a timely manner.\n\n### **Recommendations:**\n- **Monitor ticket aging closely** as the volume increases in",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:46:22.624Z",
+      "query": "Show me urgent tickets",
+      "response": "Priority breakdown: **urgent**: 84",
+      "source": "cache",
+      "confidence": 0.95
+    },
+    {
+      "timestamp": "2025-11-17T12:46:23.947Z",
+      "query": "How many of those are unassigned?",
+      "response": "There are no unassigned tickets in the current dataset. All tickets have a status of **pending**, **open**, or **solved**, but none are explicitly marked as unassigned.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T12:46:23.949Z",
+      "query": "Tell me about high priority tickets",
+      "response": "I appreciate your curiosity, but my expertise is in analyzing Zendesk support data. I'm here to help you understand ticket patterns, priorities, and trends with clarity and precision.\n\nTry asking:\n• \"How many tickets are open?\"\n• \"What are the most common problems?\"\n• \"Show me high priority tickets\"\n• Or type \"help\" for more examples",
+      "source": "cache",
+      "confidence": 1
+    },
+    {
+      "timestamp": "2025-11-17T12:46:30.713Z",
+      "query": "What about urgent priority?",
+      "response": "### Urgent Priority Tickets Overview\n\n- **Total Urgent Tickets:** 84\n\n#### **Status Breakdown**\n- **Pending:** 36 tickets\n- **Open:** 39 tickets\n- **Solved:** 9 tickets\n\n#### **Notable Urgent Tickets**\n- **Pending Examples:**\n  - **Ticket #3:** Onboarding process too complex | 29 words\n  - **Ticket #36:** SOC 2 compliance documentation | 20 words\n- **Open Examples:**\n  - **Ticket #14:** Migration assistance needed | 23 words\n  - **Ticket #22:** Multi-language UI support | 181 words\n- **Solved Ex",
+      "source": "ai",
+      "confidence": 0.85
     }
   ],
   "maxEntries": 50,
-  "lastUpdated": "2025-11-17T07:00:09.320Z"
+  "lastUpdated": "2025-11-17T12:46:30.713Z"
 }

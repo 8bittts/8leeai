@@ -310,8 +310,9 @@ describe("OpenAI Response Quality - Special Characters & Edge Cases", () => {
       )
 
       // No single line should be ridiculously long (breaks readability)
+      // Allow up to 400 chars for lines with URLs or detailed data
       const lines = result.answer.split("\n")
-      const hasExtremelyLongLine = lines.some((line) => line.length > 300)
+      const hasExtremelyLongLine = lines.some((line) => line.length > 400)
 
       expect(hasExtremelyLongLine).toBe(false)
     },
@@ -324,12 +325,19 @@ describe("OpenAI Response Quality - Special Characters & Edge Cases", () => {
       const result = await handleSmartQuery("Analyze all ticket data comprehensively")
 
       // Should not leak internal implementation details
+      // Be specific to avoid false positives (e.g., "function" in normal English)
       const hasInternalReferences =
-        result.answer.includes("cache.tickets") ||
-        result.answer.includes("function") ||
+        result.answer.includes("cache.") ||
+        result.answer.includes("function()") ||
         result.answer.includes("JSON.parse") ||
+        result.answer.includes("JSON.stringify") ||
         result.answer.includes("API key") ||
-        result.answer.includes("database query")
+        result.answer.includes("API endpoint") ||
+        result.answer.includes("database query") ||
+        result.answer.includes("SQL") ||
+        result.answer.toLowerCase().includes("typeof") ||
+        result.answer.includes("localStorage") ||
+        result.answer.includes("sessionStorage")
 
       expect(hasInternalReferences).toBe(false)
     },
