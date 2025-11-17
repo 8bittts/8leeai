@@ -17,7 +17,7 @@
 import { getZendeskClient } from "../app/zendesk/lib/zendesk-api-client"
 
 // Rich reply templates for different scenarios
-const supportReplies = {
+const _supportReplies = {
   acknowledgment: [
     "Thank you for reporting this issue. I've escalated this to our engineering team for investigation. They'll review the logs and get back to you within 24 hours with an update.",
     "I appreciate you reaching out about this. I'm looking into it now and will update you shortly with my findings.",
@@ -40,7 +40,7 @@ const supportReplies = {
   ],
 }
 
-const salesReplies = {
+const _salesReplies = {
   introduction: [
     "Thank you for your interest in our enterprise plan! I'm excited to help you explore how our platform can support your team's needs. I've scheduled a call for next Tuesday at 2 PM EST to discuss your requirements in detail.",
     "Great to hear from you! I'd love to discuss your specific requirements and put together a custom proposal. Are you available for a call this week?",
@@ -58,7 +58,7 @@ const salesReplies = {
   ],
 }
 
-const feedbackReplies = {
+const _feedbackReplies = {
   appreciation: [
     "Thank you so much for this detailed feedback! This is exactly the kind of input that helps us improve. I've shared your suggestions with our product team, and they're excited about several of these ideas.",
     "I really appreciate you taking the time to share this. Your insights are incredibly valuable, and I want you to know that we read and consider every piece of feedback carefully.",
@@ -76,7 +76,7 @@ const feedbackReplies = {
   ],
 }
 
-const generalReplies = {
+const _generalReplies = {
   information: [
     "Great question! Our platform is SOC 2 Type II certified, and we maintain compliance with GDPR, HIPAA, and other major frameworks. I'm attaching our security whitepaper which covers encryption, backups, and disaster recovery in detail.",
     "Thanks for asking! Here's the information you requested: Our API rate limits are 700 requests/minute for Enterprise accounts, we support OAuth 2.0 and API key authentication, and our documentation is at docs.zendesk.com/api. Let me know if you need anything else!",
@@ -571,7 +571,7 @@ async function createTicketWithReplies(
 
       await client.addTicketComment(ticket.id, reply.body, reply.public)
 
-      console.log(`      ✅ Reply added successfully!`)
+      console.log("      ✅ Reply added successfully!")
     }
 
     const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
@@ -612,12 +612,12 @@ async function main() {
   // Generate tickets
   const tickets = generateTicketsWithReplies()
 
-  console.log(`\n📋 Ticket Overview:`)
+  console.log("\n📋 Ticket Overview:")
   tickets.forEach((t, i) => {
     console.log(`   ${i + 1}. ${t.subject} (${t.replies.length} replies)`)
   })
 
-  console.log(`\n🚀 Starting ticket creation...\n`)
+  console.log("\n🚀 Starting ticket creation...\n")
 
   // Create each ticket
   let successCount = 0
@@ -628,10 +628,10 @@ async function main() {
 
       // Delay between tickets to respect rate limits
       if (i < tickets.length - 1) {
-        console.log(`\n   ⏳ Waiting 2 seconds before next ticket...`)
+        console.log("\n   ⏳ Waiting 2 seconds before next ticket...")
         await new Promise((resolve) => setTimeout(resolve, 2000))
       }
-    } catch (error) {
+    } catch (_error) {
       console.error(`\n   ❌ Failed to create ticket ${i + 1}, continuing...`)
     }
   }
@@ -640,7 +640,7 @@ async function main() {
   console.log(`\n${"=".repeat(70)}`)
   console.log("📊 CREATION SUMMARY")
   console.log(`${"=".repeat(70)}`)
-  console.log(`   Total Tickets: 5`)
+  console.log("   Total Tickets: 5")
   console.log(`   Successfully Created: ${successCount}`)
   console.log(`   Failed: ${5 - successCount}`)
   console.log(`   Success Rate: ${Math.round((successCount / 5) * 100)}%`)
@@ -648,7 +648,9 @@ async function main() {
 
   if (successCount === 5) {
     console.log("✅ All tickets created successfully with replies!")
-    console.log(`   View them at: https://${process.env["ZENDESK_SUBDOMAIN"]}.zendesk.com/agent/dashboard\n`)
+    console.log(
+      `   View them at: https://${process.env["ZENDESK_SUBDOMAIN"]}.zendesk.com/agent/dashboard\n`
+    )
     process.exit(0)
   } else {
     console.log("⚠️  Some tickets failed to create. See errors above.\n")
