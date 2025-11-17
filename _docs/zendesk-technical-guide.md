@@ -1,7 +1,7 @@
 # Zendesk Intelligence Portal - Master Documentation
 
-**Last Updated**: November 16, 2025
-**Status**: Production-Ready with Research-Based Query Classification
+**Last Updated**: November 17, 2025
+**Status**: Production-Ready with Comprehensive Pattern Recognition & Reply Generation
 
 ---
 
@@ -71,15 +71,18 @@ app/zendesk/
 ├── lib/
 │   ├── ticket-cache.ts               # Fetches fresh ticket data with stats
 │   ├── classify-query.ts             # Research-based query classifier
-│   ├── smart-query-handler.ts        # Two-tier query orchestrator
+│   ├── smart-query-handler.ts        # Two-tier query orchestrator with pattern integration
+│   ├── query-patterns.ts             # Comprehensive pattern recognition library (NEW)
+│   ├── conversation-cache.ts         # In-memory conversation context (NEW)
 │   ├── cached-ai-context.ts          # AI context builder (in-memory)
-│   ├── zendesk-api-client.ts         # API client with pagination
+│   ├── zendesk-api-client.ts         # API client with 15 methods + pagination
 │   ├── query-interpreter.ts          # Legacy - not actively used
 │   ├── response-formatter.ts         # Terminal formatting
 │   └── types.ts                      # TypeScript definitions
 └── api/
     └── zendesk/
         ├── query/route.ts            # Main unified query endpoint
+        ├── reply/route.ts            # AI-powered reply generation (NEW)
         ├── analyze/route.ts          # AI-powered analysis (legacy)
         ├── interpret-query/route.ts  # Legacy query interpretation
         └── refresh/route.ts          # Manual refresh trigger
@@ -135,19 +138,34 @@ export async function loadTicketCache(): Promise<TicketCacheData | null>
 -  Rate limiting awareness (429 handling)
 -  Error handling (401, 403, 404, 429, 500)
 
-**Main Methods**:
+**Main Methods** (15 total):
 ```typescript
-// Tickets
+// Ticket Retrieval
 getTickets(filters?: { status, priority, limit }): Promise<ZendeskTicket[]>
 getTicket(ticketId: number): Promise<ZendeskTicket>
+getTicketsByIds(ticketIds: number[]): Promise<ZendeskTicket[]>
 searchTickets(query: string): Promise<ZendeskTicket[]>
 
-// Analytics
-getTicketStats(): Promise<Record<string, number>>
+// Ticket Creation & Updates
+createTicket(data: TicketCreateData): Promise<ZendeskTicket>
+updateTicket(ticketId: number, data: TicketUpdateData): Promise<ZendeskTicket>
+updateTicketStatus(ticketId: number, status: string): Promise<ZendeskTicket>
+updateTicketPriority(ticketId: number, priority: string): Promise<ZendeskTicket>
+addTicketComment(ticketId: number, body: string, public: boolean): Promise<Comment>
+
+// Ticket Operations
+deleteTicket(ticketId: number): Promise<void>
+restoreTicket(ticketId: number): Promise<ZendeskTicket>
+mergeTickets(targetId: number, sourceIds: number[]): Promise<JobStatus>
+markAsSpam(ticketId: number): Promise<ZendeskTicket>
+updateManyTickets(ticketIds: number[], data: BulkUpdateData): Promise<JobStatus>
 
 // Users & Organizations
 getUsers(filters?: { role, active }): Promise<ZendeskUser[]>
 getOrganizations(): Promise<ZendeskOrganization[]>
+
+// Analytics
+getTicketStats(): Promise<Record<string, number>>
 ```
 
 **Pagination**:
@@ -289,17 +307,90 @@ Key insights:
 
 ---
 
-### 4. Smart Query Handler (`smart-query-handler.ts`)
+### 4. Query Pattern Recognition (`query-patterns.ts`)
 
-**Purpose**: Orchestrates two-tier query processing with AI fallback
+**Purpose**: Comprehensive natural language pattern library for all Zendesk operations
+
+**Architecture**:
+- **16 operation categories**: retrieval, status, priority, creation, deletion, merge, assignment, tags, collaboration, reply, analytics, organization, users, system, bulk operations
+- **100+ regex patterns**: covering all common natural language variations
+- **Type-safe definitions**: TypeScript interfaces for all patterns
+- **Centralized management**: Single source of truth for pattern matching
+
+**Pattern Categories**:
+
+```typescript
+interface QueryPattern {
+  category: string
+  operation: string
+  patterns: RegExp[]
+  requiresContext?: boolean
+  requiresConfirmation?: boolean
+  description: string
+}
+```
+
+**Example Patterns**:
+- Retrieval: `"show ticket #473"` → `get_ticket_by_id`
+- Status: `"close the first ticket"` → `update_status` (requires context)
+- Priority: `"make it urgent"` → `update_priority` (requires context)
+- Reply: `"create a reply for ticket #473"` → `generate_reply`
+- Merge: `"merge #473 and #472"` → `merge_tickets` (requires confirmation)
+
+**Helper Functions**:
+```typescript
+extractTicketId(query: string): number | null
+extractTicketIds(query: string): number[]
+extractStatus(query: string): string | null
+extractPriority(query: string): string | null
+extractEmails(query: string): string[]
+extractTags(query: string): string[]
+matchQuery(query: string): QueryPattern[]
+getBestMatch(query: string): QueryPattern | null
+```
+
+**Safety Features**:
+- `requiresContext`: Operations that need ticket context (e.g., "close the ticket")
+- `requiresConfirmation`: Destructive operations (delete, spam, bulk updates)
+
+**Integration**:
+- Used by smart-query-handler.ts for centralized pattern extraction
+- Eliminates code duplication across operation handlers
+- Foundation for future pattern-based routing
+
+---
+
+### 5. Smart Query Handler (`smart-query-handler.ts`)
+
+**Purpose**: Orchestrates two-tier query processing with pattern recognition & AI fallback
 
 **Flow**:
-1. Classify query via `classifyQuery()`
-2. If discrete pattern matched → Return instant answer from cache
-3. If no match → Fall back to AI analysis with cached context
-4. Build system prompt with ALL ticket data (word counts, descriptions)
-5. Use OpenAI GPT-4o-mini for intelligent analysis
-6. Return formatted response
+1. Check for explicit ticket number operations (e.g., "reply to ticket #473")
+2. Handle reply requests with explicit ticket IDs or context
+3. Handle ticket creation requests
+4. Handle status updates using `extractStatus()` from patterns
+5. Handle priority updates using `extractPriority()` from patterns
+6. Handle delete/spam/merge/restore operations
+7. Classify remaining queries via `classifyQuery()`
+8. If discrete pattern matched → Return instant answer from cache
+9. If no match → Fall back to AI analysis with cached context
+
+**Pattern Integration**:
+- Status handler uses centralized `extractStatus()` function
+- Priority handler uses centralized `extractPriority()` function
+- Reduced code duplication (14 lines removed)
+- Single source of truth for pattern matching
+
+**Operation Handlers** (with execution):
+- ✅ **Reply Generation**: Generate and post AI replies to tickets
+- ✅ **Status Update**: Change ticket status (close, solve, reopen, pending, hold)
+- ✅ **Priority Update**: Change ticket priority (urgent, high, normal, low)
+- ⚠️ **Assignment**: Placeholder (coming soon)
+- ⚠️ **Tags**: Placeholder (coming soon)
+- ✅ **Delete/Spam**: Soft delete or mark as spam
+- ✅ **Merge**: Combine multiple tickets
+- ✅ **Restore**: Restore deleted tickets
+- ✅ **Create Ticket**: AI-powered parameter extraction
 
 **Special Commands**:
 - `refresh` / `update` - Refresh ticket cache from Zendesk API
@@ -311,9 +402,51 @@ Key insights:
 - Includes statistics summary (byStatus, byPriority, byAge)
 - Cached in-memory to reduce token usage across requests
 
+**Conversation Context**:
+- Stores last query and last ticket list for context-aware operations
+- Enables queries like "close the first ticket" after showing tickets
+- In-memory cache with automatic cleanup
+
 ---
 
-### 5. Query Interpreter (`query-interpreter.ts`)
+### 6. Conversation Cache (`conversation-cache.ts`)
+
+**Purpose**: Store conversation context for context-aware operations
+
+**Features**:
+- In-memory storage of recent conversation exchanges
+- Stores last query and last ticket list
+- Enables context-aware operations (e.g., "close the first ticket")
+- Automatic cleanup (max 50 entries, LRU eviction)
+- Thread-safe for concurrent requests
+
+**Context Structure**:
+```typescript
+interface ConversationContext {
+  lastTickets?: Array<{
+    id: number
+    subject: string
+    description: string
+    status: string
+    priority: string
+  }>
+  lastQuery?: string
+}
+```
+
+**Usage**:
+```typescript
+// Store context after showing tickets
+addConversationEntry(query, answer, "cache", 0.95, tickets)
+
+// Retrieve context for operations
+const context = getRecentConversationContext()
+const firstTicket = context?.lastTickets?.[0]
+```
+
+---
+
+### 7. Query Interpreter (`query-interpreter.ts`)
 
 **Status**: Legacy - not actively used in production
 
@@ -321,7 +454,7 @@ Key insights:
 
 ---
 
-### 6. Response Formatter (`response-formatter.ts`)
+### 8. Response Formatter (`response-formatter.ts`)
 
 **Purpose**: Convert API responses into terminal-friendly output
 
@@ -357,6 +490,57 @@ Key insights:
 ---
 
 ## API Endpoints
+
+### POST `/api/zendesk/reply`
+
+**Purpose**: AI-powered reply generation for support tickets
+
+**Request**:
+```json
+{
+  "ticketId": 473
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "ticketId": 473,
+  "commentId": 43427955631764,
+  "replyBody": "Hello,\n\nThank you for reaching out...",
+  "ticketLink": "https://8lee.zendesk.com/agent/tickets/473"
+}
+```
+
+**Capabilities**:
+- Generates contextual AI replies based on ticket content
+- Posts reply as public comment to Zendesk
+- Uses OpenAI GPT-4o-mini for natural language generation
+- Returns direct link to ticket for verification
+- Fixes OpenAI disclaimers automatically (no "I can't assist" messages)
+
+**Example Usage**:
+```typescript
+// Via smart-query-handler:
+"create a reply for ticket #473"
+"send a response to the first ticket"
+"build a reply for ticket 473"
+```
+
+**Implementation Details**:
+- Fetches full ticket details including description and comments
+- Builds context-aware prompt for OpenAI
+- Validates generated reply (no disclaimers, proper tone)
+- Posts to Zendesk via `addTicketComment()`
+- Returns comment ID and direct link
+
+**Test Results**:
+- ✅ Ticket #473 (GDPR Compliance): Successful reply generation
+- ✅ Comment ID: 43427955631764
+- ✅ Direct link: https://8lee.zendesk.com/agent/tickets/473
+
+---
 
 ### POST `/api/zendesk/analyze`
 
