@@ -7,8 +7,13 @@ This directory contains utility scripts for testing and managing the Zendesk Int
 | Script | Purpose | Usage |
 |--------|---------|-------|
 | `test-credentials.sh` | Validate API credentials | `./scripts/test-credentials.sh` |
-| `generate-zendesk-tickets.ts` | Create realistic test tickets | `bun scripts/generate-zendesk-tickets.ts [options]` |
-| `test-zendesk-full-workflow.ts` | Comprehensive integration test | `bun run test:zendesk` |
+| `zendesk-generate-tickets.ts` | Create realistic test tickets | `bun scripts/zendesk-generate-tickets.ts [options]` |
+| `zendesk-full-workflow-test.ts` | Comprehensive integration test | `bun scripts/zendesk-full-workflow-test.ts` |
+| `zendesk-api-test.ts` | API connectivity test | `bun scripts/zendesk-api-test.ts` |
+| `zendesk-queries-test.ts` | Query classification test | `bun scripts/zendesk-queries-test.ts` |
+| `zendesk-create-synthetic-tickets.ts` | Generate test tickets with metadata | `bun scripts/zendesk-create-synthetic-tickets.ts [count]` |
+| `zendesk-add-ticket-metadata.ts` | Add metadata to existing tickets | `bun scripts/zendesk-add-ticket-metadata.ts` |
+| `zendesk-generate-tickets-with-replies.ts` | Generate tickets with AI replies | `bun scripts/zendesk-generate-tickets-with-replies.ts` |
 
 ---
 
@@ -100,7 +105,7 @@ OPENAI_API_KEY=sk-proj-your-key
 
 ---
 
-## 2. generate-zendesk-tickets.ts
+## 2. zendesk-generate-tickets.ts
 
 ### Purpose
 Generates realistic, varied support tickets directly in your Zendesk account. Useful for testing analytics, UI rendering, and AI analysis features with actual data.
@@ -117,22 +122,22 @@ Generates realistic, varied support tickets directly in your Zendesk account. Us
 
 **Create 10 random tickets (default):**
 ```bash
-bun scripts/generate-zendesk-tickets.ts
+bun scripts/zendesk-generate-tickets.ts
 ```
 
 **Create 100 tickets with slower rate limiting:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 1000
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 1000
 ```
 
 **Create 50 tickets with fixed priority:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 50 --priority high
+bun scripts/zendesk-generate-tickets.ts --count 50 --priority high
 ```
 
 **Create 25 tickets with all settings customized:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 25 --delay 750 --priority urgent --status open
+bun scripts/zendesk-generate-tickets.ts --count 25 --delay 750 --priority urgent --status open
 ```
 
 ### Command-Line Options
@@ -148,18 +153,18 @@ bun scripts/generate-zendesk-tickets.ts --count 25 --delay 750 --priority urgent
 
 **Populate account with 100 realistic tickets:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 500
 # Takes ~50 seconds (100 tickets × 500ms delay)
 ```
 
 **Quick load test with 50 high-priority urgent tickets:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 50 --priority high --delay 250
+bun scripts/zendesk-generate-tickets.ts --count 50 --priority high --delay 250
 ```
 
 **Generate support tickets in pending status for workflow testing:**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 30 --status pending
+bun scripts/zendesk-generate-tickets.ts --count 30 --status pending
 ```
 
 ### Output Example
@@ -246,25 +251,25 @@ The `--delay` option controls the millisecond pause between API requests. This i
 **Regular Testing:**
 ```bash
 # Start of week - refresh test data
-bun scripts/generate-zendesk-tickets.ts --count 50
+bun scripts/zendesk-generate-tickets.ts --count 50
 ```
 
 **Feature Development:**
 ```bash
 # Need lots of tickets for UI testing
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 500
 ```
 
 **Analytics Testing:**
 ```bash
 # Test with varied priorities
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 500
 ```
 
 **Workflow Testing:**
 ```bash
 # Test with specific statuses
-bun scripts/generate-zendesk-tickets.ts --count 30 --status pending
+bun scripts/zendesk-generate-tickets.ts --count 30 --status pending
 ```
 
 ### Troubleshooting
@@ -328,7 +333,7 @@ OPENAI_API_KEY=sk-proj-your-openai-key
 ./scripts/test-credentials.sh
 
 # 2. Create initial test data
-bun scripts/generate-zendesk-tickets.ts --count 50 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 50 --delay 500
 
 # 3. Start dev server
 bun run dev
@@ -339,13 +344,13 @@ bun run dev
 ### Refresh Test Data
 ```bash
 # Clear old tickets in Zendesk manually, then:
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 500
 ```
 
 ### Load Testing Analytics
 ```bash
 # Create lots of varied tickets for analytics testing
-bun scripts/generate-zendesk-tickets.ts --count 200 --delay 250
+bun scripts/zendesk-generate-tickets.ts --count 200 --delay 250
 
 # Then test:
 # - http://localhost:1333/zendesk
@@ -356,13 +361,13 @@ bun scripts/generate-zendesk-tickets.ts --count 200 --delay 250
 ### Create Specific Test Scenarios
 ```bash
 # All urgent tickets
-bun scripts/generate-zendesk-tickets.ts --count 30 --priority urgent
+bun scripts/zendesk-generate-tickets.ts --count 30 --priority urgent
 
 # All pending (for workflow testing)
-bun scripts/generate-zendesk-tickets.ts --count 30 --status pending
+bun scripts/zendesk-generate-tickets.ts --count 30 --status pending
 
 # Mixed with normal delays
-bun scripts/generate-zendesk-tickets.ts --count 50 --delay 500
+bun scripts/zendesk-generate-tickets.ts --count 50 --delay 500
 ```
 
 ---
@@ -375,7 +380,7 @@ bun scripts/generate-zendesk-tickets.ts --count 50 --delay 500
 - Takes ~2-3 seconds
 - Makes 2 HTTP requests (one to Zendesk, one to OpenAI)
 
-**generate-zendesk-tickets.ts:**
+**zendesk-generate-tickets.ts:**
 - Time = (count × delay) + setup time
 - Example: 100 tickets × 500ms delay = ~50 seconds + 2 seconds setup = ~52 seconds
 - Makes count HTTP requests to Zendesk API
@@ -429,7 +434,7 @@ bun scripts/generate-zendesk-tickets.ts --count 50 --delay 500
 ## 7. Script Source Files
 
 - **test-credentials.sh** - `/scripts/test-credentials.sh` (150 lines, shell)
-- **generate-zendesk-tickets.ts** - `/scripts/generate-zendesk-tickets.ts` (400+ lines, TypeScript)
+- **zendesk-generate-tickets.ts** - `/scripts/zendesk-generate-tickets.ts` (400+ lines, TypeScript)
 
 Both are well-commented and can be modified for custom test scenarios.
 
@@ -437,7 +442,7 @@ Both are well-commented and can be modified for custom test scenarios.
 
 ---
 
-## 3. test-zendesk-full-workflow.ts
+## 3. zendesk-full-workflow-test.ts
 
 ### Purpose
 Comprehensive integration test for the entire Zendesk Intelligence Portal. Tests all query types, context awareness, two-way communication, and error handling.
@@ -468,7 +473,7 @@ bun run test:zendesk
 
 **Or run directly:**
 ```bash
-bun scripts/test-zendesk-full-workflow.ts
+bun scripts/zendesk-full-workflow-test.ts
 ```
 
 ### Test Sections
@@ -612,7 +617,7 @@ Success Rate: 100.0%
 - Wait 10 seconds after starting dev server
 
 **Tests fail with "No tickets found":**
-- Run ticket generator first: `bun scripts/generate-zendesk-tickets.ts --count 50`
+- Run ticket generator first: `bun scripts/zendesk-generate-tickets.ts --count 50`
 - Refresh cache manually via UI: type "refresh"
 - Check Zendesk credentials are valid
 

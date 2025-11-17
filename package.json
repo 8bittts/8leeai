@@ -17,7 +17,7 @@
     "packages": "bun scripts/x-package-monitor.js",
     "packages:watch": "bun scripts/x-package-monitor.js --watch",
     "packages:critical": "bun scripts/x-package-monitor.js --critical",
-    "test:zendesk": "bun scripts/test-zendesk-full-workflow.ts"
+    "test:zendesk": "bun scripts/zendesk-full-workflow-test.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.67",

@@ -186,7 +186,7 @@ Available models: 108
 ### 2. Generate Test Data (Optional)
 ```bash
 # Generate 100 realistic varied tickets
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 250
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 250
 ```
 
 ### 3. Start Dev Server
@@ -237,22 +237,22 @@ http://localhost:1333/zendesk
 - Shows total ticket count and available models
 - Displays first ticket sample and model list
 
-### Script 2: generate-zendesk-tickets.ts
+### Script 2: zendesk-generate-tickets.ts
 
 **Purpose**: Create realistic varied support tickets
-**Location**: `./scripts/generate-zendesk-tickets.ts`
+**Location**: `./scripts/zendesk-generate-tickets.ts`
 **Runtime**: ~50 seconds for 100 tickets (with 250ms delay)
 
 **Usage**:
 ```bash
 # Basic (10 tickets)
-bun scripts/generate-zendesk-tickets.ts
+bun scripts/zendesk-generate-tickets.ts
 
 # With options
-bun scripts/generate-zendesk-tickets.ts --count 100 --delay 250
+bun scripts/zendesk-generate-tickets.ts --count 100 --delay 250
 
 # Fixed priority/status
-bun scripts/generate-zendesk-tickets.ts --count 50 --priority urgent
+bun scripts/zendesk-generate-tickets.ts --count 50 --priority urgent
 ```
 
 **Options**:
@@ -376,7 +376,7 @@ bun scripts/generate-zendesk-tickets.ts --count 50 --priority urgent
 
 ✅ **Ticket Generation**
 ```bash
-bun scripts/generate-zendesk-tickets.ts --count 10
+bun scripts/zendesk-generate-tickets.ts --count 10
 # Expected: All 10 created successfully
 ```
 
@@ -464,7 +464,7 @@ curl -X POST http://localhost:1333/api/zendesk/analyze \
 
 ### Generation Fails
 
-**Symptom**: `generate-zendesk-tickets.ts` fails with errors
+**Symptom**: `zendesk-generate-tickets.ts` fails with errors
 
 **Solution**:
 1. Run `./scripts/test-credentials.sh` first - must pass

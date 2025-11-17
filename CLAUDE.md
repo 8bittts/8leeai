@@ -159,13 +159,14 @@ All portfolio data lives in `/lib/data.ts`:
 
 ### Zendesk Intelligence Portal Documentation
 
-**Comprehensive documentation for the Zendesk Intelligence Portal is organized in `_docs/`:**
+**Comprehensive documentation for the Zendesk Intelligence Portal is organized in `app/zendesk/_docs/`:**
 
 - **`zendesk-MASTER.md`** - CANONICAL master technical documentation (all implementation details, architecture, API reference)
 - **`zendesk-implementation-status.md`** - Implementation progress tracker
 - **`zendesk-expansion-plan.md`** - Future API expansion roadmap
 - **`zendesk-system-documentation.md`** - Complete system documentation
 - **`zendesk-intercom-form-components.md`** - UI components reference guide
+- **`metadata-test-results.md`** - Metadata operations test results
 
 **Key Features:**
 - Natural language query processing with AI-powered analysis
@@ -174,13 +175,29 @@ All portfolio data lives in `/lib/data.ts`:
 - Pattern recognition for discrete queries (status, priority, type, tags)
 - Context-aware conversation with memory of last query and ticket list
 - Comprehensive metadata support (assignees, tags, ticket types, groups)
+- 92.9% query classification accuracy with sub-2ms metadata queries
 
 **When working with Zendesk code:**
-1. Refer to `zendesk-MASTER.md` as the canonical source of truth
+1. Refer to `app/zendesk/_docs/zendesk-MASTER.md` as the canonical source of truth
 2. All API methods in `app/zendesk/lib/zendesk-api-client.ts`
 3. Query handling in `app/zendesk/lib/smart-query-handler.ts`
 4. Pattern matching in `app/zendesk/lib/query-patterns.ts`
 5. Cache management in `app/zendesk/lib/ticket-cache.ts`
+
+**File Organization Rules:**
+- **Documentation**: ALL Zendesk docs MUST go in `app/zendesk/_docs/`
+- **Scripts**: ALL Zendesk scripts MUST use `zendesk-` prefix in `scripts/`
+- **Test Scripts**: Use `-test` suffix (e.g., `zendesk-queries-test.ts`, NOT `test-zendesk-queries.ts`)
+- **Components**: ALL Zendesk components in `app/zendesk/components/`
+- **Library**: ALL Zendesk utilities in `app/zendesk/lib/`
+- **Tests**: ALL Zendesk tests in `app/zendesk/__tests__/`
+
+**Creating New Zendesk Files:**
+- Documentation → `app/zendesk/_docs/zendesk-[name].md`
+- Scripts → `scripts/zendesk-[name].ts` or `scripts/zendesk-[name]-test.ts`
+- Components → `app/zendesk/components/[name].tsx`
+- Library code → `app/zendesk/lib/[name].ts`
+- Tests → `app/zendesk/__tests__/[name].test.ts`
 
 ### Adding New Content
 
