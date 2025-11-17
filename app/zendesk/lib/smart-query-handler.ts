@@ -325,7 +325,70 @@ export async function handleSmartQuery(
 
     // Check if query is asking to build/send a reply
     const isReplyRequest =
-      /\b(build|create|generate|write|send|post)\s+(a\s+)?(reply|response|comment)\b/i.test(query)
+      /\b(build|create|generate|write|send|post)\s+(a\s+)?(reply|response|comment|answer)\b/i.test(
+        query
+      )
+
+    // Check if query explicitly mentions a ticket number
+    const explicitTicketMatch = query.match(/ticket\s*#?(\d+)|#(\d+)/i)
+    const explicitTicketId = explicitTicketMatch
+      ? Number.parseInt(explicitTicketMatch[1] ?? explicitTicketMatch[2] ?? "", 10) || null
+      : null
+
+    // Handle reply requests with explicit ticket number (e.g., "create a reply for ticket #473")
+    if (isReplyRequest && explicitTicketId) {
+      console.log(`[SmartQuery] Handling reply request for explicit ticket #${explicitTicketId}`)
+
+      try {
+        // Fetch the specific ticket first to get its details
+        const client = getZendeskClient()
+        const ticket = await client.getTicket(explicitTicketId)
+
+        // Call the reply endpoint
+        const replyResponse = await fetch("http://localhost:1333/api/zendesk/reply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ticketId: explicitTicketId }),
+        })
+
+        if (!replyResponse.ok) {
+          throw new Error("Failed to generate and post reply")
+        }
+
+        const replyData = (await replyResponse.json()) as {
+          success: boolean
+          ticketId: number
+          commentId: number
+          replyBody: string
+          ticketLink: string
+        }
+
+        const processingTime = Date.now() - startTime
+
+        const answer = `✅ **Reply Generated and Posted**\n\n**Ticket:** #${replyData.ticketId} - ${ticket.subject}\n\n**Reply Preview:**\n${replyData.replyBody.substring(0, 300)}${replyData.replyBody.length > 300 ? "..." : ""}\n\n**Direct Link:** ${replyData.ticketLink}\n**Comment ID:** ${replyData.commentId}\n\nThe reply has been successfully posted to Zendesk and is now visible to the customer.`
+        addConversationEntry(query, answer, "ai", 0.95)
+
+        return {
+          answer,
+          source: "ai",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        const answer = `❌ **Error Generating Reply**\n\nFailed to create reply for ticket #${explicitTicketId}\n\nError: ${errorMsg}\n\nPlease verify the ticket number exists and try again.`
+        addConversationEntry(query, answer, "live", 0)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
+      }
+    }
 
     // Handle reply requests with context
     if (isReplyRequest && context?.lastTickets && context.lastTickets.length > 0) {

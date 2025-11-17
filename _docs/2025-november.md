@@ -4,6 +4,31 @@
 
 ### November 17, 2025
 
+#### Reply generation fix for explicit ticket numbers
+
+**Fixed bug where reply generation didn't work with explicit ticket numbers:**
+- Previously: "create a reply for ticket #473" would fail with "can't create replies"
+- Root cause: Reply logic only worked when tickets were in context (after showing ticket list)
+- Solution: Added pattern matching to extract ticket numbers from queries
+
+**Implementation details:**
+- Added regex pattern: `/ticket\s*#?(\d+)|#(\d+)/i` to detect explicit ticket numbers
+- New handler fetches ticket first using `getTicket(id)`, then generates reply
+- Fixed TypeScript type error with nullish coalescing: `explicitTicketMatch[1] ?? explicitTicketMatch[2] ?? ''`
+- Handler runs BEFORE context-based reply handler for proper priority
+
+**User experience:**
+- Queries like "create a reply for ticket #473" now work correctly
+- System fetches ticket, generates reply, posts to Zendesk, and returns direct link
+- Error handling provides clear feedback if ticket doesn't exist
+
+**Files Changed:**
+- `app/zendesk/lib/smart-query-handler.ts` - Added explicit ticket number detection and handling (65 new lines)
+
+**Test Status:** TypeScript check passed, Biome check passed (1 file auto-formatted)
+
+---
+
 #### Documentation semantic naming improvements
 
 **Renamed all documentation files to be semantic and descriptive:**
