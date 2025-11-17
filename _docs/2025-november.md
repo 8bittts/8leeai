@@ -4,6 +4,31 @@
 
 ### November 17, 2025
 
+#### Documentation semantic naming improvements
+
+**Renamed all documentation files to be semantic and descriptive:**
+- `zendesk.md` → `zendesk-technical-guide.md`
+- `SYSTEM_DOCUMENTATION.md` → `zendesk-system-documentation.md`
+- `FORM_COMPONENTS.md` → `zendesk-intercom-form-components.md`
+- `INTERCOM_MASTER.md` → `intercom-integration-guide.md`
+- `app/zendesk/STATUS.md` → `_docs/zendesk-implementation-status.md` (moved to docs folder)
+
+**Updated all references globally:**
+- `_docs/README.md` - Updated all documentation links
+- `_docs/zendesk-technical-guide.md` - Updated Contact & Support section
+- `_docs/2025-november.md` - Updated previous entries with new file names
+
+**Benefits:**
+- File names are now self-documenting and descriptive
+- All Zendesk docs have `zendesk-` prefix for easy identification
+- All Intercom docs have `intercom-` prefix
+- Consistent naming convention across all documentation
+- All documentation centralized in `_docs/` folder
+
+**Files Changed:** 5 files renamed, all references updated across 3 files
+
+---
+
 #### Documentation consolidation and cleanup
 
 **Removed duplicate/outdated files:**
@@ -13,14 +38,16 @@
 
 **Updated references globally:**
 - Updated `_docs/README.md` - Refreshed documentation index, removed stale references
-- Updated `_docs/zendesk.md` - Updated Contact & Support section with correct file paths
-- Updated `app/zendesk/STATUS.md` - Updated EXPANSION_PLAN.md reference
+- Updated `_docs/zendesk-technical-guide.md` - Updated Contact & Support section with correct file paths
+- Updated `_docs/zendesk-implementation-status.md` - Updated EXPANSION_PLAN.md reference
 
 **Documentation structure:**
-- `_docs/zendesk.md` - Master technical documentation (current implementation)
+- `_docs/zendesk-technical-guide.md` - Master technical documentation (current implementation)
+- `_docs/zendesk-implementation-status.md` - Implementation status and progress
 - `_docs/zendesk-expansion-plan.md` - Future API expansion roadmap
-- `_docs/SYSTEM_DOCUMENTATION.md` - Complete system documentation
-- `_docs/FORM_COMPONENTS.md` - UI components reference
+- `_docs/zendesk-system-documentation.md` - Complete system documentation
+- `_docs/zendesk-intercom-form-components.md` - UI components reference
+- `_docs/intercom-integration-guide.md` - Intercom integration documentation
 
 **Impact:**
 - Cleaner documentation structure
@@ -28,7 +55,7 @@
 - All references accurate and up-to-date
 - Easier to maintain going forward
 
-**Files Changed:** _docs/README.md, _docs/zendesk.md, app/zendesk/STATUS.md, _docs/zendesk-expansion-plan.md (moved)
+**Files Changed:** _docs/README.md, _docs/zendesk-technical-guide.md, _docs/zendesk-implementation-status.md, _docs/zendesk-expansion-plan.md (moved)
 
 ---
 

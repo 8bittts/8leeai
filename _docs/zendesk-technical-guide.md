@@ -728,9 +728,10 @@ No files, no cache, no complexity.
 ## Contact & Support
 
 **Documentation**:
-- This file: `_docs/zendesk.md`
+- This file: `_docs/zendesk-technical-guide.md`
 - Expansion plan: `_docs/zendesk-expansion-plan.md`
-- System docs: `_docs/SYSTEM_DOCUMENTATION.md`
+- System docs: `_docs/zendesk-system-documentation.md`
+- Implementation status: `_docs/zendesk-implementation-status.md`
 - Scripts: `scripts/README.md`
 
 **Code Structure**:

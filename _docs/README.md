@@ -49,13 +49,14 @@ Active release note files:
 ## Project Documentation
 
 ### Zendesk Intelligence Portal
-- [zendesk.md](zendesk.md) - Master technical documentation
+- [zendesk-technical-guide.md](zendesk-technical-guide.md) - Master technical documentation
+- [zendesk-implementation-status.md](zendesk-implementation-status.md) - Implementation status and progress
 - [zendesk-expansion-plan.md](zendesk-expansion-plan.md) - Future API expansion roadmap
-- [SYSTEM_DOCUMENTATION.md](SYSTEM_DOCUMENTATION.md) - Complete system documentation
-- [FORM_COMPONENTS.md](FORM_COMPONENTS.md) - UI components reference guide
+- [zendesk-system-documentation.md](zendesk-system-documentation.md) - Complete system documentation
+- [zendesk-intercom-form-components.md](zendesk-intercom-form-components.md) - UI components reference guide
 
 ### Intercom Integration
-- [INTERCOM_MASTER.md](INTERCOM_MASTER.md) - Intercom integration documentation
+- [intercom-integration-guide.md](intercom-integration-guide.md) - Intercom integration documentation
 
-### Planning & Ideas
-- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Terminal portfolio enhancement ideas
+### Terminal Portfolio
+- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Enhancement ideas and roadmap
