@@ -465,7 +465,7 @@ export async function handleSmartQuery(
         ticketIndex = indexMap[indexWord] ?? 0
       }
 
-      const targetTicket = context.lastTickets[ticketIndex]
+      const targetTicket = context.lastTickets?.[ticketIndex]
 
       if (!(targetTicket && targetStatus)) {
         const processingTime = Date.now() - startTime
@@ -597,7 +597,7 @@ export async function handleSmartQuery(
         ticketIndex = indexMap[indexWord] ?? 0
       }
 
-      const targetTicket = context.lastTickets[ticketIndex]
+      const targetTicket = context.lastTickets?.[ticketIndex]
 
       if (!targetTicket) {
         const processingTime = Date.now() - startTime
@@ -632,7 +632,7 @@ export async function handleSmartQuery(
 
       return {
         answer: `✅ **Ticket Merge Detected**\n\n**Available tickets:**\n${context.lastTickets
-          .slice(0, 5)
+          ?.slice(0, 5)
           .map((t, i) => `${i + 1}. #${t.id} - ${t.subject}`)
           .join(
             "\n"
@@ -722,7 +722,7 @@ export async function handleSmartQuery(
         ticketIndex = indexMap[indexWord] ?? 0
       }
 
-      const targetTicket = context.lastTickets[ticketIndex]
+      const targetTicket = context.lastTickets?.[ticketIndex]
 
       if (!(targetTicket && targetPriority)) {
         const processingTime = Date.now() - startTime

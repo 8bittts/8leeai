@@ -322,7 +322,11 @@ async function runTests(): Promise<void> {
     (r) => r.source === "ai"
   )
 
-  await test("SLA Analysis", "how many tickets are at risk of missing SLA", (r) => r.source === "ai")
+  await test(
+    "SLA Analysis",
+    "how many tickets are at risk of missing SLA",
+    (r) => r.source === "ai"
+  )
 
   await test(
     "Content Pattern Analysis",
@@ -542,12 +546,20 @@ async function runTests(): Promise<void> {
     // Test actual confirmation (will succeed if ticket exists)
     if (testContext && testContext.length > 0) {
       const firstTicket = testContext[0] as { id: number }
-      await test("Delete Confirmation - Execute", `confirm delete ticket #${firstTicket.id}`, (r) =>
-        r.answer.includes("Deleted") || r.answer.includes("deleted") || r.answer.includes("Error")
+      await test(
+        "Delete Confirmation - Execute",
+        `confirm delete ticket #${firstTicket.id}`,
+        (r) =>
+          r.answer.includes("Deleted") || r.answer.includes("deleted") || r.answer.includes("Error")
       )
 
-      await test("Restore Ticket", `restore ticket #${firstTicket.id}`, (r) =>
-        r.answer.includes("Restored") || r.answer.includes("restored") || r.answer.includes("Error")
+      await test(
+        "Restore Ticket",
+        `restore ticket #${firstTicket.id}`,
+        (r) =>
+          r.answer.includes("Restored") ||
+          r.answer.includes("restored") ||
+          r.answer.includes("Error")
       )
     }
 
