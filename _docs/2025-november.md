@@ -58,11 +58,12 @@
 - Realistic data improves AI training and testing accuracy
 - Demonstrates full Zendesk API integration (ticket creation + comments)
 
-**Files Changed:** scripts/generate-tickets-with-replies.ts (new), _docs/2025-november.md
+**Files Changed:** scripts/generate-tickets-with-replies.ts (new), _docs/2025-november.md, CLAUDE.md (Git commit guidelines added)
 
 **Commits:**
 - Create production-ready ticket generator with conversation threads
 - Fix all Biome lint issues aggressively
+- Add Git commit guidelines to CLAUDE.md (no Claude attribution in commits)
 
 ---
 
