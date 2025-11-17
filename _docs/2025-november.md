@@ -4,6 +4,68 @@
 
 ### November 17, 2025
 
+#### Comprehensive query pattern recognition system
+
+**Created extensive natural language pattern library for all Zendesk operations:**
+- **16 operation categories**: retrieval, status, priority, creation, deletion, merge, assignment, tags, collaboration, reply, analytics, organization, users, system, bulk operations
+- **100+ regex patterns**: covering all common natural language variations
+- **Smart extraction functions**: ticket IDs, status, priority, emails, tags
+- **Pattern matching engine**: finds best match with priority ordering
+
+**Operation categories covered:**
+- **Ticket Retrieval**: list tickets, get by ID, search, count
+- **Status Management**: close, solve, reopen, pending, hold
+- **Priority Control**: urgent, high, normal, low, escalate, de-escalate
+- **Creation**: create/open new tickets
+- **Deletion**: delete, restore, mark spam
+- **Merging**: combine/consolidate multiple tickets
+- **Assignment**: assign to agent, assign to group
+- **Tags**: add tags, remove tags
+- **Collaboration**: add/remove CCs and collaborators
+- **Replies**: generate AI responses
+- **Analytics**: status breakdown, priority breakdown, age analysis
+- **Organization**: org tickets, org stats
+- **Users**: user tickets, agent assignments
+- **System**: refresh cache, help commands
+- **Bulk**: bulk updates, bulk assignments (with confirmation)
+
+**Example patterns recognized:**
+- "show ticket #473" → get_ticket_by_id
+- "close the first ticket" → update_status (requires context)
+- "make it urgent priority" → update_priority (requires context)
+- "assign to john@company.com" → assign_ticket (requires context)
+- "tag it as billing" → add_tags (requires context)
+- "merge tickets #473 and #472" → merge_tickets (requires confirmation)
+- "how many open tickets" → count_tickets + status filter
+- "tickets older than 7 days" → age_analysis
+
+**Safety features:**
+- `requiresContext`: Operations that need ticket context (e.g., "close the ticket")
+- `requiresConfirmation`: Destructive operations (delete, spam, bulk updates)
+
+**Helper utilities:**
+- `extractTicketId()`: Single ID extraction ("ticket #473" → 473)
+- `extractTicketIds()`: Multiple IDs ("merge #473 and #472" → [473, 472])
+- `extractStatus()`: Status keywords ("close" → "closed", "solve" → "solved")
+- `extractPriority()`: Priority levels (urgent, high, normal, low)
+- `extractEmails()`: Email addresses for assignments/CCs
+- `extractTags()`: Tag extraction (quoted, simple, comma-separated)
+- `matchQuery()`: Find all matching patterns
+- `getBestMatch()`: Get highest priority match
+
+**Files Changed:**
+- `app/zendesk/lib/query-patterns.ts` - New file with comprehensive pattern library (450+ lines)
+
+**Architecture benefits:**
+- Centralized pattern management (easier to maintain and expand)
+- Type-safe pattern definitions with TypeScript
+- Reusable across smart-query-handler and future components
+- Foundation for AI-powered intent classification (Phase 4)
+
+**Test Status:** TypeScript check passed, Biome check passed (1 file auto-formatted)
+
+---
+
 #### Reply generation fix for explicit ticket numbers
 
 **Fixed bug where reply generation didn't work with explicit ticket numbers:**
