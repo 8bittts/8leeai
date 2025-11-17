@@ -214,15 +214,15 @@ export function ZendeskChatContainer() {
   }, [])
 
   return (
-    <main className="min-h-screen w-full bg-black text-green-500 font-mono relative flex items-center justify-center px-8 py-[100px]">
+    <main className="min-h-screen w-full bg-black text-green-500 font-mono relative flex items-center justify-center px-8 py-8">
       {/* Matrix background effect */}
       <MatrixBackground />
 
-      {/* Terminal window container - wide with equal vertical spacing */}
+      {/* Terminal window container - wide with minimal vertical spacing */}
       <div
         className="relative z-10 w-full h-full border-2 border-green-500/30 rounded-lg shadow-2xl shadow-green-500/20 bg-black flex flex-col overflow-hidden"
         onClick={handleMainClick}
-        style={{ height: "calc(100vh - 200px)" }}
+        style={{ height: "calc(100vh - 64px)" }}
       >
         {/* Zendesk Header with ASCII Art */}
         <ZendeskHeader />
