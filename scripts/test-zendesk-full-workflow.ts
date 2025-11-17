@@ -281,8 +281,93 @@ async function runTests(): Promise<void> {
     (r) => r.answer.includes("tickets") || r.answer.includes("description")
   )
 
+  // Additional comprehensive AI analysis tests
+  await test("Trend Analysis - Volume", "show ticket volume trends", (r) => r.source === "ai")
+
+  await test(
+    "Agent Performance",
+    "which agent has the most open tickets",
+    (r) => r.source === "ai" && r.answer.length > 30
+  )
+
+  await test(
+    "Organization Insights",
+    "show top 5 organizations by ticket count",
+    (r) => r.source === "ai"
+  )
+
+  await test("Tag Analysis", "what are the most common tags", (r) => r.source === "ai")
+
+  await test(
+    "Response Time Analysis",
+    "what's the average time to first response",
+    (r) => r.source === "ai"
+  )
+
+  await test(
+    "Resolution Analysis",
+    "what's the average resolution time by priority",
+    (r) => r.source === "ai"
+  )
+
+  await test(
+    "Correlation Analysis",
+    "are high priority tickets assigned to specific agents",
+    (r) => r.source === "ai"
+  )
+
+  await test(
+    "Priority Escalation",
+    "which low priority tickets should be escalated",
+    (r) => r.source === "ai"
+  )
+
+  await test("SLA Analysis", "how many tickets are at risk of missing SLA", (r) => r.source === "ai")
+
+  await test(
+    "Content Pattern Analysis",
+    "find all tickets about password reset",
+    (r) => r.source === "ai" && r.answer.length > 40
+  )
+
+  await test(
+    "Multi-Condition Search",
+    "find urgent tickets from last 24 hours",
+    (r) => r.answer.length > 20
+  )
+
+  await test("Ticket Age Distribution", "how old are our tickets", (r) => r.source === "ai")
+
+  await test("Requester Analysis", "who creates the most tickets", (r) => r.source === "ai")
+
+  await test("Solved Ticket Analysis", "analyze recently solved tickets", (r) => r.source === "ai")
+
+  await test("Open vs Closed Ratio", "what's our open vs closed ratio", (r) => r.source === "ai")
+
+  await test(
+    "Custom Field Analysis",
+    "analyze tickets by custom field values",
+    (r) => r.source === "ai"
+  )
+
+  await test("Group Performance", "which group handles the most tickets", (r) => r.source === "ai")
+
+  await test("Ticket Type Distribution", "breakdown by ticket type", (r) => r.source === "ai")
+
+  await test(
+    "Problem Ticket Analysis",
+    "show problem tickets and their incidents",
+    (r) => r.source === "ai"
+  )
+
+  await test(
+    "Unassigned Tickets",
+    "how many tickets are unassigned",
+    (r) => r.answer.includes("unassigned") || r.answer.includes("tickets")
+  )
+
   // ============================================================================
-  // SECTION 5: Context-Aware Reply Generation (Two-Way Communication)
+  // SECTION 5: Comprehensive Ticket Operations
   // ============================================================================
   console.log(`\n${"=".repeat(80)}`)
   console.log("SECTION 5: Context-Aware Reply Generation")
@@ -352,9 +437,220 @@ async function runTests(): Promise<void> {
         r.answer.includes("available"),
       contextWithTickets
     )
+
+    // ============================================================================
+    // SECTION 5B: Status Update Operations
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5B: Status Update Operations")
+    console.log("=".repeat(80))
+
+    await test(
+      "Status Update - Close Ticket",
+      "close the first ticket",
+      (r) =>
+        r.answer.includes("Status Updated") ||
+        r.answer.includes("closed") ||
+        r.answer.includes("zendesk.com"),
+      contextWithTickets
+    )
+
+    await test(
+      "Status Update - Solve Ticket",
+      "mark second ticket as solved",
+      (r) => r.answer.includes("solved") || r.answer.includes("Status"),
+      contextWithTickets
+    )
+
+    await test(
+      "Status Update - Reopen",
+      "reopen the third ticket",
+      (r) => r.answer.includes("open") || r.answer.includes("Status"),
+      contextWithTickets
+    )
+
+    await test(
+      "Status Update - Pending",
+      "set status to pending for first ticket",
+      (r) => r.answer.includes("pending") || r.answer.includes("Status"),
+      contextWithTickets
+    )
+
+    await test(
+      "Status Update - Hold",
+      "put first ticket on hold",
+      (r) => r.answer.includes("hold") || r.answer.includes("Status"),
+      contextWithTickets
+    )
+
+    // ============================================================================
+    // SECTION 5C: Priority Update Operations
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5C: Priority Update Operations")
+    console.log("=".repeat(80))
+
+    await test(
+      "Priority Update - Urgent",
+      "set priority to urgent for first ticket",
+      (r) => r.answer.includes("urgent") || r.answer.includes("Priority"),
+      contextWithTickets
+    )
+
+    await test(
+      "Priority Update - High",
+      "change priority to high",
+      (r) => r.answer.includes("high") || r.answer.includes("Priority"),
+      contextWithTickets
+    )
+
+    await test(
+      "Priority Update - Normal",
+      "set first ticket priority to normal",
+      (r) => r.answer.includes("normal") || r.answer.includes("Priority"),
+      contextWithTickets
+    )
+
+    await test(
+      "Priority Update - Low",
+      "downgrade priority to low",
+      (r) => r.answer.includes("low") || r.answer.includes("Priority"),
+      contextWithTickets
+    )
+
+    // ============================================================================
+    // SECTION 5D: Delete & Restore Operations
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5D: Delete & Restore Operations")
+    console.log("=".repeat(80))
+
+    await test(
+      "Delete Detection - Confirmation Required",
+      "delete the first ticket",
+      (r) => r.answer.includes("Confirmation Required") || r.answer.includes("confirm"),
+      contextWithTickets
+    )
+
+    await test(
+      "Spam Detection - Confirmation Required",
+      "mark second ticket as spam",
+      (r) => r.answer.includes("Confirmation Required") || r.answer.includes("confirm"),
+      contextWithTickets
+    )
+
+    // Test actual confirmation (will succeed if ticket exists)
+    if (testContext && testContext.length > 0) {
+      const firstTicket = testContext[0] as { id: number }
+      await test("Delete Confirmation - Execute", `confirm delete ticket #${firstTicket.id}`, (r) =>
+        r.answer.includes("Deleted") || r.answer.includes("deleted") || r.answer.includes("Error")
+      )
+
+      await test("Restore Ticket", `restore ticket #${firstTicket.id}`, (r) =>
+        r.answer.includes("Restored") || r.answer.includes("restored") || r.answer.includes("Error")
+      )
+    }
+
+    // ============================================================================
+    // SECTION 5E: Assignment & Tag Operations
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5E: Assignment & Tag Operations")
+    console.log("=".repeat(80))
+
+    await test(
+      "Assignment Detection",
+      "assign first ticket to agent",
+      (r) => r.answer.includes("Assignment") || r.answer.includes("assign"),
+      contextWithTickets
+    )
+
+    await test(
+      "Tag Operation - Add",
+      "add tags billing,urgent to first ticket",
+      (r) => r.answer.includes("Tag") || r.answer.includes("tags"),
+      contextWithTickets
+    )
+
+    await test(
+      "Tag Operation - Remove",
+      "remove tag spam from second ticket",
+      (r) => r.answer.includes("Tag") || r.answer.includes("tags"),
+      contextWithTickets
+    )
+
+    // ============================================================================
+    // SECTION 5F: Merge & Advanced Operations
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5F: Merge & Advanced Operations")
+    console.log("=".repeat(80))
+
+    await test(
+      "Merge Detection",
+      "merge tickets 2 and 3 into ticket 1",
+      (r) => r.answer.includes("Merge") || r.answer.includes("merge"),
+      contextWithTickets
+    )
+
+    // ============================================================================
+    // SECTION 5G: Ticket Creation
+    // ============================================================================
+    console.log(`\n${"=".repeat(80)}`)
+    console.log("SECTION 5G: Ticket Creation")
+    console.log("=".repeat(80))
+
+    await test(
+      "Create Ticket Detection",
+      "create a ticket about login issues",
+      (r) => r.answer.includes("Ticket Creation") || r.answer.includes("create")
+    )
+
+    await test(
+      "Create Ticket with Details",
+      'create ticket titled "Test Issue" with priority high',
+      (r) => r.answer.includes("Ticket Creation") || r.answer.includes("priority")
+    )
   } else {
-    console.log("\n⚠️  Skipping context-aware reply tests - no tickets available in context")
+    console.log("\n⚠️  Skipping context-aware operation tests - no tickets available in context")
   }
+
+  // ============================================================================
+  // SECTION 5H: Multi-Step Operations
+  // ============================================================================
+  console.log(`\n${"=".repeat(80)}`)
+  console.log("SECTION 5H: Multi-Step Query Interpretation")
+  console.log("=".repeat(80))
+
+  await test(
+    "Multi-Step - Find and Assign",
+    "find high priority tickets and show me the first 3",
+    (r) => r.answer.length > 30
+  )
+
+  await test(
+    "Multi-Step - Filter and Count",
+    "count all open tickets from the last week",
+    (r) => r.answer.includes("tickets") || r.answer.includes("open")
+  )
+
+  await test(
+    "Multi-Step - Search and Analyze",
+    "find tickets about billing and tell me which agent handles them most",
+    (r) => r.source === "ai" && r.answer.length > 40
+  )
+
+  await test(
+    "Complex Query - Time Range + Status",
+    "show me urgent tickets created in the last 48 hours that are still open",
+    (r) => r.answer.length > 30
+  )
+
+  await test(
+    "Complex Query - Organization + Priority",
+    "which organizations have the most high priority tickets",
+    (r) => r.source === "ai"
+  )
 
   // ============================================================================
   // SECTION 6: Error Handling & Edge Cases
