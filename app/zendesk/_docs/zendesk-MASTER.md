@@ -3,7 +3,7 @@
 **Last Updated**: November 17, 2025 (Phase 6.7)
 **Status**: Production-Ready with Comprehensive Pattern Recognition, Reply Generation & Polished Terminal UI
 
-**📄 Executive Demo Document**: See [`zendesk-demo.md`](./zendesk-demo.md) for comprehensive PM interview presentation with business impact, command examples, and technical deep-dive.
+** Executive Demo Document**: See [`zendesk-demo.md`](./zendesk-demo.md) for comprehensive PM interview presentation with business impact, command examples, and technical deep-dive.
 
 ---
 
@@ -281,14 +281,14 @@ The order of pattern matching in `tryDiscreteMatch()` is crucial. Specific patte
 
 **Edge Case Examples**:
 ```
-✅ CACHE: "How many high priority tickets?"
-❌ AI: "How many high priority tickets need attention?" (action verb)
+[PASS] CACHE: "How many high priority tickets?"
+[FAIL] AI: "How many high priority tickets need attention?" (action verb)
 
-✅ CACHE: "Show me urgent tickets"
-❌ AI: "Show me urgent tickets that mention billing" (content search)
+[PASS] CACHE: "Show me urgent tickets"
+[FAIL] AI: "Show me urgent tickets that mention billing" (content search)
 
-✅ CACHE: "Which status has the most tickets?"
-❌ AI: "Which problems are most common?" (requires content analysis)
+[PASS] CACHE: "Which status has the most tickets?"
+[FAIL] AI: "Which problems are most common?" (requires content analysis)
 ```
 
 **Returns**:
@@ -423,16 +423,16 @@ getBestMatch(query: string): QueryPattern | null
 - Single source of truth for pattern matching
 
 **Operation Handlers** (with execution):
-- ✅ **Reply Generation**: Generate and post AI replies to tickets
-- ✅ **Status Update**: Change ticket status (close, solve, reopen, pending, hold)
-- ✅ **Priority Update**: Change ticket priority (urgent, high, normal, low)
-- ✅ **Assignment**: Assign tickets to agents by email
-- ✅ **Tags**: Add or remove tags from tickets
-- ✅ **Delete/Spam**: Soft delete or mark as spam
-- ✅ **Merge**: Combine multiple tickets
-- ✅ **Restore**: Restore deleted tickets
-- ✅ **Create Ticket**: AI-powered parameter extraction
-- ✅ **List Users/Customers**: Fetch and display users grouped by role (admins, agents, customers)
+- [PASS] **Reply Generation**: Generate and post AI replies to tickets
+- [PASS] **Status Update**: Change ticket status (close, solve, reopen, pending, hold)
+- [PASS] **Priority Update**: Change ticket priority (urgent, high, normal, low)
+- [PASS] **Assignment**: Assign tickets to agents by email
+- [PASS] **Tags**: Add or remove tags from tickets
+- [PASS] **Delete/Spam**: Soft delete or mark as spam
+- [PASS] **Merge**: Combine multiple tickets
+- [PASS] **Restore**: Restore deleted tickets
+- [PASS] **Create Ticket**: AI-powered parameter extraction
+- [PASS] **List Users/Customers**: Fetch and display users grouped by role (admins, agents, customers)
 
 **Special Commands**:
 - `refresh` / `update` - Refresh ticket cache from Zendesk API
@@ -498,21 +498,21 @@ const firstTicket = context?.lastTickets?.[0]
 
 | Category | Tests | Status | Performance |
 |----------|-------|--------|-------------|
-| Tag Queries | 5/5 | ✅ 100% | <2ms cache |
-| Type Queries | 5/5 | ✅ 100% | <2ms cache |
-| Priority Queries | 3/4 | ⚠️ 75% | <2ms cache |
-| Assignment Operations | 1/2 | ⚠️ 50% | N/A |
-| Tag Operations | 3/3 | ✅ 100% | N/A |
-| Complex Queries | 3/3 | ✅ 100% | Varies |
-| Error Handling | 3/3 | ✅ 100% | <100ms |
-| Cache Performance | 3/3 | ✅ 100% | <2ms |
+| Tag Queries | 5/5 | [PASS] 100% | <2ms cache |
+| Type Queries | 5/5 | [PASS] 100% | <2ms cache |
+| Priority Queries | 3/4 | [NOTE] 75% | <2ms cache |
+| Assignment Operations | 1/2 | [NOTE] 50% | N/A |
+| Tag Operations | 3/3 | [PASS] 100% | N/A |
+| Complex Queries | 3/3 | [PASS] 100% | Varies |
+| Error Handling | 3/3 | [PASS] 100% | <100ms |
+| Cache Performance | 3/3 | [PASS] 100% | <2ms |
 
 **Example Queries** (Production Validated):
 ```
-✅ "how many tickets are tagged billing?" → 4 tickets
-✅ "breakdown by ticket type" → question: 323 | incident: 9 | problem: 8 | task: 6
-✅ "how many urgent tickets?" → urgent: 88
-✅ "show high priority tickets" → high: 89
+[PASS] "how many tickets are tagged billing?" → 4 tickets
+[PASS] "breakdown by ticket type" → question: 323 | incident: 9 | problem: 8 | task: 6
+[PASS] "how many urgent tickets?" → urgent: 88
+[PASS] "show high priority tickets" → high: 89
 ```
 
 **Production Database State** (346 tickets):
@@ -628,9 +628,9 @@ const firstTicket = context?.lastTickets?.[0]
 - Returns comment ID and direct link
 
 **Test Results**:
-- ✅ Ticket #473 (GDPR Compliance): Successful reply generation
-- ✅ Comment ID: 43427955631764
-- ✅ Direct link: https://8lee.zendesk.com/agent/tickets/473
+- [PASS] Ticket #473 (GDPR Compliance): Successful reply generation
+- [PASS] Comment ID: 43427955631764
+- [PASS] Direct link: https://8lee.zendesk.com/agent/tickets/473
 
 ---
 
@@ -865,25 +865,25 @@ bun test
 All code must pass:
 ```bash
 bun run build
-# ✓ TypeScript compilation: PASS
-# ✓ Zero type errors
+# (check) TypeScript compilation: PASS
+# (check) Zero type errors
 ```
 
 ### Testing
 
 ```bash
 bun test
-# ✓ 96 tests passing
-# ✓ 297 assertions
-# ✓ 100% critical path coverage
+# (check) 96 tests passing
+# (check) 297 assertions
+# (check) 100% critical path coverage
 ```
 
 ### Linting
 
 ```bash
 bun run check
-# ✓ Biome: PASS
-# ✓ Zero formatting issues
+# (check) Biome: PASS
+# (check) Zero formatting issues
 ```
 
 ---
@@ -1045,7 +1045,7 @@ No files, no cache, no complexity.
 
 **Enhanced Suggestion Bar**:
 - Inline layout: label and buttons on same row
-- Lightning bolt icon (⚡) for visual interest
+- Lightning bolt icon () for visual interest
 - Improved hover effects with glow (`shadow-green-500/20`)
 - Icon opacity transitions (70% → 100% on hover)
 - Better spacing and click targets
@@ -1072,33 +1072,33 @@ No files, no cache, no complexity.
 **Functionality**:
 - Fetches real users from Zendesk API via `getUsers()`
 - Groups by role: Admins, Agents, End Users/Customers
-- Shows name, email, and active status (✓/✗)
+- Shows name, email, and active status ((check)/(x))
 - Truncates large lists (10/10/15 by role)
 - Displays total count per role
 - **Location**: `app/zendesk/lib/smart-query-handler.ts:891-978`
 
 **Example Output**:
 ```
-✅ Users & Customers
+[PASS] Users & Customers
 
 Total Users: 47
 
 Admins (3):
-  • John Lee (jleekun@gmail.com) ✓
-  • Sarah Admin (sarah@8lee.ai) ✓
-  • Mike Admin (mike@8lee.ai) ✓
+  • John Lee (jleekun@gmail.com) (check)
+  • Sarah Admin (sarah@8lee.ai) (check)
+  • Mike Admin (mike@8lee.ai) (check)
 
 Agents (12):
-  • Support Agent 1 (agent1@8lee.ai) ✓
-  • Support Agent 2 (agent2@8lee.ai) ✓
+  • Support Agent 1 (agent1@8lee.ai) (check)
+  • Support Agent 2 (agent2@8lee.ai) (check)
   ... and 10 more
 
 End Users / Customers (32):
-  • Customer A (customera@example.com) ✓
-  • Customer B (customerb@example.com) ✓
+  • Customer A (customera@example.com) (check)
+  • Customer B (customerb@example.com) (check)
   ... and 30 more
 
-✓ Active  ✗ Inactive
+(check) Active  (x) Inactive
 ```
 
 ---
@@ -1111,13 +1111,13 @@ The Zendesk Intelligence Portal is a **production-ready terminal-styled interfac
  Uses AI for intelligent query processing
  Provides terminal-formatted responses
  Handles 346+ tickets with full pagination
-✅ Sub-2ms metadata queries (tags, types, priorities)
-✅ 92.9% query classification accuracy
-✅ Comprehensive metadata operations (assign, tags, status, priority)
-✅ User/customer listing with role-based grouping
-✅ 28 integration tests with production validation
-✅ macOS-style terminal UI with window controls
-✅ Enhanced suggestion bar with inline layout
+[PASS] Sub-2ms metadata queries (tags, types, priorities)
+[PASS] 92.9% query classification accuracy
+[PASS] Comprehensive metadata operations (assign, tags, status, priority)
+[PASS] User/customer listing with role-based grouping
+[PASS] 28 integration tests with production validation
+[PASS] macOS-style terminal UI with window controls
+[PASS] Enhanced suggestion bar with inline layout
  Follows recruiter-impressing code standards
  Simple architecture (no cache complexity)
  Deployable to production immediately
