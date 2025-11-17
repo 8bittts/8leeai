@@ -1,5 +1,4 @@
-# Zendesk Intelligence Portal: Executive Overview
-## Technical Demonstration for PM Principal Interview
+# Zendesk Intelligence Portal — Technical Demo
 
 **Live Demo:** https://8lee.ai/zendesk
 
@@ -35,11 +34,11 @@ Natural language queries get instant answers. No training required. No clicking.
 
 This proof-of-concept validates a critical PM hypothesis: **conversational AI can replace rigid dashboards for CX teams**. It addresses all five pain points from the Zendesk Explore platform:
 
-1. ❌ **Lack of flexibility** → ✅ Natural language handles any query pattern
-2. ❌ **Limited data coverage** → ✅ 40+ API methods with automatic pagination
-3. ❌ **Low trust in metrics** → ✅ Transparent processing with source attribution
-4. ❌ **Poor performance** → ✅ 60-70% of queries <100ms (instant)
-5. ❌ **No AI features** → ✅ GPT-4o-mini for trends, sentiment, recommendations
+1. **Lack of flexibility** → Natural language handles any query pattern
+2. **Limited data coverage** → 40+ API methods with automatic pagination
+3. **Low trust in metrics** → Transparent processing with source attribution
+4. **Poor performance** → 60-70% of queries <100ms (instant)
+5. **No AI features** → GPT-4o-mini for trends, sentiment, recommendations
 
 **Business Model Validation:**
 - ROI: 3-6x (saves $78k/year for team of 20)
@@ -114,7 +113,7 @@ Here are all the things you can ask, with examples of what you'll get back:
 ```
 88 urgent tickets
 
-⏱️ Completed in 0.08s (instant)
+Completed in 0.08s (instant)
 ```
 
 ### 2. Filter by Ticket Type
@@ -128,14 +127,14 @@ Here are all the things you can ask, with examples of what you'll get back:
 
 **What you'll get:**
 ```
-📊 Ticket Type Distribution:
+Ticket Type Distribution:
 - Questions: 323 tickets (93.4%)
 - Incidents: 9 tickets (2.6%)
 - Problems: 8 tickets (2.3%)
 - Tasks: 6 tickets (1.7%)
 
 Total: 346 tickets
-⏱️ Completed in 0.12s (instant)
+Completed in 0.12s (instant)
 ```
 
 ### 3. Filter by Tags
@@ -156,7 +155,7 @@ Tickets:
 - #493: Invoice discrepancy (normal, open)
 - #497: Refund request (high, open)
 
-⏱️ Completed in 1.2ms (instant)
+Completed in 1.2ms (instant)
 ```
 
 ### 4. See Ticket Breakdowns
@@ -168,14 +167,14 @@ Tickets:
 
 **What you'll get:**
 ```
-📊 Status Distribution:
+Status Distribution:
 - Open: 42 tickets
 - Pending: 71 tickets
 - Solved: 130 tickets
 - Closed: 103 tickets
 
 Total: 346 tickets
-⏱️ Completed in 0.09s (instant)
+Completed in 0.09s (instant)
 ```
 
 ### 5. Time-Based Questions
@@ -196,7 +195,7 @@ Most recent:
 - #496: Bug report: dashboard loading (6 hours ago)
 ...
 
-⏱️ Completed in 0.15s (instant)
+Completed in 0.15s (instant)
 ```
 
 ### 6. Get AI Insights (Complex Questions)
@@ -210,7 +209,7 @@ Most recent:
 
 **What you'll get:**
 ```
-🔍 Analysis of 346 tickets:
+Analysis of 346 tickets:
 
 **Most Common Problems:**
 1. **Authentication & Login Issues** (32 tickets, 9.2%)
@@ -238,7 +237,7 @@ Most recent:
 - #478: API rate limiting blocking production (2 days old)
 - #501: Billing invoice error for annual contract (1 day old)
 
-⏱️ Completed in 5.2s (AI analysis)
+Completed in 5.2s (AI analysis)
 ```
 
 ### 7. Search by Content
@@ -251,7 +250,7 @@ Most recent:
 
 **What you'll get:**
 ```
-🔍 Found 8 tickets mentioning GDPR/data privacy:
+Found 8 tickets mentioning GDPR/data privacy:
 
 **Urgent (2 tickets):**
 - #523: GDPR data deletion request (5 days old, EU customer)
@@ -267,7 +266,7 @@ Most recent:
 - Consider creating GDPR FAQ to reduce repetitive inquiries
 - EU customers represent 25% of privacy-related tickets
 
-⏱️ Completed in 4.8s (AI analysis)
+Completed in 4.8s (AI analysis)
 ```
 
 ### 8. Take Action on Tickets
@@ -282,16 +281,16 @@ Most recent:
 
 **What you'll get:**
 ```
-✅ Closed ticket #456
+Closed ticket #456
 
 Subject: Enterprise SSO authentication failure
 Status: open → closed
 Priority: urgent
 Updated: Just now
 
-🔗 View ticket: https://8lee.zendesk.com/agent/tickets/456
+View ticket: https://8lee.zendesk.com/agent/tickets/456
 
-⏱️ Completed in 1.2s
+Completed in 1.2s
 ```
 
 ### 9. Generate AI Replies
@@ -303,7 +302,7 @@ Updated: Just now
 
 **What you'll get:**
 ```
-✅ Generated and posted reply to ticket #473
+Generated and posted reply to ticket #473
 
 **Reply sent:**
 Hello,
@@ -324,10 +323,10 @@ have specific requirements for your enterprise contract.
 Best regards,
 Support Team
 
-🔗 View ticket: https://8lee.zendesk.com/agent/tickets/473
+View ticket: https://8lee.zendesk.com/agent/tickets/473
 Comment ID: 43427955631764
 
-⏱️ Completed in 4.2s (AI-generated)
+Completed in 4.2s (AI-generated)
 ```
 
 ### 10. Create New Tickets
@@ -339,7 +338,7 @@ Comment ID: 43427955631764
 
 **What you'll get:**
 ```
-✅ Created new ticket #499
+Created new ticket #499
 
 Subject: High priority login issues
 Description: Customer reporting login authentication failures requiring
@@ -348,9 +347,9 @@ Priority: high
 Status: new
 Tags: login, authentication, high-priority
 
-🔗 View ticket: https://8lee.zendesk.com/agent/tickets/499
+View ticket: https://8lee.zendesk.com/agent/tickets/499
 
-⏱️ Completed in 2.1s
+Completed in 2.1s
 ```
 
 ### 11. System Commands
@@ -362,7 +361,7 @@ Tags: login, authentication, high-priority
 
 **What you'll get (help command):**
 ```
-📚 **Available Commands:**
+**Available Commands:**
 
 **Quick Queries (Instant):**
 - "how many urgent tickets?"
@@ -387,7 +386,7 @@ Tags: login, authentication, high-priority
 - "refresh" - Reload data from Zendesk
 - "help" - Show this message
 
-💡 Tip: You can use natural language variations -
+Tip: You can use natural language variations -
 I'll understand "how many urgent?" the same as "count urgent tickets"
 ```
 
@@ -708,10 +707,10 @@ User: "Show me recent urgent tickets"
 System: [Displays 3 tickets]
 
 User: "Build a reply for the first ticket"
-System: ✅ Generated reply for ticket #456...
+System: Generated reply for ticket #456...
 
 User: "Close the second ticket"
-System: ✅ Closed ticket #457...
+System: Closed ticket #457...
 ```
 
 **Features:**
@@ -749,7 +748,7 @@ We wrote this code with the same quality standards as software that runs billion
 
 **Test Philosophy: Intent Over Implementation**
 ```typescript
-// ✅ Good - tests user intent
+// Good - tests user intent
 test("prevents keyboard popup when navigating command history on mobile", () => {
   // Intent: Arrow keys shouldn't trigger keyboard
   input.focus()
@@ -757,7 +756,7 @@ test("prevents keyboard popup when navigating command history on mobile", () => 
   expect(input.readOnly).toBe(true)
 })
 
-// ❌ Bad - tests implementation
+// Bad - tests implementation
 test("sets readonly to true on arrow key", () => {
   fireEvent.keyDown(input, { key: "ArrowUp" })
   expect(input.readOnly).toBe(true)
@@ -787,7 +786,7 @@ test("sets readonly to true on arrow key", () => {
 
 # What We ACHIEVED vs. What's NEXT
 
-## ✅ What We Successfully Built
+## What We Successfully Built
 
 ### 1. Natural Language Interface with Smart Routing
 **Simple:** You can ask questions in plain English and get instant or AI-powered answers automatically.
@@ -857,7 +856,7 @@ test("sets readonly to true on arrow key", () => {
 
 ---
 
-## ❌ Future Opportunities: What We Didn't Build
+## Future Opportunities: What We Didn't Build
 
 ### 1. Persistent Caching (Redis/Upstash)
 **Current:** In-memory cache resets on serverless cold starts, 2-3s latency
@@ -1255,10 +1254,10 @@ Instead of a vision document, we built a working proof-of-concept demonstrating 
 **Decision:** Two-tier architecture (60-70% instant, 30-40% AI)
 
 **Analysis:**
-- ✅ 60-70% instant answers
-- ✅ 70% cost reduction vs "always AI"
-- ❌ 8% of queries get suboptimal answers
-- ❌ Added classification complexity
+- 60-70% instant answers
+- 70% cost reduction vs "always AI"
+- 8% of queries get suboptimal answers
+- Added classification complexity
 
 **Justification:** "Fast and mostly accurate" beats "slow and perfect" for routine queries.
 
@@ -1266,10 +1265,10 @@ Instead of a vision document, we built a working proof-of-concept demonstrating 
 **Decision:** GPT-4o-mini instead of GPT-4
 
 **Analysis:**
-- ✅ 97% cheaper ($0.15 vs $5 per 1M tokens)
-- ✅ 2-3x faster (2-5s vs 5-10s)
-- ✅ 95%+ quality for ticket analysis
-- ❌ Less capable for complex reasoning
+- 97% cheaper ($0.15 vs $5 per 1M tokens)
+- 2-3x faster (2-5s vs 5-10s)
+- 95%+ quality for ticket analysis
+- Less capable for complex reasoning
 
 **Justification:** Ticket analysis doesn't need GPT-4's advanced reasoning. 95% quality at 3% of cost wins.
 
@@ -1277,11 +1276,11 @@ Instead of a vision document, we built a working proof-of-concept demonstrating 
 **Decision:** Natural language only, no visual dashboard builder
 
 **Analysis:**
-- ✅ Zero training required
-- ✅ Handles unbounded query patterns
-- ✅ AI extends capabilities without code
-- ❌ Power users may want visual builder
-- ❌ Harder to discover all capabilities
+- Zero training required
+- Handles unbounded query patterns
+- AI extends capabilities without code
+- Power users may want visual builder
+- Harder to discover all capabilities
 
 **Justification:** Lower entry barrier more important than power user features for MVP.
 
@@ -1289,10 +1288,10 @@ Instead of a vision document, we built a working proof-of-concept demonstrating 
 **Decision:** 5-minute cache TTL for tickets
 
 **Analysis:**
-- ✅ 95% cache hit rate
-- ✅ Reduces API calls (rate limit aware)
-- ❌ Data can be stale up to 5 minutes
-- ❌ Real-time updates not reflected
+- 95% cache hit rate
+- Reduces API calls (rate limit aware)
+- Data can be stale up to 5 minutes
+- Real-time updates not reflected
 
 **Justification:** Analytics are strategic (trends), not tactical (individual status). 5-min staleness acceptable.
 
@@ -1300,10 +1299,10 @@ Instead of a vision document, we built a working proof-of-concept demonstrating 
 **Decision:** Focus on tickets only (no users, orgs, macros)
 
 **Analysis:**
-- ✅ Faster MVP iteration
-- ✅ Tickets are 80% of analytics use cases
-- ❌ Can't analyze agent performance yet
-- ❌ Can't track org-level trends
+- Faster MVP iteration
+- Tickets are 80% of analytics use cases
+- Can't analyze agent performance yet
+- Can't track org-level trends
 
 **Justification:** Tickets provide immediate value. Other objects are feature expansion.
 

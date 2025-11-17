@@ -1,11 +1,31 @@
 # Zendesk Intelligence Portal - Implementation Status
 
-**Last Updated**: 2025-11-16
-**Last Commit**: 6e59751 (Zendesk: Add comprehensive integration test suite)
+**Last Updated**: 2025-11-17
+**Last Commit**: [Pending] (Natural language query boundary fix)
 
 ## ✅ Completed Tasks
 
-### 1. Reply Generation Fix
+### 1. Natural Language Query Boundary Fix
+**Status**: COMPLETE ✅
+**Date**: 2025-11-17
+
+**Problem**: The `isGeneralConversation()` function had overly broad pattern matching that was intercepting legitimate Zendesk queries before they could reach the AI/cache processing tiers. Queries like "what is the ticket count?" or "explain high priority tickets" were getting generic help responses instead of real answers.
+
+**Root Cause**: The pattern `/\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i` was matching ANY query containing these common question words, regardless of whether they were about Zendesk data.
+
+**Solution**:
+- Removed the overly broad "general knowledge" pattern entirely
+- Tightened greeting pattern from `\b` to `^...$` (must be standalone greeting only)
+- Added negative lookahead to time/date pattern to allow ticket-related date queries
+- Added extensive documentation explaining why the pattern was removed
+
+**Impact**:
+- Queries now properly flow through the two-tier system (cache classifier → AI)
+- Natural language queries about tickets, counts, analysis, etc. now get real answers
+- Only truly off-topic queries (weather, personal greetings, entertainment) get redirected
+- **File**: `app/zendesk/lib/smart-query-handler.ts:85-116`
+
+### 2. Reply Generation Fix
 **Status**: COMPLETE ✅
 **Commit**: 267ffb9
 
@@ -14,7 +34,7 @@
 - Replies successfully post to Zendesk with direct links
 - Test suite confirms: 84.6% pass rate (22/26 tests)
 
-### 2. Comprehensive Zendesk API Review
+### 3. Comprehensive Zendesk API Review
 **Status**: COMPLETE ✅
 **Commit**: 0145dc6
 

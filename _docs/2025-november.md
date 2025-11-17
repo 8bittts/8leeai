@@ -48,6 +48,41 @@
 **Code quality:**
 - TypeScript check: ✅ 0 errors
 - Biome check: ✅ Passed
+
+---
+
+#### Phase 6.6: Natural Language Query Boundary Fix
+
+**Critical bug fix in query routing:**
+- **Problem**: `isGeneralConversation()` function was using overly broad pattern matching that intercepted legitimate Zendesk queries before they could reach AI/cache processing
+- **Root Cause**: Pattern `/\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i` matched ANY query with these question words
+- **User Impact**: Queries like "what is the ticket count?" or "explain high priority tickets" were getting generic help responses instead of real answers
+
+**Solution implemented:**
+- Removed the overly broad "general knowledge" pattern entirely from `isGeneralConversation()`
+- Tightened greeting pattern from word boundary to anchored regex (must be standalone greeting only)
+- Added negative lookahead to time/date pattern to allow ticket-related date queries
+- Added extensive inline documentation explaining the fix and providing examples
+
+**Changes to pattern matching:**
+```typescript
+// BEFORE (TOO BROAD):
+/\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i
+
+// AFTER (REMOVED):
+// Pattern removed entirely - these are legitimate Zendesk query starters
+// Examples that now properly reach AI: "what is the ticket count?", "explain high priority tickets"
+```
+
+**Impact:**
+- Natural language queries now properly flow through two-tier system (cache classifier → AI)
+- Only truly off-topic queries (weather, personal greetings, entertainment) get redirected
+- Legitimate Zendesk questions using "what/who/explain/tell me" now get real answers from cache or AI
+- **File**: `app/zendesk/lib/smart-query-handler.ts:85-116`
+
+**Code quality:**
+- TypeScript check: ✅ 0 errors
+- Biome check: ✅ Passed
 - All new API methods include proper cache invalidation
 - All handlers include comprehensive error handling with user-friendly messages
 - Direct Zendesk ticket links in all operation responses
