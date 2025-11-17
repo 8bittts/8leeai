@@ -8,6 +8,7 @@ This directory contains utility scripts for testing and managing the Zendesk Int
 |--------|---------|-------|
 | `test-credentials.sh` | Validate API credentials | `./scripts/test-credentials.sh` |
 | `generate-zendesk-tickets.ts` | Create realistic test tickets | `bun scripts/generate-zendesk-tickets.ts [options]` |
+| `test-zendesk-full-workflow.ts` | Comprehensive integration test | `bun run test:zendesk` |
 
 ---
 
@@ -434,6 +435,233 @@ Both are well-commented and can be modified for custom test scenarios.
 
 ---
 
+---
+
+## 3. test-zendesk-full-workflow.ts
+
+### Purpose
+Comprehensive integration test for the entire Zendesk Intelligence Portal. Tests all query types, context awareness, two-way communication, and error handling.
+
+### What It Does
+- 🧪 Tests 25+ different query types and scenarios
+- ✅ Validates general conversation handling (weather, greetings, etc.)
+- ✅ Tests ticket querying and information retrieval
+- ✅ Validates context-aware ticket listing
+- ✅ Tests complex AI-powered analysis
+- ✅ Tests two-way communication (reply generation and posting)
+- ✅ Validates error handling and edge cases
+- 📊 Provides detailed test summary with success rates
+
+### Usage
+
+**IMPORTANT**: Dev server must be running on port 1333
+
+**Step 1: Start dev server in one terminal:**
+```bash
+bun run dev
+```
+
+**Step 2: Run tests in another terminal:**
+```bash
+bun run test:zendesk
+```
+
+**Or run directly:**
+```bash
+bun scripts/test-zendesk-full-workflow.ts
+```
+
+### Test Sections
+
+**Section 1: General Conversation & System Commands**
+- Empty query returns help text
+- Help command shows comprehensive guide
+- Greeting responses are professional and zen-like
+- "How are you" gets calm, focused response
+- Weather queries politely redirect
+- Time queries provide helpful answers
+- Thank you acknowledgments are professional
+
+**Section 2: Ticket Querying & Information Retrieval**
+- Total ticket count queries
+- Open tickets count
+- Status breakdown
+- Priority distribution
+- High priority tickets
+- Recent tickets (last 7 days)
+
+**Section 3: Context-Aware Ticket Listing**
+- Show top 5 tickets (stores in context)
+- List top 10 tickets (updates context)
+- Validates ticket data is returned
+
+**Section 4: Complex AI-Powered Analysis**
+- Most common problems analysis
+- Tickets needing attention
+- Content search (e.g., "login issues")
+- Word count analysis (descriptions > 200 words)
+
+**Section 5: Context-Aware Reply Generation**
+- Reply request without context (graceful failure)
+- Reply generation for first ticket (with context)
+- Reply generation for second ticket
+- Invalid ticket index handling
+- Validates reply posted to Zendesk
+- Validates direct link returned
+
+**Section 6: Error Handling & Edge Cases**
+- Very long queries (600+ characters)
+- Special characters in queries
+- Mixed case queries
+
+### Output Example
+
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║   ZENDESK INTELLIGENCE PORTAL - COMPREHENSIVE TEST SUITE        ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+API Base URL: http://localhost:1333
+Starting comprehensive tests...
+
+================================================================================
+SECTION 1: General Conversation & System Commands
+================================================================================
+
+🧪 Testing: Empty Query → Help Text
+   Query: ""
+   Source: cache
+   Confidence: 100%
+   Duration: 45ms
+   ✅ PASSED
+
+🧪 Testing: Help Command
+   Query: "help"
+   Source: cache
+   Confidence: 100%
+   Duration: 38ms
+   ✅ PASSED
+
+...
+
+================================================================================
+SECTION 5: Context-Aware Reply Generation
+================================================================================
+
+🧪 Testing: Reply Request - First Ticket
+   Query: "build a reply for the first ticket and send it to zendesk"
+   Source: ai
+   Confidence: 95%
+   Duration: 4532ms
+   ✉️  Reply generated and posted to Zendesk
+   🔗 Direct link included in response
+   ✅ PASSED
+
+================================================================================
+TEST SUMMARY
+================================================================================
+
+Total Tests: 27
+Passed: 27
+Failed: 0
+Success Rate: 100.0%
+
+================================================================================
+✅ ALL TESTS PASSED!
+```
+
+### What Gets Tested
+
+**API Endpoints:**
+- `/api/zendesk/query` - All query types
+- `/api/zendesk/reply` - Reply generation and posting
+
+**Query Handler Features:**
+- General conversation detection
+- Help text generation
+- Ticket list queries with context storage
+- Complex AI analysis
+- Reply request handling
+- Error handling
+
+**Context Awareness:**
+- Ticket storage after list queries
+- Context propagation between queries
+- Ticket index parsing ("first", "second", etc.)
+- Graceful failure when context missing
+
+**Two-Way Communication:**
+- AI reply generation via OpenAI
+- Reply posting to Zendesk API
+- Direct link generation
+- Comment ID extraction
+
+### Performance Metrics
+
+**Expected Response Times:**
+- Cache queries (help, stats): 20-100ms
+- Discrete queries (counts): 100-500ms
+- AI queries (analysis): 2-5 seconds
+- Reply generation: 3-6 seconds (includes API posting)
+
+### Troubleshooting
+
+**Script fails with "Connection refused":**
+- Ensure dev server is running: `bun run dev`
+- Check server is on port 1333
+- Wait 10 seconds after starting dev server
+
+**Tests fail with "No tickets found":**
+- Run ticket generator first: `bun scripts/generate-zendesk-tickets.ts --count 50`
+- Refresh cache manually via UI: type "refresh"
+- Check Zendesk credentials are valid
+
+**Reply tests fail:**
+- Verify OpenAI API key is correct in `.env.local`
+- Check Zendesk API allows ticket updates
+- Ensure test tickets exist (run generator)
+- Check API rate limits haven't been exceeded
+
+**Some tests timeout:**
+- AI analysis can take 5-10 seconds
+- Increase timeout if needed
+- Check internet connection
+- Verify OpenAI API is responsive
+
+### When to Run
+
+**After Feature Changes:**
+```bash
+# Changed query handler logic? Test it:
+bun run test:zendesk
+```
+
+**Before Deployment:**
+```bash
+# Ensure everything works:
+bun run test:zendesk
+```
+
+**After Credential Updates:**
+```bash
+# Verify new keys work:
+./scripts/test-credentials.sh
+bun run test:zendesk
+```
+
+**Continuous Integration:**
+```bash
+# Can be integrated into CI/CD pipeline
+bun run test:zendesk
+```
+
+### Exit Codes
+
+- **0**: All tests passed
+- **1**: One or more tests failed (process exits with failure code)
+
+---
+
 ## Support & Troubleshooting
 
 For detailed troubleshooting, see the individual script sections above.
@@ -445,3 +673,4 @@ For detailed troubleshooting, see the individual script sections above.
 4. ✅ Verify OpenAI account has valid billing method
 5. ✅ Try with smaller batch size (`--count 5`) first
 6. ✅ Increase delay (`--delay 1000`) if rate limiting errors
+7. ✅ Run comprehensive test: `bun run test:zendesk`
