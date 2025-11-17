@@ -889,7 +889,8 @@ export async function handleSmartQuery(
     }
 
     // Check if query is asking to list users/customers
-    const isListUsersRequest = /\b(show|list|display|get|view)\s+(all\s+)?(users?|customers?|agents?|people)\b/i.test(query)
+    const isListUsersRequest =
+      /\b(show|list|display|get|view)\s+(all\s+)?(users?|customers?|agents?|people)\b/i.test(query)
 
     if (isListUsersRequest) {
       console.log("[SmartQuery] Handling list users/customers request")
@@ -903,38 +904,39 @@ export async function handleSmartQuery(
         // Group users by role
         const usersByRole = users.reduce(
           (acc, user) => {
-            if (!acc[user.role]) acc[user.role] = []
-            acc[user.role].push(user)
+            const roleArray = acc[user.role] ?? []
+            roleArray.push(user)
+            acc[user.role] = roleArray
             return acc
           },
           {} as Record<string, typeof users>
         )
 
         // Build formatted answer
-        let answer = `✅ **Users & Customers**\n\n`
+        let answer = "✅ **Users & Customers**\n\n"
         answer += `**Total Users:** ${users.length}\n\n`
 
         // Show breakdown by role
-        if (usersByRole.admin && usersByRole.admin.length > 0) {
-          answer += `**Admins** (${usersByRole.admin.length}):\n`
-          answer += usersByRole.admin
+        if (usersByRole["admin"] && usersByRole["admin"].length > 0) {
+          answer += `**Admins** (${usersByRole["admin"].length}):\n`
+          answer += usersByRole["admin"]
             .slice(0, 10)
             .map((u) => `  • ${u.name} (${u.email}) ${u.active ? "✓" : "✗"}`)
             .join("\n")
-          if (usersByRole.admin.length > 10) {
-            answer += `\n  ... and ${usersByRole.admin.length - 10} more`
+          if (usersByRole["admin"].length > 10) {
+            answer += `\n  ... and ${usersByRole["admin"].length - 10} more`
           }
           answer += "\n\n"
         }
 
-        if (usersByRole.agent && usersByRole.agent.length > 0) {
-          answer += `**Agents** (${usersByRole.agent.length}):\n`
-          answer += usersByRole.agent
+        if (usersByRole["agent"] && usersByRole["agent"].length > 0) {
+          answer += `**Agents** (${usersByRole["agent"].length}):\n`
+          answer += usersByRole["agent"]
             .slice(0, 10)
             .map((u) => `  • ${u.name} (${u.email}) ${u.active ? "✓" : "✗"}`)
             .join("\n")
-          if (usersByRole.agent.length > 10) {
-            answer += `\n  ... and ${usersByRole.agent.length - 10} more`
+          if (usersByRole["agent"].length > 10) {
+            answer += `\n  ... and ${usersByRole["agent"].length - 10} more`
           }
           answer += "\n\n"
         }
@@ -951,7 +953,7 @@ export async function handleSmartQuery(
           answer += "\n\n"
         }
 
-        answer += `\n✓ Active  ✗ Inactive`
+        answer += "\n✓ Active  ✗ Inactive"
 
         addConversationEntry(query, answer, "live", 0.95)
 

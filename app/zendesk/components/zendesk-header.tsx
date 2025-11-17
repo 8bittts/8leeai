@@ -39,13 +39,15 @@ export function ZendeskHeader() {
     \\/_______/\\/____/\\/_/\\/_/\\/__,_ /\\/____/\\/___/   \\/_/\\/_/`}
         </pre>
 
-      {/* Welcome Message */}
-      <div className="mt-3 space-y-1 text-sm">
-        <p className="text-green-500">Zendesk Intelligence Portal - EXPERIMENTAL MODE ACTIVATED</p>
-        <p className="text-green-400 opacity-70 text-xs">
-          Ask questions about your support tickets, customers, analytics, and more.
-        </p>
-      </div>
+        {/* Welcome Message */}
+        <div className="mt-3 space-y-1 text-sm">
+          <p className="text-green-500">
+            Zendesk Intelligence Portal - EXPERIMENTAL MODE ACTIVATED
+          </p>
+          <p className="text-green-400 opacity-70 text-xs">
+            Ask questions about your support tickets, customers, analytics, and more.
+          </p>
+        </div>
 
         {/* Quick Tips */}
         <div className="mt-2 text-xs text-green-400 opacity-50 space-y-0.5">
