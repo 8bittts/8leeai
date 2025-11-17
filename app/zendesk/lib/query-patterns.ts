@@ -394,7 +394,7 @@ export const QUERY_PATTERNS: QueryPattern[] = [
 export function extractTicketId(query: string): number | null {
   // Match patterns: "ticket #473", "#473", "ticket 473"
   const match = query.match(/(?:ticket\s*)?#?(\d+)\b/i)
-  if (!match) return null
+  if (!match?.[1]) return null
 
   const id = Number.parseInt(match[1], 10)
   return Number.isNaN(id) ? null : id
@@ -408,9 +408,11 @@ export function extractTicketIds(query: string): number[] {
   const ids: number[] = []
 
   for (const match of matches) {
-    const id = Number.parseInt(match[1], 10)
-    if (!Number.isNaN(id)) {
-      ids.push(id)
+    if (match[1]) {
+      const id = Number.parseInt(match[1], 10)
+      if (!Number.isNaN(id)) {
+        ids.push(id)
+      }
     }
   }
 
@@ -474,19 +476,19 @@ export function extractEmails(query: string): string[] {
 export function extractTags(query: string): string[] {
   // Match quoted tags: tag "customer support"
   const quotedMatch = query.match(/(tag|label)s?\s+(as\s+|with\s+)?["']([^"']+)["']/i)
-  if (quotedMatch) {
+  if (quotedMatch?.[3]) {
     return [quotedMatch[3]]
   }
 
   // Match simple tags: tag it as billing
   const simpleMatch = query.match(/(tag|label)s?\s+(as\s+|with\s+)?(\w+)/i)
-  if (simpleMatch) {
+  if (simpleMatch?.[3]) {
     return [simpleMatch[3]]
   }
 
   // Match comma-separated: tag with billing, urgent, escalated
   const listMatch = query.match(/(tag|label)s?\s+(with\s+)?([a-z0-9_,\s]+)/i)
-  if (listMatch) {
+  if (listMatch?.[3]) {
     return listMatch[3].split(",").map((tag) => tag.trim())
   }
 
@@ -526,5 +528,5 @@ export function getBestMatch(query: string): QueryPattern | null {
   if (ticketIdMatch && extractTicketId(query)) return ticketIdMatch
 
   // Return first match otherwise
-  return matches[0]
+  return matches[0] || null
 }

@@ -10,6 +10,7 @@ import { generateText } from "ai"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
 import { classifyQuery } from "./classify-query"
 import { addConversationEntry, getRecentConversationContext } from "./conversation-cache"
+import { extractPriority, extractStatus } from "./query-patterns"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
 import { getZendeskClient } from "./zendesk-api-client"
 
@@ -590,14 +591,15 @@ export async function handleSmartQuery(
     if (isUpdateStatusRequest) {
       console.log("[SmartQuery] Handling update status request with context")
 
-      // Extract target status
-      let targetStatus: "new" | "open" | "pending" | "hold" | "solved" | "closed" | null = null
-      if (/\b(close|closed)\b/i.test(query)) targetStatus = "closed"
-      else if (/\b(solve|solved|resolve|resolved)\b/i.test(query)) targetStatus = "solved"
-      else if (/\b(open|reopen|reopened)\b/i.test(query)) targetStatus = "open"
-      else if (/\b(pending)\b/i.test(query)) targetStatus = "pending"
-      else if (/\b(hold)\b/i.test(query)) targetStatus = "hold"
-      else if (/\b(new)\b/i.test(query)) targetStatus = "new"
+      // Extract target status using centralized pattern extractor
+      const targetStatus = extractStatus(query) as
+        | "new"
+        | "open"
+        | "pending"
+        | "hold"
+        | "solved"
+        | "closed"
+        | null
 
       // Extract which ticket
       let ticketIndex = 0
@@ -888,12 +890,8 @@ export async function handleSmartQuery(
       context.lastTickets.length > 0
 
     if (isUpdatePriorityRequest) {
-      // Extract target priority
-      let targetPriority: "urgent" | "high" | "normal" | "low" | null = null
-      if (/\burgent\b/i.test(query)) targetPriority = "urgent"
-      else if (/\bhigh\b/i.test(query)) targetPriority = "high"
-      else if (/\bnormal\b/i.test(query)) targetPriority = "normal"
-      else if (/\blow\b/i.test(query)) targetPriority = "low"
+      // Extract target priority using centralized pattern extractor
+      const targetPriority = extractPriority(query) as "urgent" | "high" | "normal" | "low" | null
 
       // Extract which ticket
       let ticketIndex = 0
