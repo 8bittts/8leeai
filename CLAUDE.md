@@ -157,6 +157,31 @@ All portfolio data lives in `/lib/data.ts`:
 ### Special File Rules
 **Release notes are now organized in the `_docs/` directory by month.** Files follow the pattern `[year]-[month].md` (e.g., `2025-november.md`). These files are manually curated by the project maintainer. Only modify release notes when explicitly requested. Formatting: date-based organization within each monthly file (no timestamps), all entries for a day under same date heading.
 
+### Zendesk Intelligence Portal Documentation
+
+**Comprehensive documentation for the Zendesk Intelligence Portal is organized in `_docs/`:**
+
+- **`zendesk-MASTER.md`** - CANONICAL master technical documentation (all implementation details, architecture, API reference)
+- **`zendesk-implementation-status.md`** - Implementation progress tracker
+- **`zendesk-expansion-plan.md`** - Future API expansion roadmap
+- **`zendesk-system-documentation.md`** - Complete system documentation
+- **`zendesk-intercom-form-components.md`** - UI components reference guide
+
+**Key Features:**
+- Natural language query processing with AI-powered analysis
+- Ticket operations: Create, update, delete, assign, tag management
+- Smart caching with two-tier query classification (cache <100ms, AI 2-10s)
+- Pattern recognition for discrete queries (status, priority, type, tags)
+- Context-aware conversation with memory of last query and ticket list
+- Comprehensive metadata support (assignees, tags, ticket types, groups)
+
+**When working with Zendesk code:**
+1. Refer to `zendesk-MASTER.md` as the canonical source of truth
+2. All API methods in `app/zendesk/lib/zendesk-api-client.ts`
+3. Query handling in `app/zendesk/lib/smart-query-handler.ts`
+4. Pattern matching in `app/zendesk/lib/query-patterns.ts`
+5. Cache management in `app/zendesk/lib/ticket-cache.ts`
+
 ### Adding New Content
 
 **Commands:**

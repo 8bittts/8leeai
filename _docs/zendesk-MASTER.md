@@ -912,7 +912,7 @@ No files, no cache, no complexity.
 ## Contact & Support
 
 **Documentation**:
-- This file: `_docs/zendesk-technical-guide.md`
+- This file: `_docs/zendesk-MASTER.md` (CANONICAL MASTER DOCUMENTATION)
 - Expansion plan: `_docs/zendesk-expansion-plan.md`
 - System docs: `_docs/zendesk-system-documentation.md`
 - Implementation status: `_docs/zendesk-implementation-status.md`
@@ -943,3 +943,25 @@ The Zendesk Intelligence Portal is a **production-ready terminal-styled interfac
  Deployable to production immediately
 
 **Philosophy**: Keep it simple. Fetch fresh. Let AI do the thinking. Display beautifully.
+
+---
+
+## Temporary Features (Pending Cleanup)
+
+### Hidden Console Command on Homepage
+
+**Status**: TEMPORARY - Will be removed during general cleanup
+
+A hidden command has been added to the main homepage terminal (`/`) that allows navigation to the Zendesk portal:
+
+**Commands**:
+- `zendesk` or `/zendesk` - Opens https://8lee.ai/zendesk
+- `zen` or `/zen` - Opens https://8lee.ai/zendesk
+
+**Implementation**:
+- Added to `lib/utils.ts` VALID_COMMANDS array
+- Added to `components/command-prompt.tsx` handleExternalLinkCommand()
+- Added to COMMAND_ALIASES for status message feedback
+- All additions clearly marked with "TEMPORARY" comments
+
+**Removal Plan**: This feature will be removed when we clean up other temporary features and finalize the integration between the homepage and Zendesk portal.

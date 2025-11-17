@@ -4,7 +4,7 @@
  * Handles authentication, requests, caching, and error handling for Zendesk APIs
  */
 
-interface ZendeskTicket {
+export interface ZendeskTicket {
   id: number
   subject: string
   description: string
@@ -1372,10 +1372,10 @@ export class ZendeskAPIClient {
   }
 
   /**
-   * Assign ticket to a specific agent
+   * Assign ticket to a specific agent by ID
    * PUT /api/v2/tickets/{ticket_id}.json with assignee_id
    */
-  async assignTicket(ticketId: number, assigneeId: number): Promise<ZendeskTicket> {
+  async assignTicketById(ticketId: number, assigneeId: number): Promise<ZendeskTicket> {
     try {
       console.log(`[ZendeskAPI] Assigning ticket ${ticketId} to agent ${assigneeId}`)
 
@@ -1509,6 +1509,102 @@ export class ZendeskAPIClient {
       return response.ticket
     } catch (error) {
       console.error(`[ZendeskAPI] Error updating ticket ${ticketId} status:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Assign ticket to an agent
+   * PUT /api/v2/tickets/{id}.json
+   */
+  async assignTicket(ticketId: number, assigneeEmail: string): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Assigning ticket ${ticketId} to ${assigneeEmail}`)
+
+      const response = await this.request<{ ticket: ZendeskTicket }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            assignee_email: assigneeEmail,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error assigning ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Add tags to a ticket
+   * PUT /api/v2/tickets/{id}.json
+   */
+  async addTags(ticketId: number, tags: string[]): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Adding tags to ticket ${ticketId}:`, tags)
+
+      const response = await this.request<{ ticket: ZendeskTicket }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            additional_tags: tags,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error adding tags to ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Remove tags from a ticket
+   * PUT /api/v2/tickets/{id}.json
+   */
+  async removeTags(ticketId: number, tags: string[]): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Removing tags from ticket ${ticketId}:`, tags)
+
+      const response = await this.request<{ ticket: ZendeskTicket }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            remove_tags: tags,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error removing tags from ticket ${ticketId}:`, error)
       throw error
     }
   }

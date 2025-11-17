@@ -12,6 +12,7 @@ interface CachedTicket {
   description: string
   status: string
   priority: string
+  type: string // question, incident, problem, task
   created_at: string
   updated_at: string
   assignee_id: number | null
@@ -28,6 +29,7 @@ interface TicketCacheData {
   stats: {
     byStatus: Record<string, number>
     byPriority: Record<string, number>
+    byType: Record<string, number>
     byAge: {
       lessThan24h: number
       lessThan7d: number
@@ -68,15 +70,18 @@ function calculateAgeStats(tickets: CachedTicket[]): TicketCacheData["stats"]["b
 function calculateStats(tickets: CachedTicket[]): TicketCacheData["stats"] {
   const byStatus: Record<string, number> = {}
   const byPriority: Record<string, number> = {}
+  const byType: Record<string, number> = {}
 
   for (const ticket of tickets) {
     byStatus[ticket.status] = (byStatus[ticket.status] || 0) + 1
     byPriority[ticket.priority] = (byPriority[ticket.priority] || 0) + 1
+    byType[ticket.type] = (byType[ticket.type] || 0) + 1
   }
 
   return {
     byStatus,
     byPriority,
+    byType,
     byAge: calculateAgeStats(tickets),
   }
 }
@@ -106,6 +111,7 @@ export async function loadTicketCache(): Promise<TicketCacheData | null> {
         description: (ticket["description"] as string) || "",
         status: ticket["status"] as string,
         priority: ticket["priority"] as string,
+        type: (ticket["type"] as string) || "question", // Default to question if not specified
         created_at: ticket["created_at"] as string,
         updated_at: ticket["updated_at"] as string,
         assignee_id: ticket["assignee_id"] as number | null,

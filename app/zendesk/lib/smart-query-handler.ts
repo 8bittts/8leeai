@@ -10,9 +10,9 @@ import { generateText } from "ai"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
 import { classifyQuery } from "./classify-query"
 import { addConversationEntry, getRecentConversationContext } from "./conversation-cache"
-import { extractPriority, extractStatus } from "./query-patterns"
+import { extractEmails, extractPriority, extractStatus, extractTags } from "./query-patterns"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
-import { getZendeskClient } from "./zendesk-api-client"
+import { getZendeskClient, type ZendeskTicket } from "./zendesk-api-client"
 
 interface QueryResponse {
   answer: string
@@ -166,15 +166,28 @@ Ask natural language questions about your support tickets. The system uses AI to
 • Show me ticket status breakdown
 • What's our pending ticket count?
 
-**🏷️ Priority Analysis**
+**🏷️ Priority & Type Analysis**
 • How many urgent tickets?
 • Show high priority tickets
 • What's the priority distribution?
+• How many incident tickets?
+• Show problem tickets
+• Breakdown by ticket type
 
 **📅 Time-Based Queries**
 • Which tickets were created today?
 • Show tickets from the last 7 days
 • What tickets are older than 30 days?
+
+**🏷️ Tag Operations**
+• How many tickets are tagged billing?
+• Show tickets with urgent tag
+• Add tag billing to first ticket
+• Remove tag spam from second ticket
+
+**👤 Assignment Operations**
+• Assign first ticket to sarah@8lee.ai
+• Reassign second ticket to john@8lee.ai
 
 **🔍 Content Search (AI-Powered)**
 • Find tickets mentioning login issues
@@ -969,16 +982,78 @@ export async function handleSmartQuery(
       context.lastTickets.length > 0
 
     if (isAssignRequest) {
-      const processingTime = Date.now() - startTime
+      console.log("[SmartQuery] Handling assignment request with context")
 
-      const answer = `✅ **Assignment Detected**\n\nTo assign a ticket, I need:\n• Agent ID or email\n• Which ticket to assign\n\nExample: "assign first ticket to agent 123456"\n\n⚠️ Full assignment functionality coming soon! For now, use manual assignment in Zendesk.`
-      addConversationEntry(query, answer, "cache", 0.8)
+      // Extract email using centralized pattern extractor
+      const emails = extractEmails(query)
+      const assigneeEmail = emails[0] || null
 
-      return {
-        answer,
-        source: "cache",
-        confidence: 0.8,
-        processingTime,
+      // Extract which ticket
+      let ticketIndex = 0
+      const indexMatch = query.match(/\b(first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th)\b/i)
+      if (indexMatch?.[1]) {
+        const indexWord = indexMatch[1].toLowerCase()
+        const indexMap: Record<string, number> = {
+          first: 0,
+          "1st": 0,
+          second: 1,
+          "2nd": 1,
+          third: 2,
+          "3rd": 2,
+          fourth: 3,
+          "4th": 3,
+          fifth: 4,
+          "5th": 4,
+        }
+        ticketIndex = indexMap[indexWord] ?? 0
+      }
+
+      const targetTicket = context.lastTickets?.[ticketIndex]
+
+      if (!(targetTicket && assigneeEmail)) {
+        const processingTime = Date.now() - startTime
+        const answer = `❌ **Cannot Assign Ticket**\n\n${targetTicket ? "Could not find assignee email in query." : `Ticket at position ${ticketIndex + 1} not found.`}\n\nExamples:\n• "assign first ticket to sarah@8lee.ai"\n• "reassign second ticket to john@8lee.ai"`
+        addConversationEntry(query, answer, "cache", 0.5)
+
+        return {
+          answer,
+          source: "cache",
+          confidence: 0.5,
+          processingTime,
+        }
+      }
+
+      try {
+        const client = getZendeskClient()
+        const updatedTicket = await client.assignTicket(targetTicket.id, assigneeEmail)
+
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${updatedTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        const answer = `✅ **Ticket Assigned Successfully**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Assigned To:** ${assigneeEmail}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been assigned in Zendesk.`
+        addConversationEntry(query, answer, "live", 0.95)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        const answer = `❌ **Error Assigning Ticket**\n\nFailed to assign ticket #${targetTicket.id} to ${assigneeEmail}\n\nError: ${errorMsg}\n\nPlease check the email address and try again.`
+        addConversationEntry(query, answer, "live", 0)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
       }
     }
 
@@ -989,16 +1064,90 @@ export async function handleSmartQuery(
       context.lastTickets.length > 0
 
     if (isTagRequest) {
-      const processingTime = Date.now() - startTime
+      console.log("[SmartQuery] Handling tag request with context")
 
-      const answer = `✅ **Tag Operation Detected**\n\nTo modify tags, I need:\n• Which ticket\n• Which tags to add/remove\n\nExamples:\n• "add tags billing,urgent to first ticket"\n• "remove tag spam from second ticket"\n\n⚠️ Tag functionality coming soon!`
-      addConversationEntry(query, answer, "cache", 0.8)
+      // Determine operation type
+      const isAddOperation = /\b(add)\s+tags?\b/i.test(query)
+      const isRemoveOperation = /\b(remove)\s+tags?\b/i.test(query)
 
-      return {
-        answer,
-        source: "cache",
-        confidence: 0.8,
-        processingTime,
+      // Extract tags using centralized pattern extractor
+      const tags = extractTags(query)
+
+      // Extract which ticket
+      let ticketIndex = 0
+      const indexMatch = query.match(/\b(first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th)\b/i)
+      if (indexMatch?.[1]) {
+        const indexWord = indexMatch[1].toLowerCase()
+        const indexMap: Record<string, number> = {
+          first: 0,
+          "1st": 0,
+          second: 1,
+          "2nd": 1,
+          third: 2,
+          "3rd": 2,
+          fourth: 3,
+          "4th": 3,
+          fifth: 4,
+          "5th": 4,
+        }
+        ticketIndex = indexMap[indexWord] ?? 0
+      }
+
+      const targetTicket = context.lastTickets?.[ticketIndex]
+
+      if (!(targetTicket && tags.length > 0)) {
+        const processingTime = Date.now() - startTime
+        const answer = `❌ **Cannot Modify Tags**\n\n${targetTicket ? "Could not find tags in query." : `Ticket at position ${ticketIndex + 1} not found.`}\n\nExamples:\n• "add tag billing to first ticket"\n• "remove tag spam from second ticket"\n• "add tags urgent billing to first ticket"`
+        addConversationEntry(query, answer, "cache", 0.5)
+
+        return {
+          answer,
+          source: "cache",
+          confidence: 0.5,
+          processingTime,
+        }
+      }
+
+      try {
+        const client = getZendeskClient()
+        let updatedTicket: ZendeskTicket
+
+        if (isAddOperation) {
+          updatedTicket = await client.addTags(targetTicket.id, tags)
+        } else if (isRemoveOperation) {
+          updatedTicket = await client.removeTags(targetTicket.id, tags)
+        } else {
+          throw new Error("Unknown tag operation")
+        }
+
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${updatedTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        const operation = isAddOperation ? "Added" : "Removed"
+        const answer = `✅ **Tags ${operation} Successfully**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Tags ${operation}:** ${tags.join(", ")}\n**Current Tags:** ${updatedTicket.tags.join(", ") || "(none)"}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket tags have been updated in Zendesk.`
+        addConversationEntry(query, answer, "live", 0.95)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        const answer = `❌ **Error Modifying Tags**\n\nFailed to modify tags for ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease try again.`
+        addConversationEntry(query, answer, "live", 0)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
       }
     }
 

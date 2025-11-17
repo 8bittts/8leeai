@@ -61,6 +61,23 @@ const DISCRETE_INDICATORS = {
 
   priority: ["urgent", "high", "critical", "asap", "important", "normal", "medium", "low", "minor"],
 
+  // Ticket types - filterable dimensions
+  ticketType: ["question", "incident", "problem", "task"],
+
+  // Tags - filterable dimensions
+  tags: [
+    "billing",
+    "technical",
+    "feature-request",
+    "bug",
+    "urgent",
+    "high-priority",
+    "customer-success",
+    "needs-review",
+    "in-progress",
+    "waiting-on-customer",
+  ],
+
   // Time periods - temporal filters
   timeRecent: ["today", "recent", "new", "latest", "last 24", "yesterday"],
   timeWeekly: ["this week", "past week", "last week", "last 7 days", "7d"],
@@ -299,6 +316,37 @@ function tryBreakdownMatch(
     }
   }
 
+  if (/\b(type|types|ticket type)\b/i.test(q)) {
+    const breakdown = Object.entries(cache.stats.byType)
+      .map(([type, count]) => `**${type}**: ${count}`)
+      .join(" | ")
+    return {
+      answer: `Ticket type breakdown: ${breakdown}`,
+      confidence: 0.95,
+      reasoning: "Type distribution",
+    }
+  }
+
+  return null
+}
+
+/**
+ * Check for tag-based patterns and return matching result
+ */
+function tryTagMatch(
+  q: string,
+  cache: NonNullable<Awaited<ReturnType<typeof loadTicketCache>>>
+): { answer: string; confidence: number; reasoning: string } | null {
+  const tagMatch = DISCRETE_INDICATORS.tags.find((tag) => new RegExp(`\\b${tag}\\b`, "i").test(q))
+  if (tagMatch && /\b(tag(ged)?|tickets?|issues?)\b/i.test(q)) {
+    // Count tickets that have this tag
+    const count = cache.tickets.filter((ticket) => ticket.tags.includes(tagMatch)).length
+    return {
+      answer: `Tickets with tag **${tagMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Tag filter: ${tagMatch}`,
+    }
+  }
   return null
 }
 
@@ -350,6 +398,23 @@ function tryDiscreteMatch(
       reasoning: `Priority filter: ${priorityMatch}`,
     }
   }
+
+  // Type query
+  const typeMatch = DISCRETE_INDICATORS.ticketType.find((type) =>
+    new RegExp(`\\b${type}\\b`, "i").test(q)
+  )
+  if (typeMatch && /\b(tickets?|issues?)\b/i.test(q)) {
+    const count = cache.stats.byType[typeMatch] || 0
+    return {
+      answer: `Ticket type breakdown: **${typeMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Type filter: ${typeMatch}`,
+    }
+  }
+
+  // Tag queries
+  const tagMatch = tryTagMatch(q, cache)
+  if (tagMatch) return tagMatch
 
   // Time-based queries
   const timeMatch = tryTimeBasedMatch(q, cache)

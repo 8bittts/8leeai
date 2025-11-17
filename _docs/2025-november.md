@@ -4,9 +4,83 @@
 
 ### November 17, 2025
 
+#### Phase 6.5: Advanced Metadata Operations & Documentation Restructure
+
+**Implemented comprehensive ticket metadata management system:**
+- Added `assignTicket()` API method - assign tickets to specific agents via email
+- Added `addTags()` API method - add tags without overwriting existing ones
+- Added `removeTags()` API method - remove specific tags from tickets
+- Wired up assignment handler in smart-query-handler with full execution logic
+- Wired up tag handler in smart-query-handler with add/remove operations
+- Both handlers use centralized pattern extractors (`extractEmails()`, `extractTags()`)
+- Context-aware operations work with "first ticket", "second ticket" from query results
+
+**Enhanced ticket metadata across the system:**
+- Added comprehensive metadata to last 6 existing tickets (#468-473):
+  - Ticket types: question, incident, problem, task (realistic distribution)
+  - Assignees: Rotated among 5 agents (sarah@8lee.ai, john@8lee.ai, mike@8lee.ai, lisa@8lee.ai, alex@8lee.ai)
+  - Tags: Context-based (billing, technical, feature-request, bug, urgent, high-priority, customer-success, etc.)
+- Created `scripts/add-ticket-metadata.ts` for systematic metadata addition (50-ticket capacity with rate limiting)
+
+**Upgraded ticket cache and query logic:**
+- Added `type` field to CachedTicket interface
+- Added `byType` statistics to track ticket type distribution
+- Updated `calculateStats()` to include type breakdown
+- Updated query classifier to support type queries ("how many incident tickets?")
+- Added tag-based filtering ("tickets with billing tag", "show urgent tickets")
+- Enhanced breakdown queries to include ticket type distribution
+
+**Improved user experience:**
+- Updated help text with new operation examples:
+  - Priority & Type Analysis section (added type queries)
+  - Tag Operations section (count, add, remove examples)
+  - Assignment Operations section (assign/reassign examples)
+- Help now shows comprehensive examples of all metadata operations
+
+**Documentation consolidation:**
+- **Renamed**: `zendesk-technical-guide.md` → `zendesk-MASTER.md` (CANONICAL)
+- Updated all references in `_docs/README.md` and `_docs/2025-november.md`
+- Added comprehensive Zendesk section to `CLAUDE.md`:
+  - Documentation file structure (5 docs: MASTER, implementation-status, expansion-plan, system-documentation, intercom-form-components)
+  - Key features summary (natural language queries, ticket operations, smart caching, pattern recognition)
+  - File location reference for Zendesk code (API client, query handler, patterns, cache)
+
+**Code quality:**
+- TypeScript check: ✅ 0 errors
+- Biome check: ✅ Passed
+- All new API methods include proper cache invalidation
+- All handlers include comprehensive error handling with user-friendly messages
+- Direct Zendesk ticket links in all operation responses
+
+**Impact:**
+- Users can now assign tickets directly from natural language queries
+- Tag management enables better ticket organization and filtering
+- Type-based queries provide better analytical capabilities
+- Metadata-rich tickets improve query accuracy and filtering
+- Documentation restructure provides clear hierarchy and canonical source
+
+**Files Changed:**
+- `_docs/zendesk-technical-guide.md` → `_docs/zendesk-MASTER.md` (renamed)
+- `_docs/README.md` - Updated documentation references
+- `_docs/2025-november.md` - Updated 9 file references
+- `app/zendesk/lib/zendesk-api-client.ts` - Added 3 new API methods (assignTicket, addTags, removeTags)
+- `app/zendesk/lib/smart-query-handler.ts` - Wired assignment/tag handlers, updated help text
+- `app/zendesk/lib/ticket-cache.ts` - Added type field and byType statistics
+- `app/zendesk/lib/classify-query.ts` - Added type and tag filtering logic
+- `scripts/add-ticket-metadata.ts` - New metadata addition script
+- `CLAUDE.md` - Added Zendesk Intelligence Portal documentation section
+
+**Testing:**
+- Successfully assigned ticket #473 to lisa@8lee.ai
+- Successfully added tags (technical, customer-success) to ticket #473
+- Metadata script processed 50 ticket range (#424-473), successfully updated 6 existing tickets
+- All new query patterns tested and working (type breakdown, tag counts, type filtering)
+
+---
+
 #### Technical documentation update and consolidation
 
-**Updated canonical Zendesk documentation (`zendesk-technical-guide.md`):**
+**Updated canonical Zendesk documentation (`zendesk-MASTER.md`):**
 - Updated status to "Production-Ready with Comprehensive Pattern Recognition & Reply Generation"
 - Last updated: November 17, 2025
 - Added `query-patterns.ts` to file structure with description
@@ -29,14 +103,14 @@
 6. **API Endpoints**: Added reply generation endpoint with full documentation
 
 **Documentation Philosophy:**
-- `zendesk-technical-guide.md` = Canonical master documentation ✅
+- `zendesk-MASTER.md` = Canonical master documentation ✅
 - `zendesk-implementation-status.md` = Current progress tracking
 - `zendesk-expansion-plan.md` = Future roadmap
 - `zendesk-system-documentation.md` = Complete system reference
 - All cross-references updated and validated
 
 **Files Changed:**
-- `_docs/zendesk-technical-guide.md` - Major update with new sections and API methods (80+ new lines)
+- `_docs/zendesk-MASTER.md` - Major update with new sections and API methods (80+ new lines)
 
 ---
 
@@ -165,7 +239,7 @@
 #### Documentation semantic naming improvements
 
 **Renamed all documentation files to be semantic and descriptive:**
-- `zendesk.md` → `zendesk-technical-guide.md`
+- `zendesk.md` → `zendesk-MASTER.md`
 - `SYSTEM_DOCUMENTATION.md` → `zendesk-system-documentation.md`
 - `FORM_COMPONENTS.md` → `zendesk-intercom-form-components.md`
 - `INTERCOM_MASTER.md` → `intercom-integration-guide.md`
@@ -173,7 +247,7 @@
 
 **Updated all references globally:**
 - `_docs/README.md` - Updated all documentation links
-- `_docs/zendesk-technical-guide.md` - Updated Contact & Support section
+- `_docs/zendesk-MASTER.md` - Updated Contact & Support section
 - `_docs/2025-november.md` - Updated previous entries with new file names
 
 **Benefits:**
@@ -196,11 +270,11 @@
 
 **Updated references globally:**
 - Updated `_docs/README.md` - Refreshed documentation index, removed stale references
-- Updated `_docs/zendesk-technical-guide.md` - Updated Contact & Support section with correct file paths
+- Updated `_docs/zendesk-MASTER.md` - Updated Contact & Support section with correct file paths
 - Updated `_docs/zendesk-implementation-status.md` - Updated EXPANSION_PLAN.md reference
 
 **Documentation structure:**
-- `_docs/zendesk-technical-guide.md` - Master technical documentation (current implementation)
+- `_docs/zendesk-MASTER.md` - Master technical documentation (current implementation)
 - `_docs/zendesk-implementation-status.md` - Implementation status and progress
 - `_docs/zendesk-expansion-plan.md` - Future API expansion roadmap
 - `_docs/zendesk-system-documentation.md` - Complete system documentation
@@ -213,7 +287,7 @@
 - All references accurate and up-to-date
 - Easier to maintain going forward
 
-**Files Changed:** _docs/README.md, _docs/zendesk-technical-guide.md, _docs/zendesk-implementation-status.md, _docs/zendesk-expansion-plan.md (moved)
+**Files Changed:** _docs/README.md, _docs/zendesk-MASTER.md, _docs/zendesk-implementation-status.md, _docs/zendesk-expansion-plan.md (moved)
 
 ---
 

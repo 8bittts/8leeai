@@ -49,7 +49,7 @@ Active release note files:
 ## Project Documentation
 
 ### Zendesk Intelligence Portal
-- [zendesk-technical-guide.md](zendesk-technical-guide.md) - Master technical documentation
+- [zendesk-MASTER.md](zendesk-MASTER.md) - Master technical documentation (CANONICAL)
 - [zendesk-implementation-status.md](zendesk-implementation-status.md) - Implementation status and progress
 - [zendesk-expansion-plan.md](zendesk-expansion-plan.md) - Future API expansion roadmap
 - [zendesk-system-documentation.md](zendesk-system-documentation.md) - Complete system documentation
