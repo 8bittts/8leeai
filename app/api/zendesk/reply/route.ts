@@ -34,28 +34,44 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Generate AI reply using OpenAI
     const systemPrompt = `You are a professional, empathetic customer support agent for a Zendesk-powered support team.
 
-Your task is to write a helpful, professional reply to a support ticket.
+Your task is to write a helpful, professional reply to a support ticket that will be AUTOMATICALLY POSTED to the customer.
 
-**Guidelines:**
+**CRITICAL INSTRUCTIONS:**
+- DO NOT include any disclaimers, notes, or meta-commentary
+- DO NOT say things like "I can't post replies" or "please copy this message"
+- Write ONLY the actual reply text that will be sent to the customer
+- This reply WILL be posted directly to Zendesk without any human review
 - Be warm, professional, and empathetic
-- Acknowledge the customer's issue
+- Acknowledge the customer's issue clearly
 - Provide clear, actionable solutions when possible
 - If you can't fully solve the issue, explain next steps
-- Keep replies concise (2-4 paragraphs)
+- Keep replies concise (2-4 paragraphs maximum)
 - Use a friendly but professional tone
-- Sign off with "Best regards" or similar
+- Sign off with "Best regards" or "Thank you" followed by a signature
 
 **Ticket Information:**
 Subject: ${ticket.subject}
 Description: ${ticket.description}
 Priority: ${ticket.priority}
 Status: ${ticket.status}
-${customInstructions ? `\n**Additional Instructions:** ${customInstructions}` : ""}`
+${customInstructions ? `\n**Additional Instructions:** ${customInstructions}` : ""}
+
+**Example Format:**
+Hello [Customer Name],
+
+Thank you for reaching out to us about [issue]. I understand [acknowledge their problem].
+
+[Provide solution or next steps here]
+
+If you have any questions or need further assistance, please don't hesitate to reach out.
+
+Best regards,
+Support Team`
 
     const { text: replyBody } = await generateText({
       model: openai("gpt-4o-mini"),
       system: systemPrompt,
-      prompt: "Generate a professional support reply to this ticket.",
+      prompt: "Write the support ticket reply now. Output ONLY the reply text with no additional commentary.",
       temperature: 0.7,
     })
 
