@@ -218,11 +218,11 @@ export function ZendeskChatContainer() {
       {/* Matrix background effect */}
       <MatrixBackground />
 
-      {/* Terminal window container - wide layout with minimal horizontal padding */}
+      {/* Terminal window container - wide with equal vertical spacing */}
       <div
         className="relative z-10 w-full h-full border-2 border-green-500/30 rounded-lg shadow-2xl shadow-green-500/20 bg-black flex flex-col overflow-hidden"
         onClick={handleMainClick}
-        style={{ minHeight: "calc(100vh - 200px)" }}
+        style={{ height: "calc(100vh - 200px)" }}
       >
         {/* Zendesk Header with ASCII Art */}
         <ZendeskHeader />
