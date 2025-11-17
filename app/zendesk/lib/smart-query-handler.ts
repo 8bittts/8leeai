@@ -415,7 +415,9 @@ export async function handleSmartQuery(
           model: openai("gpt-4o-mini"),
           system: `You are a ticket parameter extractor. Extract ticket creation parameters from natural language.
 
-**Your task**: Parse the user's request and output ONLY valid JSON with these fields:
+**CRITICAL**: Output ONLY raw JSON. No markdown code blocks, no backticks, no explanation.
+
+**Output format** (exactly this structure):
 {
   "subject": "Clear, concise subject line (max 100 chars)",
   "description": "Detailed description of the issue (200-500 chars if user wants detailed, otherwise match query intent)",
@@ -429,12 +431,21 @@ export async function handleSmartQuery(
 - Default priority to "normal" unless specified
 - Use "support@zendesk.com" as default requester if none specified
 - Make the ticket realistic and professional
-- Output ONLY the JSON, no markdown, no explanation`,
+- Output ONLY raw JSON - start with { and end with }`,
           prompt: `Extract ticket parameters from: "${query}"`,
           temperature: 0.7,
         })
 
-        const ticketParams = JSON.parse(ticketJson)
+        // Strip markdown code blocks if AI ignores instructions
+        let cleanJson = ticketJson.trim()
+        if (cleanJson.startsWith("```")) {
+          cleanJson = cleanJson
+            .replace(/^```(?:json)?\n?/, "")
+            .replace(/\n?```$/, "")
+            .trim()
+        }
+
+        const ticketParams = JSON.parse(cleanJson)
 
         // Create the ticket
         const client = getZendeskClient()
