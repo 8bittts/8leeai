@@ -123,6 +123,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         li: "https://www.linkedin.com/in/8lee/",
         x: "https://twitter.com/8bit",
         twitter: "https://twitter.com/8bit",
+        // TEMPORARY: Hidden command for Zendesk portal access (will be removed during cleanup)
+        zendesk: "https://8lee.ai/zendesk",
+        zen: "https://8lee.ai/zendesk",
       } as const
 
       type LinkKey = keyof typeof links

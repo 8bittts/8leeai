@@ -120,6 +120,9 @@ export const VALID_COMMANDS = [
   "random",
   "clear",
   "contact",
+  // TEMPORARY: Hidden command for Zendesk portal access (will be removed during cleanup)
+  "zendesk",
+  "zen",
 ] as const
 
 export type Command = (typeof VALID_COMMANDS)[number]
@@ -161,4 +164,7 @@ export const COMMAND_ALIASES: Record<string, string> = {
   clear: "clear",
   random: "random project",
   contact: "contact form",
+  // TEMPORARY: Hidden command for Zendesk portal (will be removed during cleanup)
+  zendesk: "Zendesk Portal",
+  zen: "Zendesk Portal",
 } as const

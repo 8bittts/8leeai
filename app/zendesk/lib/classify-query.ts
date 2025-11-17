@@ -361,45 +361,14 @@ function tryDiscreteMatch(
 
   const q = query.toLowerCase()
 
-  // Total count query
-  if (
-    DISCRETE_INDICATORS.counting.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q)) &&
-    /\b(tickets?|issues?|cases?)\b/i.test(q)
-  ) {
-    return {
-      answer: `We have **${cache.ticketCount}** tickets in total.`,
-      confidence: 0.99,
-      reasoning: "Total count from cache",
-    }
-  }
+  // Check specific queries BEFORE general total count
+  // This prevents "how many incident tickets?" from matching total count
 
-  // Status query
-  const statusMatch = DISCRETE_INDICATORS.status.find((status) =>
-    new RegExp(`\\b${status}\\b`, "i").test(q)
-  )
-  if (statusMatch && /\b(tickets?|issues?)\b/i.test(q)) {
-    const count = cache.stats.byStatus[statusMatch] || 0
-    return {
-      answer: `Status breakdown: **${statusMatch}**: ${count}`,
-      confidence: 0.95,
-      reasoning: `Status filter: ${statusMatch}`,
-    }
-  }
+  // Tag queries (most specific - check first)
+  const tagMatch = tryTagMatch(q, cache)
+  if (tagMatch) return tagMatch
 
-  // Priority query
-  const priorityMatch = DISCRETE_INDICATORS.priority.find((priority) =>
-    new RegExp(`\\b${priority}\\b`, "i").test(q)
-  )
-  if (priorityMatch && /\b(tickets?|issues?)\b/i.test(q)) {
-    const count = cache.stats.byPriority[priorityMatch] || 0
-    return {
-      answer: `Priority breakdown: **${priorityMatch}**: ${count}`,
-      confidence: 0.95,
-      reasoning: `Priority filter: ${priorityMatch}`,
-    }
-  }
-
-  // Type query
+  // Type query (specific)
   const typeMatch = DISCRETE_INDICATORS.ticketType.find((type) =>
     new RegExp(`\\b${type}\\b`, "i").test(q)
   )
@@ -412,17 +381,51 @@ function tryDiscreteMatch(
     }
   }
 
-  // Tag queries
-  const tagMatch = tryTagMatch(q, cache)
-  if (tagMatch) return tagMatch
+  // Priority query (specific)
+  const priorityMatch = DISCRETE_INDICATORS.priority.find((priority) =>
+    new RegExp(`\\b${priority}\\b`, "i").test(q)
+  )
+  if (priorityMatch && /\b(tickets?|issues?)\b/i.test(q)) {
+    const count = cache.stats.byPriority[priorityMatch] || 0
+    return {
+      answer: `Priority breakdown: **${priorityMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Priority filter: ${priorityMatch}`,
+    }
+  }
 
-  // Time-based queries
+  // Status query (specific)
+  const statusMatch = DISCRETE_INDICATORS.status.find((status) =>
+    new RegExp(`\\b${status}\\b`, "i").test(q)
+  )
+  if (statusMatch && /\b(tickets?|issues?)\b/i.test(q)) {
+    const count = cache.stats.byStatus[statusMatch] || 0
+    return {
+      answer: `Status breakdown: **${statusMatch}**: ${count}`,
+      confidence: 0.95,
+      reasoning: `Status filter: ${statusMatch}`,
+    }
+  }
+
+  // Time-based queries (specific)
   const timeMatch = tryTimeBasedMatch(q, cache)
   if (timeMatch) return timeMatch
 
-  // Breakdown/distribution requests
+  // Breakdown/distribution requests (specific)
   const breakdownMatch = tryBreakdownMatch(q, cache)
   if (breakdownMatch) return breakdownMatch
+
+  // Total count query (general - check LAST as fallback)
+  if (
+    DISCRETE_INDICATORS.counting.some((kw) => new RegExp(`\\b${kw}\\b`, "i").test(q)) &&
+    /\b(tickets?|issues?|cases?)\b/i.test(q)
+  ) {
+    return {
+      answer: `We have **${cache.ticketCount}** tickets in total.`,
+      confidence: 0.99,
+      reasoning: "Total count from cache",
+    }
+  }
 
   return null
 }
