@@ -3,6 +3,8 @@
 **Last Updated**: November 17, 2025
 **Status**: Production-Ready with Comprehensive Pattern Recognition & Reply Generation
 
+**📄 Executive Demo Document**: See [`zendesk-demo.md`](./zendesk-demo.md) for comprehensive PM interview presentation with business impact, command examples, and technical deep-dive.
+
 ---
 
 ## Overview

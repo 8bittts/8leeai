@@ -85,23 +85,31 @@ function isHelpQuery(query: string): boolean {
 /**
  * Check if query is general conversation (non-Zendesk)
  * Detects questions about weather, personal feelings, general chitchat, etc.
+ * CRITICAL: Patterns must be narrow to avoid blocking legitimate Zendesk queries
  */
 function isGeneralConversation(query: string): boolean {
   const generalPatterns = [
-    // Weather queries
+    // Weather queries (clearly off-topic)
     /\b(weather|temperature|forecast|rain|sunny|cloudy|hot|cold)\b/i,
-    // Personal questions
+
+    // Personal questions (clearly off-topic)
     /\b(how are you|how do you feel|are you okay|what's up|how's it going)\b/i,
-    // Time/date queries
-    /\b(what time|what day|what date|current time|today's date)\b/i,
-    // General knowledge
-    /\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i,
-    // Greetings
-    /^(hi|hello|hey|good morning|good afternoon|good evening|greetings)\b/i,
-    // Thanks/goodbye
+
+    // Time/date queries ONLY if not about tickets
+    /\b(what time|what day|what date|current time|today's date)\b(?!.*(ticket|created|updated|modified))/i,
+
+    // Simple standalone greetings (no Zendesk context)
+    /^(hi|hello|hey|good morning|good afternoon|good evening|greetings)\.?$/i,
+
+    // Polite closures (clearly off-topic)
     /\b(thank you|thanks|bye|goodbye|see you|farewell)\b/i,
-    // Random/off-topic
-    /\b(joke|story|fun fact|random|tell me|sing)\b/i,
+
+    // Entertainment requests (clearly off-topic)
+    /\b(joke|story|fun fact|sing)\b/i,
+
+    // REMOVED OVERLY BROAD PATTERN: /\b(who is|what is|where is|when is|why is|define|explain|tell me about)\b/i
+    // These are legitimate query starters for Zendesk questions and MUST reach the AI tier
+    // Examples that must pass through: "what is the ticket count?", "explain high priority tickets", "tell me about recent tickets"
   ]
 
   return generalPatterns.some((pattern) => pattern.test(query))
