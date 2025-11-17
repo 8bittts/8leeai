@@ -4,7 +4,7 @@
  * styled correctly, and easily understood by users
  */
 
-import { expect, test, describe, beforeAll } from "bun:test"
+import { beforeAll, describe, expect, test } from "bun:test"
 import { handleSmartQuery } from "../lib/smart-query-handler"
 import { refreshTicketCache } from "../lib/ticket-cache"
 
@@ -71,9 +71,7 @@ describe("OpenAI Response Quality - Formatting & Structure", () => {
   test(
     "AI responses should not contain raw JSON objects",
     async () => {
-      const result = await handleSmartQuery(
-        "Show me statistics about ticket priority distribution"
-      )
+      const result = await handleSmartQuery("Show me statistics about ticket priority distribution")
 
       // Should not return raw JSON like {"priority": "high", ...}
       const looksLikeJson =
@@ -89,9 +87,7 @@ describe("OpenAI Response Quality - Formatting & Structure", () => {
   test(
     "AI responses should not include disclaimers or apologies",
     async () => {
-      const result = await handleSmartQuery(
-        "Analyze average response time across all tickets"
-      )
+      const result = await handleSmartQuery("Analyze average response time across all tickets")
 
       const hasDisclaimer =
         result.answer.toLowerCase().includes("i apologize") ||
@@ -109,9 +105,7 @@ describe("OpenAI Response Quality - Content Clarity", () => {
   test(
     "AI responses should directly answer the question without excessive preamble",
     async () => {
-      const result = await handleSmartQuery(
-        "Tell me about high priority ticket patterns"
-      )
+      const result = await handleSmartQuery("Tell me about high priority ticket patterns")
 
       // Should not start with long preambles
       const startsWithFluff =
@@ -364,9 +358,7 @@ describe("OpenAI Response Quality - Performance & Reliability", () => {
   test(
     "AI responses should indicate appropriate confidence levels",
     async () => {
-      const result = await handleSmartQuery(
-        "Analyze ticket resolution time patterns and trends"
-      )
+      const result = await handleSmartQuery("Analyze ticket resolution time patterns and trends")
 
       // Confidence should be in valid range
       expect(result.confidence).toBeGreaterThanOrEqual(0)
