@@ -64,7 +64,7 @@ app/zendesk/
 ├── page.tsx                           # Main entry point (password: booya)
 ├── layout.tsx                         # Zendesk-specific layout
 ├── components/
-│   ├── zendesk-chat-container.tsx    # Main orchestrator (100px padding, responsive layout)
+│   ├── zendesk-chat-container.tsx    # Main orchestrator (32px equal padding, wide layout)
 │   ├── zendesk-header.tsx            # ASCII art header with macOS window controls
 │   ├── chat-history.tsx              # Message display
 │   ├── chat-input.tsx                # Terminal input
@@ -1035,11 +1035,12 @@ No files, no cache, no complexity.
 - Proper accessibility labels (ARIA) for each button
 - **Location**: `app/zendesk/components/zendesk-header.tsx:11-27`
 
-**Spacious Layout**:
-- 100px padding on all sides (`p-[100px]`)
-- Terminal fills remaining space dynamically
-- Professional appearance with breathing room
-- Responsive to viewport changes
+**Wide Layout with Balanced Spacing**:
+- Equal 32px padding on all sides (`px-8 py-8`)
+- Minimal horizontal padding maximizes screen width usage
+- Terminal fills remaining space dynamically: `w-full h-full`
+- Fixed height: `calc(100vh - 64px)` for proper viewport sizing
+- Professional appearance with balanced spacing and maximum content area
 - **Location**: `app/zendesk/components/zendesk-chat-container.tsx:217-225`
 
 **Enhanced Suggestion Bar**:
@@ -1052,6 +1053,13 @@ No files, no cache, no complexity.
 - **Location**: `app/zendesk/components/suggestion-bar.tsx:42-63`
 
 ### User/Customer Listing
+
+**Code Quality & Fixes**:
+- Fixed non-null assertion Biome error in user role grouping
+- Replaced `acc[user.role]!.push(user)` with nullish coalescing pattern
+- Fixed TypeScript strict mode errors (bracket notation for index signatures)
+- All checks passing: TypeScript (120 files), Biome (no fixes needed)
+- **Location**: `app/zendesk/lib/smart-query-handler.ts:905-913`
 
 **New Query Support**:
 ```
