@@ -836,6 +836,684 @@ export class ZendeskAPIClient {
   }
 
   /**
+   * Bulk create tickets
+   * POST /api/v2/tickets/create_many.json
+   */
+  async createManyTickets(
+    tickets: Array<{
+      subject: string
+      comment: { body: string }
+      priority?: "urgent" | "high" | "normal" | "low"
+      status?: "new" | "open" | "pending" | "hold" | "solved" | "closed"
+      requester_email?: string
+    }>
+  ): Promise<{ job_status_id: string }> {
+    try {
+      console.log(`[ZendeskAPI] Bulk creating ${tickets.length} tickets`)
+
+      const response = await this.request<{ job_status: { id: string } }>(
+        "/tickets/create_many.json",
+        {
+          method: "POST",
+          body: { tickets },
+        }
+      )
+
+      console.log(`[ZendeskAPI] Bulk create job started: ${response.job_status.id}`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return { job_status_id: response.job_status.id }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error bulk creating tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Bulk delete tickets (soft delete)
+   * DELETE /api/v2/tickets/destroy_many.json?ids=1,2,3
+   */
+  async deleteManyTickets(ticketIds: number[]): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Bulk deleting ${ticketIds.length} tickets`)
+
+      await this.request<void>(`/tickets/destroy_many.json?ids=${ticketIds.join(",")}`, {
+        method: "DELETE",
+      })
+
+      console.log(`[ZendeskAPI] Bulk deleted ${ticketIds.length} tickets`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error bulk deleting tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Bulk restore tickets
+   * PUT /api/v2/tickets/restore_many.json?ids=1,2,3
+   */
+  async restoreManyTickets(ticketIds: number[]): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Bulk restoring ${ticketIds.length} tickets`)
+
+      await this.request<void>(`/tickets/restore_many.json?ids=${ticketIds.join(",")}`, {
+        method: "PUT",
+      })
+
+      console.log(`[ZendeskAPI] Bulk restored ${ticketIds.length} tickets`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error bulk restoring tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Permanently delete a ticket (cannot be restored)
+   * DELETE /api/v2/tickets/{ticket_id}/destroy.json
+   */
+  async deleteTicketPermanent(ticketId: number): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Permanently deleting ticket ${ticketId}`)
+
+      await this.request<void>(`/tickets/${ticketId}/destroy.json`, {
+        method: "DELETE",
+      })
+
+      console.log(`[ZendeskAPI] Ticket ${ticketId} permanently deleted`)
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error permanently deleting ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Bulk permanently delete tickets
+   * DELETE /api/v2/tickets/destroy_many.json?ids=1,2,3&destroy=true
+   */
+  async deleteManyTicketsPermanent(ticketIds: number[]): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Permanently deleting ${ticketIds.length} tickets`)
+
+      await this.request<void>(
+        `/tickets/destroy_many.json?ids=${ticketIds.join(",")}&destroy=true`,
+        {
+          method: "DELETE",
+        }
+      )
+
+      console.log(`[ZendeskAPI] Permanently deleted ${ticketIds.length} tickets`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error permanently deleting tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Bulk mark tickets as spam
+   * PUT /api/v2/tickets/mark_many_as_spam.json?ids=1,2,3
+   */
+  async markManyAsSpam(ticketIds: number[]): Promise<void> {
+    try {
+      console.log(`[ZendeskAPI] Marking ${ticketIds.length} tickets as spam`)
+
+      await this.request<void>(`/tickets/mark_many_as_spam.json?ids=${ticketIds.join(",")}`, {
+        method: "PUT",
+      })
+
+      console.log(`[ZendeskAPI] Marked ${ticketIds.length} tickets as spam`)
+
+      // Clear all ticket caches
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets")) {
+          this.cache.delete(key)
+        }
+      }
+    } catch (error) {
+      console.error("[ZendeskAPI] Error marking tickets as spam:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Get tickets for a specific organization
+   * GET /api/v2/organizations/{organization_id}/tickets.json
+   */
+  async getOrganizationTickets(organizationId: number): Promise<ZendeskTicket[]> {
+    const cacheKey = this.getCacheKey(`/organizations/${organizationId}/tickets.json`)
+    const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
+    if (cached) return cached as ZendeskTicket[]
+
+    try {
+      const allTickets: ZendeskTicket[] = []
+      let nextPageUrl: string | null = `/organizations/${organizationId}/tickets.json`
+
+      let pageCount = 0
+      while (nextPageUrl) {
+        pageCount++
+        console.log(`[ZendeskAPI] Fetching org ${organizationId} tickets page ${pageCount}...`)
+
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl)
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allTickets)
+      return allTickets
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching org ${organizationId} tickets:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get tickets requested by a specific user
+   * GET /api/v2/users/{user_id}/tickets/requested.json
+   */
+  async getUserTicketsRequested(userId: number): Promise<ZendeskTicket[]> {
+    const cacheKey = this.getCacheKey(`/users/${userId}/tickets/requested.json`)
+    const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
+    if (cached) return cached as ZendeskTicket[]
+
+    try {
+      const allTickets: ZendeskTicket[] = []
+      let nextPageUrl: string | null = `/users/${userId}/tickets/requested.json`
+
+      let _pageCount = 0
+      while (nextPageUrl) {
+        _pageCount++
+
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl)
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allTickets)
+      return allTickets
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching user ${userId} requested tickets:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get tickets assigned to a specific user
+   * GET /api/v2/users/{user_id}/tickets/assigned.json
+   */
+  async getUserTicketsAssigned(userId: number): Promise<ZendeskTicket[]> {
+    const cacheKey = this.getCacheKey(`/users/${userId}/tickets/assigned.json`)
+    const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
+    if (cached) return cached as ZendeskTicket[]
+
+    try {
+      const allTickets: ZendeskTicket[] = []
+      let nextPageUrl: string | null = `/users/${userId}/tickets/assigned.json`
+
+      let _pageCount = 0
+      while (nextPageUrl) {
+        _pageCount++
+
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl)
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allTickets)
+      return allTickets
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching user ${userId} assigned tickets:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get tickets where user is CC'd
+   * GET /api/v2/users/{user_id}/tickets/ccd.json
+   */
+  async getUserTicketsCCd(userId: number): Promise<ZendeskTicket[]> {
+    const cacheKey = this.getCacheKey(`/users/${userId}/tickets/ccd.json`)
+    const cached = this.getFromCache(cacheKey, this.cacheTTL["tickets"] || 5 * 60 * 1000)
+    if (cached) return cached as ZendeskTicket[]
+
+    try {
+      const allTickets: ZendeskTicket[] = []
+      let nextPageUrl: string | null = `/users/${userId}/tickets/ccd.json`
+
+      let _pageCount = 0
+      while (nextPageUrl) {
+        _pageCount++
+
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl)
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+
+        nextPageUrl = response.next_page || null
+      }
+
+      this.setCache(cacheKey, allTickets)
+      return allTickets
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching user ${userId} CC'd tickets:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get total ticket count
+   * GET /api/v2/tickets/count.json
+   */
+  async getTicketCount(query?: string): Promise<number> {
+    try {
+      const params = query ? { query } : {}
+      const response = await this.request<{ count: { value: number } }>("/tickets/count.json", {
+        params,
+      })
+
+      return response.count.value
+    } catch (error) {
+      console.error("[ZendeskAPI] Error getting ticket count:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Get deleted tickets
+   * GET /api/v2/deleted_tickets.json
+   */
+  async getDeletedTickets(): Promise<ZendeskTicket[]> {
+    try {
+      const response = await this.request<{ deleted_tickets: ZendeskTicket[] }>(
+        "/deleted_tickets.json"
+      )
+
+      return response.deleted_tickets
+    } catch (error) {
+      console.error("[ZendeskAPI] Error fetching deleted tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Get ticket collaborators
+   * GET /api/v2/tickets/{ticket_id}/collaborators.json
+   */
+  async getTicketCollaborators(ticketId: number): Promise<ZendeskUser[]> {
+    try {
+      const response = await this.request<{ users: ZendeskUser[] }>(
+        `/tickets/${ticketId}/collaborators.json`
+      )
+
+      return response.users
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching ticket ${ticketId} collaborators:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get ticket incidents (for problem tickets)
+   * GET /api/v2/tickets/{ticket_id}/incidents.json
+   */
+  async getTicketIncidents(ticketId: number): Promise<ZendeskTicket[]> {
+    try {
+      const allTickets: ZendeskTicket[] = []
+      let nextPageUrl: string | null = `/tickets/${ticketId}/incidents.json`
+
+      let _pageCount = 0
+      while (nextPageUrl) {
+        _pageCount++
+
+        const response = await this.request<{
+          tickets: ZendeskTicket[]
+          next_page?: string
+        }>(nextPageUrl)
+
+        const pageTickets = response.tickets || []
+        allTickets.push(...pageTickets)
+
+        nextPageUrl = response.next_page || null
+      }
+
+      return allTickets
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error fetching ticket ${ticketId} incidents:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Get similar/related tickets (autocomplete for problems)
+   * GET /api/v2/tickets/problems/autocomplete.json?text=search_term
+   */
+  async searchProblemTickets(searchText: string): Promise<ZendeskTicket[]> {
+    try {
+      const response = await this.request<{ tickets: ZendeskTicket[] }>(
+        `/tickets/problems/autocomplete.json?text=${encodeURIComponent(searchText)}`
+      )
+
+      return response.tickets
+    } catch (error) {
+      console.error("[ZendeskAPI] Error searching problem tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Get recent tickets (agent's recently viewed)
+   * GET /api/v2/tickets/recent.json
+   */
+  async getRecentTickets(): Promise<ZendeskTicket[]> {
+    try {
+      const response = await this.request<{ tickets: ZendeskTicket[] }>("/tickets/recent.json")
+
+      return response.tickets
+    } catch (error) {
+      console.error("[ZendeskAPI] Error fetching recent tickets:", error)
+      throw error
+    }
+  }
+
+  /**
+   * Add tags to a ticket
+   * PUT /api/v2/tickets/{ticket_id}.json with additional_tags
+   */
+  async addTicketTags(ticketId: number, tags: string[]): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Adding tags to ticket ${ticketId}: ${tags.join(", ")}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            additional_tags: tags,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error adding tags to ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Remove tags from a ticket
+   * PUT /api/v2/tickets/{ticket_id}.json with remove_tags
+   */
+  async removeTicketTags(ticketId: number, tags: string[]): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Removing tags from ticket ${ticketId}: ${tags.join(", ")}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            remove_tags: tags,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error removing tags from ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Set ticket tags (replaces all existing tags)
+   * PUT /api/v2/tickets/{ticket_id}.json with tags
+   */
+  async setTicketTags(ticketId: number, tags: string[]): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Setting tags for ticket ${ticketId}: ${tags.join(", ")}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            tags,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error setting tags for ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Assign ticket to a specific agent
+   * PUT /api/v2/tickets/{ticket_id}.json with assignee_id
+   */
+  async assignTicket(ticketId: number, assigneeId: number): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Assigning ticket ${ticketId} to agent ${assigneeId}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            assignee_id: assigneeId,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error assigning ticket ${ticketId}:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Assign ticket to a group
+   * PUT /api/v2/tickets/{ticket_id}.json with group_id
+   */
+  async assignTicketToGroup(ticketId: number, groupId: number): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Assigning ticket ${ticketId} to group ${groupId}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            group_id: groupId,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error assigning ticket ${ticketId} to group:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Update ticket priority
+   * PUT /api/v2/tickets/{ticket_id}.json with priority
+   */
+  async updateTicketPriority(
+    ticketId: number,
+    priority: "urgent" | "high" | "normal" | "low"
+  ): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Updating ticket ${ticketId} priority to ${priority}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            priority,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error updating ticket ${ticketId} priority:`, error)
+      throw error
+    }
+  }
+
+  /**
+   * Update ticket status
+   * PUT /api/v2/tickets/{ticket_id}.json with status
+   */
+  async updateTicketStatus(
+    ticketId: number,
+    status: "new" | "open" | "pending" | "hold" | "solved" | "closed"
+  ): Promise<ZendeskTicket> {
+    try {
+      console.log(`[ZendeskAPI] Updating ticket ${ticketId} status to ${status}`)
+
+      const response = await this.request<{
+        ticket: ZendeskTicket
+      }>(`/tickets/${ticketId}.json`, {
+        method: "PUT",
+        body: {
+          ticket: {
+            status,
+          },
+        },
+      })
+
+      // Clear cache
+      this.cache.delete(this.getCacheKey(`/tickets/${ticketId}.json`))
+      for (const key of this.cache.keys()) {
+        if (key.includes("/tickets.json")) {
+          this.cache.delete(key)
+        }
+      }
+
+      return response.ticket
+    } catch (error) {
+      console.error(`[ZendeskAPI] Error updating ticket ${ticketId} status:`, error)
+      throw error
+    }
+  }
+
+  /**
    * Clear cache
    */
   clearCache(): void {

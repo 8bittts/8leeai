@@ -10,6 +10,7 @@ import { generateText } from "ai"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
 import { classifyQuery } from "./classify-query"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
+import { getZendeskClient } from "./zendesk-api-client"
 
 interface QueryResponse {
   answer: string
@@ -476,13 +477,31 @@ export async function handleSmartQuery(
         }
       }
 
-      const processingTime = Date.now() - startTime
+      try {
+        const client = getZendeskClient()
+        const updatedTicket = await client.updateTicketStatus(targetTicket.id, targetStatus)
 
-      return {
-        answer: `✅ **Status Update Detected**\n\n**Ticket:** #${targetTicket.id} - ${targetTicket.subject}\n**Current Status:** ${targetTicket.status}\n**New Status:** ${targetStatus}\n\n⚠️ Status update functionality coming soon! This will update the ticket in Zendesk and return a confirmation link.`,
-        source: "cache",
-        confidence: 0.85,
-        processingTime,
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${updatedTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        return {
+          answer: `✅ **Status Updated Successfully**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous Status:** ${targetTicket.status}\n**New Status:** ${updatedTicket.status}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket status has been updated in Zendesk.`,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        return {
+          answer: `❌ **Error Updating Status**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease check your Zendesk API connection.`,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
       }
     }
 
@@ -493,6 +512,65 @@ export async function handleSmartQuery(
       ) &&
       context?.lastTickets &&
       context.lastTickets.length > 0
+
+    // Check if this is a confirmation for delete/spam
+    const isConfirmDelete = /\b(confirm\s+(delete|spam))\s+ticket\s+#?(\d+)\b/i.test(query)
+
+    if (isConfirmDelete) {
+      const confirmMatch = query.match(/\b(confirm\s+(delete|spam))\s+ticket\s+#?(\d+)\b/i)
+      const ticketId = confirmMatch?.[3] ? Number.parseInt(confirmMatch[3], 10) : null
+      const isSpam = confirmMatch?.[2]?.toLowerCase() === "spam"
+
+      if (!ticketId) {
+        const processingTime = Date.now() - startTime
+        return {
+          answer: "❌ **Invalid Confirmation**\n\nCould not parse ticket ID from confirmation.",
+          source: "cache",
+          confidence: 0,
+          processingTime,
+        }
+      }
+
+      try {
+        const client = getZendeskClient()
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+
+        if (isSpam) {
+          await client.markAsSpam(ticketId)
+
+          const processingTime = Date.now() - startTime
+
+          return {
+            answer: `✅ **Ticket Marked as Spam**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been marked as spam and the requester has been suspended.\n\n**Note:** This action suspends future tickets from this requester.`,
+            source: "live",
+            confidence: 1,
+            processingTime,
+          }
+        }
+
+        await client.deleteTicket(ticketId)
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${ticketId}`
+
+        const processingTime = Date.now() - startTime
+
+        return {
+          answer: `✅ **Ticket Deleted**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been soft-deleted (can be restored later).\n\nTo restore: "restore ticket #${ticketId}"\n\n**Link:** ${ticketLink}`,
+          source: "live",
+          confidence: 1,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        return {
+          answer: `❌ **Error**\n\nFailed to ${isSpam ? "mark as spam" : "delete"} ticket #${ticketId}\n\nError: ${errorMsg}`,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
+      }
+    }
 
     if (isDeleteRequest) {
       console.log("[SmartQuery] Handling delete/spam request with context")
@@ -561,6 +639,159 @@ export async function handleSmartQuery(
           )}\n\nTo merge tickets, specify:\n• Target ticket (where comments will be merged to)\n• Source tickets (will be closed after merge)\n\nExample: "merge tickets 2 and 3 into ticket 1"\n\n⚠️ Merge functionality coming soon!`,
         source: "cache",
         confidence: 0.85,
+        processingTime,
+      }
+    }
+
+    // Check if query is asking to restore a deleted ticket
+    const isRestoreRequest = /\b(restore|undelete|recover)\s+ticket\s+#?(\d+)\b/i.test(query)
+
+    if (isRestoreRequest) {
+      const restoreMatch = query.match(/\b(restore|undelete|recover)\s+ticket\s+#?(\d+)\b/i)
+      const ticketId = restoreMatch?.[2] ? Number.parseInt(restoreMatch[2], 10) : null
+
+      if (!ticketId) {
+        const processingTime = Date.now() - startTime
+        return {
+          answer: "❌ **Invalid Request**\n\nCould not parse ticket ID from query.",
+          source: "cache",
+          confidence: 0,
+          processingTime,
+        }
+      }
+
+      try {
+        const client = getZendeskClient()
+        const restoredTicket = await client.restoreTicket(ticketId)
+
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${restoredTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        return {
+          answer: `✅ **Ticket Restored**\n\n**Ticket:** #${restoredTicket.id} - ${restoredTicket.subject}\n**Status:** ${restoredTicket.status}\n**Priority:** ${restoredTicket.priority}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been successfully restored.`,
+          source: "live",
+          confidence: 1,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        return {
+          answer: `❌ **Error Restoring Ticket**\n\nFailed to restore ticket #${ticketId}\n\nError: ${errorMsg}`,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
+      }
+    }
+
+    // Check if query is asking to update priority
+    const isUpdatePriorityRequest =
+      /\b(set|change|update)\s+(priority|prio)\b/i.test(query) &&
+      context?.lastTickets &&
+      context.lastTickets.length > 0
+
+    if (isUpdatePriorityRequest) {
+      // Extract target priority
+      let targetPriority: "urgent" | "high" | "normal" | "low" | null = null
+      if (/\burgent\b/i.test(query)) targetPriority = "urgent"
+      else if (/\bhigh\b/i.test(query)) targetPriority = "high"
+      else if (/\bnormal\b/i.test(query)) targetPriority = "normal"
+      else if (/\blow\b/i.test(query)) targetPriority = "low"
+
+      // Extract which ticket
+      let ticketIndex = 0
+      const indexMatch = query.match(/\b(first|1st|second|2nd|third|3rd|fourth|4th|fifth|5th)\b/i)
+      if (indexMatch?.[1]) {
+        const indexWord = indexMatch[1].toLowerCase()
+        const indexMap: Record<string, number> = {
+          first: 0,
+          "1st": 0,
+          second: 1,
+          "2nd": 1,
+          third: 2,
+          "3rd": 2,
+          fourth: 3,
+          "4th": 3,
+          fifth: 4,
+          "5th": 4,
+        }
+        ticketIndex = indexMap[indexWord] ?? 0
+      }
+
+      const targetTicket = context.lastTickets[ticketIndex]
+
+      if (!(targetTicket && targetPriority)) {
+        const processingTime = Date.now() - startTime
+        return {
+          answer: `❌ **Cannot Update Priority**\n\n${targetTicket ? "Could not determine target priority (urgent/high/normal/low)." : `Ticket at position ${ticketIndex + 1} not found.`}\n\nExamples:\n• "set priority to high for first ticket"\n• "change priority to urgent"`,
+          source: "cache",
+          confidence: 0.5,
+          processingTime,
+        }
+      }
+
+      try {
+        const client = getZendeskClient()
+        const updatedTicket = await client.updateTicketPriority(targetTicket.id, targetPriority)
+
+        const subdomain = process.env["ZENDESK_SUBDOMAIN"] || ""
+        const ticketLink = `https://${subdomain}.zendesk.com/agent/tickets/${updatedTicket.id}`
+
+        const processingTime = Date.now() - startTime
+
+        return {
+          answer: `✅ **Priority Updated**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous:** ${targetTicket.priority}\n**New:** ${updatedTicket.priority}\n\n**Direct Link:** ${ticketLink}`,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        return {
+          answer: `❌ **Error Updating Priority**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}`,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
+      }
+    }
+
+    // Check if query is asking to assign a ticket
+    const isAssignRequest =
+      /\b(assign|reassign|give)\s+(ticket|the (first|second|third))\b/i.test(query) &&
+      context?.lastTickets &&
+      context.lastTickets.length > 0
+
+    if (isAssignRequest) {
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `✅ **Assignment Detected**\n\nTo assign a ticket, I need:\n• Agent ID or email\n• Which ticket to assign\n\nExample: "assign first ticket to agent 123456"\n\n⚠️ Full assignment functionality coming soon! For now, use manual assignment in Zendesk.`,
+        source: "cache",
+        confidence: 0.8,
+        processingTime,
+      }
+    }
+
+    // Check if query is asking about tags
+    const isTagRequest =
+      /\b(add|remove|set)\s+tags?\b/i.test(query) &&
+      context?.lastTickets &&
+      context.lastTickets.length > 0
+
+    if (isTagRequest) {
+      const processingTime = Date.now() - startTime
+
+      return {
+        answer: `✅ **Tag Operation Detected**\n\nTo modify tags, I need:\n• Which ticket\n• Which tags to add/remove\n\nExamples:\n• "add tags billing,urgent to first ticket"\n• "remove tag spam from second ticket"\n\n⚠️ Tag functionality coming soon!`,
+        source: "cache",
+        confidence: 0.8,
         processingTime,
       }
     }
