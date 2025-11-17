@@ -9,6 +9,7 @@ import { openai } from "@ai-sdk/openai"
 import { generateText } from "ai"
 import { buildSystemPromptWithContext, invalidateCache } from "./cached-ai-context"
 import { classifyQuery } from "./classify-query"
+import { addConversationEntry, getRecentConversationContext } from "./conversation-cache"
 import { loadTicketCache, refreshTicketCache } from "./ticket-cache"
 import { getZendeskClient } from "./zendesk-api-client"
 
@@ -254,8 +255,11 @@ export async function handleSmartQuery(
       console.log("[SmartQuery] Handling empty query")
       const processingTime = Date.now() - startTime
 
+      const answer = generateHelpText()
+      addConversationEntry("", answer, "cache", 1)
+
       return {
-        answer: generateHelpText(),
+        answer,
         source: "cache",
         confidence: 1,
         processingTime,
@@ -269,10 +273,14 @@ export async function handleSmartQuery(
       invalidateCache() // Clear cached context after refresh
       const processingTime = Date.now() - startTime
 
+      const answer = refreshResult.success
+        ? `✅ Cache refreshed successfully!\n\nUpdated with ${refreshResult.ticketCount} tickets from Zendesk.\nMessage: ${refreshResult.message}`
+        : `❌ Failed to refresh cache\n\nError: ${refreshResult.error}\n${refreshResult.message}`
+
+      addConversationEntry(query, answer, "cache", refreshResult.success ? 1 : 0)
+
       return {
-        answer: refreshResult.success
-          ? `✅ Cache refreshed successfully!\n\nUpdated with ${refreshResult.ticketCount} tickets from Zendesk.\nMessage: ${refreshResult.message}`
-          : `❌ Failed to refresh cache\n\nError: ${refreshResult.error}\n${refreshResult.message}`,
+        answer,
         source: "cache",
         confidence: refreshResult.success ? 1 : 0,
         processingTime,
@@ -284,8 +292,11 @@ export async function handleSmartQuery(
       console.log("[SmartQuery] Handling help request")
       const processingTime = Date.now() - startTime
 
+      const answer = generateHelpText()
+      addConversationEntry(query, answer, "cache", 1)
+
       return {
-        answer: generateHelpText(),
+        answer,
         source: "cache",
         confidence: 1,
         processingTime,
@@ -297,8 +308,11 @@ export async function handleSmartQuery(
       console.log("[SmartQuery] Handling general conversation")
       const processingTime = Date.now() - startTime
 
+      const answer = generateGeneralResponse(query)
+      addConversationEntry(query, answer, "cache", 1)
+
       return {
-        answer: generateGeneralResponse(query),
+        answer,
         source: "cache",
         confidence: 1,
         processingTime,
@@ -341,8 +355,11 @@ export async function handleSmartQuery(
 
       if (!targetTicket) {
         const processingTime = Date.now() - startTime
+        const answer = `❌ Cannot find ticket at position ${ticketIndex + 1}.\n\nOnly ${context.lastTickets.length} tickets available in context.`
+        addConversationEntry(query, answer, "cache", 0)
+
         return {
-          answer: `❌ Cannot find ticket at position ${ticketIndex + 1}.\n\nOnly ${context.lastTickets.length} tickets available in context.`,
+          answer,
           source: "cache",
           confidence: 0,
           processingTime,
@@ -371,8 +388,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Reply Generated and Posted**\n\n**Ticket:** #${replyData.ticketId} - ${targetTicket.subject}\n\n**Reply Preview:**\n${replyData.replyBody.substring(0, 300)}${replyData.replyBody.length > 300 ? "..." : ""}\n\n**Direct Link:** ${replyData.ticketLink}\n**Comment ID:** ${replyData.commentId}\n\nThe reply has been successfully posted to Zendesk and is now visible to the customer.`
+        addConversationEntry(query, answer, "ai", 0.95)
+
         return {
-          answer: `✅ **Reply Generated and Posted**\n\n**Ticket:** #${replyData.ticketId} - ${targetTicket.subject}\n\n**Reply Preview:**\n${replyData.replyBody.substring(0, 300)}${replyData.replyBody.length > 300 ? "..." : ""}\n\n**Direct Link:** ${replyData.ticketLink}\n**Comment ID:** ${replyData.commentId}\n\nThe reply has been successfully posted to Zendesk and is now visible to the customer.`,
+          answer,
           source: "ai",
           confidence: 0.95,
           processingTime,
@@ -381,8 +401,11 @@ export async function handleSmartQuery(
         const processingTime = Date.now() - startTime
         const errorMsg = error instanceof Error ? error.message : String(error)
 
+        const answer = `❌ **Error Generating Reply**\n\nFailed to create reply for ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease try again or check your Zendesk API connection.`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error Generating Reply**\n\nFailed to create reply for ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease try again or check your Zendesk API connection.`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -393,8 +416,11 @@ export async function handleSmartQuery(
     // If reply request but no context
     if (isReplyRequest && (!context?.lastTickets || context.lastTickets.length === 0)) {
       const processingTime = Date.now() - startTime
+      const answer = `❌ **No Tickets in Context**\n\nTo generate a reply, first show me some tickets:\n• "show top 5 tickets"\n• "list recent tickets"\n\nThen you can say:\n• "build a reply for the first ticket"\n• "send a response to the second ticket"`
+      addConversationEntry(query, answer, "cache", 1)
+
       return {
-        answer: `❌ **No Tickets in Context**\n\nTo generate a reply, first show me some tickets:\n• "show top 5 tickets"\n• "list recent tickets"\n\nThen you can say:\n• "build a reply for the first ticket"\n• "send a response to the second ticket"`,
+        answer,
         source: "cache",
         confidence: 1,
         processingTime,
@@ -463,8 +489,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Ticket Created Successfully**\n\n**Ticket #${createdTicket.id}**\n\n**Subject:** ${createdTicket.subject}\n**Priority:** ${createdTicket.priority}\n**Status:** ${createdTicket.status}\n\n**Description:**\n${ticketParams.description}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been created in Zendesk and is ready for agent review.`
+        addConversationEntry(query, answer, "live", 0.95)
+
         return {
-          answer: `✅ **Ticket Created Successfully**\n\n**Ticket #${createdTicket.id}**\n\n**Subject:** ${createdTicket.subject}\n**Priority:** ${createdTicket.priority}\n**Status:** ${createdTicket.status}\n\n**Description:**\n${ticketParams.description}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been created in Zendesk and is ready for agent review.`,
+          answer,
           source: "live",
           confidence: 0.95,
           processingTime,
@@ -475,8 +504,11 @@ export async function handleSmartQuery(
 
         console.error("[SmartQuery] Error creating ticket:", error)
 
+        const answer = `❌ **Error Creating Ticket**\n\nFailed to create ticket from query.\n\nError: ${errorMsg}\n\nPlease try with more explicit parameters like:\n"create ticket about login issues with priority high and description 'User cannot access dashboard'"`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error Creating Ticket**\n\nFailed to create ticket from query.\n\nError: ${errorMsg}\n\nPlease try with more explicit parameters like:\n"create ticket about login issues with priority high and description 'User cannot access dashboard'"`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -528,8 +560,11 @@ export async function handleSmartQuery(
 
       if (!(targetTicket && targetStatus)) {
         const processingTime = Date.now() - startTime
+        const answer = `❌ **Cannot Update Status**\n\n${targetTicket ? "Could not determine target status from query." : `Ticket at position ${ticketIndex + 1} not found in context.`}\n\nExamples:\n• "close the first ticket"\n• "mark second ticket as solved"\n• "set status to pending for first ticket"`
+        addConversationEntry(query, answer, "cache", 0.5)
+
         return {
-          answer: `❌ **Cannot Update Status**\n\n${targetTicket ? "Could not determine target status from query." : `Ticket at position ${ticketIndex + 1} not found in context.`}\n\nExamples:\n• "close the first ticket"\n• "mark second ticket as solved"\n• "set status to pending for first ticket"`,
+          answer,
           source: "cache",
           confidence: 0.5,
           processingTime,
@@ -545,8 +580,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Status Updated Successfully**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous Status:** ${targetTicket.status}\n**New Status:** ${updatedTicket.status}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket status has been updated in Zendesk.`
+        addConversationEntry(query, answer, "live", 0.95)
+
         return {
-          answer: `✅ **Status Updated Successfully**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous Status:** ${targetTicket.status}\n**New Status:** ${updatedTicket.status}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket status has been updated in Zendesk.`,
+          answer,
           source: "live",
           confidence: 0.95,
           processingTime,
@@ -555,8 +593,11 @@ export async function handleSmartQuery(
         const processingTime = Date.now() - startTime
         const errorMsg = error instanceof Error ? error.message : String(error)
 
+        const answer = `❌ **Error Updating Status**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease check your Zendesk API connection.`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error Updating Status**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}\n\nPlease check your Zendesk API connection.`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -582,8 +623,11 @@ export async function handleSmartQuery(
 
       if (!ticketId) {
         const processingTime = Date.now() - startTime
+        const answer = "❌ **Invalid Confirmation**\n\nCould not parse ticket ID from confirmation."
+        addConversationEntry(query, answer, "cache", 0)
+
         return {
-          answer: "❌ **Invalid Confirmation**\n\nCould not parse ticket ID from confirmation.",
+          answer,
           source: "cache",
           confidence: 0,
           processingTime,
@@ -599,8 +643,11 @@ export async function handleSmartQuery(
 
           const processingTime = Date.now() - startTime
 
+          const answer = `✅ **Ticket Marked as Spam**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been marked as spam and the requester has been suspended.\n\n**Note:** This action suspends future tickets from this requester.`
+          addConversationEntry(query, answer, "live", 1)
+
           return {
-            answer: `✅ **Ticket Marked as Spam**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been marked as spam and the requester has been suspended.\n\n**Note:** This action suspends future tickets from this requester.`,
+            answer,
             source: "live",
             confidence: 1,
             processingTime,
@@ -612,8 +659,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Ticket Deleted**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been soft-deleted (can be restored later).\n\nTo restore: "restore ticket #${ticketId}"\n\n**Link:** ${ticketLink}`
+        addConversationEntry(query, answer, "live", 1)
+
         return {
-          answer: `✅ **Ticket Deleted**\n\n**Ticket:** #${ticketId}\n\nThe ticket has been soft-deleted (can be restored later).\n\nTo restore: "restore ticket #${ticketId}"\n\n**Link:** ${ticketLink}`,
+          answer,
           source: "live",
           confidence: 1,
           processingTime,
@@ -622,8 +672,11 @@ export async function handleSmartQuery(
         const processingTime = Date.now() - startTime
         const errorMsg = error instanceof Error ? error.message : String(error)
 
+        const answer = `❌ **Error**\n\nFailed to ${isSpam ? "mark as spam" : "delete"} ticket #${ticketId}\n\nError: ${errorMsg}`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error**\n\nFailed to ${isSpam ? "mark as spam" : "delete"} ticket #${ticketId}\n\nError: ${errorMsg}`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -660,8 +713,11 @@ export async function handleSmartQuery(
 
       if (!targetTicket) {
         const processingTime = Date.now() - startTime
+        const answer = `❌ **Cannot ${isSpamRequest ? "Mark as Spam" : "Delete"}**\n\nTicket at position ${ticketIndex + 1} not found in context.`
+        addConversationEntry(query, answer, "cache", 0.5)
+
         return {
-          answer: `❌ **Cannot ${isSpamRequest ? "Mark as Spam" : "Delete"}**\n\nTicket at position ${ticketIndex + 1} not found in context.`,
+          answer,
           source: "cache",
           confidence: 0.5,
           processingTime,
@@ -670,8 +726,11 @@ export async function handleSmartQuery(
 
       const processingTime = Date.now() - startTime
 
+      const answer = `⚠️ **${isSpamRequest ? "Spam Detection" : "Deletion"} Detected**\n\n**Ticket:** #${targetTicket.id} - ${targetTicket.subject}\n\n${isSpamRequest ? "This will mark the ticket as spam and suspend the requester." : "This will soft-delete the ticket (can be restored later)."}\n\n✋ **Confirmation Required**\n\nTo proceed, please explicitly confirm:\n• "${isSpamRequest ? "confirm spam" : "confirm delete"} ticket #${targetTicket.id}"\n\nDestructive operations require explicit confirmation for safety.`
+      addConversationEntry(query, answer, "cache", 0.95)
+
       return {
-        answer: `⚠️ **${isSpamRequest ? "Spam Detection" : "Deletion"} Detected**\n\n**Ticket:** #${targetTicket.id} - ${targetTicket.subject}\n\n${isSpamRequest ? "This will mark the ticket as spam and suspend the requester." : "This will soft-delete the ticket (can be restored later)."}\n\n✋ **Confirmation Required**\n\nTo proceed, please explicitly confirm:\n• "${isSpamRequest ? "confirm spam" : "confirm delete"} ticket #${targetTicket.id}"\n\nDestructive operations require explicit confirmation for safety.`,
+        answer,
         source: "cache",
         confidence: 0.95,
         processingTime,
@@ -689,13 +748,16 @@ export async function handleSmartQuery(
 
       const processingTime = Date.now() - startTime
 
+      const answer = `✅ **Ticket Merge Detected**\n\n**Available tickets:**\n${context.lastTickets
+        ?.slice(0, 5)
+        .map((t, i) => `${i + 1}. #${t.id} - ${t.subject}`)
+        .join(
+          "\n"
+        )}\n\nTo merge tickets, specify:\n• Target ticket (where comments will be merged to)\n• Source tickets (will be closed after merge)\n\nExample: "merge tickets 2 and 3 into ticket 1"\n\n⚠️ Merge functionality coming soon!`
+      addConversationEntry(query, answer, "cache", 0.85)
+
       return {
-        answer: `✅ **Ticket Merge Detected**\n\n**Available tickets:**\n${context.lastTickets
-          ?.slice(0, 5)
-          .map((t, i) => `${i + 1}. #${t.id} - ${t.subject}`)
-          .join(
-            "\n"
-          )}\n\nTo merge tickets, specify:\n• Target ticket (where comments will be merged to)\n• Source tickets (will be closed after merge)\n\nExample: "merge tickets 2 and 3 into ticket 1"\n\n⚠️ Merge functionality coming soon!`,
+        answer,
         source: "cache",
         confidence: 0.85,
         processingTime,
@@ -711,8 +773,11 @@ export async function handleSmartQuery(
 
       if (!ticketId) {
         const processingTime = Date.now() - startTime
+        const answer = "❌ **Invalid Request**\n\nCould not parse ticket ID from query."
+        addConversationEntry(query, answer, "cache", 0)
+
         return {
-          answer: "❌ **Invalid Request**\n\nCould not parse ticket ID from query.",
+          answer,
           source: "cache",
           confidence: 0,
           processingTime,
@@ -728,8 +793,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Ticket Restored**\n\n**Ticket:** #${restoredTicket.id} - ${restoredTicket.subject}\n**Status:** ${restoredTicket.status}\n**Priority:** ${restoredTicket.priority}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been successfully restored.`
+        addConversationEntry(query, answer, "live", 1)
+
         return {
-          answer: `✅ **Ticket Restored**\n\n**Ticket:** #${restoredTicket.id} - ${restoredTicket.subject}\n**Status:** ${restoredTicket.status}\n**Priority:** ${restoredTicket.priority}\n\n**Direct Link:** ${ticketLink}\n\nThe ticket has been successfully restored.`,
+          answer,
           source: "live",
           confidence: 1,
           processingTime,
@@ -738,8 +806,11 @@ export async function handleSmartQuery(
         const processingTime = Date.now() - startTime
         const errorMsg = error instanceof Error ? error.message : String(error)
 
+        const answer = `❌ **Error Restoring Ticket**\n\nFailed to restore ticket #${ticketId}\n\nError: ${errorMsg}`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error Restoring Ticket**\n\nFailed to restore ticket #${ticketId}\n\nError: ${errorMsg}`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -785,8 +856,11 @@ export async function handleSmartQuery(
 
       if (!(targetTicket && targetPriority)) {
         const processingTime = Date.now() - startTime
+        const answer = `❌ **Cannot Update Priority**\n\n${targetTicket ? "Could not determine target priority (urgent/high/normal/low)." : `Ticket at position ${ticketIndex + 1} not found.`}\n\nExamples:\n• "set priority to high for first ticket"\n• "change priority to urgent"`
+        addConversationEntry(query, answer, "cache", 0.5)
+
         return {
-          answer: `❌ **Cannot Update Priority**\n\n${targetTicket ? "Could not determine target priority (urgent/high/normal/low)." : `Ticket at position ${ticketIndex + 1} not found.`}\n\nExamples:\n• "set priority to high for first ticket"\n• "change priority to urgent"`,
+          answer,
           source: "cache",
           confidence: 0.5,
           processingTime,
@@ -802,8 +876,11 @@ export async function handleSmartQuery(
 
         const processingTime = Date.now() - startTime
 
+        const answer = `✅ **Priority Updated**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous:** ${targetTicket.priority}\n**New:** ${updatedTicket.priority}\n\n**Direct Link:** ${ticketLink}`
+        addConversationEntry(query, answer, "live", 0.95)
+
         return {
-          answer: `✅ **Priority Updated**\n\n**Ticket:** #${updatedTicket.id} - ${updatedTicket.subject}\n**Previous:** ${targetTicket.priority}\n**New:** ${updatedTicket.priority}\n\n**Direct Link:** ${ticketLink}`,
+          answer,
           source: "live",
           confidence: 0.95,
           processingTime,
@@ -812,8 +889,11 @@ export async function handleSmartQuery(
         const processingTime = Date.now() - startTime
         const errorMsg = error instanceof Error ? error.message : String(error)
 
+        const answer = `❌ **Error Updating Priority**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}`
+        addConversationEntry(query, answer, "live", 0)
+
         return {
-          answer: `❌ **Error Updating Priority**\n\nFailed to update ticket #${targetTicket.id}\n\nError: ${errorMsg}`,
+          answer,
           source: "live",
           confidence: 0,
           processingTime,
@@ -830,8 +910,11 @@ export async function handleSmartQuery(
     if (isAssignRequest) {
       const processingTime = Date.now() - startTime
 
+      const answer = `✅ **Assignment Detected**\n\nTo assign a ticket, I need:\n• Agent ID or email\n• Which ticket to assign\n\nExample: "assign first ticket to agent 123456"\n\n⚠️ Full assignment functionality coming soon! For now, use manual assignment in Zendesk.`
+      addConversationEntry(query, answer, "cache", 0.8)
+
       return {
-        answer: `✅ **Assignment Detected**\n\nTo assign a ticket, I need:\n• Agent ID or email\n• Which ticket to assign\n\nExample: "assign first ticket to agent 123456"\n\n⚠️ Full assignment functionality coming soon! For now, use manual assignment in Zendesk.`,
+        answer,
         source: "cache",
         confidence: 0.8,
         processingTime,
@@ -847,8 +930,11 @@ export async function handleSmartQuery(
     if (isTagRequest) {
       const processingTime = Date.now() - startTime
 
+      const answer = `✅ **Tag Operation Detected**\n\nTo modify tags, I need:\n• Which ticket\n• Which tags to add/remove\n\nExamples:\n• "add tags billing,urgent to first ticket"\n• "remove tag spam from second ticket"\n\n⚠️ Tag functionality coming soon!`
+      addConversationEntry(query, answer, "cache", 0.8)
+
       return {
-        answer: `✅ **Tag Operation Detected**\n\nTo modify tags, I need:\n• Which ticket\n• Which tags to add/remove\n\nExamples:\n• "add tags billing,urgent to first ticket"\n• "remove tag spam from second ticket"\n\n⚠️ Tag functionality coming soon!`,
+        answer,
         source: "cache",
         confidence: 0.8,
         processingTime,
@@ -861,6 +947,8 @@ export async function handleSmartQuery(
 
     if (classified.matched && classified.answer) {
       console.log(`[SmartQuery] Instant answer matched (${classified.processingTime}ms)`)
+      addConversationEntry(query, classified.answer, "cache", classified.confidence)
+
       return {
         answer: classified.answer,
         source: "cache",
@@ -876,8 +964,12 @@ export async function handleSmartQuery(
     const cache = await loadTicketCache()
     if (!cache || cache.tickets.length === 0) {
       const processingTime = Date.now() - startTime
+      const answer =
+        "❌ No tickets found in cache\n\nTry 'refresh' or 'update' to sync with Zendesk"
+      addConversationEntry(query, answer, "cache", 0)
+
       return {
-        answer: "❌ No tickets found in cache\n\nTry 'refresh' or 'update' to sync with Zendesk",
+        answer,
         source: "cache",
         confidence: 0,
         processingTime,
@@ -890,6 +982,12 @@ export async function handleSmartQuery(
     // If we have conversation context, append it to the system prompt
     if (context?.lastTickets && context.lastTickets.length > 0) {
       systemPrompt += `\n\nCONVERSATION CONTEXT:\nThe user previously asked: "${context.lastQuery}"\nThese tickets were shown:\n${context.lastTickets.map((t, i) => `${i + 1}. Ticket #${t.id}: ${t.subject} (${t.status}, ${t.priority})`).join("\n")}`
+    }
+
+    // Add recent conversation history for better AI context
+    const conversationHistory = getRecentConversationContext()
+    if (conversationHistory) {
+      systemPrompt += `\n\n${conversationHistory}`
     }
 
     const { text: aiAnswer } = await generateText({
@@ -918,6 +1016,8 @@ export async function handleSmartQuery(
       }))
     }
 
+    addConversationEntry(query, aiAnswer, "ai", 0.85)
+
     return {
       answer: aiAnswer,
       source: "ai",
@@ -931,8 +1031,11 @@ export async function handleSmartQuery(
 
     console.error("[SmartQuery] Error:", error)
 
+    const answer = `❌ Error processing query\n\nError: ${errorMsg}\n\nPlease try again or use 'help' for available commands.`
+    addConversationEntry(query, answer, "live", 0)
+
     return {
-      answer: `❌ Error processing query\n\nError: ${errorMsg}\n\nPlease try again or use 'help' for available commands.`,
+      answer,
       source: "live",
       confidence: 0,
       processingTime,
