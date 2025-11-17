@@ -39,19 +39,24 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
   ]
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-2 border-t border-green-500/20">
-      <div className="text-xs text-green-400 opacity-60 mb-2">Quick queries:</div>
-      <div className="flex flex-wrap gap-2">
+    <div className="px-4 sm:px-6 lg:px-8 py-3 border-t border-green-500/30 bg-black/50">
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="text-xs font-semibold text-green-400 opacity-80 tracking-wide">
+          ⚡ Quick queries:
+        </div>
         {suggestions.map((suggestion) => (
           <button
             type="button"
             key={suggestion.label}
             onClick={() => onSuggestionClick(suggestion.query)}
-            className="px-2 py-1 text-xs border border-green-500/40 rounded text-green-500 hover:bg-green-900/20 hover:border-green-500/60 transition-colors"
+            className="group px-3 py-1.5 text-xs border border-green-500/50 rounded-md text-green-500 hover:bg-green-500/10 hover:border-green-500/80 hover:shadow-sm hover:shadow-green-500/20 transition-all duration-200 flex items-center gap-1.5"
             title={suggestion.description}
             aria-label={suggestion.description}
           >
-            {suggestion.icon} {suggestion.label}
+            <span className="opacity-70 group-hover:opacity-100 transition-opacity">
+              {suggestion.icon}
+            </span>
+            <span className="font-medium">{suggestion.label}</span>
           </button>
         ))}
       </div>

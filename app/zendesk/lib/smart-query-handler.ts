@@ -888,6 +888,95 @@ export async function handleSmartQuery(
       }
     }
 
+    // Check if query is asking to list users/customers
+    const isListUsersRequest = /\b(show|list|display|get|view)\s+(all\s+)?(users?|customers?|agents?|people)\b/i.test(query)
+
+    if (isListUsersRequest) {
+      console.log("[SmartQuery] Handling list users/customers request")
+
+      try {
+        const client = getZendeskClient()
+        const users = await client.getUsers()
+
+        const processingTime = Date.now() - startTime
+
+        // Group users by role
+        const usersByRole = users.reduce(
+          (acc, user) => {
+            if (!acc[user.role]) acc[user.role] = []
+            acc[user.role].push(user)
+            return acc
+          },
+          {} as Record<string, typeof users>
+        )
+
+        // Build formatted answer
+        let answer = `✅ **Users & Customers**\n\n`
+        answer += `**Total Users:** ${users.length}\n\n`
+
+        // Show breakdown by role
+        if (usersByRole.admin && usersByRole.admin.length > 0) {
+          answer += `**Admins** (${usersByRole.admin.length}):\n`
+          answer += usersByRole.admin
+            .slice(0, 10)
+            .map((u) => `  • ${u.name} (${u.email}) ${u.active ? "✓" : "✗"}`)
+            .join("\n")
+          if (usersByRole.admin.length > 10) {
+            answer += `\n  ... and ${usersByRole.admin.length - 10} more`
+          }
+          answer += "\n\n"
+        }
+
+        if (usersByRole.agent && usersByRole.agent.length > 0) {
+          answer += `**Agents** (${usersByRole.agent.length}):\n`
+          answer += usersByRole.agent
+            .slice(0, 10)
+            .map((u) => `  • ${u.name} (${u.email}) ${u.active ? "✓" : "✗"}`)
+            .join("\n")
+          if (usersByRole.agent.length > 10) {
+            answer += `\n  ... and ${usersByRole.agent.length - 10} more`
+          }
+          answer += "\n\n"
+        }
+
+        if (usersByRole["end-user"] && usersByRole["end-user"].length > 0) {
+          answer += `**End Users / Customers** (${usersByRole["end-user"].length}):\n`
+          answer += usersByRole["end-user"]
+            .slice(0, 15)
+            .map((u) => `  • ${u.name} (${u.email}) ${u.active ? "✓" : "✗"}`)
+            .join("\n")
+          if (usersByRole["end-user"].length > 15) {
+            answer += `\n  ... and ${usersByRole["end-user"].length - 15} more`
+          }
+          answer += "\n\n"
+        }
+
+        answer += `\n✓ Active  ✗ Inactive`
+
+        addConversationEntry(query, answer, "live", 0.95)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0.95,
+          processingTime,
+        }
+      } catch (error) {
+        const processingTime = Date.now() - startTime
+        const errorMsg = error instanceof Error ? error.message : String(error)
+
+        const answer = `❌ **Error Listing Users**\n\nFailed to fetch users from Zendesk.\n\nError: ${errorMsg}\n\nPlease check your Zendesk API connection.`
+        addConversationEntry(query, answer, "live", 0)
+
+        return {
+          answer,
+          source: "live",
+          confidence: 0,
+          processingTime,
+        }
+      }
+    }
+
     // ========================================================================
     // ALL OTHER QUERIES → DIRECT TO OPENAI WITH FULL CONTEXT
     // ========================================================================

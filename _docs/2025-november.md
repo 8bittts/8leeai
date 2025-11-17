@@ -98,6 +98,76 @@
 - `_docs/zendesk-technical-guide.md` → `_docs/zendesk-MASTER.md` (renamed)
 - `_docs/README.md` - Updated documentation references
 - `_docs/2025-november.md` - Updated 9 file references
+
+---
+
+#### Phase 6.7: Terminal UI Polish & Customer/User Query Support
+
+**macOS-style terminal window improvements:**
+- Added authentic macOS window control buttons (red, yellow, green) to terminal header
+- Buttons include hover effects (brighten on mouseover) for interactivity
+- Added horizontal divider bar under window control buttons for visual separation
+- Buttons positioned with proper spacing (gap-2) and accessibility labels
+- **File**: `app/zendesk/components/zendesk-header.tsx:11-27`
+
+**Terminal window layout optimization:**
+- Changed from full-width responsive layout to generous-margin design
+- Terminal window now has 100px padding on all sides (`p-[100px]`)
+- Container fills remaining space: `w-full h-full`
+- Added calculated min-height: `calc(100vh - 200px)` for proper sizing
+- Creates professional, spacious appearance with breathing room
+- **File**: `app/zendesk/components/zendesk-chat-container.tsx:217-225`
+
+**Suggestion bar UX improvements:**
+- Enhanced visual hierarchy with improved spacing and typography
+- Changed label from "Quick queries:" to "⚡ Quick queries:" for visual interest
+- Made label inline with suggestion buttons (single flex row)
+- Added subtle background (`bg-black/50`) for better contrast
+- Improved button styling:
+  - Better borders with hover glow effect (`hover:shadow-sm hover:shadow-green-500/20`)
+  - Icon opacity transitions on hover (70% → 100%)
+  - Increased padding and spacing for better click targets
+  - Font weight for label text readability
+- Layout wraps gracefully on smaller screens
+- **File**: `app/zendesk/components/suggestion-bar.tsx:42-63`
+
+**Customer/user listing functionality:**
+- Added dedicated handler for "list customers", "list users", "show agents" queries
+- Fetches real user data from Zendesk API using `getUsers()` method
+- Groups users by role (Admins, Agents, End Users/Customers)
+- Displays user information with:
+  - Name and email for each user
+  - Active/inactive status with visual indicators (✓/✗)
+  - Truncation for large lists (10 admins, 10 agents, 15 end users)
+  - Total count for each role category
+- Pattern matching: `/\b(show|list|display|get|view)\s+(all\s+)?(users?|customers?|agents?|people)\b/i`
+- **File**: `app/zendesk/lib/smart-query-handler.ts:891-978`
+
+**Pattern matching improvements:**
+- Integrated centralized pattern extractors from `query-patterns.ts`
+- Status handler now uses `extractStatus()` function
+- Priority handler now uses `extractPriority()` function
+- Email extraction uses `extractEmails()` function
+- Tag extraction uses `extractTags()` function
+- Reduced code duplication across operation handlers
+
+**User experience improvements:**
+- Terminal window feels more like authentic macOS application
+- Quick queries are more discoverable and easier to click
+- User/customer queries now return actual data instead of "no access" message
+- Consistent pattern matching across all operations
+
+**Code quality:**
+- TypeScript check: ✅ 0 errors
+- Biome check: ✅ Passed
+- All changes maintain existing accessibility standards
+- Proper ARIA labels on interactive elements
+
+**Files Changed:**
+- `app/zendesk/components/zendesk-header.tsx` - Added window controls and divider
+- `app/zendesk/components/zendesk-chat-container.tsx` - Updated layout spacing
+- `app/zendesk/components/suggestion-bar.tsx` - Improved styling and inline layout
+- `app/zendesk/lib/smart-query-handler.ts` - Added customer/user listing handler
 - `app/zendesk/lib/zendesk-api-client.ts` - Added 3 new API methods (assignTicket, addTags, removeTags)
 - `app/zendesk/lib/smart-query-handler.ts` - Wired assignment/tag handlers, updated help text
 - `app/zendesk/lib/ticket-cache.ts` - Added type field and byType statistics

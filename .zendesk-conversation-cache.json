@@ -1,48 +1,6 @@
 {
   "entries": [
     {
-      "timestamp": "2025-11-17T14:14:03.309Z",
-      "query": "assign first ticket to sarah@8lee.ai",
-      "response": "I cannot directly assign tickets, but you can manually assign **Ticket #2** to **sarah@8lee.ai**. Here are the ticket details for your reference:\n\n- **Ticket #2**  \n  - **Priority:** Urgent  \n  - **Status:** Pending  \n  - **Word Count:** 26  \n  - **Description:** \"Is there an active community forum or Slack channel where users can help each other? Would be great ...\"",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T14:14:03.313Z",
-      "query": "list recent tickets",
-      "response": "**30** tickets created in the last 24 hours.",
-      "source": "cache",
-      "confidence": 0.95
-    },
-    {
-      "timestamp": "2025-11-17T14:14:13.127Z",
-      "query": "assign second ticket to john@8lee.ai",
-      "response": "I cannot directly assign tickets, but you can manually assign **Ticket #3** to **john@8lee.ai**. Here are the ticket details for your reference:\n\n- **Ticket #3**  \n  - **Priority:** Urgent  \n  - **Status:** Open  \n  - **Word Count:** 29  \n  - **Description:** \"The onboarding process was confusing. I got stuck on step 3 where it asks for API credentials. The d...\"",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T14:14:13.129Z",
-      "query": "show me recent tickets",
-      "response": "**30** tickets created in the last 24 hours.",
-      "source": "cache",
-      "confidence": 0.95
-    },
-    {
-      "timestamp": "2025-11-17T14:14:15.962Z",
-      "query": "add tag test-tag to first ticket",
-      "response": "I cannot directly add tags to tickets. However, you can manually add the tag **test-tag** to **Ticket #2**. Here are the ticket details for your reference:\n\n- **Ticket #2**  \n  - **Priority:** Urgent  \n  - **Status:** Pending  \n  - **Word Count:** 26  \n  - **Description:** \"Is there an active community forum or Slack channel where users can help each other? Would be great ...\"",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
-      "timestamp": "2025-11-17T14:14:21.787Z",
-      "query": "list tickets",
-      "response": "Here are the details of the first five tickets:\n\n1. **Ticket #2**  \n   - **Priority:** Urgent  \n   - **Status:** Pending  \n   - **Word Count:** 26  \n   - **Description:** \"Is there an active community forum or Slack channel where users can help each other? Would be great ...\"\n\n2. **Ticket #3**  \n   - **Priority:** Urgent  \n   - **Status:** Open  \n   - **Word Count:** 29  \n   - **Description:** \"The onboarding process was confusing. I got stuck on step 3 where it asks for API credentials. The d..",
-      "source": "ai",
-      "confidence": 0.85
-    },
-    {
       "timestamp": "2025-11-17T14:14:27.616Z",
       "query": "remove tag test-tag from first ticket",
       "response": "I cannot directly remove tags from tickets. However, you can manually remove the tag **test-tag** from **Ticket #2**. Here are the ticket details for your reference:\n\n- **Ticket #2**  \n  - **Priority:** Urgent  \n  - **Status:** Pending  \n  - **Word Count:** 26  \n  - **Description:** \"Is there an active community forum or Slack channel where users can help each other? Would be great ...\"",
@@ -349,8 +307,50 @@
       "response": "Tickets with tag **urgent**: 6",
       "source": "cache",
       "confidence": 0.95
+    },
+    {
+      "timestamp": "2025-11-17T18:19:59.387Z",
+      "query": "dsdf",
+      "response": "It seems like your message might have been cut off or is unclear. Could you please provide more details or clarify your request?",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T18:20:29.671Z",
+      "query": "what are the top 5 issues",
+      "response": "The top 5 issues based on ticket content and frequency are:\n\n1. **Onboarding Process Complexity**  \n   - Multiple tickets highlight confusion around the onboarding steps, especially regarding API credentials.  \n   - **Example Tickets**: #3, #6, #33, #14, #128\n\n2. **API Issues (Authentication and Rate Limits)**  \n   - Many tickets report problems with API authentication and rate limits, leading to failed integrations and functionality.  \n   - **Example Tickets**: #93, #101, #469, #210\n\n3. **User ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T18:20:46.566Z",
+      "query": "show open tickets",
+      "response": "Here are the details of the open tickets:\n\n- **Total Open Tickets: 191**\n\n### Breakdown by Priority:\n- **Urgent:** 34\n- **High:** 54\n- **Normal:** 80\n- **Low:** 23\n\n### Selected Open Tickets:\n1. **Ticket #3**  \n   - *Subject:* Onboarding process too complex  \n   - *Priority:* Urgent  \n   - *Status:* Open  \n   - *Description:* \"The onboarding process was confusing. I got stuck on step 3 where it asks for API credentials...\"\n\n2. **Ticket #6**  \n   - *Subject:* Performance improvement feedback  \n  ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T18:20:55.761Z",
+      "query": "show ticket statistics",
+      "response": "### Ticket Statistics\n\n- **Total Tickets:** 346\n\n#### By Status:\n- **Pending:** 79\n- **Open:** 191\n- **Solved:** 76\n\n#### By Priority:\n- **Urgent:** 88\n- **High:** 89\n- **Normal:** 86\n- **Low:** 83\n\n#### By Age:\n- **< 24 hours:** 30\n- **< 7 days:** 316\n- **< 30 days:** 0\n- **> 30 days:** 0",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-17T18:20:58.384Z",
+      "query": "list customers",
+      "response": "✅ **Users & Customers**\n\n**Total Users:** 4\n\n**Admins** (1):\n  • Eight Lee (jleekun@gmail.com) ✓\n\n**Agents** (1):\n  • AI Agent (null) ✓\n\n**End Users / Customers** (2):\n  • Customer (example@zendesk.com) ✓\n  • Web User 691628b8836a948861bd7a53 (null) ✓\n\n\n✓ Active  ✗ Inactive",
+      "source": "live",
+      "confidence": 0.95
+    },
+    {
+      "timestamp": "2025-11-17T18:21:12.099Z",
+      "query": "show available commands",
+      "response": "Here are the available commands you can use:\n\n1. **Ticket Statistics**\n   - Get overall ticket statistics, including counts by status and priority.\n\n2. **Search Tickets**\n   - Look for tickets based on keywords, statuses, priorities, or specific issues.\n\n3. **Show Open Tickets**\n   - Display details of all currently open tickets.\n\n4. **List Customers**\n   - View the list of users and customers associated with the ticketing system.\n\n5. **Ticket Breakdown**\n   - Get a breakdown of tickets by type,",
+      "source": "ai",
+      "confidence": 0.85
     }
   ],
   "maxEntries": 50,
-  "lastUpdated": "2025-11-17T14:15:39.321Z"
+  "lastUpdated": "2025-11-17T18:21:12.099Z"
 }

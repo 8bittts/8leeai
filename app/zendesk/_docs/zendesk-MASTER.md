@@ -1,7 +1,7 @@
 # Zendesk Intelligence Portal - Master Documentation
 
-**Last Updated**: November 17, 2025
-**Status**: Production-Ready with Comprehensive Pattern Recognition & Reply Generation
+**Last Updated**: November 17, 2025 (Phase 6.7)
+**Status**: Production-Ready with Comprehensive Pattern Recognition, Reply Generation & Polished Terminal UI
 
 **📄 Executive Demo Document**: See [`zendesk-demo.md`](./zendesk-demo.md) for comprehensive PM interview presentation with business impact, command examples, and technical deep-dive.
 
@@ -61,15 +61,15 @@ Display to User
 
 ```
 app/zendesk/
-├── page.tsx                           # Main entry point
+├── page.tsx                           # Main entry point (password: booya)
 ├── layout.tsx                         # Zendesk-specific layout
 ├── components/
-│   ├── zendesk-chat-container.tsx    # Main orchestrator
-│   ├── zendesk-header.tsx            # ASCII art header
+│   ├── zendesk-chat-container.tsx    # Main orchestrator (100px padding, responsive layout)
+│   ├── zendesk-header.tsx            # ASCII art header with macOS window controls
 │   ├── chat-history.tsx              # Message display
 │   ├── chat-input.tsx                # Terminal input
 │   ├── message-bubble.tsx            # Message renderer
-│   └── suggestion-bar.tsx            # Quick queries
+│   └── suggestion-bar.tsx            # Quick queries (inline layout with enhanced styling)
 ├── lib/
 │   ├── ticket-cache.ts               # Fetches fresh ticket data with stats
 │   ├── classify-query.ts             # Research-based query classifier
@@ -147,7 +147,7 @@ export async function loadTicketCache(): Promise<TicketCacheData | null>
 -  Rate limiting awareness (429 handling)
 -  Error handling (401, 403, 404, 429, 500)
 
-**Main Methods** (18 total):
+**Main Methods** (19 total):
 ```typescript
 // Ticket Retrieval
 getTickets(filters?: { status, priority, limit }): Promise<ZendeskTicket[]>
@@ -175,7 +175,7 @@ addTags(ticketId: number, tags: string[]): Promise<ZendeskTicket>
 removeTags(ticketId: number, tags: string[]): Promise<ZendeskTicket>
 
 // Users & Organizations
-getUsers(filters?: { role, active }): Promise<ZendeskUser[]>
+getUsers(filters?: { role, active }): Promise<ZendeskUser[]>  // Used by "list customers" query
 getOrganizations(): Promise<ZendeskOrganization[]>
 
 // Analytics
@@ -432,6 +432,7 @@ getBestMatch(query: string): QueryPattern | null
 - ✅ **Merge**: Combine multiple tickets
 - ✅ **Restore**: Restore deleted tickets
 - ✅ **Create Ticket**: AI-powered parameter extraction
+- ✅ **List Users/Customers**: Fetch and display users grouped by role (admins, agents, customers)
 
 **Special Commands**:
 - `refresh` / `update` - Refresh ticket cache from Zendesk API
@@ -1023,6 +1024,77 @@ No files, no cache, no complexity.
 
 ---
 
+## Recent Improvements (Phase 6.7)
+
+### Terminal UI Polish
+
+**macOS-style Window Controls**:
+- Authentic red, yellow, green window control buttons in header
+- Hover effects (brighten on mouseover) for visual feedback
+- Horizontal divider bar separating controls from content
+- Proper accessibility labels (ARIA) for each button
+- **Location**: `app/zendesk/components/zendesk-header.tsx:11-27`
+
+**Spacious Layout**:
+- 100px padding on all sides (`p-[100px]`)
+- Terminal fills remaining space dynamically
+- Professional appearance with breathing room
+- Responsive to viewport changes
+- **Location**: `app/zendesk/components/zendesk-chat-container.tsx:217-225`
+
+**Enhanced Suggestion Bar**:
+- Inline layout: label and buttons on same row
+- Lightning bolt icon (⚡) for visual interest
+- Improved hover effects with glow (`shadow-green-500/20`)
+- Icon opacity transitions (70% → 100% on hover)
+- Better spacing and click targets
+- Subtle background for contrast (`bg-black/50`)
+- **Location**: `app/zendesk/components/suggestion-bar.tsx:42-63`
+
+### User/Customer Listing
+
+**New Query Support**:
+```
+> list customers
+> show users
+> list agents
+> show all people
+```
+
+**Functionality**:
+- Fetches real users from Zendesk API via `getUsers()`
+- Groups by role: Admins, Agents, End Users/Customers
+- Shows name, email, and active status (✓/✗)
+- Truncates large lists (10/10/15 by role)
+- Displays total count per role
+- **Location**: `app/zendesk/lib/smart-query-handler.ts:891-978`
+
+**Example Output**:
+```
+✅ Users & Customers
+
+Total Users: 47
+
+Admins (3):
+  • John Lee (jleekun@gmail.com) ✓
+  • Sarah Admin (sarah@8lee.ai) ✓
+  • Mike Admin (mike@8lee.ai) ✓
+
+Agents (12):
+  • Support Agent 1 (agent1@8lee.ai) ✓
+  • Support Agent 2 (agent2@8lee.ai) ✓
+  ... and 10 more
+
+End Users / Customers (32):
+  • Customer A (customera@example.com) ✓
+  • Customer B (customerb@example.com) ✓
+  ... and 30 more
+
+✓ Active  ✗ Inactive
+```
+
+---
+
 ## Summary
 
 The Zendesk Intelligence Portal is a **production-ready terminal-styled interface** that:
@@ -1034,7 +1106,10 @@ The Zendesk Intelligence Portal is a **production-ready terminal-styled interfac
 ✅ Sub-2ms metadata queries (tags, types, priorities)
 ✅ 92.9% query classification accuracy
 ✅ Comprehensive metadata operations (assign, tags, status, priority)
+✅ User/customer listing with role-based grouping
 ✅ 28 integration tests with production validation
+✅ macOS-style terminal UI with window controls
+✅ Enhanced suggestion bar with inline layout
  Follows recruiter-impressing code standards
  Simple architecture (no cache complexity)
  Deployable to production immediately
