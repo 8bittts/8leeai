@@ -1041,6 +1041,8 @@ No files, no cache, no complexity.
 - Terminal fills remaining space dynamically: `w-full h-full`
 - Fixed height: `calc(100vh - 64px)` for proper viewport sizing
 - Professional appearance with balanced spacing and maximum content area
+- Balanced glow effect on both top and bottom edges for visual polish
+- Custom box-shadow creates subtle green glow: top edge (`-10px 40px -5px`), bottom edge (`10px 40px -5px`), ambient (`60px`)
 - **Location**: `app/zendesk/components/zendesk-chat-container.tsx:217-225`
 
 **Enhanced Suggestion Bar**:

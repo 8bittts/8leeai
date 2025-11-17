@@ -117,6 +117,8 @@
 - Container fills remaining space: `w-full h-full`
 - Fixed height: `calc(100vh - 64px)` for proper sizing (64px = 32px × 2)
 - Creates professional appearance with balanced spacing and maximum content area
+- Added balanced glow effect on both top and bottom edges for visual polish
+- Custom box-shadow: `0 -10px 40px -5px rgba(34, 197, 94, 0.3)` (top), `0 10px 40px -5px rgba(34, 197, 94, 0.3)` (bottom), plus ambient `0 0 60px rgba(34, 197, 94, 0.15)`
 - **File**: `app/zendesk/components/zendesk-chat-container.tsx:217-225`
 
 **Suggestion bar UX improvements:**

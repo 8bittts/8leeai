@@ -333,8 +333,8 @@ bun run packages:critical
 - `happy-dom`: 20.0.1 → 20.0.2
 
 **Verification:**
-- `bun run check` (Biome) ✓
-- `bun test` ✓
+- `bun run check` (Biome) (check)
+- `bun test` (check)
 
 **Files Changed:** 2 files (package.json, bun.lock)
 
@@ -986,10 +986,10 @@ bun run packages:critical
 - Cleaner CI/verbose output while preserving all 100+ error-level rules
 
 **Validation:**
-- Tests: 32 pass, 99 assertions ✓
-- TypeScript strict mode: Zero errors ✓
-- Biome CI mode: 30 files checked, no issues ✓
-- Production build: Successful ✓
+- Tests: 32 pass, 99 assertions (check)
+- TypeScript strict mode: Zero errors (check)
+- Biome CI mode: 30 files checked, no issues (check)
+- Production build: Successful (check)
 
 **Files Changed:** 1 file (biome.json)
 

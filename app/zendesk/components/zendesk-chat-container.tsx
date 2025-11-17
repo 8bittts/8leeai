@@ -224,7 +224,8 @@ export function ZendeskChatContainer() {
         onClick={handleMainClick}
         style={{
           height: "calc(100vh - 64px)",
-          boxShadow: "0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3), 0 0 60px rgba(34, 197, 94, 0.15)"
+          boxShadow:
+            "0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3), 0 0 60px rgba(34, 197, 94, 0.15)",
         }}
       >
         {/* Zendesk Header with ASCII Art */}
