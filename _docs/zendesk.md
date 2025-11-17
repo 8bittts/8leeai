@@ -729,7 +729,8 @@ No files, no cache, no complexity.
 
 **Documentation**:
 - This file: `_docs/zendesk.md`
-- Master plan: `_docs/zencom-master-plan.md`
+- Expansion plan: `_docs/zendesk-expansion-plan.md`
+- System docs: `_docs/SYSTEM_DOCUMENTATION.md`
 - Scripts: `scripts/README.md`
 
 **Code Structure**:

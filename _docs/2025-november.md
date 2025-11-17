@@ -4,6 +4,34 @@
 
 ### November 17, 2025
 
+#### Documentation consolidation and cleanup
+
+**Removed duplicate/outdated files:**
+- Removed `_docs/zencom-master-plan.md` - Outdated project plan superseded by current implementation
+- Removed `scripts/test-zendesk.ts` - Duplicate of `generate-zendesk-tickets.ts` with less features
+- Moved `app/zendesk/EXPANSION_PLAN.md` → `_docs/zendesk-expansion-plan.md` for better organization
+
+**Updated references globally:**
+- Updated `_docs/README.md` - Refreshed documentation index, removed stale references
+- Updated `_docs/zendesk.md` - Updated Contact & Support section with correct file paths
+- Updated `app/zendesk/STATUS.md` - Updated EXPANSION_PLAN.md reference
+
+**Documentation structure:**
+- `_docs/zendesk.md` - Master technical documentation (current implementation)
+- `_docs/zendesk-expansion-plan.md` - Future API expansion roadmap
+- `_docs/SYSTEM_DOCUMENTATION.md` - Complete system documentation
+- `_docs/FORM_COMPONENTS.md` - UI components reference
+
+**Impact:**
+- Cleaner documentation structure
+- No duplicate content
+- All references accurate and up-to-date
+- Easier to maintain going forward
+
+**Files Changed:** _docs/README.md, _docs/zendesk.md, app/zendesk/STATUS.md, _docs/zendesk-expansion-plan.md (moved)
+
+---
+
 #### Zendesk: Production-ready ticket generation with conversation threads
 
 **Enhanced ticket creation with realistic multi-turn conversation support:**

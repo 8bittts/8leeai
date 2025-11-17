@@ -60,7 +60,7 @@ Added **4 new operation handlers** in `smart-query-handler.ts`:
 
 ### 5. Expansion Plan Documentation
 **Status**: COMPLETE ✅
-**File**: `app/zendesk/EXPANSION_PLAN.md`
+**File**: `_docs/zendesk-expansion-plan.md`
 
 Created comprehensive roadmap covering:
 - Phase 1: Core Ticket Management ✅

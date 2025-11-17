@@ -48,16 +48,14 @@ Active release note files:
 
 ## Project Documentation
 
-### ZenCom Project (Zendesk + Intercom Integration)
-- [zencom-master-plan.md](zencom-master-plan.md) - Complete project plan and architecture
+### Zendesk Intelligence Portal
+- [zendesk.md](zendesk.md) - Master technical documentation
+- [zendesk-expansion-plan.md](zendesk-expansion-plan.md) - Future API expansion roadmap
+- [SYSTEM_DOCUMENTATION.md](SYSTEM_DOCUMENTATION.md) - Complete system documentation
 - [FORM_COMPONENTS.md](FORM_COMPONENTS.md) - UI components reference guide
 
-### Zendesk Intelligence Portal
-- [ZENDESK_IMPLEMENTATION_STATUS.md](ZENDESK_IMPLEMENTATION_STATUS.md) - Implementation status and progress
-- [zendesk-capability-matrix.md](zendesk-capability-matrix.md) - API capability reference
-- [zendesk-chat-architecture.md](zendesk-chat-architecture.md) - Technical architecture design
-- [zendesk-hiring-pitch.md](zendesk-hiring-pitch.md) - Feature highlights for hiring managers
+### Intercom Integration
+- [INTERCOM_MASTER.md](INTERCOM_MASTER.md) - Intercom integration documentation
 
 ### Planning & Ideas
-- [PLAN_UPDATE_SUMMARY.md](PLAN_UPDATE_SUMMARY.md) - High-level plan summaries
-- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Future enhancement ideas
+- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Terminal portfolio enhancement ideas
