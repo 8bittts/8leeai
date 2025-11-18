@@ -1,12 +1,12 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import type { ChatMessage } from "@/app/zendesk/lib/types"
+import type { ChatMessage } from "@/app/zendesk/lib/zendesk-types"
 import { MatrixBackground } from "@/components/matrix-background"
-import { ChatHistory } from "./chat-history"
-import { ChatInput } from "./chat-input"
-import { SuggestionBar } from "./suggestion-bar"
+import { ChatHistory } from "./zendesk-chat-history"
+import { ChatInput } from "./zendesk-chat-input"
 import { ZendeskHeader } from "./zendesk-header"
+import { SuggestionBar } from "./zendesk-suggestion-bar"
 
 /**
  * Simple UUID v4 generator for message IDs
@@ -118,7 +118,7 @@ export function ZendeskChatContainer() {
       try {
         // Use the new unified smart query endpoint
         console.log(`[Chat] Processing query: "${query}"`)
-        const queryResponse = await fetch("/api/zendesk/query", {
+        const queryResponse = await fetch("/zendesk/api/query", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query, context }),

@@ -25,7 +25,7 @@ function generateTestTicket(index: number): TicketData {
 
 async function createZendeskTicket(data: TicketData): Promise<boolean> {
   try {
-    const response = await fetch(`${BASE_URL}/api/zendesk/tickets`, {
+    const response = await fetch(`${BASE_URL}/zendesk/api/tickets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

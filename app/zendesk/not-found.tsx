@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-import { Cursor } from "@/components/cursor"
-import { useTypewriter } from "@/hooks/use-typewriter"
-import { ANIMATION_DELAYS } from "@/lib/utils"
+import { Cursor } from "./components/zendesk-cursor"
+import { useTypewriter } from "./hooks/zendesk-use-typewriter"
+import { ANIMATION_DELAYS } from "./lib/zendesk-utils"
 
 /**
  * Custom 404 page with Mario background and typewriter effect

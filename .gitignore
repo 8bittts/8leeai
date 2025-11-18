@@ -62,3 +62,6 @@ Thumbs.db
 
 # Docs
 CLAUDE.md
+
+# Zendesk Cache
+/app/zendesk/cache/

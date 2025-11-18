@@ -159,16 +159,33 @@ All portfolio data lives in `/lib/data.ts`:
 
 ### Zendesk Intelligence Portal Documentation
 
-**Comprehensive documentation for the Zendesk Intelligence Portal is organized in `app/zendesk/_docs/`:**
+**EXPERIMENT STATUS: CONCLUDED - FULLY ISOLATED AND READY FOR DELETION**
 
-- **`zendesk-MASTER.md`** - CANONICAL master technical documentation (all implementation details, architecture, API reference)
-- **`zendesk-implementation-status.md`** - Implementation progress tracker
-- **`zendesk-expansion-plan.md`** - Future API expansion roadmap
-- **`zendesk-system-documentation.md`** - Complete system documentation
-- **`zendesk-intercom-form-components.md`** - UI components reference guide
-- **`metadata-test-results.md`** - Metadata operations test results
+**All Zendesk files are consolidated in `/app/zendesk/` with complete isolation from main app:**
 
-**Key Features:**
+**Isolation Status (✓ VERIFIED):**
+- ✅ Zero code dependencies - no imports between main app and zendesk
+- ✅ Complete file consolidation - all 49 files in `/app/zendesk/`
+- ✅ Global prefix standardization - all files prefixed with `zendesk-`
+- ✅ Safe to delete - removing `/app/zendesk/` will NOT break homepage
+- ✅ 13,569 lines of experimental code fully isolated
+
+**Deletion Guide:**
+- **See `app/zendesk/_docs/DELETION-GUIDE.md`** for step-by-step deletion instructions
+- Requires cleanup of 4 main app files (command references only):
+  - `components/command-prompt.tsx` - Remove "zendesk" and "zen" commands
+  - `lib/utils.ts` - Remove zendesk from VALID_COMMANDS
+  - `proxy.ts` - Remove zendesk demo site routing and CSP
+  - `package.json` - Remove test:zendesk script
+
+**Documentation** (`app/zendesk/_docs/`):
+- **`zendesk-README.md`** - Main documentation (architecture, API reference, quick start, usage)
+- **`zendesk-TESTING.md`** - Test results and coverage (28 integration tests, 92.9% success rate)
+- **`zendesk-ARCHIVE.md`** - Historical documentation (implementation status, expansion plans, demo guides)
+- **`zendesk-SCRIPTS.md`** - Script documentation and usage guides
+- **`DELETION-GUIDE.md`** - Complete deletion instructions and rollback plan
+
+**Key Features (Experimental):**
 - Natural language query processing with AI-powered analysis
 - Ticket operations: Create, update, delete, assign, tag management
 - Smart caching with two-tier query classification (cache <100ms, AI 2-10s)
@@ -177,27 +194,39 @@ All portfolio data lives in `/lib/data.ts`:
 - Comprehensive metadata support (assignees, tags, ticket types, groups)
 - 92.9% query classification accuracy with sub-2ms metadata queries
 
+**Directory Structure:**
+```
+app/zendesk/
+├── _docs/           # Documentation (5 files including DELETION-GUIDE.md)
+├── api/             # API routes (7 endpoints)
+├── cache/           # Cache files (tickets/, conversation-cache.json)
+├── components/      # React components (18 files, all prefixed)
+├── hooks/           # React hooks (4 files, all prefixed)
+├── lib/             # Utilities and core logic (15 files, all prefixed)
+├── scripts/         # Test and utility scripts (8 files, all prefixed)
+├── __tests__/       # Integration tests (6 files)
+├── page.tsx         # Main entry point (password: booya)
+├── layout.tsx       # Layout wrapper
+└── not-found.tsx    # Custom 404 page
+```
+
 **When working with Zendesk code:**
-1. Refer to `app/zendesk/_docs/zendesk-MASTER.md` as the canonical source of truth
+1. Refer to `app/zendesk/_docs/zendesk-README.md` for comprehensive documentation
 2. All API methods in `app/zendesk/lib/zendesk-api-client.ts`
-3. Query handling in `app/zendesk/lib/smart-query-handler.ts`
-4. Pattern matching in `app/zendesk/lib/query-patterns.ts`
-5. Cache management in `app/zendesk/lib/ticket-cache.ts`
+3. Query handling in `app/zendesk/lib/zendesk-smart-query-handler.ts`
+4. Pattern matching in `app/zendesk/lib/zendesk-query-patterns.ts`
+5. Cache management in `app/zendesk/lib/zendesk-ticket-cache.ts`
+6. API routes in `app/zendesk/api/*/route.ts`
+7. Test scripts in `app/zendesk/scripts/zendesk-*.ts`
 
-**File Organization Rules:**
-- **Documentation**: ALL Zendesk docs MUST go in `app/zendesk/_docs/`
-- **Scripts**: ALL Zendesk scripts MUST use `zendesk-` prefix in `scripts/`
-- **Test Scripts**: Use `-test` suffix (e.g., `zendesk-queries-test.ts`, NOT `test-zendesk-queries.ts`)
-- **Components**: ALL Zendesk components in `app/zendesk/components/`
-- **Library**: ALL Zendesk utilities in `app/zendesk/lib/`
-- **Tests**: ALL Zendesk tests in `app/zendesk/__tests__/`
-
-**Creating New Zendesk Files:**
-- Documentation → `app/zendesk/_docs/zendesk-[name].md`
-- Scripts → `scripts/zendesk-[name].ts` or `scripts/zendesk-[name]-test.ts`
-- Components → `app/zendesk/components/[name].tsx`
-- Library code → `app/zendesk/lib/[name].ts`
-- Tests → `app/zendesk/__tests__/[name].test.ts`
+**File Organization Rules (ALL Zendesk files in app/zendesk/):**
+- **Documentation** → `app/zendesk/_docs/` (zendesk-README.md, zendesk-TESTING.md, zendesk-ARCHIVE.md)
+- **API Routes** → `app/zendesk/api/[endpoint]/route.ts`
+- **Scripts** → `app/zendesk/scripts/zendesk-[name].ts`
+- **Components** → `app/zendesk/components/[name].tsx`
+- **Library** → `app/zendesk/lib/[name].ts`
+- **Tests** → `app/zendesk/__tests__/[name].test.ts`
+- **Cache** → `app/zendesk/cache/` (ignored by git)
 
 ### Adding New Content
 

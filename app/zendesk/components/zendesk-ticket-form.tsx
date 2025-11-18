@@ -35,7 +35,7 @@ export function ZendeskTicketForm({ onClose }: ZendeskTicketFormProps) {
     setSubmitStatus(null)
 
     try {
-      const response = await fetch("/api/zendesk/tickets", {
+      const response = await fetch("/zendesk/api/tickets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

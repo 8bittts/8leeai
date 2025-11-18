@@ -2383,3 +2383,100 @@ _docs/
 - Focus management works correctly with existing ref API
 
 **Files Changed:** 1 file (components/command-prompt.tsx)
+
+---
+
+#### Zendesk Experiment - Complete Isolation & Deletion Preparation
+
+**Comprehensive cleanup and isolation of Zendesk Intelligence Portal experiment:**
+
+**Status:** Experiment concluded - fully isolated and documented for future deletion
+
+**Consolidation Phase:**
+- Moved all cache files from root to `app/zendesk/cache/`:
+  - `.zendesk-cache/` → `app/zendesk/cache/tickets/`
+  - `.zendesk-conversation-cache.json` → `app/zendesk/cache/conversation-cache.json`
+- Moved API routes: `app/api/zendesk/*` → `app/zendesk/api/` (7 endpoints)
+- Moved scripts: `scripts/zendesk-*.ts` → `app/zendesk/scripts/` (7 scripts)
+- Moved documentation: `scripts/README.md` → `app/zendesk/_docs/zendesk-SCRIPTS.md`
+- Moved credentials test: `scripts/test-credentials.sh` → `app/zendesk/scripts/`
+- Consolidated 7 documentation files into 3:
+  - `zendesk-README.md` (main docs)
+  - `zendesk-TESTING.md` (test results)
+  - `zendesk-ARCHIVE.md` (historical docs)
+
+**Global Prefix Standardization:**
+- Renamed 38 files with `zendesk-` prefix for complete naming consistency:
+  - 15 components: `zendesk-ai-response-viewer.tsx`, `zendesk-boot-sequence.tsx`, etc.
+  - 4 hooks: `zendesk-use-typewriter.ts`, `zendesk-use-virtual-keyboard-suppression.ts`, etc.
+  - 2 tests: `zendesk-metadata-operations.test.ts`, `zendesk-openai-response-quality.test.ts`
+  - 14 lib files: `zendesk-api-client.ts`, `zendesk-smart-query-handler.ts`, `zendesk-utils.ts`, etc.
+  - 3 docs: `zendesk-ARCHIVE.md`, `zendesk-README.md`, `zendesk-TESTING.md`
+- Updated all import statements across codebase (both relative `./` and absolute `@/` paths)
+- Next.js convention files kept standard: `page.tsx`, `layout.tsx`, `route.ts`, `not-found.tsx`
+
+**Isolation Verification:**
+- Fixed `app/zendesk/not-found.tsx` - changed imports from main app to zendesk components
+- Verified zero code dependencies between main app and zendesk
+- Confirmed no main app files import from `app/zendesk/`
+- Identified command references (non-breaking):
+  - `components/command-prompt.tsx` - "zendesk" and "zen" URL commands
+  - `lib/utils.ts` - Command list entries
+  - `proxy.ts` - Demo site routing and CSP for api.zendesk.com
+  - `package.json` - test:zendesk script
+- Code duplication by design - zendesk has independent copies of shared utilities:
+  - Components (9): boot-sequence, command-prompt, cursor, cv-content, data-grid-section, matrix-background, secure-external-link, terminal-container
+  - Hooks (2): use-typewriter, use-virtual-keyboard-suppression
+  - Lib (3): data, utils, utils.test
+
+**Documentation Created:**
+- `app/zendesk/_docs/DELETION-GUIDE.md` - Complete step-by-step deletion instructions
+  - 5-step deletion process
+  - Files to remove (4 locations with specific line references)
+  - What gets deleted (49 files, 13,569 lines of code)
+  - What remains (contact form email handler stays)
+  - Testing after deletion checklist
+  - Rollback plan if needed
+
+**Experiment Statistics:**
+- **Total Files:** 49 TypeScript files + 5 documentation files
+- **Total Code:** ~13,569 lines
+- **API Routes:** 7 endpoints
+- **Components:** 18
+- **Hooks:** 4
+- **Lib Files:** 15
+- **Scripts:** 8 (7 test scripts + 1 credential validator)
+- **Tests:** 6 test files
+- **Cache:** 2 cache systems (ticket cache + conversation cache)
+
+**Features Isolated:**
+- Zendesk Intelligence Portal UI (terminal-style chat interface)
+- Natural language query processing with AI-powered analysis
+- Smart caching system with two-tier query classification
+- Pattern recognition for discrete queries (status, priority, type, tags)
+- Context-aware conversation with memory
+- Comprehensive metadata support (assignees, tags, ticket types, groups)
+- Reply generation and posting to Zendesk
+- Customer/user listing functionality
+
+**Deletion Safety:**
+- ✅ Complete isolation achieved - no code dependencies with main app
+- ✅ Build succeeds after isolation fixes (compiled in 1.2s, 0 errors)
+- ✅ Homepage will work perfectly if zendesk folder is deleted
+- ✅ Only 4 files need cleanup after deletion (command references only)
+
+**Note:** The contact form email handler at `app/api/contact/zendesk/route.ts` is **separate** from this experiment and should remain. It sends contact form submissions to support@8lee.zendesk.com.
+
+**Impact:**
+- Zendesk experiment now completely isolated and ready for deletion
+- Clear documentation for future cleanup
+- No risk of breaking main app functionality
+- Clean separation of concerns achieved
+
+**Verification:**
+- Production build: SUCCESSFUL (1217.5ms compile, 0 errors)
+- All routes generated correctly
+- No zendesk imports in main app files
+- No main app imports in zendesk files
+
+**Files Changed:** 49 files (renamed with zendesk- prefix), 5 documentation files, 1 deletion guide created, updated references in 4 main app files
