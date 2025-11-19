@@ -449,6 +449,7 @@ export interface IntercomSearchQuery {
   pagination?: {
     per_page?: number
     starting_after?: string
+    page?: number
   }
   sort?: {
     field: string

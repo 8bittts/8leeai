@@ -7,6 +7,7 @@
 
 import { loadConversationCache } from "@/app/intercom/lib/intercom-conversation-cache"
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Verification script with multiple validation checks
 async function main() {
   console.log("🔍 Comprehensive Cache Data Verification")
   console.log("=".repeat(52))

@@ -25,7 +25,9 @@ async function main() {
     console.log(`   Found ${tickets1?.length || 0} tickets`)
 
     if (tickets1 && tickets1.length > 0) {
-      console.log(`   First ticket: ${tickets1[0].id} - ${tickets1[0].ticket_attributes._default_title_}`)
+      console.log(
+        `   First ticket: ${tickets1[0].id} - ${tickets1[0].ticket_attributes._default_title_}`
+      )
     }
 
     console.log("\n2. Searching for just submitted tickets:")
@@ -46,7 +48,6 @@ async function main() {
     for (const type of types) {
       console.log(`   - ${type.name} (${type.id})`)
     }
-
   } catch (error) {
     console.error("\n❌ Error:", error)
     if (error instanceof Error) {
@@ -56,4 +57,7 @@ async function main() {
   }
 }
 
-main()
+main().catch((error) => {
+  console.error("Unhandled error:", error)
+  process.exit(1)
+})

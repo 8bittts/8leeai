@@ -220,6 +220,19 @@ function convertToCached(conv: IntercomConversation): CachedConversation {
 function convertTicketToCached(ticket: IntercomTicket): CachedTicket {
   // Note: API returns ticket_state not state
   const state = (ticket as { ticket_state?: string }).ticket_state || ticket.state
+
+  // Extract contacts from nested structure
+  const contactsList =
+    (ticket.contacts as { contacts?: Array<{ email?: string; id?: string }> })?.contacts ||
+    []
+  const contactEmails = contactsList
+    .map((c: { email?: string; id?: string }) => c.email || c.id || "")
+    .filter((e: string) => e)
+
+  // Extract priority with proper typing
+  const priorityValue = ticket.ticket_attributes["priority"]
+  const priority = typeof priorityValue === "string" ? priorityValue : null
+
   return {
     id: ticket.id,
     ticket_type_id: ticket.ticket_type.id,
@@ -230,9 +243,8 @@ function convertTicketToCached(ticket: IntercomTicket): CachedTicket {
     created_at: ticket.created_at,
     updated_at: ticket.updated_at,
     admin_assignee_id: ticket.admin_assignee_id || null,
-    contact_emails:
-      ticket.contacts?.contacts?.map((c) => c.email || c.id || "").filter((e) => e) || [],
-    priority: ticket.ticket_attributes.priority || null,
+    contact_emails: contactEmails,
+    priority,
   }
 }
 
@@ -266,7 +278,7 @@ export async function loadConversationCache(): Promise<ConversationCacheData | n
     const ticketCount = rawTickets?.length || 0
 
     console.log(
-      `[DataFetcher] Fetched ${conversationCount} conversations and ${ticketCount} tickets`,
+      `[DataFetcher] Fetched ${conversationCount} conversations and ${ticketCount} tickets`
     )
 
     // Convert to cached format
@@ -283,10 +295,10 @@ export async function loadConversationCache(): Promise<ConversationCacheData | n
     }
 
     console.log(
-      `[DataFetcher] ✅ Fetched ${conversations.length} conversations and ${tickets.length} tickets`,
+      `[DataFetcher] ✅ Fetched ${conversations.length} conversations and ${tickets.length} tickets`
     )
     console.log(
-      `[DataFetcher] Stats: ${data.stats.byState["open"] || 0} open, ${data.stats.byState["closed"] || 0} closed, ${data.stats.byState["snoozed"] || 0} snoozed`,
+      `[DataFetcher] Stats: ${data.stats.byState["open"] || 0} open, ${data.stats.byState["closed"] || 0} closed, ${data.stats.byState["snoozed"] || 0} snoozed`
     )
     return data
   } catch (error) {

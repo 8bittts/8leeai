@@ -97,8 +97,15 @@
       "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
       "source": "cache",
       "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:57:54.048Z",
+      "query": "show open tickets",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
     }
   ],
   "maxEntries": 50,
-  "lastUpdated": "2025-11-19T01:56:50.698Z"
+  "lastUpdated": "2025-11-19T01:57:54.048Z"
 }

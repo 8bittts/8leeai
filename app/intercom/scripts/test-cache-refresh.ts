@@ -49,7 +49,7 @@ async function main() {
     console.log("✅ Cache refresh test PASSED")
     console.log(`   - Successfully loaded ${cacheData.conversationCount} conversations`)
     console.log(`   - Successfully loaded ${cacheData.ticketCount} tickets`)
-    console.log(`   - All data structures validated`)
+    console.log("   - All data structures validated")
   } catch (error) {
     console.error("❌ Error:", error)
     process.exit(1)
