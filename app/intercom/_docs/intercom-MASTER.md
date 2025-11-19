@@ -399,10 +399,7 @@ INTERCOM_SUBDOMAIN      # For direct ticket links (e.g., "your-workspace")
 ```
 app/intercom/
 ├── _docs/
-│   ├── intercom-MASTER.md          # This file (SINGLE SOURCE OF TRUTH)
-│   └── _docs/
-│       ├── README.md                # Release notes index
-│       └── 2025-november.md         # November changelog
+│   └── intercom-MASTER.md          # This file (SINGLE SOURCE OF TRUTH)
 │
 ├── api/                             # 7 API Routes
 │   ├── query/route.ts               # Main query endpoint (natural language)
