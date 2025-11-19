@@ -18,6 +18,10 @@ interface CachedConversation {
   team_assignee_id: string | null
   tags: string[]
   contact_ids: string[]
+  source?: {
+    subject?: string
+    body?: string
+  }
   statistics:
     | {
         time_to_assignment?: number
@@ -186,9 +190,71 @@ function calculateStats(conversations: CachedConversation[]): ConversationCacheD
 }
 
 /**
+ * Build source object with only defined properties
+ */
+function buildSource(
+  source: IntercomConversation["source"]
+): { subject?: string; body?: string } | undefined {
+  if (!source) return
+  if (source.subject === undefined && source.body === undefined) return
+
+  const result: { subject?: string; body?: string } = {}
+  if (source.subject !== undefined) result.subject = source.subject
+  if (source.body !== undefined) result.body = source.body
+  return result
+}
+
+/**
+ * Build statistics object with only defined properties
+ */
+function buildStatistics(stats: IntercomConversation["statistics"]):
+  | {
+      time_to_assignment?: number
+      time_to_admin_reply?: number
+      time_to_first_close?: number
+      median_time_to_reply?: number
+    }
+  | undefined {
+  if (!stats) return
+
+  const hasAny =
+    stats.time_to_assignment !== undefined ||
+    stats.time_to_admin_reply !== undefined ||
+    stats.time_to_first_close !== undefined ||
+    stats.median_time_to_reply !== undefined
+
+  if (!hasAny) return
+
+  const result: {
+    time_to_assignment?: number
+    time_to_admin_reply?: number
+    time_to_first_close?: number
+    median_time_to_reply?: number
+  } = {}
+
+  if (stats.time_to_assignment !== undefined) {
+    result.time_to_assignment = stats.time_to_assignment
+  }
+  if (stats.time_to_admin_reply !== undefined) {
+    result.time_to_admin_reply = stats.time_to_admin_reply
+  }
+  if (stats.time_to_first_close !== undefined) {
+    result.time_to_first_close = stats.time_to_first_close
+  }
+  if (stats.median_time_to_reply !== undefined) {
+    result.median_time_to_reply = stats.median_time_to_reply
+  }
+
+  return result
+}
+
+/**
  * Convert IntercomConversation to CachedConversation
  */
 function convertToCached(conv: IntercomConversation): CachedConversation {
+  const source = buildSource(conv.source)
+  const statistics = buildStatistics(conv.statistics)
+
   return {
     id: conv.id,
     state: conv.state,
@@ -200,22 +266,8 @@ function convertToCached(conv: IntercomConversation): CachedConversation {
     team_assignee_id: conv.team_assignee_id || null,
     tags: conv.tags?.tags.map((t) => t.name) || [],
     contact_ids: conv.contacts?.contacts.map((c) => c.id) || [],
-    statistics: conv.statistics
-      ? {
-          ...(conv.statistics.time_to_assignment !== undefined && {
-            time_to_assignment: conv.statistics.time_to_assignment,
-          }),
-          ...(conv.statistics.time_to_admin_reply !== undefined && {
-            time_to_admin_reply: conv.statistics.time_to_admin_reply,
-          }),
-          ...(conv.statistics.time_to_first_close !== undefined && {
-            time_to_first_close: conv.statistics.time_to_first_close,
-          }),
-          ...(conv.statistics.median_time_to_reply !== undefined && {
-            median_time_to_reply: conv.statistics.median_time_to_reply,
-          }),
-        }
-      : undefined,
+    ...(source !== undefined && { source }),
+    statistics,
   }
 }
 

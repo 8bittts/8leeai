@@ -26,21 +26,24 @@ function buildContextFromCache(
     throw new Error("Cache data is required")
   }
 
-  // Build comprehensive conversation summaries
+  // Build comprehensive conversation summaries with subject and preview
   // Include ALL conversations (not just first 50) so AI can do complex analysis
   const conversationSummaries = cacheData.conversations
     .map((conv) => {
       const priority = conv.priority ? "high" : "normal"
       const tags = conv.tags.length > 0 ? `[${conv.tags.join(", ")}]` : ""
-      return `CONV #${conv.id} [${priority}/${conv.state}] ${tags}`
+      const subject = conv.source?.subject || "No subject"
+      const bodyPreview = conv.source?.body ? ` - ${conv.source.body.substring(0, 150)}...` : ""
+      return `CONV #${conv.id} [${priority}/${conv.state}] ${tags} "${subject}"${bodyPreview}`
     })
     .join("\n")
 
-  // Build comprehensive ticket summaries
+  // Build comprehensive ticket summaries with title and description
   const ticketSummaries = cacheData.tickets
     .map((ticket) => {
       const priority = ticket.priority || "normal"
-      return `TICKET #${ticket.id} [${priority}/${ticket.state}] ${ticket.title}`
+      const description = ticket.description ? ` - ${ticket.description.substring(0, 150)}...` : ""
+      return `TICKET #${ticket.id} [${priority}/${ticket.state}] "${ticket.title}"${description}`
     })
     .join("\n")
 
@@ -141,7 +144,8 @@ CAPABILITIES:
 INSTRUCTIONS:
 - Answer the user's question based on the provided data
 - Be accurate with numbers - count carefully
-- When analyzing trends or problems, reference specific IDs (TICKET #XXX or CONV #XXX)
+- When listing tickets or conversations, ALWAYS include the title/subject and description/body preview, not just IDs
+- Example: "TICKET #123: Password reset not working - User unable to reset password via email"
 - For prioritization queries, consider priority, state, title/subject, and description content
 - If you don't have data to answer a question, say so clearly
 - Distinguish between tickets and conversations when relevant
@@ -154,7 +158,8 @@ RESPONSE FORMATTING:
 - Use correct terminology: "ticket" for tickets, "conversation" for conversations, "state" for Intercom items
 - Avoid technical implementation terms: don't mention "cache", "database", "API", "JSON", "query", or code-specific terminology
 - Be professional but conversational: no apologies, disclaimers, or preambles like "Based on the data..."
-- Start with the answer immediately, then provide supporting details`
+- Start with the answer immediately, then provide supporting details
+- IMPORTANT: Never show just ticket/conversation IDs - always include the title and a brief description`
 }
 
 /**

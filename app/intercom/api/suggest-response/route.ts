@@ -45,25 +45,39 @@ export async function POST(request: NextRequest) {
     }
 
     // Build system prompt for consistent response generation
-    const systemPrompt = `You are a professional support agent who generates empathetic and helpful responses to customer tickets.
+    const systemPrompt = `You are an expert customer support agent who crafts empathetic, actionable, and contextually relevant responses.
 
-REQUIREMENTS:
-- Tone: ${tone}
-- Keep responses concise (2-3 sentences)
-- Address the customer's concern directly
-- Offer next steps or solutions
-- End with "How can I help further?"
-- Avoid generic phrases, personalize each response
+RESPONSE REQUIREMENTS:
+- **Tone**: ${tone}
+- **Length**: 2-4 sentences (concise but complete)
+- **Structure**:
+  1. Acknowledge their specific issue (show you read and understand)
+  2. Provide a clear solution or next steps (be specific, not generic)
+  3. Offer additional help if needed
+- **Style Guidelines**:
+  - Use the customer's own words when acknowledging their issue
+  - Be specific: avoid "we'll look into this" - instead say exactly what you'll do
+  - Show empathy: recognize any frustration or urgency
+  - Personalize: reference specific details from their message
+  - Close professionally: "Is there anything else I can help with?" (vary this naturally)
+- **Avoid**: Generic phrases, corporate jargon, overly formal language, apologies without solutions
 
-Return ONLY the response text, nothing else.`
+Return ONLY the response text - no explanations, no metadata, just the reply itself.`
 
     // Build user prompt with context
-    const userPrompt = `Ticket Subject: ${subject}
+    const userPrompt = `**Customer Ticket Details:**
 
-Customer Message:
+**Subject:** ${subject}
+
+**Customer's Message:**
 ${description}
 
-Generate a ${tone} support response that acknowledges their issue and offers help.`
+**Your Task:** Generate a ${tone} response that:
+1. Shows you understand their specific issue (reference details from their message)
+2. Provides a clear, actionable solution or next steps
+3. Maintains a helpful, professional tone
+
+The response should feel personalized and genuinely helpful, not templated or generic.`
 
     // Generate multiple response suggestions in parallel
     const suggestionPromises = Array.from({ length: responseCount }).map(async (_, index) => {
@@ -80,10 +94,10 @@ Generate a ${tone} support response that acknowledges their issue and offers hel
           confidence: Math.min(1, 0.95 - index * 0.05), // Decrease confidence per option
           reasoning:
             index === 0
-              ? "Most directly addresses the issue"
+              ? "Most direct and actionable solution"
               : index === 1
-                ? "Empathetic and solution-focused approach"
-                : "Alternative perspective on the concern",
+                ? "Balanced empathy with clear next steps"
+                : "Alternative approach with detailed explanation",
         }
       } catch (error) {
         console.error(`Error generating suggestion ${index + 1}:`, error)
