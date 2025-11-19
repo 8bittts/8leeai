@@ -104,8 +104,225 @@
       "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
       "source": "cache",
       "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T16:30:41.343Z",
+      "query": "how many technical tickets?",
+      "response": "There are **116 tickets** in total, but they are all categorized as **normal/submitted** with no specific indication of being technical. \n\nHere are some relevant types you may consider:\n\n- **Performance issues**: 6 tickets\n- **Password reset issues**: 6 tickets\n- **Mobile app crashes**: 6 tickets\n- **Integration issues**: 6 tickets\n\nIf you need further analysis or categorization, please specify!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:30:46.515Z",
+      "query": "tickets tagged feature-request",
+      "response": "There are **7 tickets** tagged as feature requests. Here are the details:\n\n- **TICKET #215471848143523**: Feature request: Dark mode  \n- **TICKET #215471848141976**: Feature request: Dark mode  \n- **TICKET #215471848140342**: Feature request: Dark mode  \n- **TICKET #215471848138272**: Feature request: Dark mode  \n- **TICKET #215471848059329**: Feature request: Dark mode  \n- **TICKET #215471848001657**: Feature request: Dark mode  \n- **TICKET #215471848061849**: Feature request: Dark mode  \n\nAll ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:30:47.902Z",
+      "query": "show tickets with urgent tag",
+      "response": "There are currently **no tickets with an urgent tag**. All 116 tickets are categorized as **normal/submitted** with no high-priority tickets present. If you need further details on the existing tickets, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:30:48.820Z",
+      "query": "how many bug tickets?",
+      "response": "There are **116 tickets** in total, but the data does not categorize any tickets specifically as \"bug\" tickets. However, several tickets indicate potential bugs, such as:\n\n- **Mobile app crashing on Android**\n- **Password reset not working**\n- **Performance issues with large datasets**\n\nIf you need a more detailed analysis of these tickets, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:30:49.691Z",
+      "query": "how many tickets are tagged billing?",
+      "response": "There are **6 tickets** tagged with billing questions. Here are their titles:\n\n- Billing question about recent charge (TICKET #215471848143430)\n- Billing question about recent charge (TICKET #215471848141879)\n- Billing question about recent charge (TICKET #215471848140184)\n- Billing question about recent charge (TICKET #215471848138031)\n- Billing question about recent charge (TICKET #215471848063847)\n- Billing question about recent charge (TICKET #215471848059226)",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:30:56.578Z",
+      "query": "how many incident tickets?",
+      "response": "There are **116 tickets** in total, but none are specifically categorized as \"incident\" tickets. All tickets are labeled as **normal/submitted**. If you need more details or specific categories, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:01.674Z",
+      "query": "show problem tickets",
+      "response": "There are **116 tickets** in total, but none are specifically categorized as \"problem\" tickets. However, several tickets indicate potential issues. Here are some key problem-related tickets:\n\n- **TICKET #215471848144443**: Performance issues with large datasets\n- **TICKET #215471848144198**: Mobile app crashing on Android\n- **TICKET #215471848144310**: Password reset not working\n- **TICKET #215471848143632**: Integration not working with Slack\n- **TICKET #215471848143310**: Unable to login to ac",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:05.225Z",
+      "query": "how many question tickets?",
+      "response": "There are **6 tickets** categorized as questions. Here are their titles:\n\n- **How do I export my data?**\n  - TICKET #215471848143735\n  - TICKET #215471848142197\n  - TICKET #215471848140552\n  - TICKET #215471848138840\n  - TICKET #215471848062632\n  - TICKET #215471848001916\n\nThese tickets involve inquiries related to data export.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:06.977Z",
+      "query": "breakdown by ticket type",
+      "response": "The current ticket breakdown by type is as follows:\n\n### Total Tickets: **116**\n\n#### Categories:\n- **Feature Requests:** **7 tickets**\n  - TICKET #215471848143523: Feature request: Dark mode\n  - TICKET #215471848141976: Feature request: Dark mode\n  - TICKET #215471848140342: Feature request: Dark mode\n  - TICKET #215471848138272: Feature request: Dark mode\n  - TICKET #215471848059329: Feature request: Dark mode\n  - TICKET #215471848001657: Feature request: Dark mode\n  - TICKET #215471749556193:",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:08.008Z",
+      "query": "show task tickets",
+      "response": "There are **no tickets categorized as task tickets**. All **116 tickets** are labeled as **normal/submitted** without any specific task categorization. If you need information on other types of tickets or specific issues, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:09.780Z",
+      "query": "how many urgent tickets?",
+      "response": "There are currently **no tickets with an urgent tag**. All **116 tickets** are categorized as **normal/submitted**. If you need further details on the existing tickets, feel free to ask!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:12.176Z",
+      "query": "show high priority tickets",
+      "response": "There are currently **no high-priority tickets**. All **116 tickets** are categorized as **normal/submitted**. If you need information on specific tickets or other categories, feel free to ask!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:13.821Z",
+      "query": "how many normal priority tickets?",
+      "response": "There are **116 tickets** in total, and all of them are categorized as **normal priority**.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:16.074Z",
+      "query": "what's the priority distribution?",
+      "response": "The priority distribution for the tickets is as follows:\n\n- **High Priority:** 0 tickets\n- **Normal Priority:** 116 tickets\n\nAll tickets are categorized as **normal priority**.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:21.873Z",
+      "query": "list recent tickets",
+      "response": "Here are the most recent tickets:\n\n1. **TICKET #215471749557875** - Untitled\n2. **TICKET #215471749556193** - Untitled\n3. **TICKET #215471745449819** - Untitled\n4. **TICKET #215471745294027** - Untitled\n5. **TICKET #215471745263321** - Untitled\n6. **TICKET #215471745251670** - Untitled\n\nAll tickets are marked as **normal/submitted**. If you need more details about any specific ticket, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:23.904Z",
+      "query": "assign second ticket to john@8lee.ai",
+      "response": "I'm unable to directly assign tickets. However, you can manually assign **TICKET #215471848144443** (Performance issues with large datasets) to john@8lee.ai in your ticket management system. If you need further assistance, feel free to ask!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:30.712Z",
+      "query": "show me recent tickets",
+      "response": "Here are the most recent tickets:\n\n1. **TICKET #215471749557875** - Untitled\n2. **TICKET #215471749556193** - Untitled\n3. **TICKET #215471745449819** - Untitled\n4. **TICKET #215471745294027** - Untitled\n5. **TICKET #215471745263321** - Untitled\n6. **TICKET #215471745251670** - Untitled\n\nIf you need details on specific tickets, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:33.081Z",
+      "query": "add tag test-tag to first ticket",
+      "response": "I can't directly add tags to tickets. However, you can manually add the tag **\"test-tag\"** to **TICKET #215471848144562** (Cannot add team members) in your ticket management system. If you need further assistance, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:39.346Z",
+      "query": "list tickets",
+      "response": "Here are the current tickets:\n\n1. **TICKET #215471848144562** - Cannot add team members\n2. **TICKET #215471848144443** - Performance issues with large datasets\n3. **TICKET #215471848144310** - Password reset not working\n4. **TICKET #215471848144198** - Mobile app crashing on Android\n5. **TICKET #215471848144102** - Account upgrade request\n6. **TICKET #215471848143735** - How do I export my data?\n7. **TICKET #215471848143632** - Integration not working with Slack\n8. **TICKET #215471848143523** - ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:42.703Z",
+      "query": "remove tag test-tag from first ticket",
+      "response": "I can't directly remove tags from tickets. However, you can manually remove the tag **\"test-tag\"** from **TICKET #215471848144562** (Cannot add team members) in your ticket management system. If you need further assistance, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:48.510Z",
+      "query": "show tickets",
+      "response": "Here are the current tickets:\n\n1. **TICKET #215471848144562** - Cannot add team members\n2. **TICKET #215471848144443** - Performance issues with large datasets\n3. **TICKET #215471848144310** - Password reset not working\n4. **TICKET #215471848144198** - Mobile app crashing on Android\n5. **TICKET #215471848144102** - Account upgrade request\n6. **TICKET #215471848143735** - How do I export my data?\n7. **TICKET #215471848143632** - Integration not working with Slack\n8. **TICKET #215471848143523** - ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:51.136Z",
+      "query": "add tags urgent billing to first ticket",
+      "response": "I can't directly add tags to tickets. However, you can manually add the tags **\"urgent\"** and **\"billing\"** to **TICKET #215471848144562** (Cannot add team members) in your ticket management system. If you need further assistance, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:57.737Z",
+      "query": "how many urgent tickets are tagged billing?",
+      "response": "There are **0 urgent tickets** tagged with **billing**. All current tickets are categorized as normal priority, and there are no tags present.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:31:59.206Z",
+      "query": "show me urgent tickets from the last 7 days",
+      "response": "There are **0 urgent tickets** from the last 7 days. All current tickets are categorized as normal priority, and there are no urgent tickets available in the system.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:00.915Z",
+      "query": "show tickets with nonexistent-tag-xyz",
+      "response": "There are **0 tickets** with the tag **\"nonexistent-tag-xyz.\"** Currently, all tickets are categorized under normal priority, and no tags have been assigned.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:04.246Z",
+      "query": "show me the breakdown by status, priority, and type",
+      "response": "Here's the breakdown of the tickets by status, priority, and type:\n\n### By Status:\n- **Submitted:** 116 tickets\n\n### By Priority:\n- **High Priority:** 0 tickets\n- **Normal Priority:** 116 tickets\n\n### By Type:\n- **Tickets:** 116\n\n### Summary:\n- All tickets are in the **submitted** state and categorized as **normal priority**. There are no high-priority tickets.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:04.269Z",
+      "query": "how many foobar type tickets?",
+      "response": "There are **0 tickets** of type \"foobar.\" Currently, all tickets in the system are categorized under normal priority with no specific \"foobar\" type identified.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:06.350Z",
+      "query": "assign first ticket to sarah@8lee.ai",
+      "response": "I can't directly assign tickets. However, you can manually assign **TICKET #215471848144562** (Cannot add team members) to **sarah@8lee.ai** in your ticket management system. If you need further assistance, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:08.311Z",
+      "query": "how many tickets are tagged billing?",
+      "response": "There are **0 tickets** tagged with **billing**. All current tickets are categorized under normal priority, and no tags have been assigned.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:11.542Z",
+      "query": "breakdown by ticket type",
+      "response": "Here's the breakdown of the current tickets by type:\n\n### Ticket Types:\n- **Total Tickets:** 116 \n- All tickets are categorized as **normal priority**.\n\n### Ticket Details:\n- **Formal Support Requests:** 116 tickets\n- **Conversations:** 0 tickets\n\nCurrently, there are no conversations, and all items are tickets with no specific type differentiation beyond that.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:32:13.756Z",
+      "query": "how many urgent tickets?",
+      "response": "There are **0 urgent tickets** currently in the system. All tickets are categorized under normal priority.",
+      "source": "ai",
+      "confidence": 0.85
     }
   ],
   "maxEntries": 50,
-  "lastUpdated": "2025-11-19T01:57:54.048Z"
+  "lastUpdated": "2025-11-19T16:32:13.756Z"
 }

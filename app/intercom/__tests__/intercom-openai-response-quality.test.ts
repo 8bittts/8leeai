@@ -5,8 +5,8 @@
  */
 
 import { beforeAll, describe, expect, test } from "bun:test"
-import { handleSmartQuery } from "../lib/smart-query-handler"
-import { refreshConversationCache } from "../lib/ticket-cache"
+import { refreshConversationCache } from "../lib/intercom-conversation-cache"
+import { handleSmartQuery } from "../lib/intercom-smart-query-handler"
 
 // Set longer timeout for AI-powered tests (30 seconds)
 const AI_TEST_TIMEOUT = 30000

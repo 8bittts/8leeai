@@ -13,7 +13,7 @@
 
 import { describe, expect, test } from "bun:test"
 import { getIntercomAPIClient } from "../lib/intercom-api-client"
-import { handleSmartQuery } from "../lib/smart-query-handler"
+import { handleSmartQuery } from "../lib/intercom-smart-query-handler"
 
 describe("Metadata Operations - Tag Queries", () => {
   test("should count tickets with specific tag", async () => {

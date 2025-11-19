@@ -12,8 +12,8 @@
  */
 
 import { describe, expect, test } from "bun:test"
-import { handleSmartQuery } from "../lib/smart-query-handler"
 import { getZendeskClient } from "../lib/zendesk-api-client"
+import { handleSmartQuery } from "../lib/zendesk-smart-query-handler"
 
 describe("Metadata Operations - Tag Queries", () => {
   test("should count tickets with specific tag", async () => {

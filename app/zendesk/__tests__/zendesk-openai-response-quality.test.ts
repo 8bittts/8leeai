@@ -5,8 +5,8 @@
  */
 
 import { beforeAll, describe, expect, test } from "bun:test"
-import { handleSmartQuery } from "../lib/smart-query-handler"
-import { refreshTicketCache } from "../lib/ticket-cache"
+import { handleSmartQuery } from "../lib/zendesk-smart-query-handler"
+import { refreshTicketCache } from "../lib/zendesk-ticket-cache"
 
 // Set longer timeout for AI-powered tests (30 seconds)
 const AI_TEST_TIMEOUT = 30000
