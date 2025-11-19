@@ -5,7 +5,7 @@
 
 import { describe, expect, test } from "bun:test"
 import { render } from "@testing-library/react"
-import { Cursor } from "./cursor"
+import { Cursor } from "./intercom-cursor"
 
 describe("Cursor - Visual feedback for terminal readiness", () => {
   test("provides visible indicator that terminal is active", () => {

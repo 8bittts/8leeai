@@ -1,12 +1,12 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { BootSequence } from "./intercom-boot-sequence"
-import { CommandPrompt, type CommandPromptRef } from "./intercom-command-prompt"
-import { CVContent } from "./intercom-cv-content"
-import { MatrixBackground } from "./intercom-matrix-background"
-import { projects } from "../lib/intercom-data"
-import { openExternalLink, PROJECTS_PER_PAGE } from "../lib/intercom-utils"
+import { BootSequence } from "@/components/boot-sequence"
+import { CommandPrompt, type CommandPromptRef } from "@/components/command-prompt"
+import { CVContent } from "@/components/cv-content"
+import { MatrixBackground } from "@/components/matrix-background"
+import { projects } from "@/lib/data"
+import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 export function TerminalContainer() {
   const [bootComplete, setBootComplete] = useState(false)

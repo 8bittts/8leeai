@@ -1,4 +1,4 @@
-import { openExternalLink, renderTextWithUnderlinedWord } from "../lib/intercom-utils"
+import { openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
 
 /**
  * Secure external link component with window.opener protection

@@ -5,7 +5,7 @@
 
 import { describe, expect, test, vi } from "bun:test"
 import { renderHook, waitFor } from "@testing-library/react"
-import { useTypewriter } from "./use-typewriter"
+import { useTypewriter } from "./intercom-use-typewriter"
 
 describe("useTypewriter - Authentic terminal content reveal", () => {
   test("begins with no content visible to build anticipation", () => {

@@ -43,28 +43,30 @@ export function ContactForm({ onClose }: ContactFormProps) {
     setStatusMessage(null)
 
     try {
-      const response = await fetch("/intercom/api/conversations", {
+      const response = await fetch("/intercom/api/tickets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          visitorEmail: email,
-          visitorName: name,
-          initialMessage: message,
-          topic: "support",
+          subject: `Support Request from ${name}`,
+          description: message,
+          requesterEmail: email,
+          requesterName: name,
+          category: "support",
+          priority: "normal",
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to create contact")
+        throw new Error(data.error || "Failed to create ticket")
       }
 
       setStatusMessage({
         type: "success",
-        message: `Conversation created! (Conversation ID: ${data.conversationId})`,
+        message: `Ticket created successfully! (ID: ${data.ticketId})`,
       })
 
       // Reset form after delay
@@ -163,7 +165,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
           disabled={isSubmitting}
           className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? "Creating Contact..." : "Create Contact"}
+          {isSubmitting ? "Creating Ticket..." : "Create Ticket"}
         </button>
       </form>
     </section>

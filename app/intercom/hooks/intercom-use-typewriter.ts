@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { ANIMATION_DELAYS } from "../lib/intercom-utils"
+import { ANIMATION_DELAYS } from "@/lib/utils"
 
 interface UseTypewriterOptions {
   text: string

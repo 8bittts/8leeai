@@ -1,9 +1,9 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { Cursor } from "./intercom-cursor"
-import { useTypewriter } from "../hooks/intercom-use-typewriter"
-import { ANIMATION_DELAYS } from "../lib/intercom-utils"
+import { Cursor } from "@/components/cursor"
+import { useTypewriter } from "@/hooks/use-typewriter"
+import { ANIMATION_DELAYS } from "@/lib/utils"
 
 interface BootSequenceProps {
   onComplete: () => void

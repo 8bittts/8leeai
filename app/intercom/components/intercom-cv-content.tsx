@@ -1,11 +1,11 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { Cursor } from "./intercom-cursor"
-import { SecureExternalLink } from "./intercom-secure-external-link"
-import { useTypewriter } from "../hooks/intercom-use-typewriter"
-import { projects } from "../lib/intercom-data"
-import { ANIMATION_DELAYS, formatIndex } from "../lib/intercom-utils"
+import { Cursor } from "@/components/cursor"
+import { SecureExternalLink } from "@/components/secure-external-link"
+import { useTypewriter } from "@/hooks/use-typewriter"
+import { projects } from "@/lib/data"
+import { ANIMATION_DELAYS, formatIndex } from "@/lib/utils"
 
 const summaryText =
   "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "

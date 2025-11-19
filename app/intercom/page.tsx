@@ -1,76 +1,90 @@
 "use client"
 
-import { useRef, useState } from "react"
-import { BootSequence } from "./components/intercom-boot-sequence"
-import { CVContent } from "./components/intercom-cv-content"
-import { MatrixBackground } from "./components/intercom-matrix-background"
-import { CommandPrompt, type CommandPromptRef } from "./components/intercom-command-prompt"
+import { useEffect, useState } from "react"
+import { IntercomChatContainer } from "./components/intercom-chat-container"
 
-export default function IntercomDemo() {
-  const [bootComplete, setBootComplete] = useState(false)
-  const [visibleProjects, setVisibleProjects] = useState(15)
-  const [command, setCommand] = useState("")
-  const commandPromptRef = useRef<CommandPromptRef>(null)
+const CORRECT_PASSWORD = "booya"
+const SESSION_KEY = "intercom_auth"
 
-  const clearToStart = () => {
-    setBootComplete(false)
-    setVisibleProjects(15)
-    setCommand("")
-  }
+/**
+ * Intercom Intelligence Portal
+ * A terminal-styled chat interface for querying all Intercom APIs
+ * Password protected (password: booya)
+ */
+export default function IntercomPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
-  const triggerFlash = () => {
-    const terminal = document.querySelector("[data-terminal]")
-    if (terminal) {
-      terminal.classList.add("animate-flash")
-      setTimeout(() => {
-        terminal.classList.remove("animate-flash")
-      }, 200)
+  // Check sessionStorage on mount
+  useEffect(() => {
+    const sessionAuth = sessionStorage.getItem(SESSION_KEY)
+    if (sessionAuth === "true") {
+      setIsAuthenticated(true)
+    }
+    setIsLoading(false)
+  }, [])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (password === CORRECT_PASSWORD) {
+      setIsAuthenticated(true)
+      sessionStorage.setItem(SESSION_KEY, "true")
+      setError("")
+    } else {
+      setError("Incorrect password")
+      setPassword("")
     }
   }
 
-  const openProject = (projectNumber: number) => {
-    const { projects } = require("./lib/intercom-data")
-    const project = projects[projectNumber - 1]
-    if (project?.url) {
-      const newWindow = window.open(project.url, "_blank")
-      if (newWindow) {
-        newWindow.opener = null
-      }
-    }
+  // Show nothing while checking session
+  if (isLoading) {
+    return null
   }
 
-  return (
-    <main
-      className="min-h-screen w-full bg-black text-green-500 font-mono relative flex flex-col lg:flex-row overflow-x-hidden"
-      data-terminal={true}
-    >
-      <MatrixBackground />
+  // Show password form if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-black border border-green-500 p-8 rounded">
+            <h1 className="text-green-500 text-2xl mb-6 font-mono text-center">
+              Intercom Intelligence Portal
+            </h1>
+            <p className="text-green-500 text-sm mb-6 font-mono text-center opacity-70">
+              Enter password to access
+            </p>
 
-      <div className="relative z-10 flex-1 flex flex-col">
-        {bootComplete ? (
-          <>
-            <div className="flex-1 overflow-y-auto px-4 lg:px-6 pt-4">
-              <CVContent visibleProjects={visibleProjects} />
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  // biome-ignore lint/a11y/noAutofocus: Password input should auto-focus for better UX on password gate
+                  autoFocus={true}
+                  className="w-full bg-black text-green-500 border border-green-500 px-4 py-2 font-mono focus:outline-none focus:border-green-400"
+                />
+              </div>
 
-            <div className="px-4 lg:px-6 pb-4">
-              <CommandPrompt
-                ref={commandPromptRef}
-                showMoreProjects={() => setVisibleProjects((prev) => prev + 15)}
-                openProject={openProject}
-                clearToStart={clearToStart}
-                triggerFlash={triggerFlash}
-                visibleProjects={visibleProjects}
-                totalProjects={64}
-                command={command}
-                setCommand={setCommand}
-              />
-            </div>
-          </>
-        ) : (
-          <BootSequence onComplete={() => setBootComplete(true)} />
-        )}
+              {error && <p className="text-red-500 text-sm font-mono text-center">{error}</p>}
+
+              <button
+                type="submit"
+                className="w-full bg-green-500 text-black px-4 py-2 font-mono font-bold hover:bg-green-400 transition-colors"
+              >
+                Access
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </main>
-  )
+    )
+  }
+
+  // Show main interface if authenticated
+  return <IntercomChatContainer />
 }

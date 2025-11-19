@@ -6,7 +6,7 @@
 import { describe, expect, test } from "bun:test"
 import { renderHook } from "@testing-library/react"
 import type { RefObject } from "react"
-import { useVirtualKeyboardSuppression } from "./use-virtual-keyboard-suppression"
+import { useVirtualKeyboardSuppression } from "./intercom-use-virtual-keyboard-suppression"
 
 describe("useVirtualKeyboardSuppression - Mobile keyboard control", () => {
   test("hides keyboard after command submission on touch devices", () => {

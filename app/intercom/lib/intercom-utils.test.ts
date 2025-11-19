@@ -11,7 +11,7 @@ import {
   isValidCommand,
   openExternalLink,
   renderTextWithUnderlinedWord,
-} from "./utils"
+} from "./intercom-utils"
 
 describe("formatIndex - Consistent numbering for scannable lists", () => {
   test("displays project numbers in consistent width for visual scanning", () => {

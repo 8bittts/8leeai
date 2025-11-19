@@ -1,0 +1,104 @@
+{
+  "entries": [
+    {
+      "timestamp": "2025-11-19T01:38:56.697Z",
+      "query": "refresh",
+      "response": "✅ Cache refreshed successfully!\n\nUpdated with 0 conversations from Intercom.\nMessage: Successfully fetched 0 conversations from Intercom",
+      "source": "cache",
+      "confidence": 1
+    },
+    {
+      "timestamp": "2025-11-19T01:38:56.697Z",
+      "query": "stats",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:38:56.697Z",
+      "query": "show all open conversations",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:38:56.698Z",
+      "query": "how many conversations do we have?",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:38:56.698Z",
+      "query": "summarize the current ticket situation",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:38:56.698Z",
+      "query": "what are the most common issues?",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.083Z",
+      "query": "refresh",
+      "response": "✅ Cache refreshed successfully!\n\nUpdated with 0 conversations from Intercom.\nMessage: Successfully fetched 0 conversations from Intercom",
+      "source": "cache",
+      "confidence": 1
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.083Z",
+      "query": "stats",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.083Z",
+      "query": "show all open conversations",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.084Z",
+      "query": "how many conversations do we have?",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.084Z",
+      "query": "summarize the current ticket situation",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:39:42.084Z",
+      "query": "what are the most common issues?",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:44:01.882Z",
+      "query": "how many ticket do we have",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    },
+    {
+      "timestamp": "2025-11-19T01:56:50.698Z",
+      "query": "how many tickets",
+      "response": "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom",
+      "source": "cache",
+      "confidence": 0
+    }
+  ],
+  "maxEntries": 50,
+  "lastUpdated": "2025-11-19T01:56:50.698Z"
+}
