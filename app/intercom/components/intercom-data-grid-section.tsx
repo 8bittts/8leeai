@@ -1,5 +1,5 @@
-import { SecureExternalLink } from "@/components/secure-external-link"
-import { formatIndexWithOffset } from "@/lib/utils"
+import { SecureExternalLink } from "./intercom-secure-external-link"
+import { formatIndexWithOffset } from "../lib/intercom-utils"
 
 /**
  * Reusable grid section component for displaying Education and Volunteer data

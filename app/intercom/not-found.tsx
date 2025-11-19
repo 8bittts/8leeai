@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-import { Cursor } from "@/components/cursor"
-import { useTypewriter } from "@/hooks/use-typewriter"
-import { ANIMATION_DELAYS } from "@/lib/utils"
+import { Cursor } from "./components/intercom-cursor"
+import { useTypewriter } from "./hooks/intercom-use-typewriter"
+import { ANIMATION_DELAYS } from "./lib/intercom-utils"
 
 /**
  * Custom 404 page with Mario background and typewriter effect

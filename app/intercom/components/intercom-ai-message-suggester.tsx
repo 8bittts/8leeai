@@ -41,7 +41,7 @@ export function AIMessageSuggester({
     setSuggestions([])
 
     try {
-      const response = await fetch("/api/intercom/suggest-message", {
+      const response = await fetch("/intercom/api/suggest-message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

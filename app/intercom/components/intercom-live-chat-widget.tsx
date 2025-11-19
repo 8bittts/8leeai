@@ -19,7 +19,7 @@ export function LiveChatWidget() {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch("/api/intercom/conversations")
+      const response = await fetch("/intercom/api/conversations")
       if (response.ok) {
         const data = await response.json()
         setConversations(data.conversations || [])

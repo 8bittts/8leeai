@@ -1,10 +1,10 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { BootSequence } from "@/components/boot-sequence"
-import { CVContent } from "@/components/cv-content"
-import { MatrixBackground } from "@/components/matrix-background"
-import { CommandPrompt, type CommandPromptRef } from "./components/command-prompt"
+import { BootSequence } from "./components/intercom-boot-sequence"
+import { CVContent } from "./components/intercom-cv-content"
+import { MatrixBackground } from "./components/intercom-matrix-background"
+import { CommandPrompt, type CommandPromptRef } from "./components/intercom-command-prompt"
 
 export default function IntercomDemo() {
   const [bootComplete, setBootComplete] = useState(false)
@@ -29,7 +29,7 @@ export default function IntercomDemo() {
   }
 
   const openProject = (projectNumber: number) => {
-    const { projects } = require("@/lib/data")
+    const { projects } = require("./lib/intercom-data")
     const project = projects[projectNumber - 1]
     if (project?.url) {
       const newWindow = window.open(project.url, "_blank")

@@ -1,11 +1,11 @@
 "use client"
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
-import { DataGridSection } from "@/components/data-grid-section"
-import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
-import { education, projects, volunteer } from "@/lib/data"
-import { COMMAND_ALIASES, DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
-import { ContactForm } from "./contact-form"
+import { DataGridSection } from "./intercom-data-grid-section"
+import { useVirtualKeyboardSuppression } from "../hooks/intercom-use-virtual-keyboard-suppression"
+import { education, projects, volunteer } from "../lib/intercom-data"
+import { COMMAND_ALIASES, DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "../lib/intercom-utils"
+import { ContactForm } from "./intercom-contact-form"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
