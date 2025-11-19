@@ -58,6 +58,43 @@ export async function handleSmartQuery(
   const startTime = Date.now()
 
   try {
+    // Handle help/commands requests instantly (no AI/cache needed)
+    if (/^(help|commands?|show\s+(available\s+)?commands?|what\s+can\s+you\s+do)\b/i.test(query)) {
+      console.log("[SmartQuery] Handling help request")
+      const processingTime = Date.now() - startTime
+
+      const answer = `✅ **Available Commands**
+
+**Ticket Operations:**
+• "show tickets" / "list tickets" / "show top 10 tickets"
+• "show open tickets" / "show resolved tickets"
+• "how many tickets" / "ticket count"
+• "create ticket about [issue]"
+• "build a reply for ticket #123" (or "first ticket", "second ticket")
+• "close ticket #123" / "reopen ticket #123"
+
+**Information:**
+• "show users" / "list admins"
+• "help" / "show commands"
+
+**Cache Management:**
+• "refresh" / "update" / "sync" - Force refresh cache from Intercom
+
+**Tips:**
+• You can ask natural language questions like "what are the most urgent tickets?"
+• Reference tickets by number or position (first, second, third, etc.)
+• Cache updates automatically every 24 hours`
+
+      addConversationEntry(query, answer, "cache", 1)
+
+      return {
+        answer,
+        source: "cache",
+        confidence: 1,
+        processingTime,
+      }
+    }
+
     // Check for refresh command (special case - no AI needed)
     if (/^(refresh|update|sync|reload|fetch|pull)\b/i.test(query)) {
       console.log("[SmartQuery] Handling refresh request")

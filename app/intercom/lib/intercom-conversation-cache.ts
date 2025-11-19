@@ -68,10 +68,10 @@ interface ConversationCacheData {
   }
 }
 
-// In-memory cache with TTL (5 minutes)
+// In-memory cache with TTL (1 day)
 let cachedData: ConversationCacheData | null = null
 let cacheTimestamp = 0
-const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+const CACHE_TTL = 24 * 60 * 60 * 1000 // 1 day
 
 /**
  * Calculate conversation age-based statistics

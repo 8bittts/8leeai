@@ -69,12 +69,12 @@ export class IntercomAPIClient {
   private baseUrl = "https://api.intercom.io"
   private cache: Map<string, { data: unknown; timestamp: number }>
   private cacheTTL: Record<string, number> = {
-    conversations: 5 * 60 * 1000, // 5 minutes
-    tickets: 5 * 60 * 1000, // 5 minutes
-    contacts: 60 * 60 * 1000, // 1 hour
-    admins: 60 * 60 * 1000, // 1 hour
-    teams: 60 * 60 * 1000, // 1 hour
-    tags: 60 * 60 * 1000, // 1 hour
+    conversations: 24 * 60 * 60 * 1000, // 1 day
+    tickets: 24 * 60 * 60 * 1000, // 1 day
+    contacts: 24 * 60 * 60 * 1000, // 1 day
+    admins: 24 * 60 * 60 * 1000, // 1 day
+    teams: 24 * 60 * 60 * 1000, // 1 day
+    tags: 24 * 60 * 60 * 1000, // 1 day
   }
 
   constructor() {
