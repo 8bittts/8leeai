@@ -228,6 +228,90 @@ app/zendesk/
 - **Tests** → `app/zendesk/__tests__/[name].test.ts`
 - **Cache** → `app/zendesk/cache/` (ignored by git)
 
+### Intercom Intelligence Portal Documentation
+
+**STATUS: ✅ PRODUCTION READY**
+
+**All Intercom files are consolidated in `/app/intercom/` with complete isolation from main app:**
+
+**Production Status:**
+- ✅ Zero TypeScript errors
+- ✅ Zero Biome lint issues
+- ✅ Complete Intercom API integration
+- ✅ 116 synthetic test tickets
+- ✅ Comprehensive documentation in single MASTER.md file
+- ✅ 62 TypeScript files (17 components, 7 API routes, 14 scripts, 14 lib files)
+
+**Documentation:**
+- **See `app/intercom/_docs/intercom-MASTER.md`** for complete documentation
+- Single consolidated documentation file (no duplication)
+- Comprehensive coverage: architecture, API reference, testing, troubleshooting
+
+**Key Features (Production Ready):**
+- Natural language query processing with OpenAI GPT-4o
+- Ticket & conversation operations (create, read, update, search)
+- Smart caching with two-tier query system (cache <100ms, AI 2-10s)
+- Automatic pagination for tickets (page-based) and conversations (cursor-based)
+- Context-aware conversation history
+- Safe synthetic data generation (5 tickets/batch, 3s delays)
+- Comprehensive metadata support (admins, teams, tags, ticket types, contacts)
+
+**Directory Structure:**
+```
+app/intercom/
+├── _docs/                     # Documentation (1 file)
+│   └── intercom-MASTER.md       # Complete documentation
+├── api/                       # API routes (7 routes)
+├── components/                # React components (17 files)
+├── hooks/                     # React hooks (2 files)
+├── lib/                       # Core logic (14 files)
+├── scripts/                   # Utility scripts (14 files)
+├── __tests__/                 # Integration tests (6 files)
+├── page.tsx                   # Main entry point (password: booya)
+├── layout.tsx                 # Layout wrapper
+└── not-found.tsx              # Custom 404 page
+```
+
+**When working with Intercom code:**
+1. **Always refer to `app/intercom/_docs/intercom-MASTER.md`** for complete documentation
+2. API Client: `app/intercom/lib/intercom-api-client.ts`
+3. Query Handler: `app/intercom/lib/intercom-smart-query-handler.ts`
+4. Cache Layer: `app/intercom/lib/intercom-conversation-cache.ts`
+5. Types: `app/intercom/lib/intercom-types.ts`
+6. Main UI: `app/intercom/components/intercom-terminal-container.tsx`
+
+**File Organization Rules (ALL Intercom files in app/intercom/):**
+- **Documentation** → `app/intercom/_docs/intercom-MASTER.md` (single consolidated file)
+- **API Routes** → `app/intercom/api/[endpoint]/route.ts`
+- **Scripts** → `app/intercom/scripts/[name].ts` (all prefixed with `intercom-`)
+- **Components** → `app/intercom/components/intercom-[name].tsx`
+- **Library** → `app/intercom/lib/intercom-[name].ts`
+- **Hooks** → `app/intercom/hooks/use-intercom-[name].ts`
+- **Tests** → `app/intercom/__tests__/[name].test.ts`
+- **No cache directory** (in-memory only, no persistent files)
+
+**Environment Variables:**
+```bash
+INTERCOM_ACCESS_TOKEN   # Bearer token from Intercom Developer Hub
+OPENAI_API_KEY          # OpenAI API key for GPT-4o
+INTERCOM_SUBDOMAIN      # Optional: for ticket links
+```
+
+**Quick Start:**
+```bash
+# Test credentials
+./app/intercom/scripts/test-credentials.sh
+
+# Generate synthetic data
+bun app/intercom/scripts/intercom-generate-synthetic-data.ts --count 50
+
+# Verify cache
+bun app/intercom/scripts/verify-cache-data.ts
+
+# Access portal
+# http://localhost:1333/intercom (password: booya)
+```
+
 ### Adding New Content
 
 **Commands:**
