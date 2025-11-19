@@ -232,8 +232,12 @@ export class IntercomAPIClient {
   async getConversations(filters?: ConversationFilters): Promise<IntercomConversation[]> {
     const cacheKey = this.getCacheKey("/conversations", filters as Record<string, unknown>)
     const cached = this.getFromCache<IntercomConversation[]>(cacheKey, "conversations")
-    if (cached) return cached
+    if (cached) {
+      console.log(`[API] Using cached conversations (${cached.length} conversations)`)
+      return cached
+    }
 
+    console.log("[API] Fetching conversations from Intercom API...")
     const conversations = await this.fetchAllPages<IntercomConversation>("/conversations")
 
     // Apply filters if provided
@@ -249,6 +253,7 @@ export class IntercomAPIClient {
     }
 
     this.setCache(cacheKey, filtered)
+    console.log(`[API] Cached ${filtered.length} conversations`)
     return filtered
   }
 
@@ -420,6 +425,18 @@ export class IntercomAPIClient {
    * POST /tickets/search
    */
   async searchTickets(query: IntercomSearchQuery): Promise<IntercomTicket[]> {
+    // Check cache first (cache key based on query)
+    const cacheKey = this.getCacheKey(
+      "/tickets/search",
+      query as unknown as Record<string, unknown>
+    )
+    const cached = this.getFromCache<IntercomTicket[]>(cacheKey, "tickets")
+    if (cached) {
+      console.log(`[API] Using cached tickets (${cached.length} tickets)`)
+      return cached
+    }
+
+    console.log("[API] Fetching tickets from Intercom API...")
     const allTickets: IntercomTicket[] = []
     let hasMore = true
     let page = 1
@@ -449,6 +466,10 @@ export class IntercomAPIClient {
       hasMore = response.pages ? response.pages.page < response.pages.total_pages : false
       page++
     }
+
+    // Cache the results
+    this.setCache(cacheKey, allTickets)
+    console.log(`[API] Cached ${allTickets.length} tickets`)
 
     return allTickets
   }

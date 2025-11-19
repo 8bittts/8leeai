@@ -68,6 +68,11 @@ interface ConversationCacheData {
   }
 }
 
+// In-memory cache with TTL (5 minutes)
+let cachedData: ConversationCacheData | null = null
+let cacheTimestamp = 0
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+
 /**
  * Calculate conversation age-based statistics
  */
@@ -248,10 +253,9 @@ function convertTicketToCached(ticket: IntercomTicket): CachedTicket {
 }
 
 /**
- * Load conversations AND tickets - ALWAYS fetches fresh from Intercom API
- * Comprehensive data fetch for complete customer interaction view
+ * Fetch fresh data from Intercom API and update cache
  */
-export async function loadConversationCache(): Promise<ConversationCacheData | null> {
+async function fetchFreshData(): Promise<ConversationCacheData | null> {
   try {
     console.log("[DataFetcher] Fetching fresh data from Intercom API...")
     const client = getIntercomAPIClient()
@@ -293,8 +297,12 @@ export async function loadConversationCache(): Promise<ConversationCacheData | n
       stats: calculateStats(conversations),
     }
 
+    // Update cache
+    cachedData = data
+    cacheTimestamp = Date.now()
+
     console.log(
-      `[DataFetcher] ✅ Fetched ${conversations.length} conversations and ${tickets.length} tickets`
+      `[DataFetcher] ✅ Cached ${conversations.length} conversations and ${tickets.length} tickets`
     )
     console.log(
       `[DataFetcher] Stats: ${data.stats.byState["open"] || 0} open, ${data.stats.byState["closed"] || 0} closed, ${data.stats.byState["snoozed"] || 0} snoozed`
@@ -307,6 +315,32 @@ export async function loadConversationCache(): Promise<ConversationCacheData | n
 }
 
 /**
+ * Load conversations AND tickets - Uses in-memory cache with 5min TTL
+ * Only fetches fresh data if cache is expired or doesn't exist
+ */
+export async function loadConversationCache(): Promise<ConversationCacheData | null> {
+  // Check if cache is valid
+  const cacheAge = Date.now() - cacheTimestamp
+  const isCacheValid = cachedData && cacheAge < CACHE_TTL
+
+  if (isCacheValid) {
+    console.log(
+      `[DataFetcher] Using cached data (age: ${Math.round(cacheAge / 1000)}s, ${cachedData?.conversationCount} conversations, ${cachedData?.ticketCount} tickets)`
+    )
+    return cachedData
+  }
+
+  // Cache expired or doesn't exist - fetch fresh
+  if (cachedData) {
+    console.log(
+      `[DataFetcher] Cache expired (age: ${Math.round(cacheAge / 1000)}s), fetching fresh data`
+    )
+  }
+
+  return await fetchFreshData()
+}
+
+/**
  * Get cache stats - same as loadConversationCache but different name for compatibility
  */
 export async function getCacheStats(): Promise<ConversationCacheData["stats"] | null> {
@@ -315,7 +349,7 @@ export async function getCacheStats(): Promise<ConversationCacheData["stats"] | 
 }
 
 /**
- * Refresh cache - fetches fresh data from Intercom (conversations + tickets)
+ * Refresh cache - FORCE fetches fresh data from Intercom (ignores cache)
  */
 export async function refreshConversationCache(): Promise<{
   success: boolean
@@ -326,7 +360,12 @@ export async function refreshConversationCache(): Promise<{
   error?: string
 }> {
   try {
-    const data = await loadConversationCache()
+    // Force fresh fetch by invalidating cache
+    console.log("[DataFetcher] Manual refresh requested - invalidating cache")
+    cachedData = null
+    cacheTimestamp = 0
+
+    const data = await fetchFreshData()
 
     if (!data) {
       return {
