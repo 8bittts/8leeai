@@ -406,13 +406,24 @@ export class IntercomAPIClient {
    * Add comment to ticket
    * POST /tickets/{id}/reply
    */
-  async addTicketComment(id: string, body: string): Promise<void> {
+  async addTicketComment(id: string, body: string, adminId?: string): Promise<void> {
+    // Get admin_id if not provided
+    let actualAdminId = adminId
+    if (!actualAdminId) {
+      const admins = await this.getAdmins()
+      if (admins.length === 0) throw new Error("No admins found")
+      const firstAdmin = admins[0]
+      if (!firstAdmin) throw new Error("Failed to retrieve admin")
+      actualAdminId = firstAdmin.id
+    }
+
     await this.request(`/tickets/${id}/reply`, {
       method: "POST",
       body: JSON.stringify({
         message_type: "comment",
         type: "admin",
         body,
+        admin_id: actualAdminId,
       }),
     })
 
