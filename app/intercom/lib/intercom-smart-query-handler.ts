@@ -66,7 +66,7 @@ export async function handleSmartQuery(
       const processingTime = Date.now() - startTime
 
       const answer = refreshResult.success
-        ? `✅ Cache refreshed successfully!\n\nUpdated with ${refreshResult.conversationCount} conversations from Intercom.\nMessage: ${refreshResult.message}`
+        ? `✅ Cache refreshed successfully!\n\nUpdated with ${refreshResult.conversationCount} conversations and ${refreshResult.ticketCount} tickets from Intercom.\nMessage: ${refreshResult.message}`
         : `❌ Failed to refresh cache\n\nError: ${refreshResult.error}\n${refreshResult.message}`
 
       addConversationEntry(query, answer, "cache", refreshResult.success ? 1 : 0)
@@ -305,8 +305,8 @@ export async function handleSmartQuery(
           state: "submitted",
         })
 
-        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || ""
-        const ticketLink = `https://${subdomain}.intercom.com/agent/tickets/${createdTicket.id}`
+        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || "app"
+        const ticketLink = `https://${subdomain}.intercom.com/a/tickets/${createdTicket.id}`
 
         const processingTime = Date.now() - startTime
 
@@ -399,8 +399,8 @@ export async function handleSmartQuery(
           state: targetStatus,
         })
 
-        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || ""
-        const ticketLink = `https://${subdomain}.intercom.com/agent/tickets/${updatedTicket.id}`
+        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || "app"
+        const ticketLink = `https://${subdomain}.intercom.com/a/tickets/${updatedTicket.id}`
 
         const processingTime = Date.now() - startTime
         const ticketSubject = updatedTicket.ticket_attributes._default_title_
@@ -686,8 +686,8 @@ export async function handleSmartQuery(
           priority: priorityBoolean,
         })
 
-        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || ""
-        const ticketLink = `https://${subdomain}.intercom.com/agent/tickets/${updatedConv.id}`
+        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || "app"
+        const ticketLink = `https://${subdomain}.intercom.com/a/inbox/${updatedConv.id}`
 
         const processingTime = Date.now() - startTime
         const priorityLabel = priorityBoolean ? "high" : "normal"
@@ -773,8 +773,8 @@ export async function handleSmartQuery(
           admin_assignee_id: assigneeEmail, // Assuming assigneeEmail is actually admin ID
         })
 
-        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || ""
-        const ticketLink = `https://${subdomain}.intercom.com/agent/tickets/${updatedConv.id}`
+        const subdomain = process.env["INTERCOM_SUBDOMAIN"] || "app"
+        const ticketLink = `https://${subdomain}.intercom.com/a/inbox/${updatedConv.id}`
 
         const processingTime = Date.now() - startTime
 
@@ -951,10 +951,10 @@ export async function handleSmartQuery(
 
     // Validate cache exists before AI processing
     const cache = await loadConversationCache()
-    if (!cache || cache.conversations.length === 0) {
+    if (!cache || (cache.conversations.length === 0 && cache.tickets.length === 0)) {
       const processingTime = Date.now() - startTime
       const answer =
-        "❌ No conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom"
+        "❌ No tickets or conversations found in cache\n\nTry 'refresh' or 'update' to sync with Intercom"
       addConversationEntry(query, answer, "cache", 0)
 
       return {

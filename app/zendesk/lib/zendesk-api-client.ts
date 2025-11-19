@@ -70,6 +70,7 @@ export class ZendeskAPIClient {
   /**
    * Validate that required environment variables are configured
    */
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Method is called in constructor (line 67), false positive in Biome 2.3.6
   private validateConfig(): void {
     if (!this.subdomain) {
       throw new Error("ZENDESK_SUBDOMAIN environment variable not configured")

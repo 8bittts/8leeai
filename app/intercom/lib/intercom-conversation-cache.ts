@@ -223,8 +223,7 @@ function convertTicketToCached(ticket: IntercomTicket): CachedTicket {
 
   // Extract contacts from nested structure
   const contactsList =
-    (ticket.contacts as { contacts?: Array<{ email?: string; id?: string }> })?.contacts ||
-    []
+    (ticket.contacts as { contacts?: Array<{ email?: string; id?: string }> })?.contacts || []
   const contactEmails = contactsList
     .map((c: { email?: string; id?: string }) => c.email || c.id || "")
     .filter((e: string) => e)

@@ -37,7 +37,7 @@ export async function POST(_request: NextRequest): Promise<NextResponse> {
       success: true,
       message: result.message,
       conversationCount: result.conversationCount,
-      ticketCount: result.conversationCount, // For backwards compatibility
+      ticketCount: result.ticketCount,
       lastUpdated: cache?.lastUpdated,
       stats: cache?.stats,
     })
@@ -76,7 +76,7 @@ export async function GET(_request: NextRequest): Promise<NextResponse> {
       message: "Cache status retrieved",
       cached: true,
       conversationCount: cache.conversationCount,
-      ticketCount: cache.conversationCount, // For backwards compatibility
+      ticketCount: cache.ticketCount,
       lastUpdated: cache.lastUpdated,
       stats: cache.stats,
     })

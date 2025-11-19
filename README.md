@@ -121,9 +121,11 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **UI**: [React 19.2.0](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
-- **Code Quality**: [Biome 2.3.5](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **Code Quality**: [Biome 2.3.6](https://biomejs.dev) - 100+ error rules + 5 nursery rules
+- **AI/ML**: [Vercel AI SDK 5.0.95](https://sdk.vercel.ai), [OpenAI SDK 2.0.68](https://github.com/openai/openai-node)
+- **Email**: [Resend 6.5.1](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
-- **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.5`, `@types/react-dom@19.2.3`
+- **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.6`, `@types/react-dom@19.2.3`
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com)
 
@@ -159,6 +161,11 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ├── scripts/                          # Development utilities
 │   └── x-package-monitor.js          # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
+├── app/intercom/                     # Intercom Intelligence Portal (production-ready)
+│   ├── api/                          # API routes (7 endpoints)
+│   ├── components/                   # React components (18 files)
+│   ├── lib/                          # Core logic and utilities (15 files)
+│   └── _docs/intercom-MASTER.md      # Comprehensive documentation
 ├── app/zendesk/                      # ⚠️ ISOLATED EXPERIMENT - Can be deleted safely
 │   └── _docs/DELETION-GUIDE.md       # See this file for deletion instructions
 ├── _docs/                            # Release notes documentation

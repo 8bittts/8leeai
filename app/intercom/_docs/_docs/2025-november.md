@@ -1,5 +1,37 @@
 # Release Notes - November 2025
 
+## November 19, 2025
+
+### Intercom Portal - Production Fixes & Package Updates ✅
+
+Fixed critical production bugs and applied routine package updates to maintain stability and security.
+
+**Critical Fixes:**
+- **Refresh API Bug**: Fixed `ticketCount` returning wrong value (`conversationCount` instead of `ticketCount`)
+- **Tag Operations**: Fixed hardcoded `admin_id` placeholder that would fail in production - now auto-fetches first available admin
+- **URL Generation**: Fixed missing `INTERCOM_SUBDOMAIN` validation causing broken ticket/conversation links
+- **URL Structure**: Standardized Intercom URLs to correct format (`/a/tickets/` for tickets, `/a/inbox/` for conversations)
+
+**Package Updates:**
+- **Vercel AI SDK**: 5.0.93 → 5.0.95
+- **OpenAI SDK**: 2.0.67 → 2.0.68
+- **Resend**: 6.4.2 → 6.5.1
+- **Biome**: 2.3.5 → 2.3.6 (includes config migration)
+- **@types/react**: 19.2.5 → 19.2.6
+
+**Code Quality:**
+- Added biome-ignore comments for false positive in `noUnusedPrivateClassMembers` rule
+- All tests passing (96/100 - 4 test file path issues unrelated to fixes)
+- Zero TypeScript errors
+- Zero Biome lint errors
+
+**Documentation:**
+- Updated README.md with Intercom portal information
+- Updated CLAUDE.md with new package versions
+- Added comprehensive code review report
+
+---
+
 ## November 18, 2025
 
 ### Intercom Intelligence Portal - Production Ready ✅

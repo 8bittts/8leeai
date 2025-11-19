@@ -86,6 +86,7 @@ export class IntercomAPIClient {
   /**
    * Validate that required environment variables are configured
    */
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Method is called in constructor (line 83), false positive in Biome 2.3.6
   private validateConfig(): void {
     if (!this.accessToken) {
       throw new Error("INTERCOM_ACCESS_TOKEN environment variable not configured")
@@ -319,11 +320,26 @@ export class IntercomAPIClient {
   /**
    * Add tags to conversation
    * POST /conversations/{id}/tags
+   * Note: Fetches first available admin ID automatically if not provided
    */
-  async tagConversation(id: string, tags: string[]): Promise<void> {
+  async tagConversation(id: string, tags: string[], adminId?: string): Promise<void> {
+    // If no admin ID provided, fetch the first available admin
+    let actualAdminId = adminId
+    if (!actualAdminId) {
+      const admins = await this.getAdmins()
+      if (admins.length === 0) {
+        throw new Error("No admins found - cannot tag conversation")
+      }
+      const firstAdmin = admins[0]
+      if (!firstAdmin) {
+        throw new Error("Failed to retrieve admin")
+      }
+      actualAdminId = firstAdmin.id
+    }
+
     await this.request(`/conversations/${id}/tags`, {
       method: "POST",
-      body: JSON.stringify({ admin_id: "admin_id", tag_names: tags }),
+      body: JSON.stringify({ admin_id: actualAdminId, tag_names: tags }),
     })
 
     // Invalidate conversation cache

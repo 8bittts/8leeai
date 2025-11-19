@@ -83,9 +83,11 @@ Terminal-style portfolio website featuring authentic DOS simulation with boot se
 - Next.js 16.0.3 + React 19.2.0 + TypeScript 5.9.3 (strict mode)
 - Tailwind CSS v4.1.17 (utility classes only, zero custom CSS)
 - Vercel Analytics 1.5.0 + Speed Insights 1.2.0
-- Biome 2.3.5 (linting/formatting with 100+ error-level rules)
+- Biome 2.3.6 (linting/formatting with 100+ error-level rules)
+- AI/ML: Vercel AI SDK 5.0.95 + OpenAI SDK 2.0.68
+- Email: Resend 6.5.1
 - Bun 1.3.1 (package manager, runtime, test runner)
-- Type Definitions: `@types/node@24.10.1`, `@types/react@19.2.5`, `@types/react-dom@19.2.3`
+- Type Definitions: `@types/node@24.10.1`, `@types/react@19.2.6`, `@types/react-dom@19.2.3`
 
 ## Architecture
 

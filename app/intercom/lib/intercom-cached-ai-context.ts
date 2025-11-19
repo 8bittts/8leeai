@@ -28,18 +28,33 @@ function buildContextFromCache(
 
   // Build comprehensive conversation summaries
   // Include ALL conversations (not just first 50) so AI can do complex analysis
-  const ticketSummaries = cacheData.conversations
+  const conversationSummaries = cacheData.conversations
     .map((conv) => {
       const priority = conv.priority ? "high" : "normal"
       const tags = conv.tags.length > 0 ? `[${conv.tags.join(", ")}]` : ""
-      return `#${conv.id} [${priority}/${conv.state}] ${tags}`
+      return `CONV #${conv.id} [${priority}/${conv.state}] ${tags}`
     })
+    .join("\n")
+
+  // Build comprehensive ticket summaries
+  const ticketSummaries = cacheData.tickets
+    .map((ticket) => {
+      const priority = ticket.priority || "normal"
+      return `TICKET #${ticket.id} [${priority}/${ticket.state}] ${ticket.title}`
+    })
+    .join("\n")
+
+  // Combine both conversations and tickets
+  const allItemSummaries = [conversationSummaries, ticketSummaries]
+    .filter((s) => s.length > 0)
     .join("\n")
 
   // Build stats summary
   const statsSummary = `
-CONVERSATION STATISTICS:
-- Total: ${cacheData.conversationCount}
+CACHE STATISTICS:
+- Conversations: ${cacheData.conversationCount}
+- Tickets: ${cacheData.ticketCount}
+- Total Items: ${cacheData.conversationCount + cacheData.ticketCount}
 - By State: ${Object.entries(cacheData.stats.byState)
     .map(([k, v]) => `${k}:${v}`)
     .join(" | ")}
@@ -48,7 +63,7 @@ CONVERSATION STATISTICS:
 `
 
   return {
-    ticketSummaries,
+    ticketSummaries: allItemSummaries,
     statsSummary,
     cacheTimestamp: Date.now(),
     cacheFileTimestamp: new Date(cacheData.lastUpdated).getTime(),
@@ -92,7 +107,9 @@ export async function getCachedContext(): Promise<CachedContext> {
   }
 
   cachedContext = buildContextFromCache(cache)
-  console.log(`[CachedAIContext] Context built with ${cache.conversationCount} conversations`)
+  console.log(
+    `[CachedAIContext] Context built with ${cache.conversationCount} conversations and ${cache.ticketCount} tickets`
+  )
 
   return cachedContext
 }
@@ -104,36 +121,37 @@ export async function getCachedContext(): Promise<CachedContext> {
 export async function buildSystemPromptWithContext(): Promise<string> {
   const context = await getCachedContext()
 
-  return `You are a helpful support analytics assistant. Answer questions about support tickets based on the provided data.
+  return `You are a helpful support analytics assistant. Answer questions about Intercom tickets and conversations based on the provided data.
 
 Be concise and direct. If asked for statistics, provide specific numbers. If asked to analyze, provide actionable insights.
 
-CURRENT TICKET DATA (automatically updated):
+CURRENT DATA (automatically updated):
 ${context.statsSummary}
 
-ALL TICKET DETAILS (with word counts and descriptions):
+ALL ITEMS (Tickets and Conversations):
 ${context.ticketSummaries}
 
 CAPABILITIES:
-- You have access to ALL tickets with full metadata (subject, status, priority, word count, description preview)
-- You can count tickets based on any criteria (status, priority, word count, content, etc.)
-- You can analyze patterns, trends, and prioritize tickets based on context
-- You can search ticket content and identify common issues
+- You have access to ALL tickets and conversations with full metadata (title/subject, state, priority, descriptions)
+- You can count items based on any criteria (state, priority, type, content, etc.)
+- You can analyze patterns, trends, and prioritize items based on context
+- You can search content and identify common issues
+- Intercom has TICKETS (formal support requests) and CONVERSATIONS (informal chat interactions)
 
 INSTRUCTIONS:
-- Answer the user's question based on the provided ticket data
+- Answer the user's question based on the provided data
 - Be accurate with numbers - count carefully
-- When analyzing trends or problems, reference specific ticket IDs
-- For word count queries, use the "X words" metadata provided for each ticket
-- For prioritization queries, consider priority, status, subject, and description content
+- When analyzing trends or problems, reference specific IDs (TICKET #XXX or CONV #XXX)
+- For prioritization queries, consider priority, state, title/subject, and description content
 - If you don't have data to answer a question, say so clearly
+- Distinguish between tickets and conversations when relevant
 
 RESPONSE FORMATTING:
 - Use markdown formatting (**, ##, bullets) for structure and readability
 - Keep individual lines under 250 characters for readability (use line breaks appropriately)
 - Use bullet points (- or •) for lists of 3+ items
 - Break long content into paragraphs with blank lines between sections
-- Use domain language: say "ticket" not "record" or "entry", "status" not "state"
+- Use correct terminology: "ticket" for tickets, "conversation" for conversations, "state" for Intercom items
 - Avoid technical implementation terms: don't mention "cache", "database", "API", "JSON", "query", or code-specific terminology
 - Be professional but conversational: no apologies, disclaimers, or preambles like "Based on the data..."
 - Start with the answer immediately, then provide supporting details`
