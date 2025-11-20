@@ -409,20 +409,20 @@ bun scripts/zendesk-generate-tickets.ts --count 50 --delay 500
 
 ## 6. Tips & Best Practices
 
-✅ **DO:**
+**DO:**
 - Run credential test before generating tickets
 - Start with small batches (10-20) to verify it works
 - Use `--delay 500` as default safe setting
 - Monitor success rate in output
 - Check Zendesk dashboard after creation
 
-❌ **DON'T:**
+**DON'T:**
 - Run generator multiple times simultaneously (creates duplicate load)
 - Use `--delay` below 100ms (risk of rate limiting)
 - Run with very large counts (>500) in single batch
 - Assume instant appearance in Zendesk dashboard (may cache)
 
-💡 **TIPS:**
+**TIPS:**
 - Save common commands as aliases in your shell
 - Use `--count 0` would fail; minimum is 1
 - Ticket IDs are returned in output for verification
