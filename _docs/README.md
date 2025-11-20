@@ -2,6 +2,10 @@
 
 This directory contains monthly release notes for the 8lee.ai terminal portfolio project.
 
+## Status Documents
+
+- [project-isolation-status.md](project-isolation-status.md) - Zendesk and Intercom project isolation verification (100% isolated, safe to delete)
+
 ## Naming Convention
 
 Release note files follow this naming pattern:
