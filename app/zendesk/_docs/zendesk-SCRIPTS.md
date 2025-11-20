@@ -67,12 +67,12 @@ First ticket (sample):
 }
 
 ================================================
-🧪 TESTING OPENAI API
+TESTING OPENAI API
 ================================================
 
 HTTP Status: 200
 
-✅ OPENAI API - AUTHENTICATED ✅
+OPENAI API - AUTHENTICATED
 
 Available models: 108
 ```
