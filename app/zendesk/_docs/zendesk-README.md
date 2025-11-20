@@ -252,16 +252,16 @@ Stage 5: Default → Cache for performance
 8. If no match → Fall back to AI analysis
 
 **Operation Handlers**:
-- ✅ Reply Generation: Generate and post AI replies
-- ✅ Status Update: Change ticket status
-- ✅ Priority Update: Change ticket priority
-- ✅ Assignment: Assign tickets to agents
-- ✅ Tags: Add or remove tags
-- ✅ Delete/Spam: Soft delete or mark as spam
-- ✅ Merge: Combine multiple tickets
-- ✅ Restore: Restore deleted tickets
-- ✅ Create Ticket: AI-powered parameter extraction
-- ✅ List Users/Customers: Fetch and display users
+- Reply Generation: Generate and post AI replies
+- Status Update: Change ticket status
+- Priority Update: Change ticket priority
+- Assignment: Assign tickets to agents
+- Tags: Add or remove tags
+- Delete/Spam: Soft delete or mark as spam
+- Merge: Combine multiple tickets
+- Restore: Restore deleted tickets
+- Create Ticket: AI-powered parameter extraction
+- List Users/Customers: Fetch and display users
 
 ### 4. Query Pattern Recognition (`lib/query-patterns.ts`)
 
