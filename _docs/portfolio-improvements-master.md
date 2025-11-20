@@ -1,6 +1,6 @@
 # Portfolio Improvements - Master Plan
 
-**Status:** Command Aliases & Easter Eggs Complete ✅
+**Status:** Command Aliases, Easter Eggs & Stats Complete ✅
 **Last Updated:** November 20, 2025
 
 ---
@@ -60,6 +60,34 @@ new Date().toString()
 
 ---
 
+### 3. Stats Command ✅ COMPLETE
+
+**Portfolio metrics at a glance.**
+
+**Implemented Output:**
+```
+Portfolio Statistics
+══════════════════════════════════════
+Total Projects:        64
+Education Entries:     5
+Volunteer Roles:       6
+Available Commands:    [dynamic count]
+Technologies:          React, Next.js, TypeScript, AI/ML,
+                      Tailwind CSS, Bun, Node.js, Python
+Years Active:          20+ years
+Latest Project:        [first project from data]
+Focus Areas:           AI/ML, Full-Stack Web, Systems
+```
+
+**Files Modified:**
+- `lib/utils.ts` - Added 'stats' to VALID_COMMANDS
+- `components/command-prompt.tsx` - Added stats handler with dynamic calculations
+- `README.md` - Updated Available Commands section
+
+**Benefit:** Quick overview of portfolio scope and breadth of experience
+
+---
+
 ## Important Context: Clear Behavior
 
 **Current Implementation:**
@@ -90,71 +118,17 @@ const clearToStart = () => {
 
 ---
 
-## Next Priority Improvements
+## Future Improvements (Not Planned)
 
-### 3. Stats Command (25 minutes) ⚠️ Ready
+The following improvements were considered but removed from the active roadmap:
 
-**Portfolio metrics at a glance.**
+### Sound Toggle ❌ REMOVED
+- **Reason:** Audio preference best handled at OS level; adds unnecessary complexity
+- **Original concept:** Commands to enable/disable boot audio with localStorage persistence
 
-**Output Format:**
-```
-Portfolio Statistics
-══════════════════════════════════════
-Total Projects:        64
-Education Entries:      5
-Volunteer Roles:        6
-Available Commands:    20+
-Technologies:          React, Next.js, TypeScript, AI/ML,
-                      Tailwind CSS, Node.js, Python
-Years Active:          20+ years
-Latest Project:        [most recent project name]
-Most Popular:          AI/ML, Full-Stack Web
-```
-
-**Benefits:** Useful overview, showcases breadth of experience
-
----
-
-### 4. Sound Toggle (10 minutes) ⚠️ Ready
-
-**User control over boot audio.**
-
-**Commands:**
-```typescript
-'sound on'   // Enable boot audio (default)
-'sound off'  // Disable boot audio
-'sound'      // Show current status
-```
-
-**Implementation:**
-- Add to localStorage for persistence
-- Check on boot before playing audio
-- Update status message to reflect state
-
----
-
-### 5. Command History Display (25 minutes) ⚠️ Ready
-
-**Show past commands.**
-
-**Command:** `history`
-
-**Output:**
-```
-Command History
-══════════════════════════════════════
-1. help
-2. education
-3. github
-4. random
-5. 42
-
-Type any number to execute that command again
-```
-
-**Implementation Options:**
-- Store in component state (resets on clear)
-- Store in localStorage (persists across clears)
+### Command History Display ❌ REMOVED
+- **Reason:** Terminal aesthetic already achieved with current command set; history adds minimal value
+- **Original concept:** `history` command showing past commands with numbered list
 
 ---
 
@@ -212,14 +186,14 @@ These would work better if `clear` just hid content instead of returning to boot
 
 - ✅ Command Aliases (7 new commands)
 - ✅ Easter Egg Commands (4 new commands: whoami, uname, date, echo)
+- ✅ Stats Command (portfolio metrics overview)
 - ✅ TypeScript compilation passes
 - ✅ Biome linting passes
 - ✅ README.md updated
 - ✅ Help section updated
-- ⏹️ Stats Command
-- ⏹️ Sound Toggle
-- ⏹️ Command History
+- ❌ Sound Toggle (removed from plan)
+- ❌ Command History (removed from plan)
 
 ---
 
-**Total Time Estimate for Remaining Items:** ~60 minutes (3 improvements)
+**Total Improvements Completed:** 3 major features (11 new commands total)

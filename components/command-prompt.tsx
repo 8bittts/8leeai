@@ -4,7 +4,13 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import { DataGridSection } from "@/components/data-grid-section"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
-import { COMMAND_ALIASES, DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
+import {
+  COMMAND_ALIASES,
+  DATA_OFFSETS,
+  openExternalLink,
+  PROJECTS_PER_PAGE,
+  VALID_COMMANDS,
+} from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
@@ -175,6 +181,27 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         return true
       }
 
+      if (cmdLower === "stats") {
+        hideAllSections()
+        const totalCommands = VALID_COMMANDS.length
+        setDisplayContent(
+          `Portfolio Statistics
+${"═".repeat(50)}
+Total Projects:        ${projects.length}
+Education Entries:     ${education.length}
+Volunteer Roles:       ${volunteer.length}
+Available Commands:    ${totalCommands}
+Technologies:          React, Next.js, TypeScript, AI/ML,
+                      Tailwind CSS, Bun, Node.js, Python
+Years Active:          20+ years
+Latest Project:        ${projects[0]?.name || "N/A"}
+Focus Areas:           AI/ML, Full-Stack Web, Systems`
+        )
+        setCommand("")
+        setStatusMessage("Portfolio statistics displayed")
+        return true
+      }
+
       return false
     }
 
@@ -335,6 +362,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               <p>• uname · System info</p>
               <p>• date · Current date/time</p>
               <p>• echo [text] · Echo text back</p>
+              <p>• stats · Portfolio statistics</p>
             </div>
           </section>
         )}

@@ -80,6 +80,7 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `uname` - System info
 - `date` - Current date/time
 - `echo [text]` - Echo text back
+- `stats` - Portfolio statistics
 - `Ctrl+L` / `Cmd+K` - Keyboard shortcut to clear terminal
 
 **Development Commands** (Bun only):
