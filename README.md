@@ -161,13 +161,6 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 ├── scripts/                          # Development utilities
 │   └── x-package-monitor.js          # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
-├── app/intercom/                     # Intercom Intelligence Portal (production-ready)
-│   ├── api/                          # API routes (7 endpoints)
-│   ├── components/                   # React components (18 files)
-│   ├── lib/                          # Core logic and utilities (15 files)
-│   └── _docs/intercom-MASTER.md      # Comprehensive documentation
-├── app/zendesk/                      # ISOLATED EXPERIMENT - Can be deleted safely
-│   └── _docs/DELETION-GUIDE.md       # See this file for deletion instructions
 ├── _docs/                            # Release notes documentation
 │   ├── README.md                     # Documentation structure guide
 │   ├── 2025-november.md              # November 2025 release notes

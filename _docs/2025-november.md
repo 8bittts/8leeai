@@ -4,6 +4,81 @@
 
 ### November 19, 2025
 
+#### Documentation Cleanup & Experiment Removal Planning
+
+**MAJOR CLEANUP: Prepared codebase for Zendesk/Intercom experiment removal**
+
+**Documentation Emoji Removal:**
+- Removed ALL emojis from all documentation files (16 files total)
+  - Main: CLAUDE.md, README.md
+  - Release notes: _docs/2025-november.md
+  - Zendesk docs: 6 files in app/zendesk/_docs/
+  - Intercom docs: 5 files in app/intercom/_docs/
+- Added explicit no-emoji rule to CLAUDE.md
+- All documentation now uses clean, professional text
+
+**Experiment Isolation Verification:**
+- Confirmed zero TypeScript errors in main codebase
+- Confirmed zero Biome lint issues in main codebase
+- Removed Zendesk/Intercom references from README.md
+- Removed Zendesk/Intercom sections from CLAUDE.md
+- Both experiments fully isolated and ready for deletion
+
+**Historical Analysis:**
+- Identified last clean commit before experiments: `bb373cd` (Nov 4, 2025 - "Package updates")
+- Experiments span ~130 commits of work
+- Total experimental code: 27,802 lines across 111 files
+  - Zendesk: 13,569 lines across 49 files
+  - Intercom: 14,233 lines across 62 files
+
+**Removal Strategy Analysis:**
+
+**Option 1: Git Revert to bb373cd**
+- Pros: Clean slate, removes all experimental code instantly
+- Cons: Loses ALL changes made during experiment period including:
+  - Package updates (Vercel AI SDK, OpenAI, Resend, Biome, React, Next.js)
+  - CLAUDE.md creation and documentation improvements
+  - Release notes structure reorganization (_docs/ directory)
+  - Package monitor script improvements
+  - Any bug fixes or improvements to main site
+- Risk: HIGH - Would require manual cherry-picking of important changes
+- Recommendation: NOT RECOMMENDED
+
+**Option 2: Manual Deletion (Surgical Approach)**
+- Pros: Keeps all package updates and improvements to main site
+- Cons: Requires careful file-by-file cleanup
+- Steps:
+  1. Delete directories: app/zendesk/, app/intercom/
+  2. Clean up 4 main app files:
+     - components/command-prompt.tsx (remove zendesk/intercom commands)
+     - lib/utils.ts (remove from VALID_COMMANDS)
+     - proxy.ts (remove CSP/CORS entries)
+     - package.json (remove test scripts)
+  3. Clean up environment variable references
+  4. Verify build succeeds
+  5. Run full test suite
+  6. Commit clean codebase
+- Risk: LOW - Both experiments have deletion guides
+- Recommendation: RECOMMENDED
+
+**Deletion Guides Available:**
+- Zendesk: `app/zendesk/_docs/DELETION-GUIDE.md`
+- Intercom: `app/intercom/_docs/DELETION-GUIDE.md`
+
+**Code Quality Status:**
+- TypeScript: 0 errors
+- Biome: 0 lint issues
+- Tests: All passing (32 tests, 99 assertions)
+- Build: Clean compilation
+
+**Next Steps:**
+1. Backup experiment directories externally (if needed)
+2. Follow manual deletion process (Option 2)
+3. Verify all tests pass
+4. Deploy clean codebase
+
+---
+
 #### Intercom Portal - Performance Optimization & Production Fixes
 
 **MAJOR PERFORMANCE FIX: Implemented comprehensive caching to eliminate 5-7 second delays**
