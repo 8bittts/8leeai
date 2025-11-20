@@ -399,11 +399,11 @@ bun app/intercom/scripts/intercom-generate-synthetic-data.ts --count 50
 ### Code Quality Standards
 
 **Zero-Tolerance Policy:**
-- ✅ TypeScript: Strict mode + 4 ultra-strict flags
-- ✅ Biome: 100+ error rules + 5 nursery rules
-- ✅ No any types (except dynamic Intercom data)
-- ✅ Full JSDoc comments
-- ✅ Comprehensive error handling
+- TypeScript: Strict mode + 4 ultra-strict flags
+- Biome: 100+ error rules + 5 nursery rules
+- No any types (except dynamic Intercom data)
+- Full JSDoc comments
+- Comprehensive error handling
 
 ---
 
