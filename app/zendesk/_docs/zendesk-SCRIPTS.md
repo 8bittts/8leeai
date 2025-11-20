@@ -174,22 +174,22 @@ bun scripts/zendesk-generate-tickets.ts --count 30 --status pending
 ║         ZENDESK TICKET GENERATOR - Create Realistic Tickets      ║
 ╚═══════════════════════════════════════════════════════════════════╝
 
-🔧 Configuration:
+Configuration:
    Subdomain: 8lee
    Email: jleekun@gmail.com
    Tickets to create: 15
    Delay between requests: 500ms
 
-🎲 Generating 15 random tickets...
+Generating 15 random tickets...
 
-📬 Submitting tickets to Zendesk (500ms delay between requests)...
+Submitting tickets to Zendesk (500ms delay between requests)...
 
-📤 Creating ticket 1/15...
+Creating ticket 1/15...
    From: Diana Martinez <diana.martinez@work.email>
    Subject: Compliance certification status
    Priority: urgent | Status: pending
    Tags: question
-   ✅ Created! Ticket ID: 2
+   Created! Ticket ID: 2
 
 [... continues for all tickets ...]
 
@@ -202,7 +202,7 @@ bun scripts/zendesk-generate-tickets.ts --count 30 --status pending
 ║ Success Rate:     100%                                                   ║
 ╚═══════════════════════════════════════════════════════════════════╝
 
-✅ All tickets created successfully!
+All tickets created successfully!
    View them at: https://8lee.zendesk.com/agent/dashboard
 ```
 
