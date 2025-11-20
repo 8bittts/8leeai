@@ -115,6 +115,30 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       return false
     }
 
+    const handleSocialCommand = () => {
+      hideAllSections()
+      setShowHelp(true)
+      setCommand("")
+      setStatusMessage("Social and professional links displayed")
+    }
+
+    // Map command aliases to their canonical forms
+    const normalizeCommand = (cmd: string): string => {
+      const cmdLower = cmd.toLowerCase()
+      if (
+        cmdLower === "resume" ||
+        cmdLower === "cv" ||
+        cmdLower === "about" ||
+        cmdLower === "bio"
+      ) {
+        return "education"
+      }
+      if (cmdLower === "contact" || cmdLower === "reach" || cmdLower === "hello") {
+        return "email"
+      }
+      return cmdLower
+    }
+
     const handleExternalLinkCommand = (cmdLower: string) => {
       const links = {
         github: "https://github.com/8bittts/8leeai",
@@ -186,7 +210,13 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
       // Strip leading slash to support slash command syntax (e.g., "/education", "/github")
       const cmd = command.trim().replace(/^\//, "")
-      const cmdLower = cmd.toLowerCase()
+      const cmdLower = normalizeCommand(cmd)
+
+      // Handle social command separately (shows help with social links)
+      if (cmdLower === "social") {
+        handleSocialCommand()
+        return
+      }
 
       const handled =
         handleSectionCommand(cmdLower) ||
@@ -223,14 +253,15 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <h2 className="text-xl font-bold mb-4">Available Commands</h2>
             <div className="text-sm space-y-1">
               <p>• enter · Load more projects (15 per page)</p>
-              <p>• email · Email address</p>
+              <p>• email (contact, hello, reach) · Email address</p>
               <p>• help · Show this help screen</p>
-              <p>• education (ed) · Education background</p>
+              <p>• education (ed, resume, cv, about, bio) · Education background</p>
               <p>• volunteer (vol) · Volunteer experience</p>
               <p>• github · Link to this project</p>
               <p>• wellfound · Wellfound profile</p>
               <p>• linkedin (li) · LinkedIn profile</p>
               <p>• twitter/x · X/Twitter profile</p>
+              <p>• social · Show all social links</p>
               <p>• random · Open a random project</p>
               <p>• clear · Reset terminal</p>
             </div>

@@ -120,6 +120,14 @@ export const VALID_COMMANDS = [
   "random",
   "clear",
   "contact",
+  // Natural language aliases
+  "resume",
+  "cv",
+  "about",
+  "bio",
+  "reach",
+  "hello",
+  "social",
   // TEMPORARY: Hidden command for Zendesk portal access (will be removed during cleanup)
   "zendesk",
   "zen",
@@ -136,14 +144,15 @@ export function isValidCommand(cmd: string): cmd is Command {
 
 // Formatted command list for display (groups aliases with main commands)
 export const COMMAND_DISPLAY_LIST = [
-  "email",
+  "email (contact, hello, reach)",
   "help",
-  "education (ed)",
+  "education (ed, resume, cv, about, bio)",
   "volunteer (vol)",
   "github",
   "wellfound",
   "linkedin (li)",
   "x",
+  "social",
   "clear",
 ] as const
 
@@ -163,7 +172,15 @@ export const COMMAND_ALIASES: Record<string, string> = {
   help: "help",
   clear: "clear",
   random: "random project",
-  contact: "contact form",
+  contact: "contact email",
+  // Natural language aliases
+  resume: "Education",
+  cv: "Education",
+  about: "Education",
+  bio: "Education",
+  reach: "contact email",
+  hello: "contact email",
+  social: "social links",
   // TEMPORARY: Hidden command for Zendesk portal (will be removed during cleanup)
   zendesk: "Zendesk Portal",
   zen: "Zendesk Portal",

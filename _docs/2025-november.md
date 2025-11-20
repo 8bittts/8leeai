@@ -4,6 +4,37 @@
 
 ### November 20, 2025
 
+#### Portfolio: Command Aliases & Natural Language Support
+
+**Added intuitive command aliases for better user experience and discoverability**
+
+Implemented natural language command support to make the terminal more discoverable and user-friendly:
+
+**New Command Aliases:**
+- Education access: `resume`, `cv`, `about`, `bio` (all map to `education`)
+- Contact access: `contact`, `reach`, `hello` (all map to `email`)
+- Social links: `social` command displays all social and professional links at once
+
+**Files Modified:**
+- lib/utils.ts - Added 7 new commands to VALID_COMMANDS array
+- components/command-prompt.tsx - Added normalizeCommand() helper for alias mapping, handleSocialCommand() for social links
+- README.md - Updated Available Commands section with new aliases
+
+**Code Quality:**
+- Extracted alias logic into normalizeCommand() helper to reduce cognitive complexity
+- All changes pass TypeScript strict mode compilation
+- All changes pass Biome linting (100+ error rules)
+- Help section updated to show new aliases
+
+**Documentation:**
+- Created portfolio-improvements-master.md consolidating improvement plans
+- Removed duplicate planning docs (first-improvements-plan.md, first-improvements-REVISED.md)
+- Documented clear behavior context for future improvements
+
+**Benefit:** Users can now use natural language commands like "resume" or "contact" instead of memorizing technical commands. The "social" command provides quick access to all professional links.
+
+---
+
 #### Intercom Portal: Major API & Feature Enhancements (v2.1)
 
 **Comprehensive upgrade to Intercom Intelligence Portal with 11 new methods and API v2.14**

@@ -67,13 +67,14 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `70-75` - Volunteer experience by number
 - `help` - Show all available commands
 - `random` - Open a random project
-- `email` - Contact email info
-- `education` / `ed` - Education background
+- `email` / `contact` / `hello` / `reach` - Contact email info
+- `education` / `ed` / `resume` / `cv` / `about` / `bio` - Education background
 - `volunteer` / `vol` - Volunteer experience
 - `github` - This GitHub project
 - `wellfound` - Wellfound profile
 - `linkedin` / `li` - LinkedIn profile
 - `x` - X/Twitter profile
+- `social` - Show all social and professional links
 - `clear` - Reset terminal
 - `Ctrl+L` / `Cmd+K` - Keyboard shortcut to clear terminal
 
