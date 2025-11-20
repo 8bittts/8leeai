@@ -52,15 +52,9 @@ Active release note files:
 
 ## Project Documentation
 
-### Zendesk Intelligence Portal
-- [zendesk-MASTER.md](zendesk-MASTER.md) - Master technical documentation (CANONICAL)
-- [zendesk-implementation-status.md](zendesk-implementation-status.md) - Implementation status and progress
-- [zendesk-expansion-plan.md](zendesk-expansion-plan.md) - Future API expansion roadmap
-- [zendesk-system-documentation.md](zendesk-system-documentation.md) - Complete system documentation
-- [zendesk-intercom-form-components.md](zendesk-intercom-form-components.md) - UI components reference guide
-
-### Intercom Integration
-- [intercom-integration-guide.md](intercom-integration-guide.md) - Intercom integration documentation
-
 ### Terminal Portfolio
-- [portfolio-improvement-ideas.md](portfolio-improvement-ideas.md) - Enhancement ideas and roadmap
+- [portfolio-improvements-master.md](portfolio-improvements-master.md) - Completed improvements master plan (3 features, 11 commands)
+- [project-isolation-status.md](project-isolation-status.md) - Archived experimental projects status
+
+### Archived Experimental Projects
+**Note:** Zendesk and Intercom Intelligence Portals are archived (November 2025). Documentation remains in their respective `app/` directories but projects are gitignored and no longer under active development.

@@ -195,7 +195,7 @@ All portfolio data lives in `/lib/data.ts`:
 
 ### Pre-Commit Checklist
 1. Run `bun run check` - Biome linting/formatting
-2. Run `bun test` - Execute all unit and component tests (32 tests, 99 assertions)
+2. Run `bun test` - Execute all unit and component tests (96 tests, 297 assertions)
 
 ### Special File Rules
 **Release notes are now organized in the `_docs/` directory by month.** Files follow the pattern `[year]-[month].md` (e.g., `2025-november.md`). These files are manually curated by the project maintainer. Only modify release notes when explicitly requested. Formatting: date-based organization within each monthly file (no timestamps), all entries for a day under same date heading.
@@ -293,7 +293,7 @@ Tests focus on **user intent and business logic**, not implementation details. T
    - Every assertion includes a comment explaining the business reason
    - Comments answer: "Why does this matter to users?"
 
-**Test Coverage (32 tests, 99 assertions):**
+**Test Coverage (96 tests, 297 assertions):**
 - **`lib/utils.test.ts`** - Data integrity, user input validation, security filtering (URL validation, malicious pattern detection)
 - **`hooks/use-typewriter.test.tsx`** - Authentic terminal content reveal
 - **`hooks/use-virtual-keyboard-suppression.test.tsx`** - Mobile keyboard control (hide after Enter)

@@ -29,7 +29,7 @@ See [Security](#security) section below for implementation details.
 
 - **Authentic Terminal Experience**: Boot sequence animation with interactive pause, command-line interface with visible cursor (2px mobile, 1px desktop), automatic input focus after boot, keyboard shortcuts (`Ctrl+L`/`Cmd+K` to clear)
 - **Matrix Background Effect**: Battery-optimized falling characters on mobile (13fps) using `requestAnimationFrame`
-- **Interactive Commands**: 64+ projects, education, and volunteer experience with aliases (`ed`, `vol`, `li`), `random` command for discovery, `help` command - see [Available Commands](#available-commands)
+- **Interactive Commands**: 64+ projects, education, and volunteer experience with natural language aliases (`resume`, `contact`, `social`), Unix-style commands (`whoami`, `uname`, `date`, `echo`), portfolio stats, and `random` discovery - see [Available Commands](#available-commands)
 - **Typewriter Effects**: Smooth text animations with 300ms fade-in transitions and prefers-reduced-motion support
 - **Custom 404 Page**: Mario-themed error page that returns to home on interaction
 - **Mobile-First UX**: Optimized auto-scroll centers content in viewport, automatic cursor focus, keyboard hides after Enter, 2px visible cursor
@@ -38,7 +38,7 @@ See [Security](#security) section below for implementation details.
 - **Zero Bloat**: Pure Tailwind utilities, minimal dependencies, optimal bundle size
 - **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA live regions, keyboard navigation, focus indicators, skip links, enhanced affordances
 - **Production Security**: CSP, CORS, HSTS, secure external link handling - see [Security](#security)
-- **Code Quality**: Ultra-aggressive Biome linting (100+ error rules), 32 tests with 99 assertions - see [Testing](#testing)
+- **Code Quality**: Ultra-aggressive Biome linting (100+ error rules), 96 tests with 297 assertions - see [Testing](#testing)
 
 ## Quick Start
 
@@ -117,13 +117,15 @@ For simple updates (SAFE only), the plan file auto-deletes. For complex updates 
 
 ## Testing
 
-**Coverage**: 32 tests, 99 assertions across 4 files (~850ms execution)
+**Coverage**: 96 tests, 297 assertions across 12 files (~2.3s execution)
 
-Run `bun test` to execute all tests. Tests are co-located with source files:
+Run `bun test` to execute all tests. Core portfolio tests are co-located with source files:
 - `lib/utils.test.ts` - Data integrity, user input validation, security filtering
 - `hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
 - `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control
 - `components/cursor.test.tsx` - Visual feedback for terminal readiness
+
+Additional tests exist for archived experimental projects (gitignored).
 
 **Testing Philosophy**: Tests focus on **user intent and business logic**, not implementation details. Test names read like requirements (e.g., "hides keyboard after command submission on touch devices"). Every assertion includes comments explaining WHY it matters to users.
 
