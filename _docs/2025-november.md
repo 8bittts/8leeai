@@ -2,6 +2,20 @@
 
 ## Week 1 (November 16-22, 2025)
 
+### November 20, 2025
+
+#### Package Updates
+
+**Routine maintenance update - SAFE with low impact:**
+
+- Vercel AI SDK: 5.0.97 → 5.0.98
+
+**Updated Documentation:**
+- CLAUDE.md - Tech Stack section
+- README.md - Tech Stack section
+
+---
+
 ### November 19, 2025
 
 #### Package Updates

@@ -14,6 +14,7 @@
  * bun scripts/package-monitor.js
  * bun scripts/package-monitor.js --watch
  * bun scripts/package-monitor.js --critical
+ * bun scripts/package-monitor.js --verify    # Run with verification checks
  * ============================================================
  *
  * Monitors library and package updates, analyzes breaking changes,
@@ -80,6 +81,7 @@ class PackageMonitorAgent {
   constructor(options = {}) {
     this.watchMode = options.watch
     this.criticalOnly = options.critical
+    this.runVerify = options.verify
     this.generatedPlanFile = null // Track generated file for cleanup
     this.packageJson = this.loadPackageJson()
     this.knownBreakingChanges = this.loadBreakingChangesDB()
@@ -352,6 +354,17 @@ class PackageMonitorAgent {
 
       // Generate action plan
       this.generateActionPlan(filtered)
+
+      // Run verification checks if requested
+      if (this.runVerify) {
+        const verifyPassed = this.runVerificationChecks()
+        if (!verifyPassed) {
+          console.error(
+            `${COLORS.red}${COLORS.bright}⚠️  Verification failed. Please fix issues before committing.${COLORS.reset}\n`
+          )
+          process.exit(1)
+        }
+      }
 
       // Cleanup generated plan file at the end
       this.cleanupGeneratedPlan()
@@ -837,6 +850,38 @@ class PackageMonitorAgent {
     }
   }
 
+  runVerificationChecks() {
+    console.log(
+      `\n${COLORS.cyan}${COLORS.bright}[VERIFY] Running verification checks...${COLORS.reset}\n`
+    )
+
+    try {
+      // Run core tests only (exclude experimental Zendesk/Intercom tests)
+      console.log(`${COLORS.cyan}[1/3] Running core tests...${COLORS.reset}`)
+      execSync(
+        "bun test lib/utils.test.ts hooks/use-typewriter.test.tsx hooks/use-virtual-keyboard-suppression.test.tsx components/cursor.test.tsx",
+        { stdio: "inherit" }
+      )
+
+      // Run Biome linting
+      console.log(`\n${COLORS.cyan}[2/3] Running Biome linting...${COLORS.reset}`)
+      execSync("bunx biome check --write .", { stdio: "inherit" })
+
+      // Run production build
+      console.log(`\n${COLORS.cyan}[3/3] Running production build...${COLORS.reset}`)
+      execSync("bun run build", { stdio: "inherit" })
+
+      console.log(
+        `\n${COLORS.green}${COLORS.bright}✅ All verification checks passed!${COLORS.reset}\n`
+      )
+      return true
+    } catch (error) {
+      console.error(`\n${COLORS.red}${COLORS.bright}❌ Verification checks failed!${COLORS.reset}`)
+      console.error(`${COLORS.red}${error.message}${COLORS.reset}\n`)
+      return false
+    }
+  }
+
   async startWatchMode() {
     console.log(`${COLORS.cyan}[WATCH] Starting package monitor in watch mode...${COLORS.reset}`)
     console.log(`${COLORS.cyan}   Checking every 6 hours. Press Ctrl+C to stop.${COLORS.reset}\n`)
@@ -862,6 +907,7 @@ async function main() {
   const options = {
     watch: args.includes("--watch"),
     critical: args.includes("--critical"),
+    verify: args.includes("--verify"),
   }
 
   const monitor = new PackageMonitorAgent(options)
