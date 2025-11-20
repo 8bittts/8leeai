@@ -2,10 +2,6 @@
 
 This directory contains monthly release notes for the 8lee.ai terminal portfolio project.
 
-## Status Documents
-
-- [project-isolation-status.md](project-isolation-status.md) - Zendesk and Intercom project isolation verification (100% isolated, safe to delete)
-
 ## Naming Convention
 
 Release note files follow this naming pattern:
@@ -54,7 +50,6 @@ Active release note files:
 
 ### Terminal Portfolio
 - [portfolio-improvements-master.md](portfolio-improvements-master.md) - Completed improvements master plan (3 features, 11 commands)
-- [project-isolation-status.md](project-isolation-status.md) - Archived experimental projects status
 
 ### Archived Experimental Projects
-**Note:** Zendesk and Intercom Intelligence Portals are archived (November 2025). Documentation remains in their respective `app/` directories but projects are gitignored and no longer under active development.
+**Note:** Zendesk and Intercom Intelligence Portals are archived (November 2025). Documentation remains in their respective `app/` directories but projects are gitignored and no longer under active development. See [2025-november.md](2025-november.md) for archival details.
