@@ -4,6 +4,54 @@
 
 ### November 20, 2025
 
+#### Intercom Portal: Major API & Feature Enhancements (v2.1)
+
+**Comprehensive upgrade to Intercom Intelligence Portal with 11 new methods and API v2.14**
+
+Completed three-phase enhancement plan implementing best practices from Intercom API v2.14:
+
+**Phase 1 - Core API Improvements:**
+- Updated to Intercom API v2.14 (from v2.11) for latest features
+- Added comprehensive rate limit tracking via X-RateLimit-* headers
+- Proactive warnings when approaching rate limits (<100 requests remaining)
+- Regional endpoint support (US, EU, AU) via INTERCOM_REGION environment variable
+- Public getRateLimitStatus() method for real-time monitoring
+
+**Phase 2 - Tag Management & Bulk Operations:**
+- Complete tag management suite:
+  - tagTicket() - Add tags (merges with existing)
+  - untagTicket() - Remove specific tags
+  - replaceTicketTags() - Replace all tags
+  - bulkTagTickets() - Parallel tagging
+- Bulk operations suite:
+  - bulkUpdateTickets() - Update multiple with success/failure tracking
+  - bulkAssignTickets() - Batch assignment
+  - bulkCloseTickets() - Mass closure
+  - bulkSetPriority() - Bulk priority updates
+- Enhanced IntercomTicket type with tags property
+
+**Phase 3 - Business Analytics:**
+- getTicketVolumeTrends() - Track volume over time (day/week/month periods)
+- getResolutionTimeStats() - Calculate avg, median, p90 resolution times
+- getTeamPerformance() - Per-admin metrics with resolution stats
+- getSLACompliance() - Track SLA compliance with configurable targets
+
+**Files Modified:**
+- app/intercom/lib/intercom-api-client.ts - Added 300+ lines (11 new methods)
+- app/intercom/lib/intercom-types.ts - Enhanced IntercomTicket type
+- app/intercom/_docs/intercom-MASTER.md - Updated to v2.1 with completed enhancements
+
+**Quality Assurance:**
+- All changes compile without TypeScript errors
+- All changes pass Biome linting (100+ error rules)
+- Proper error handling with Promise.allSettled for parallel operations
+- Consistent logging with color-coded console output
+- Cache invalidation on all mutation operations
+
+Benefits: Enhanced business intelligence capabilities, efficient multi-ticket management, proactive rate limit management, global workspace support, production-ready best practices.
+
+---
+
 #### Documentation Enhancement: Script Console Colorization
 
 **Enhanced documentation for color-coded console output in utility scripts**

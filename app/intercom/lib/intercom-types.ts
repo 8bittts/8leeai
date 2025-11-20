@@ -238,6 +238,7 @@ export interface IntercomTicket {
     _default_description_: string
     [key: string]: unknown
   }
+  tags?: string[]
   created_at: number
   updated_at: number
   open: boolean

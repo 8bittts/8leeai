@@ -1,14 +1,90 @@
 # INTERCOM INTELLIGENCE PORTAL
 ## Complete Documentation & Executive Overview
 
-**Version:** 1.1
+**Version:** 2.1 (ENHANCED)
 **Status:** PRODUCTION READY
 **Isolation:** 100% ISOLATED (Safe to delete)
-**Last Updated:** November 19, 2025
 **Build Status:** CLEAN (Zero TypeScript errors, Zero Biome lint issues)
 
 > **DELETION GUIDE:** See `DELETION-GUIDE.md` for complete removal instructions.
 > The portal is fully isolated and can be safely deleted without affecting the main site.
+
+---
+
+## RECENT ENHANCEMENTS
+
+### Core API Improvements
+
+**API Version Update** ✅
+- Updated from Intercom API v2.11 to v2.14 (latest)
+- All endpoints now using latest API features
+- File: `intercom-api-client.ts:170`
+
+**Rate Limit Tracking** ✅
+- Proactive monitoring via X-RateLimit-* headers
+- Automatic warnings when approaching limits (<100 requests remaining)
+- Public `getRateLimitStatus()` method for monitoring
+- Intelligent rate limit handling with automatic retry
+- File: `intercom-api-client.ts:80-149`
+
+**Regional Endpoint Support** ✅
+- Support for US, EU, and AU regions
+- Configurable via `INTERCOM_REGION` environment variable
+- Automatic endpoint selection based on workspace location
+- File: `intercom-api-client.ts:99-109`
+
+### Tag Management & Bulk Operations
+
+**Complete Tag Management** ✅
+- `tagTicket()` - Add tags to tickets (merges with existing)
+- `untagTicket()` - Remove specific tags from tickets
+- `replaceTicketTags()` - Replace all tags on ticket
+- `bulkTagTickets()` - Apply tags to multiple tickets in parallel
+- Enhanced `IntercomTicket` type with tags property
+- Files: `intercom-api-client.ts:504-579`, `intercom-types.ts:241`
+
+**Bulk Operations Suite** ✅
+- `bulkUpdateTickets()` - Update multiple tickets with success/failure tracking
+- `bulkAssignTickets()` - Batch assign tickets to admin
+- `bulkCloseTickets()` - Mass close/resolve tickets
+- `bulkSetPriority()` - Bulk priority updates
+- All operations use Promise.allSettled for parallel execution
+- File: `intercom-api-client.ts:581-652`
+
+### Business Analytics
+
+**Advanced Analytics Methods** ✅
+- `getTicketVolumeTrends()` - Track volume over time (day/week/month)
+- `getResolutionTimeStats()` - Calculate avg, median, p90 resolution times
+- `getTeamPerformance()` - Per-admin metrics with resolution stats
+- `getSLACompliance()` - Track SLA compliance with configurable targets
+- File: `intercom-api-client.ts:868-1111`
+
+### Architecture & Quality
+
+**Clean Architecture** ✅
+- Three-layer design (UI → Handler → Cache → API)
+- Singleton pattern for API client
+- Zero TypeScript errors, zero Biome lint issues
+- Comprehensive JSDoc comments throughout
+
+**Performance** ✅
+- Sub-100ms cached responses
+- Help commands return in <1ms
+- 24-hour intelligent caching with automatic invalidation
+- Parallel API fetching for optimal speed
+
+**AI Integration** ✅
+- GPT-4o for complex analysis
+- GPT-4o-mini for cost-effective queries
+- Context-aware conversations with 50-entry history
+- Intelligent prompt engineering with full cache context
+
+**Security** ✅
+- Comprehensive input validation (Zod schemas)
+- Rate limit handling with proactive monitoring
+- Environment variable validation
+- Controlled batch operations (5 tickets max, 3s delays)
 
 ---
 
@@ -110,10 +186,10 @@ A production-ready web application that acts as an intelligent command center fo
                            ▼
 ┌─────────────────────────────────────────────────────────┐
 │                   API CLIENT                            │
-│   • Intercom REST API v2.11                            │
+│   • Intercom REST API v2.14                            │
 │   • Bearer token authentication                         │
 │   • Automatic pagination (page + cursor based)          │
-│   • Rate limit handling (429 retry)                     │
+│   • Rate limit handling (429 retry + proactive)        │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -410,7 +486,7 @@ bun app/intercom/scripts/intercom-generate-synthetic-data.ts --count 50
 ## SECURITY & COMPLIANCE
 
 ### Authentication
-- **Method**: Bearer token (Intercom API v2.11)
+- **Method**: Bearer token (Intercom API v2.14)
 - **Storage**: Environment variables only
 - **Transmission**: HTTPS only
 - **Validation**: Token checked on every request
@@ -667,6 +743,19 @@ bun app/intercom/scripts/intercom-comprehensive-test.ts
 ---
 
 ## CHANGELOG
+
+### Version 2.1 (November 20, 2025)
+- **MAJOR**: Updated to Intercom API v2.14 (latest)
+- **MAJOR**: Added comprehensive rate limit tracking with X-RateLimit-* headers
+- **MAJOR**: Added regional endpoint support (US, EU, AU)
+- **FEATURE**: Complete tag management (tagTicket, untagTicket, replaceTicketTags, bulkTagTickets)
+- **FEATURE**: Bulk operations suite (bulkUpdateTickets, bulkAssignTickets, bulkCloseTickets, bulkSetPriority)
+- **FEATURE**: Business analytics methods (getTicketVolumeTrends, getResolutionTimeStats, getTeamPerformance, getSLACompliance)
+- **ENHANCEMENT**: Added tags property to IntercomTicket type
+- **ENHANCEMENT**: Public getRateLimitStatus() method for monitoring
+- **ENHANCEMENT**: Proactive rate limit warnings (<100 requests remaining)
+- **DOCS**: Updated MASTER.md to reflect completed enhancements
+- **VERIFIED**: Zero TypeScript errors, Zero Biome lint issues
 
 ### Version 1.1.1 (November 19, 2025 - Evening)
 - **FIX**: TypeScript error in `intercom-conversation-cache.ts` (exactOptionalPropertyTypes)

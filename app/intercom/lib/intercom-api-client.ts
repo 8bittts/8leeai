@@ -66,7 +66,7 @@ interface ContactData {
  */
 export class IntercomAPIClient {
   private accessToken: string
-  private baseUrl = "https://api.intercom.io"
+  private baseUrl: string
   private cache: Map<string, { data: unknown; timestamp: number }>
   private cacheTTL: Record<string, number> = {
     conversations: 24 * 60 * 60 * 1000, // 1 day
@@ -77,10 +77,75 @@ export class IntercomAPIClient {
     tags: 24 * 60 * 60 * 1000, // 1 day
   }
 
+  // Rate limit tracking (Intercom: 10,000 requests/minute)
+  private rateLimitInfo = {
+    limit: 10000,
+    remaining: 10000,
+    reset: Date.now() + 60000, // Reset in 1 minute
+  }
+
   constructor() {
     this.accessToken = process.env["INTERCOM_ACCESS_TOKEN"] || ""
+    this.baseUrl = this.getRegionalEndpoint()
     this.cache = new Map()
     this.validateConfig()
+  }
+
+  /**
+   * Get regional API endpoint based on INTERCOM_REGION environment variable
+   * Supports: US (default), EU, AU
+   */
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Method is called in constructor (line 89), false positive in Biome 2.3.6
+  private getRegionalEndpoint(): string {
+    const region = (process.env["INTERCOM_REGION"] || "US").toUpperCase()
+    const endpoints: Record<string, string> = {
+      US: "https://api.intercom.io",
+      EU: "https://api.eu.intercom.io",
+      AU: "https://api.au.intercom.io",
+    }
+    const endpoint = endpoints[region] ?? endpoints["US"] ?? "https://api.intercom.io"
+    console.log(`[API] Using ${region} endpoint: ${endpoint}`)
+    return endpoint
+  }
+
+  /**
+   * Update rate limit information from response headers
+   */
+  private updateRateLimitInfo(headers: Headers): void {
+    const limit = headers.get("X-RateLimit-Limit")
+    const remaining = headers.get("X-RateLimit-Remaining")
+    const reset = headers.get("X-RateLimit-Reset")
+
+    if (limit) this.rateLimitInfo.limit = Number.parseInt(limit, 10)
+    if (remaining) this.rateLimitInfo.remaining = Number.parseInt(remaining, 10)
+    if (reset) this.rateLimitInfo.reset = Number.parseInt(reset, 10) * 1000 // Convert to ms
+
+    // Log warning if approaching rate limit (< 100 requests remaining)
+    if (this.rateLimitInfo.remaining < 100) {
+      const resetDate = new Date(this.rateLimitInfo.reset)
+      console.warn(
+        `[API] ⚠️ Approaching rate limit! Remaining: ${this.rateLimitInfo.remaining}/${this.rateLimitInfo.limit}. Resets at ${resetDate.toLocaleTimeString()}`
+      )
+    }
+  }
+
+  /**
+   * Get current rate limit status
+   */
+  getRateLimitStatus(): {
+    limit: number
+    remaining: number
+    resetAt: string
+    percentageUsed: number
+  } {
+    const percentageUsed =
+      ((this.rateLimitInfo.limit - this.rateLimitInfo.remaining) / this.rateLimitInfo.limit) * 100
+    return {
+      limit: this.rateLimitInfo.limit,
+      remaining: this.rateLimitInfo.remaining,
+      resetAt: new Date(this.rateLimitInfo.reset).toISOString(),
+      percentageUsed: Number(percentageUsed.toFixed(2)),
+    }
   }
 
   /**
@@ -95,13 +160,14 @@ export class IntercomAPIClient {
 
   /**
    * Build Authorization header using Bearer token
+   * Using Intercom API v2.14 (latest as of November 2025)
    */
   private getAuthHeaders(): Record<string, string> {
     return {
       Authorization: `Bearer ${this.accessToken}`,
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Intercom-Version": "2.11",
+      "Intercom-Version": "2.14",
     }
   }
 
@@ -150,6 +216,7 @@ export class IntercomAPIClient {
 
   /**
    * Make authenticated request to Intercom API
+   * Automatically tracks rate limit headers for proactive monitoring
    */
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`
@@ -158,11 +225,14 @@ export class IntercomAPIClient {
     try {
       const response = await fetch(url, { ...options, headers })
 
+      // Update rate limit tracking from response headers
+      this.updateRateLimitInfo(response.headers)
+
       // Handle rate limiting (429)
       if (response.status === 429) {
         const retryAfter = response.headers.get("Retry-After")
         const waitTime = retryAfter ? Number.parseInt(retryAfter, 10) * 1000 : 60000
-        console.warn(`Rate limit hit. Waiting ${waitTime}ms before retry...`)
+        console.warn(`[API] 🛑 Rate limit hit (429). Waiting ${waitTime / 1000}s before retry...`)
         await new Promise((resolve) => setTimeout(resolve, waitTime))
         return this.request<T>(endpoint, options)
       }
@@ -432,6 +502,152 @@ export class IntercomAPIClient {
   }
 
   /**
+   * Add tags to ticket
+   * PUT /tickets/{id} with tags array
+   */
+  async tagTicket(id: string, tags: string[]): Promise<IntercomTicket> {
+    // Get current ticket to merge with existing tags
+    const currentTicket = await this.getTicket(id)
+    const existingTags = currentTicket.tags || []
+    const newTags = [...existingTags, ...tags].filter(
+      (tag, index, arr) => arr.indexOf(tag) === index
+    )
+
+    const ticket = await this.updateTicket(id, { tags: newTags })
+
+    console.log(`[API] Added tags to ticket ${id}: ${tags.join(", ")}`)
+    return ticket
+  }
+
+  /**
+   * Remove tags from ticket
+   * PUT /tickets/{id} with filtered tags array
+   */
+  async untagTicket(id: string, tagsToRemove: string[]): Promise<IntercomTicket> {
+    // Get current ticket to filter existing tags
+    const currentTicket = await this.getTicket(id)
+    const existingTags = currentTicket.tags || []
+    const newTags = existingTags.filter((tag: string) => !tagsToRemove.includes(tag))
+
+    const ticket = await this.updateTicket(id, { tags: newTags })
+
+    console.log(`[API] Removed tags from ticket ${id}: ${tagsToRemove.join(", ")}`)
+    return ticket
+  }
+
+  /**
+   * Replace all tags on ticket
+   * PUT /tickets/{id} with new tags array (overwrites existing)
+   */
+  async replaceTicketTags(id: string, tags: string[]): Promise<IntercomTicket> {
+    const ticket = await this.updateTicket(id, { tags })
+
+    console.log(`[API] Replaced tags on ticket ${id} with: ${tags.join(", ")}`)
+    return ticket
+  }
+
+  /**
+   * Bulk tag multiple tickets
+   * Applies same tags to multiple tickets in parallel
+   * Returns array of updated tickets with success/failure status
+   */
+  async bulkTagTickets(
+    ticketIds: string[],
+    tags: string[]
+  ): Promise<Array<{ id: string; success: boolean; error?: string }>> {
+    console.log(`[API] Bulk tagging ${ticketIds.length} tickets with: ${tags.join(", ")}`)
+
+    const results = await Promise.allSettled(ticketIds.map((id) => this.tagTicket(id, tags)))
+
+    return results.map((result, index) => {
+      const id = ticketIds[index]
+      if (!id) {
+        return { id: "unknown", success: false, error: "Missing ticket ID" }
+      }
+
+      if (result.status === "fulfilled") {
+        return { id, success: true }
+      }
+      return {
+        id,
+        success: false,
+        error: result.reason instanceof Error ? result.reason.message : String(result.reason),
+      }
+    })
+  }
+
+  /**
+   * Bulk update multiple tickets
+   * Applies same updates to multiple tickets in parallel
+   * Returns array of results with success/failure status
+   */
+  async bulkUpdateTickets(
+    ticketIds: string[],
+    updates: TicketUpdate
+  ): Promise<Array<{ id: string; success: boolean; error?: string }>> {
+    console.log(`[API] Bulk updating ${ticketIds.length} tickets`)
+
+    const results = await Promise.allSettled(ticketIds.map((id) => this.updateTicket(id, updates)))
+
+    return results.map((result, index) => {
+      const id = ticketIds[index]
+      if (!id) {
+        return { id: "unknown", success: false, error: "Missing ticket ID" }
+      }
+
+      if (result.status === "fulfilled") {
+        return { id, success: true }
+      }
+      return {
+        id,
+        success: false,
+        error: result.reason instanceof Error ? result.reason.message : String(result.reason),
+      }
+    })
+  }
+
+  /**
+   * Bulk assign multiple tickets to admin
+   * Assigns multiple tickets to same admin in parallel
+   * Returns array of results with success/failure status
+   */
+  async bulkAssignTickets(
+    ticketIds: string[],
+    adminId: string
+  ): Promise<Array<{ id: string; success: boolean; error?: string }>> {
+    console.log(`[API] Bulk assigning ${ticketIds.length} tickets to admin ${adminId}`)
+
+    return await this.bulkUpdateTickets(ticketIds, { admin_assignee_id: adminId })
+  }
+
+  /**
+   * Bulk close multiple tickets
+   * Sets state to 'resolved' for multiple tickets in parallel
+   * Returns array of results with success/failure status
+   */
+  async bulkCloseTickets(
+    ticketIds: string[]
+  ): Promise<Array<{ id: string; success: boolean; error?: string }>> {
+    console.log(`[API] Bulk closing ${ticketIds.length} tickets`)
+
+    return await this.bulkUpdateTickets(ticketIds, { state: "resolved" })
+  }
+
+  /**
+   * Bulk set priority for multiple tickets
+   * Sets priority for multiple tickets in parallel
+   * Returns array of results with success/failure status
+   */
+  async bulkSetPriority(
+    ticketIds: string[],
+    priority: string
+  ): Promise<Array<{ id: string; success: boolean; error?: string }>> {
+    console.log(`[API] Bulk setting priority to '${priority}' for ${ticketIds.length} tickets`)
+
+    return await this.bulkUpdateTickets(ticketIds, { priority })
+  }
+
+  /**
    * Search tickets with automatic pagination
    * POST /tickets/search
    */
@@ -647,6 +863,254 @@ export class IntercomAPIClient {
     }
 
     return stats
+  }
+
+  // ============================================================================
+  // BUSINESS ANALYTICS METHODS (for business owner queries)
+  // ============================================================================
+
+  /**
+   * Get ticket volume trends over time periods
+   * Returns ticket counts by day, week, or month
+   */
+  async getTicketVolumeTrends(period: "day" | "week" | "month" = "day"): Promise<{
+    labels: string[]
+    counts: number[]
+    totalTickets: number
+  }> {
+    const tickets = await this.searchTickets({
+      query: { operator: "AND", value: [] },
+      pagination: { per_page: 150 },
+    })
+
+    const now = Date.now()
+    const periodMs = period === "day" ? 86400000 : period === "week" ? 604800000 : 2592000000 // 30 days
+    const periods = 7 // Last 7 periods
+
+    const buckets: number[] = new Array(periods).fill(0)
+    const labels: string[] = []
+
+    // Create labels
+    for (let i = periods - 1; i >= 0; i--) {
+      const date = new Date(now - i * periodMs)
+      labels.push(date.toISOString().split("T")[0] ?? "unknown")
+    }
+
+    // Count tickets in each period
+    for (const ticket of tickets) {
+      const ticketTime = ticket.created_at * 1000
+      const periodIndex = Math.floor((now - ticketTime) / periodMs)
+
+      if (periodIndex >= 0 && periodIndex < periods) {
+        const bucketIndex = periods - 1 - periodIndex
+        if (buckets[bucketIndex] !== undefined) {
+          buckets[bucketIndex]++
+        }
+      }
+    }
+
+    return {
+      labels,
+      counts: buckets,
+      totalTickets: tickets.length,
+    }
+  }
+
+  /**
+   * Get resolution time statistics
+   * Returns avg, median, and percentiles for ticket resolution
+   */
+  async getResolutionTimeStats(): Promise<{
+    avgResolutionHours: number
+    medianResolutionHours: number
+    p90ResolutionHours: number
+    totalResolved: number
+  }> {
+    const tickets = await this.searchTickets({
+      query: { operator: "AND", value: [] },
+      pagination: { per_page: 150 },
+    })
+
+    const resolvedTickets = tickets.filter((t) => t.state === "resolved")
+    const resolutionTimes: number[] = []
+
+    for (const ticket of resolvedTickets) {
+      const resolutionTimeMs = (ticket.updated_at - ticket.created_at) * 1000
+      const resolutionTimeHours = resolutionTimeMs / (1000 * 60 * 60)
+      resolutionTimes.push(resolutionTimeHours)
+    }
+
+    if (resolutionTimes.length === 0) {
+      return {
+        avgResolutionHours: 0,
+        medianResolutionHours: 0,
+        p90ResolutionHours: 0,
+        totalResolved: 0,
+      }
+    }
+
+    resolutionTimes.sort((a, b) => a - b)
+
+    const avg = resolutionTimes.reduce((sum, t) => sum + t, 0) / resolutionTimes.length
+    const median = resolutionTimes[Math.floor(resolutionTimes.length / 2)] ?? 0
+    const p90 = resolutionTimes[Math.floor(resolutionTimes.length * 0.9)] ?? 0
+
+    return {
+      avgResolutionHours: Number(avg.toFixed(2)),
+      medianResolutionHours: Number(median.toFixed(2)),
+      p90ResolutionHours: Number(p90.toFixed(2)),
+      totalResolved: resolvedTickets.length,
+    }
+  }
+
+  /**
+   * Get team performance metrics
+   * Returns tickets handled per admin with resolution stats
+   */
+  async getTeamPerformance(): Promise<
+    Array<{
+      adminId: string
+      adminName: string
+      ticketsAssigned: number
+      ticketsResolved: number
+      avgResolutionHours: number
+    }>
+  > {
+    const [tickets, admins] = await Promise.all([
+      this.searchTickets({
+        query: { operator: "AND", value: [] },
+        pagination: { per_page: 150 },
+      }),
+      this.getAdmins(),
+    ])
+
+    const adminStats = new Map<
+      string,
+      {
+        name: string
+        assigned: number
+        resolved: number
+        resolutionTimes: number[]
+      }
+    >()
+
+    // Initialize admin stats
+    for (const admin of admins) {
+      adminStats.set(admin.id, {
+        name: admin.name,
+        assigned: 0,
+        resolved: 0,
+        resolutionTimes: [],
+      })
+    }
+
+    // Count tickets per admin
+    for (const ticket of tickets) {
+      if (ticket.admin_assignee_id) {
+        const stats = adminStats.get(ticket.admin_assignee_id)
+        if (stats) {
+          stats.assigned++
+
+          if (ticket.state === "resolved") {
+            stats.resolved++
+            const resolutionTimeHours =
+              ((ticket.updated_at - ticket.created_at) * 1000) / (1000 * 60 * 60)
+            stats.resolutionTimes.push(resolutionTimeHours)
+          }
+        }
+      }
+    }
+
+    // Build result array
+    const result: Array<{
+      adminId: string
+      adminName: string
+      ticketsAssigned: number
+      ticketsResolved: number
+      avgResolutionHours: number
+    }> = []
+
+    for (const [adminId, stats] of adminStats) {
+      const avgResolution =
+        stats.resolutionTimes.length > 0
+          ? stats.resolutionTimes.reduce((sum, t) => sum + t, 0) / stats.resolutionTimes.length
+          : 0
+
+      result.push({
+        adminId,
+        adminName: stats.name,
+        ticketsAssigned: stats.assigned,
+        ticketsResolved: stats.resolved,
+        avgResolutionHours: Number(avgResolution.toFixed(2)),
+      })
+    }
+
+    // Sort by tickets assigned (descending)
+    return result.sort((a, b) => b.ticketsAssigned - a.ticketsAssigned)
+  }
+
+  /**
+   * Get SLA compliance metrics
+   * Returns tickets meeting/breaching SLA targets
+   */
+  async getSLACompliance(
+    responseTimeSLAHours = 24,
+    resolutionTimeSLAHours = 72
+  ): Promise<{
+    totalTickets: number
+    responseTimeCompliant: number
+    responseTimeBreached: number
+    resolutionTimeCompliant: number
+    resolutionTimeBreached: number
+    complianceRate: number
+  }> {
+    const tickets = await this.searchTickets({
+      query: { operator: "AND", value: [] },
+      pagination: { per_page: 150 },
+    })
+
+    let responseCompliant = 0
+    let responseBreached = 0
+    let resolutionCompliant = 0
+    let resolutionBreached = 0
+
+    for (const ticket of tickets) {
+      // Response time check (assuming first update is first response)
+      const responseTimeHours = ((ticket.updated_at - ticket.created_at) * 1000) / (1000 * 60 * 60)
+
+      if (responseTimeHours <= responseTimeSLAHours) {
+        responseCompliant++
+      } else {
+        responseBreached++
+      }
+
+      // Resolution time check (only for resolved tickets)
+      if (ticket.state === "resolved") {
+        const resolutionTimeHours =
+          ((ticket.updated_at - ticket.created_at) * 1000) / (1000 * 60 * 60)
+
+        if (resolutionTimeHours <= resolutionTimeSLAHours) {
+          resolutionCompliant++
+        } else {
+          resolutionBreached++
+        }
+      }
+    }
+
+    const totalTickets = tickets.length
+    const totalCompliant = responseCompliant + resolutionCompliant
+    const totalChecks = totalTickets * 2 // Each ticket checked for both response and resolution
+    const complianceRate =
+      totalChecks > 0 ? Number(((totalCompliant / totalChecks) * 100).toFixed(2)) : 0
+
+    return {
+      totalTickets,
+      responseTimeCompliant: responseCompliant,
+      responseTimeBreached: responseBreached,
+      resolutionTimeCompliant: resolutionCompliant,
+      resolutionTimeBreached: resolutionBreached,
+      complianceRate,
+    }
   }
 
   /**
