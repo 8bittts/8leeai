@@ -467,14 +467,14 @@ bun run test:zendesk
 
 ## Security Considerations
 
-✅ **Implemented**:
+**Implemented**:
 - Environment variables for all credentials
 - Basic Auth over HTTPS
 - Input validation on all queries
 - Error messages don't expose internals
 - CORS properly configured
 
-📋 **Before Production**:
+**Before Production**:
 - [ ] Add authentication layer for chat interface
 - [ ] Implement rate limiting per user
 - [ ] Add CSRF protection
@@ -499,16 +499,16 @@ See [TESTING.md](./TESTING.md) for comprehensive test results and coverage.
 
 The Zendesk Intelligence Portal is a **production-ready terminal-styled interface** that:
 
-✅ Always fetches fresh data from Zendesk API
-✅ Uses AI for intelligent query processing
-✅ Provides terminal-formatted responses
-✅ Handles 346+ tickets with full pagination
-✅ Sub-2ms metadata queries (tags, types, priorities)
-✅ 92.9% query classification accuracy
-✅ Comprehensive metadata operations
-✅ 28 integration tests with production validation
-✅ macOS-style terminal UI with window controls
-✅ Simple architecture (no cache complexity)
-✅ Deployable to production immediately
+- Always fetches fresh data from Zendesk API
+- Uses AI for intelligent query processing
+- Provides terminal-formatted responses
+- Handles 346+ tickets with full pagination
+- Sub-2ms metadata queries (tags, types, priorities)
+- 92.9% query classification accuracy
+- Comprehensive metadata operations
+- 28 integration tests with production validation
+- macOS-style terminal UI with window controls
+- Simple architecture (no cache complexity)
+- Deployable to production immediately
 
 **Philosophy**: Keep it simple. Fetch fresh. Let AI do the thinking. Display beautifully.

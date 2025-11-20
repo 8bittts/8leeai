@@ -23,11 +23,11 @@ This directory contains utility scripts for testing and managing the Zendesk Int
 Validates that both Zendesk and OpenAI API credentials are correctly configured and authenticated.
 
 ### What It Does
-- ✅ Checks all required environment variables are set
-- ✅ Tests Zendesk API authentication (makes actual API call)
-- ✅ Tests OpenAI API authentication (makes actual API call)
-- ✅ Displays account information and available models
-- ✅ Shows success/failure status with clear error messages
+- Checks all required environment variables are set
+- Tests Zendesk API authentication (makes actual API call)
+- Tests OpenAI API authentication (makes actual API call)
+- Displays account information and available models
+- Shows success/failure status with clear error messages
 
 ### Usage
 
@@ -42,20 +42,20 @@ Validates that both Zendesk and OpenAI API credentials are correctly configured 
 CREDENTIAL VALIDATION TEST
 ================================================
 
-📋 Checking environment variables...
+Checking environment variables...
 
-✅ ZENDESK_EMAIL: jleekun@gmail.com
-✅ ZENDESK_API_TOKEN: xhUpLvStmz...OM7qQOGrKY
-✅ ZENDESK_SUBDOMAIN: 8lee
-✅ OPENAI_API_KEY: sk-proj-Dr...BiZbU-mwA
+ZENDESK_EMAIL: jleekun@gmail.com
+ZENDESK_API_TOKEN: xhUpLvStmz...OM7qQOGrKY
+ZENDESK_SUBDOMAIN: 8lee
+OPENAI_API_KEY: sk-proj-Dr...BiZbU-mwA
 
 ================================================
-🧪 TESTING ZENDESK API
+TESTING ZENDESK API
 ================================================
 
 HTTP Status: 200
 
-✅ ZENDESK API - AUTHENTICATED ✅
+ZENDESK API - AUTHENTICATED
 
 Total tickets in account: 15
 
