@@ -39,8 +39,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const [showVolunteer, setShowVolunteer] = useState(false)
     const [showEmail, setShowEmail] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
-    const [showEasterEgg, setShowEasterEgg] = useState(false)
-    const [easterEggContent, setEasterEggContent] = useState("")
+    const [displayContent, setDisplayContent] = useState("")
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
@@ -56,7 +55,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       setShowVolunteer(false)
       setShowEmail(false)
       setShowHelp(false)
-      setShowEasterEgg(false)
+      setDisplayContent("")
     }
 
     const handleRandomCommand = () => {
@@ -131,10 +130,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
       if (cmdLower === "whoami") {
         hideAllSections()
-        setEasterEggContent(
+        setDisplayContent(
           "You're exploring Eight Lee's portfolio terminal.\nType 'help' to see what I can do!"
         )
-        setShowEasterEgg(true)
         setCommand("")
         setStatusMessage("User info displayed")
         return true
@@ -152,10 +150,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         const hasHadBirthday = now >= birthdayThisYear
         const age = year - birthYear - (hasHadBirthday ? 0 : 1)
 
-        setEasterEggContent(
+        setDisplayContent(
           `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0`
         )
-        setShowEasterEgg(true)
         setCommand("")
         setStatusMessage("System info displayed")
         return true
@@ -163,8 +160,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
       if (cmdLower === "date") {
         hideAllSections()
-        setEasterEggContent(new Date().toString())
-        setShowEasterEgg(true)
+        setDisplayContent(new Date().toString())
         setCommand("")
         setStatusMessage("Current date/time displayed")
         return true
@@ -173,8 +169,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       if (cmdLower.startsWith("echo ")) {
         hideAllSections()
         const text = cmd.slice(5) // Remove 'echo ' prefix (case-insensitive via original cmd)
-        setEasterEggContent(text || "")
-        setShowEasterEgg(true)
+        setDisplayContent(text || "")
         setCommand("")
         setStatusMessage("Echo")
         return true
@@ -379,10 +374,10 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
           />
         )}
 
-        {/* Easter Egg Content */}
-        {showEasterEgg && (
+        {/* Easter Egg / Command Output */}
+        {displayContent && (
           <section className="mb-8" aria-label="Command Output">
-            <div className="text-sm whitespace-pre-wrap">{easterEggContent}</div>
+            <div className="text-sm whitespace-pre-wrap">{displayContent}</div>
           </section>
         )}
 

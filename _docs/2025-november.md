@@ -4,7 +4,7 @@
 
 ### November 20, 2025
 
-#### Portfolio: Easter Egg Commands
+#### Portfolio: Easter Egg Commands + Simplification
 
 **Added classic Unix commands with portfolio personality**
 
@@ -22,16 +22,24 @@ Implemented four fun terminal commands for discovery and authenticity:
 - Echo command preserves original case from user input
 - All commands show in help section for discoverability
 
+**Code Simplification:**
+- Consolidated state: Replaced showEasterEgg + easterEggContent with single displayContent state
+- Reduced state variables from 2 to 1 for easter egg content
+- Simpler JSX: Single displayContent check instead of separate flag
+- Extracted handleUnrecognizedCommand() to reduce cognitive complexity
+
 **Files Modified:**
 - lib/utils.ts - Added 4 new commands to VALID_COMMANDS
-- components/command-prompt.tsx - Added easter egg handler and display section
+- components/command-prompt.tsx - Added easter egg handler, simplified state management
 - README.md - Updated Available Commands section with new commands
 
 **Code Quality:**
-- Extracted handleUnrecognizedCommand() to reduce cognitive complexity
 - All changes pass TypeScript strict mode compilation
 - All changes pass Biome linting (100+ error rules)
-- Proper state management with showEasterEgg toggle
+- Cleaner, more maintainable state management
+
+**System Updates:**
+- Homebrew packages verified up to date (cjson, docker, ffmpeg, pyenv, 010-editor)
 
 **Benefit:** Adds terminal authenticity, fun discovery factor, and personality to the portfolio experience. Commands feel natural for users familiar with Unix/Linux terminals.
 
