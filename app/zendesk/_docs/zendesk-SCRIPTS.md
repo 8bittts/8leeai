@@ -448,14 +448,14 @@ Both are well-commented and can be modified for custom test scenarios.
 Comprehensive integration test for the entire Zendesk Intelligence Portal. Tests all query types, context awareness, two-way communication, and error handling.
 
 ### What It Does
-- 🧪 Tests 25+ different query types and scenarios
-- ✅ Validates general conversation handling (weather, greetings, etc.)
-- ✅ Tests ticket querying and information retrieval
-- ✅ Validates context-aware ticket listing
-- ✅ Tests complex AI-powered analysis
-- ✅ Tests two-way communication (reply generation and posting)
-- ✅ Validates error handling and edge cases
-- 📊 Provides detailed test summary with success rates
+- Tests 25+ different query types and scenarios
+- Validates general conversation handling (weather, greetings, etc.)
+- Tests ticket querying and information retrieval
+- Validates context-aware ticket listing
+- Tests complex AI-powered analysis
+- Tests two-way communication (reply generation and posting)
+- Validates error handling and edge cases
+- Provides detailed test summary with success rates
 
 ### Usage
 
@@ -533,19 +533,19 @@ Starting comprehensive tests...
 SECTION 1: General Conversation & System Commands
 ================================================================================
 
-🧪 Testing: Empty Query → Help Text
+Testing: Empty Query → Help Text
    Query: ""
    Source: cache
    Confidence: 100%
    Duration: 45ms
-   ✅ PASSED
+   PASSED
 
-🧪 Testing: Help Command
+Testing: Help Command
    Query: "help"
    Source: cache
    Confidence: 100%
    Duration: 38ms
-   ✅ PASSED
+   PASSED
 
 ...
 
@@ -553,14 +553,14 @@ SECTION 1: General Conversation & System Commands
 SECTION 5: Context-Aware Reply Generation
 ================================================================================
 
-🧪 Testing: Reply Request - First Ticket
+Testing: Reply Request - First Ticket
    Query: "build a reply for the first ticket and send it to zendesk"
    Source: ai
    Confidence: 95%
    Duration: 4532ms
-   ✉️  Reply generated and posted to Zendesk
-   🔗 Direct link included in response
-   ✅ PASSED
+   Reply generated and posted to Zendesk
+   Direct link included in response
+   PASSED
 
 ================================================================================
 TEST SUMMARY
@@ -572,7 +572,7 @@ Failed: 0
 Success Rate: 100.0%
 
 ================================================================================
-✅ ALL TESTS PASSED!
+ALL TESTS PASSED!
 ```
 
 ### What Gets Tested
@@ -672,10 +672,10 @@ bun run test:zendesk
 For detailed troubleshooting, see the individual script sections above.
 
 **Quick checklist if things aren't working:**
-1. ✅ Run `./scripts/test-credentials.sh` - should pass both tests
-2. ✅ Check `.env.local` has all required variables
-3. ✅ Verify Zendesk account has API access enabled
-4. ✅ Verify OpenAI account has valid billing method
-5. ✅ Try with smaller batch size (`--count 5`) first
-6. ✅ Increase delay (`--delay 1000`) if rate limiting errors
-7. ✅ Run comprehensive test: `bun run test:zendesk`
+1. Run `./scripts/test-credentials.sh` - should pass both tests
+2. Check `.env.local` has all required variables
+3. Verify Zendesk account has API access enabled
+4. Verify OpenAI account has valid billing method
+5. Try with smaller batch size (`--count 5`) first
+6. Increase delay (`--delay 1000`) if rate limiting errors
+7. Run comprehensive test: `bun run test:zendesk`
