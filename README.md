@@ -76,6 +76,10 @@ Open [http://localhost:1333](http://localhost:1333) to view the terminal.
 - `x` - X/Twitter profile
 - `social` - Show all social and professional links
 - `clear` - Reset terminal
+- `whoami` - User info
+- `uname` - System info
+- `date` - Current date/time
+- `echo [text]` - Echo text back
 - `Ctrl+L` / `Cmd+K` - Keyboard shortcut to clear terminal
 
 **Development Commands** (Bun only):

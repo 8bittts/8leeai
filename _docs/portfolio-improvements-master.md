@@ -1,6 +1,6 @@
 # Portfolio Improvements - Master Plan
 
-**Status:** Command Aliases Complete ✅
+**Status:** Command Aliases & Easter Eggs Complete ✅
 **Last Updated:** November 20, 2025
 
 ---
@@ -29,6 +29,34 @@
 - `README.md` - Updated Available Commands section
 
 **Benefit:** More intuitive, matches natural user language patterns
+
+---
+
+### 2. Easter Egg Commands ✅ COMPLETE
+
+**Classic Unix commands with personality.**
+
+**Implemented Commands:**
+```typescript
+// whoami - User info
+"You're exploring Eight Lee's portfolio terminal\nType 'help' to see what I can do!"
+
+// uname - System info with dynamic age
+"8leeOS v[age] (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0"
+
+// date - Current date/time
+new Date().toString()
+
+// echo [text] - Echo back user input (preserves case)
+"echo Hello World" → "Hello World"
+```
+
+**Files Modified:**
+- `lib/utils.ts` - Added 4 new commands (whoami, uname, date, echo)
+- `components/command-prompt.tsx` - Added handleEasterEggCommands() with all handlers
+- `README.md` - Updated Available Commands section
+
+**Benefit:** Fun personality, discovery factor, terminal authenticity
 
 ---
 
@@ -63,42 +91,6 @@ const clearToStart = () => {
 ---
 
 ## Next Priority Improvements
-
-### 2. Easter Egg Commands (20 minutes) ⚠️ Ready
-
-**Classic Unix commands with personality.**
-
-**New Commands:**
-```typescript
-// whoami
-"You're exploring Eight Lee's portfolio terminal"
-"Type 'help' to see what I can do!"
-
-// uname
-"8leeOS v[age] (Terminal Edition)"
-"Built with Next.js 16.0.3 + React 19.2.0"
-
-// date
-new Date().toString() // Current date/time
-
-// echo [text]
-// Simply echoes back what user types
-
-// fortune
-// Random rotating messages about portfolio
-[
-  "Did you know? Eight has worked with AI/ML for 3+ years",
-  "Fun fact: This terminal is built with pure Tailwind utilities",
-  "Tip: Try the 'random' command to discover a random project",
-  "Secret: Type numbers 1-64 to jump directly to any project",
-]
-```
-
-**Implementation Location:** `components/command-prompt.tsx`
-
-**Benefits:** Fun personality, discovery factor, terminal authenticity
-
----
 
 ### 3. Stats Command (25 minutes) ⚠️ Ready
 
@@ -219,15 +211,15 @@ These would work better if `clear` just hid content instead of returning to boot
 ## Completed Checklist
 
 - ✅ Command Aliases (7 new commands)
+- ✅ Easter Egg Commands (4 new commands: whoami, uname, date, echo)
 - ✅ TypeScript compilation passes
 - ✅ Biome linting passes
 - ✅ README.md updated
 - ✅ Help section updated
-- ⏹️ Easter Egg Commands
 - ⏹️ Stats Command
 - ⏹️ Sound Toggle
 - ⏹️ Command History
 
 ---
 
-**Total Time Estimate for Remaining Items:** ~80 minutes (4 improvements)
+**Total Time Estimate for Remaining Items:** ~60 minutes (3 improvements)

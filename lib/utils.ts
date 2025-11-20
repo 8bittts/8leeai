@@ -128,6 +128,11 @@ export const VALID_COMMANDS = [
   "reach",
   "hello",
   "social",
+  // Easter egg commands
+  "whoami",
+  "uname",
+  "date",
+  "echo",
   // TEMPORARY: Hidden command for Zendesk portal access (will be removed during cleanup)
   "zendesk",
   "zen",
@@ -181,6 +186,11 @@ export const COMMAND_ALIASES: Record<string, string> = {
   reach: "contact email",
   hello: "contact email",
   social: "social links",
+  // Easter egg commands
+  whoami: "user info",
+  uname: "system info",
+  date: "current date/time",
+  echo: "echo text",
   // TEMPORARY: Hidden command for Zendesk portal (will be removed during cleanup)
   zendesk: "Zendesk Portal",
   zen: "Zendesk Portal",

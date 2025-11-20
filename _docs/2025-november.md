@@ -4,6 +4,39 @@
 
 ### November 20, 2025
 
+#### Portfolio: Easter Egg Commands
+
+**Added classic Unix commands with portfolio personality**
+
+Implemented four fun terminal commands for discovery and authenticity:
+
+**New Commands:**
+- `whoami` - Displays user info and portfolio purpose
+- `uname` - Shows system info with dynamic age calculation (8leeOS v[age])
+- `date` - Displays current date and time
+- `echo [text]` - Echoes back user input (preserves case)
+
+**Implementation Details:**
+- Added handleEasterEggCommands() function with all four handlers
+- Dynamic age calculation matches boot sequence (born 1982-11-09)
+- Echo command preserves original case from user input
+- All commands show in help section for discoverability
+
+**Files Modified:**
+- lib/utils.ts - Added 4 new commands to VALID_COMMANDS
+- components/command-prompt.tsx - Added easter egg handler and display section
+- README.md - Updated Available Commands section with new commands
+
+**Code Quality:**
+- Extracted handleUnrecognizedCommand() to reduce cognitive complexity
+- All changes pass TypeScript strict mode compilation
+- All changes pass Biome linting (100+ error rules)
+- Proper state management with showEasterEgg toggle
+
+**Benefit:** Adds terminal authenticity, fun discovery factor, and personality to the portfolio experience. Commands feel natural for users familiar with Unix/Linux terminals.
+
+---
+
 #### Experimental Projects: Official Archival
 
 **Archived Zendesk and Intercom Intelligence Portals - no longer under active development**
