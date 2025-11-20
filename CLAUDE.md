@@ -54,6 +54,47 @@ bun scripts/x-package-monitor.js --watch
 bun scripts/x-package-monitor.js --critical
 ```
 
+## Script Development
+
+### Console Output Guidelines
+
+**When creating or updating utility scripts, use color-coded console output for better readability:**
+
+Use ANSI escape codes for consistent, professional terminal output. Example pattern from `scripts/x-package-monitor.js`:
+
+```javascript
+const COLORS = {
+  reset: "\x1b[0m",
+  bright: "\x1b[1m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  cyan: "\x1b[36m",
+}
+
+// Usage examples:
+console.log(`${COLORS.green}[OK] Success message${COLORS.reset}`)
+console.log(`${COLORS.red}[ERROR] Error message${COLORS.reset}`)
+console.log(`${COLORS.yellow}[WARNING] Warning message${COLORS.reset}`)
+console.log(`${COLORS.cyan}${COLORS.bright}[INFO] Header${COLORS.reset}`)
+```
+
+**Color Conventions:**
+- **Green**: Success messages, safe operations
+- **Red**: Errors, failures, urgent actions
+- **Yellow**: Warnings, caution, attention needed
+- **Cyan**: Headers, information, sections
+- **Blue/Magenta**: Section separators, metadata
+- **Bright**: Combined with colors for emphasis
+
+**Best Practices:**
+- Always reset colors after each message (`${COLORS.reset}`)
+- Use bright for headers and important labels
+- Combine colors for visual hierarchy (e.g., `${COLORS.cyan}${COLORS.bright}`)
+- Maintain consistency across scripts for familiar UX
+
 ## Git Commit Guidelines
 
 **IMPORTANT: When committing to the main branch:**

@@ -95,7 +95,14 @@ bun run packages:watch        # Continuous monitoring (checks every 6 hours)
 bun run packages:critical     # Only critical/security updates
 ```
 
-The package monitor analyzes breaking changes and categorizes updates by priority:
+The package monitor features enhanced console output with color-coded messages for better visibility:
+- Green: Success messages and safe updates
+- Yellow: Warnings and caution updates
+- Red: Errors and urgent updates
+- Cyan: Information and headers
+- Blue/Magenta: Section separators
+
+The monitor analyzes breaking changes and categorizes updates by priority:
 - **URGENT**: Security-related or major version changes (apply immediately)
 - **CAUTION**: Known breaking changes (review changelog and test thoroughly)
 - **SAFE**: Patch/minor updates with low impact (apply when convenient)
