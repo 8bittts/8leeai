@@ -111,12 +111,12 @@ OPENAI_API_KEY=sk-proj-your-key
 Generates realistic, varied support tickets directly in your Zendesk account. Useful for testing analytics, UI rendering, and AI analysis features with actual data.
 
 ### What It Does
-- 🎲 Generates realistic ticket data (names, emails, subjects, descriptions)
-- 📤 Creates tickets directly in Zendesk via API
-- ⏱️ Rate-limited to prevent API overwhelming (configurable delay)
-- 📊 Shows success/failure summary
-- 🏷️ Adds relevant tags by category (support, sales, feedback, general)
-- 🎯 Varies priority and status for realistic distribution
+- Generates realistic ticket data (names, emails, subjects, descriptions)
+- Creates tickets directly in Zendesk via API
+- Rate-limited to prevent API overwhelming (configurable delay)
+- Shows success/failure summary
+- Adds relevant tags by category (support, sales, feedback, general)
+- Varies priority and status for realistic distribution
 
 ### Usage
 
