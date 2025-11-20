@@ -2,7 +2,7 @@
 
 An original, retro terminal-style portfolio experience built with modern web technologies.
 
-## ⚠️ Ultra Private Mode Enabled
+## Ultra Private Mode Enabled
 
 This codebase is configured for **triple-layer anti-crawling protection** - the site will NOT appear in search engines, archives, or indexing tools while remaining accessible to direct visitors.
 
@@ -166,7 +166,7 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 │   ├── components/                   # React components (18 files)
 │   ├── lib/                          # Core logic and utilities (15 files)
 │   └── _docs/intercom-MASTER.md      # Comprehensive documentation
-├── app/zendesk/                      # ⚠️ ISOLATED EXPERIMENT - Can be deleted safely
+├── app/zendesk/                      # ISOLATED EXPERIMENT - Can be deleted safely
 │   └── _docs/DELETION-GUIDE.md       # See this file for deletion instructions
 ├── _docs/                            # Release notes documentation
 │   ├── README.md                     # Documentation structure guide

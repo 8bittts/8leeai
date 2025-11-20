@@ -296,7 +296,7 @@ Transform the Zendesk Intelligence Portal into a **general-purpose intelligence 
 - `restoreTicket()` - Restore single ticket
 - `restoreTickets()` - Bulk restore (up to 100)
 
-### Phase 2: Advanced Ticket Operations 🚀
+### Phase 2: Advanced Ticket Operations
 
 #### Assignment & Collaboration
 - `assignTicket()` - Assign to specific agent

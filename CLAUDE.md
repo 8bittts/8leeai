@@ -58,7 +58,7 @@ bun scripts/x-package-monitor.js --critical
 
 **IMPORTANT: When committing to the main branch:**
 
-- **NO Claude attribution**: Do not include "🤖 Generated with Claude Code" or similar callouts
+- **NO Claude attribution**: Do not include "Generated with Claude Code" or similar callouts
 - **NO co-authorship**: Do not add "Co-Authored-By: Claude <noreply@anthropic.com>"
 - **User account only**: Commits should be attributed solely to the user's Git account
 - Write clear, conventional commit messages describing the changes
@@ -165,12 +165,12 @@ All portfolio data lives in `/lib/data.ts`:
 
 **All Zendesk files are consolidated in `/app/zendesk/` with complete isolation from main app:**
 
-**Isolation Status (✓ VERIFIED):**
-- ✅ Zero code dependencies - no imports between main app and zendesk
-- ✅ Complete file consolidation - all 49 files in `/app/zendesk/`
-- ✅ Global prefix standardization - all files prefixed with `zendesk-`
-- ✅ Safe to delete - removing `/app/zendesk/` will NOT break homepage
-- ✅ 13,569 lines of experimental code fully isolated
+**Isolation Status (VERIFIED):**
+- Zero code dependencies - no imports between main app and zendesk
+- Complete file consolidation - all 49 files in `/app/zendesk/`
+- Global prefix standardization - all files prefixed with `zendesk-`
+- Safe to delete - removing `/app/zendesk/` will NOT break homepage
+- 13,569 lines of experimental code fully isolated
 
 **Deletion Guide:**
 - **See `app/zendesk/_docs/DELETION-GUIDE.md`** for step-by-step deletion instructions
@@ -232,17 +232,17 @@ app/zendesk/
 
 ### Intercom Intelligence Portal Documentation
 
-**STATUS: ✅ PRODUCTION READY**
+**STATUS: PRODUCTION READY**
 
 **All Intercom files are consolidated in `/app/intercom/` with complete isolation from main app:**
 
 **Production Status:**
-- ✅ Zero TypeScript errors
-- ✅ Zero Biome lint issues
-- ✅ Complete Intercom API integration
-- ✅ 116 synthetic test tickets
-- ✅ Comprehensive documentation in single MASTER.md file
-- ✅ 62 TypeScript files (17 components, 7 API routes, 14 scripts, 14 lib files)
+- Zero TypeScript errors
+- Zero Biome lint issues
+- Complete Intercom API integration
+- 116 synthetic test tickets
+- Comprehensive documentation in single MASTER.md file
+- 62 TypeScript files (17 components, 7 API routes, 14 scripts, 14 lib files)
 
 **Documentation:**
 - **See `app/intercom/_docs/intercom-MASTER.md`** for complete documentation
@@ -390,16 +390,16 @@ Tests focus on **user intent and business logic**, not implementation details. T
 **Core Principles:**
 
 1. **Test WHY, not HOW**
-   - ✅ Good: "prevents keyboard popup when navigating command history on touch devices"
-   - ❌ Bad: "sets readonly attribute to true"
+   - Good: "prevents keyboard popup when navigating command history on touch devices"
+   - Bad: "sets readonly attribute to true"
 
 2. **Test observable behavior**
-   - ✅ Good: "gradually reveals text character by character for terminal aesthetic"
-   - ❌ Bad: "types out text with 50ms intervals using setInterval"
+   - Good: "gradually reveals text character by character for terminal aesthetic"
+   - Bad: "types out text with 50ms intervals using setInterval"
 
 3. **Document user needs in test names**
-   - ✅ Good: "highlights specific word to show users what's clickable"
-   - ❌ Bad: "underlines matching word (case-insensitive)"
+   - Good: "highlights specific word to show users what's clickable"
+   - Bad: "underlines matching word (case-insensitive)"
 
 4. **Explain intent in comments**
    - Every assertion includes a comment explaining the business reason
