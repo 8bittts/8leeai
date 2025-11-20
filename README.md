@@ -200,6 +200,32 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 
 For detailed commit history and comprehensive changelog, see the [_docs](_docs/) directory with monthly release notes.
 
+## Archived Experimental Projects
+
+This repository contains two archived experimental projects that are no longer under active development:
+
+### Zendesk Intelligence Portal (`/app/zendesk/`)
+- **Status**: Archived (November 2025)
+- **Access**: Hidden command `zendesk` or `zen` in production terminal
+- **Purpose**: Experimental AI-powered ticket intelligence system
+- **Documentation**: See `app/zendesk/_docs/zendesk-MASTER.md` and `DELETION-GUIDE.md`
+
+### Intercom Intelligence Portal (`/app/intercom/`)
+- **Status**: Archived (November 2025)
+- **Access**: Hidden command `intercom` in production terminal
+- **Purpose**: Experimental AI-powered conversation intelligence system
+- **Documentation**: See `app/intercom/_docs/intercom-MASTER.md` (v2.1) and `DELETION-GUIDE.md`
+
+**Important Notes:**
+- Both projects are **100% isolated** from the main portfolio site
+- They remain accessible in production via hidden terminal commands
+- Source code is **excluded from version control** (`.gitignore`)
+- All tests have been removed to reduce maintenance overhead
+- Projects are fully documented with deletion guides if needed
+- No further development or updates planned
+
+These projects served as proof-of-concept explorations of AI-powered customer support intelligence systems. They remain in the codebase for reference and demonstration purposes but are not part of the actively maintained portfolio.
+
 ## Contributing
 
 This is a personal portfolio project. Feel free to make suggestions!

@@ -4,6 +4,43 @@
 
 ### November 20, 2025
 
+#### Experimental Projects: Official Archival
+
+**Archived Zendesk and Intercom Intelligence Portals - no longer under active development**
+
+Both experimental AI-powered customer support intelligence projects have been officially archived:
+
+**Archival Actions:**
+- Added `/app/zendesk/` and `/app/intercom/` to `.gitignore` (future changes not tracked)
+- Removed all integration tests (4 test files deleted) to reduce maintenance overhead
+- Updated README.md with "Archived Experimental Projects" section
+- Updated project-isolation-status.md to reflect archival status
+- Both projects remain 100% isolated from main portfolio site
+
+**Production Status:**
+- Projects remain functional in production via hidden terminal commands
+- Zendesk accessible via `zendesk` or `zen` command
+- Intercom accessible via `intercom` command
+- No impact on main portfolio functionality
+- Can be safely deleted when ready (deletion guides available)
+
+**Why Archived:**
+- Proof-of-concept exploration complete
+- Focus shifting to core portfolio improvements
+- No further development planned
+- Serve as reference implementations only
+
+**Files Modified:**
+- .gitignore - Added app/zendesk/ and app/intercom/
+- README.md - Added comprehensive archival section
+- _docs/project-isolation-status.md - Updated with archival status
+- Removed: app/zendesk/__tests__/ (2 test files)
+- Removed: app/intercom/__tests__/ (2 test files)
+
+**Note:** Both projects are fully documented with master documentation and deletion guides in their respective `_docs/` directories. The v2.1 Intercom enhancements completed earlier today represent the final development milestone for these projects.
+
+---
+
 #### Portfolio: Command Aliases & Natural Language Support
 
 **Added intuitive command aliases for better user experience and discoverability**

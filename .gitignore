@@ -63,5 +63,8 @@ Thumbs.db
 # Docs
 CLAUDE.md
 
-# Zendesk Cache
-/app/zendesk/cache/
+# Archived Experimental Projects (Discontinued)
+# These projects are no longer under active development
+# but remain in production for reference/access via hidden commands
+/app/zendesk/
+/app/intercom/

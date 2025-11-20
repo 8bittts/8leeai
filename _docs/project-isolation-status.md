@@ -1,37 +1,61 @@
 # Project Isolation Status
 
 **Last Verified:** November 20, 2025
+**Status:** ✅ ARCHIVED
 
-## Isolation Verification
+## Archival Complete
 
-Both experimental projects (Zendesk and Intercom) are **100% isolated** and ready for retirement/archival.
+Both experimental projects (Zendesk and Intercom) have been **officially archived** and are no longer under active development.
 
 ### Zendesk Intelligence Portal
-- **Status:** Complete Isolation Achieved
-- **Location:** `app/zendesk/`
+- **Status:** 🗄️ ARCHIVED (November 20, 2025)
+- **Location:** `app/zendesk/` (gitignored)
+- **Production Access:** Hidden command `zendesk` or `zen`
 - **Deletion Guide:** `app/zendesk/_docs/DELETION-GUIDE.md`
-- **Safe to Delete:** ✅ YES
+- **Documentation:** `app/zendesk/_docs/zendesk-MASTER.md`
 
 ### Intercom Intelligence Portal
-- **Status:** 100% ISOLATED (Safe to delete)
-- **Location:** `app/intercom/`
+- **Status:** 🗄️ ARCHIVED (November 20, 2025)
+- **Location:** `app/intercom/` (gitignored)
+- **Production Access:** Hidden command `intercom`
 - **Deletion Guide:** `app/intercom/_docs/DELETION-GUIDE.md`
 - **Master Doc:** `app/intercom/_docs/intercom-MASTER.md` (v2.1)
-- **Safe to Delete:** ✅ YES
 
-## Main Project Status
+## Archival Actions Taken
 
-**Verified Clean:**
-- ✅ No references in `CLAUDE.md`
-- ✅ No references in `README.md`
+**Version Control:**
+- ✅ Added to `.gitignore` - future changes not tracked
+- ✅ Existing code remains in production for reference
+- ✅ All integration tests removed (4 test files deleted)
+
+**Documentation:**
+- ✅ README.md updated with "Archived Experimental Projects" section
+- ✅ Clear notes about discontinued status
+- ✅ Hidden terminal command access documented
+
+**Isolation Verified:**
+- ✅ No references in `CLAUDE.md` (main development guide)
+- ✅ Zero import dependencies from main portfolio site
 - ✅ Build passes without both projects
-- ✅ Zero import dependencies from main site
+- ✅ Main site at https://8lee.ai completely independent
 
-**Conclusion:** Both projects can be safely deleted or archived without any impact on the main portfolio site at https://8lee.ai.
+## Production Status
 
-## Retirement Recommendations
+**Both projects remain functional in production:**
+- Routes still work: `/zendesk` and `/intercom`
+- Hidden terminal commands still function
+- No impact on main portfolio functionality
+- Can be safely deleted when ready (see deletion guides)
 
-1. **Archive First:** Create `archive/` directory and move both projects there
-2. **Document Learning:** Capture key learnings in release notes
-3. **Delete When Ready:** Remove completely after archive period
-4. **Focus on Core:** Concentrate on portfolio improvements (see `portfolio-improvement-ideas.md`)
+## Future Actions
+
+**When ready to fully remove:**
+1. Follow deletion guides in each project's `_docs/` directory
+2. Remove routes from Next.js app router
+3. Clean up any remaining environment variables
+4. Update terminal commands in `lib/utils.ts`
+
+**Current Focus:**
+- Main portfolio improvements (see `portfolio-improvements-master.md`)
+- Terminal UX enhancements
+- Core feature development
