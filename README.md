@@ -122,8 +122,8 @@ Run `bun test` to execute all tests. Tests are co-located with source files:
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.6](https://biomejs.dev) - 100+ error rules + 5 nursery rules
-- **AI/ML**: [Vercel AI SDK 5.0.95](https://sdk.vercel.ai), [OpenAI SDK 2.0.68](https://github.com/openai/openai-node)
-- **Email**: [Resend 6.5.1](https://resend.com)
+- **AI/ML**: [Vercel AI SDK 5.0.97](https://sdk.vercel.ai), [OpenAI SDK 2.0.69](https://github.com/openai/openai-node)
+- **Email**: [Resend 6.5.2](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.6`, `@types/react-dom@19.2.3`
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)

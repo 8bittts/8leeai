@@ -4,6 +4,20 @@
 
 ### November 19, 2025
 
+#### Package Updates
+
+**Routine maintenance updates - all SAFE with low impact:**
+
+- Vercel AI SDK: 5.0.95 → 5.0.97
+- OpenAI SDK: 2.0.68 → 2.0.69
+- Resend: 6.5.1 → 6.5.2
+
+**Updated Documentation:**
+- CLAUDE.md - Tech Stack section
+- README.md - Tech Stack section
+
+---
+
 #### Documentation Cleanup & Experiment Removal Planning
 
 **MAJOR CLEANUP: Prepared codebase for Zendesk/Intercom experiment removal**
