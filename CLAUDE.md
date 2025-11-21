@@ -198,7 +198,13 @@ All portfolio data lives in `/lib/data.ts`:
 2. Run `bun test` - Execute all unit and component tests (96 tests, 297 assertions)
 
 ### Special File Rules
-**Release notes are now organized in the `_docs/` directory by month.** Files follow the pattern `[year]-[month].md` (e.g., `2025-november.md`). These files are manually curated by the project maintainer. Only modify release notes when explicitly requested. Formatting: date-based organization within each monthly file (no timestamps), all entries for a day under same date heading.
+**Release notes are now organized with a hybrid structure:**
+- **Weekly files** (November 2025+): Located in `/docs/release-notes/` directory, following pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-november.md` for Week 1, `2025-11-w2-november.md` for Week 2)
+- **Monthly files** (Historical): September and October 2025 remain in `_docs/` directory as `[year]-[month].md` (e.g., `2025-september.md`, `2025-october.md`)
+- **Week assignment**: Week 1 (days 1-7), Week 2 (days 8-14), Week 3 (days 15-21), Week 4 (days 22-28), Week 5 (days 29-31 if applicable)
+- **Structure guide**: See `/docs/release-notes/00-RN-README.md` for complete documentation
+
+These files are manually curated by the project maintainer. Only modify release notes when explicitly requested. Formatting: date-based organization (no timestamps), all entries for a day under same date heading, reverse chronological order.
 
 **Documentation Style:** NEVER add emojis to any documentation files. All documentation must use clean, professional text without emojis or decorative Unicode characters. This applies to all markdown files including README.md, CLAUDE.md, release notes, and any technical documentation.
 
@@ -353,9 +359,18 @@ test("hides keyboard after command submission on touch devices", () => {
 ├── postcss.config.mjs     # PostCSS + Tailwind
 ├── tsconfig.json          # TypeScript config
 ├── biome.json            # Linting/formatting
-├── _docs/                # Release notes documentation
+├── _docs/                # Historical documentation
 │   ├── README.md         # Documentation structure guide
-│   └── [year]-[month].md # Monthly release notes files
+│   ├── 2025-september.md # September 2025 release notes (monthly)
+│   ├── 2025-october.md   # October 2025 release notes (monthly)
+│   ├── 2025-november.md  # November 2025 release notes (archived, pre-weekly split)
+│   └── portfolio-improvements-master.md # Portfolio enhancement tracking
+├── docs/                 # Current release notes (November 2025+)
+│   └── release-notes/    # Weekly release notes directory
+│       ├── 00-RN-README.md              # Release notes structure guide
+│       ├── 2025-11-w1-november.md       # November Week 1 (Nov 2-8)
+│       ├── 2025-11-w2-november.md       # November Week 2 (Nov 9-15)
+│       └── 2025-11-w3-november.md       # November Week 3 (Nov 16-22)
 ├── test-setup.ts         # Bun test configuration with happy-dom
 ├── bunfig.toml           # Bun configuration for test preloading
 └── CLAUDE.md             # AI assistant guidance (this file)

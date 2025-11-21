@@ -176,11 +176,18 @@ Additional tests exist for archived experimental projects (gitignored).
 ├── scripts/                          # Development utilities
 │   └── x-package-monitor.js          # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
-├── _docs/                            # Release notes documentation
+├── _docs/                            # Historical documentation
 │   ├── README.md                     # Documentation structure guide
-│   ├── 2025-november.md              # November 2025 release notes
-│   ├── 2025-october.md               # October 2025 release notes
-│   └── 2025-september.md             # September 2025 release notes
+│   ├── 2025-september.md             # September 2025 release notes (monthly)
+│   ├── 2025-october.md               # October 2025 release notes (monthly)
+│   ├── 2025-november.md              # November 2025 release notes (archived, pre-weekly split)
+│   └── portfolio-improvements-master.md # Portfolio enhancement tracking
+├── docs/                             # Current release notes (November 2025+)
+│   └── release-notes/                # Weekly release notes directory
+│       ├── 00-RN-README.md           # Release notes structure guide
+│       ├── 2025-11-w1-november.md    # November Week 1 (Nov 2-8)
+│       ├── 2025-11-w2-november.md    # November Week 2 (Nov 9-15)
+│       └── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
 ├── test-setup.ts                     # Bun test configuration with happy-dom
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
@@ -205,7 +212,11 @@ Additional tests exist for archived experimental projects (gitignored).
 
 ## Version History
 
-For detailed commit history and comprehensive changelog, see the [_docs](_docs/) directory with monthly release notes.
+For detailed release history and comprehensive changelog:
+- **Current (November 2025+)**: See [docs/release-notes](docs/release-notes/) directory with weekly release notes
+- **Historical (September-October 2025)**: See [_docs](_docs/) directory with monthly release notes
+
+Weekly files follow the pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-november.md` for Week 1). See [docs/release-notes/00-RN-README.md](docs/release-notes/00-RN-README.md) for the complete structure guide.
 
 ## Archived Experimental Projects
 
