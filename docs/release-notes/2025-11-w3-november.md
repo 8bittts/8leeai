@@ -7,6 +7,35 @@
 
 ## November 21, 2025
 
+### Vercel Team Configuration: Fixed
+
+**Fixed incorrect Vercel team configuration pointing to wrong team**
+
+Resolved local Vercel deployment configuration that was pointing to the wrong team (hobby plan instead of production death-note team):
+
+**Problem Identified:**
+- Local `.vercel/project.json` was configured with wrong team ID (`team_B9HeQzz4d7hL5isGF0Ds0lcu`)
+- Duplicate project existed in unused 8lee-team (hobby plan)
+- Caused confusion and potential deployment issues
+
+**Actions Taken:**
+- Removed incorrect `.vercel/` directory
+- Ran `vercel link --scope death-note --yes` to reconfigure
+- New configuration now points to correct team: `team_UzPg3vyRGY8HESeUqDwFmCXB` (death-note)
+- Verified no global macOS or CLI configurations pointing to wrong team
+
+**Verification:**
+- Project ID: `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
+- Team ID: `team_UzPg3vyRGY8HESeUqDwFmCXB` (death-note)
+- All future deployments will use correct Pro team
+
+**Part of broader cleanup:**
+- Removed all duplicate projects from unused 8lee-team
+- Audited all sibling projects (8leeai, yenchat, altoaxcom, deathnote)
+- Ensured consistent team configuration across all projects
+
+---
+
 ### Package Updates: Biome and AI SDK
 
 **Updated development tooling and AI SDK to latest versions**

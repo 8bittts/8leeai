@@ -130,6 +130,13 @@ Terminal-style portfolio website featuring authentic DOS simulation with boot se
 - Bun 1.3.1 (package manager, runtime, test runner)
 - Type Definitions: `@types/node@24.10.1`, `@types/react@19.2.6`, `@types/react-dom@19.2.3`
 
+**Deployment Configuration:**
+- **Vercel Team**: death-note (Pro plan) - `team_UzPg3vyRGY8HESeUqDwFmCXB`
+- **Project ID**: `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
+- **Live URL**: https://8lee.ai
+- **IMPORTANT**: Always use `--scope death-note` flag for all Vercel CLI operations
+- Configuration fixed November 21, 2025 - see `docs/release-notes/2025-11-w3-november.md` for details
+
 ## Architecture
 
 ### Component Hierarchy

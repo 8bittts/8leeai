@@ -142,7 +142,11 @@ Additional tests exist for archived experimental projects (gitignored).
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.6`, `@types/react-dom@19.2.3`
 - **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
-- **Deployment**: [Vercel](https://vercel.com)
+- **Deployment**: [Vercel](https://vercel.com) (death-note team - Pro plan)
+  - Team ID: `team_UzPg3vyRGY8HESeUqDwFmCXB`
+  - Project ID: `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
+  - Live: https://8lee.ai
+  - Configuration fixed November 21, 2025 (see release notes)
 
 ## Project Structure
 
