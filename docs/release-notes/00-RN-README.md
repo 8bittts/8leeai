@@ -30,10 +30,14 @@ This directory contains organized release notes with a **weekly structure** for 
 
 **WEEKLY NAMING CONVENTION**: `YYYY-MM-wN-month.md` where N is the week number (1-5)
 
+**MULTI-PART WEEK NAMING** (for large weeks): If a week's release notes become too large, split into parts using `YYYY-MM-wN-P-month.md` where P is the part number (1, 2, 3, etc.)
+
 Examples:
 - `2025-11-w1-november.md` - November 2025 Week 1 (November 2-8)
 - `2025-11-w2-november.md` - November 2025 Week 2 (November 9-15)
 - `2025-11-w3-november.md` - November 2025 Week 3 (November 16-22)
+- `2025-11-w4-1-november.md` - November 2025 Week 4 Part 1 (if week 4 is split)
+- `2025-11-w4-2-november.md` - November 2025 Week 4 Part 2 (if week 4 is split)
 
 **RATIONALE FOR WEEKLY SYSTEM**:
 - **Better File Management**: Weekly organization prevents any single file from becoming unwieldy
@@ -79,11 +83,31 @@ Examples:
 
 **Weekly File Naming Pattern**: `YYYY-MM-wN-month.md`
 
+**Multi-Part Week Naming Pattern** (when needed): `YYYY-MM-wN-P-month.md`
+
 Examples:
 - `2025-11-w1-november.md` (November 1-7)
 - `2025-11-w2-november.md` (November 8-14)
 - `2025-11-w3-november.md` (November 15-21)
 - `2025-12-w1-december.md` (December 1-7)
+- `2025-11-w4-1-november.md` (November Week 4 Part 1, if split)
+- `2025-11-w4-2-november.md` (November Week 4 Part 2, if split)
+
+**CRITICAL: Multi-Part Week Cross-Reference Rule**:
+When a week is split into multiple parts, each part file MUST include clear cross-references to all other parts at the very top of the file, immediately after the title. Format:
+
+```markdown
+# Release Notes - November 2025 Week 4 Part 1
+
+**Note**: This week is split into multiple parts due to size:
+- Part 1: [2025-11-w4-1-november.md](./2025-11-w4-1-november.md) (this file)
+- Part 2: [2025-11-w4-2-november.md](./2025-11-w4-2-november.md)
+- Part 3: [2025-11-w4-3-november.md](./2025-11-w4-3-november.md)
+
+---
+```
+
+This cross-reference section ensures readers can easily navigate between parts of a multi-part week.
 
 ### **Content Guidelines**
 
@@ -114,6 +138,19 @@ All content follows a clear, professional format without emojis or decorative el
 - Easier navigation to specific timeframes
 - Improved git history and merge conflict reduction
 - Better historical reference and archival management
+
+**When to Split a Week Into Multiple Parts**:
+- If a weekly file exceeds approximately 500 lines or becomes difficult to navigate
+- When a week has an unusually high volume of changes, updates, or releases
+- To maintain readability and prevent any single file from becoming too large
+- Split proactively rather than waiting for the file to become unmanageably large
+
+**How to Split a Week**:
+1. Create part files following the pattern: `YYYY-MM-wN-P-month.md` (e.g., `2025-11-w4-1-november.md`, `2025-11-w4-2-november.md`)
+2. Distribute content logically across parts (by date, by topic, or chronologically)
+3. Add cross-reference section to the top of EACH part file listing all parts
+4. Update the cross-references in all parts when adding a new part
+5. Keep the original single-file name (e.g., `2025-11-w4-november.md`) deleted or renamed to avoid confusion
 
 ### **Historical File Preservation**
 

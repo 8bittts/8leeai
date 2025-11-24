@@ -207,9 +207,10 @@ All portfolio data lives in `/lib/data.ts`:
 ### Special File Rules
 **Release notes are now organized with a hybrid structure:**
 - **Weekly files** (November 2025+): Located in `/docs/release-notes/` directory, following pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-november.md` for Week 1, `2025-11-w2-november.md` for Week 2)
+- **Multi-part weeks** (when needed): If a week becomes too large, split into parts using `YYYY-MM-wN-P-month.md` (e.g., `2025-11-w4-1-november.md`, `2025-11-w4-2-november.md`). Each part MUST include cross-references to all other parts at the top of the file.
 - **Monthly files** (Historical): September and October 2025 remain in `_docs/` directory as `[year]-[month].md` (e.g., `2025-september.md`, `2025-october.md`)
 - **Week assignment**: Week 1 (days 1-7), Week 2 (days 8-14), Week 3 (days 15-21), Week 4 (days 22-28), Week 5 (days 29-31 if applicable)
-- **Structure guide**: See `/docs/release-notes/00-RN-README.md` for complete documentation
+- **Structure guide**: See `/docs/release-notes/00-RN-README.md` for complete documentation including multi-part week guidelines
 
 These files are manually curated by the project maintainer. Only modify release notes when explicitly requested. Formatting: date-based organization (no timestamps), all entries for a day under same date heading, reverse chronological order.
 
@@ -377,7 +378,9 @@ test("hides keyboard after command submission on touch devices", () => {
 │       ├── 00-RN-README.md              # Release notes structure guide
 │       ├── 2025-11-w1-november.md       # November Week 1 (Nov 2-8)
 │       ├── 2025-11-w2-november.md       # November Week 2 (Nov 9-15)
-│       └── 2025-11-w3-november.md       # November Week 3 (Nov 16-22)
+│       ├── 2025-11-w3-november.md       # November Week 3 (Nov 16-22)
+│       └── 2025-11-w4-november.md       # November Week 4 (Nov 22-28)
+│       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
 ├── test-setup.ts         # Bun test configuration with happy-dom
 ├── bunfig.toml           # Bun configuration for test preloading
 └── CLAUDE.md             # AI assistant guidance (this file)

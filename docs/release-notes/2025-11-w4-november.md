@@ -85,3 +85,41 @@ Routine maintenance updates for Vercel AI SDK and React type definitions:
 - Safe updates with no breaking changes
 - No code modifications required
 - All verification tests passed successfully
+
+---
+
+### Documentation Enhancement: Multi-Part Week Release Notes System
+
+**Added comprehensive multi-part week splitting rule to release notes documentation**
+
+Enhanced release notes documentation to support splitting large weekly files into multiple parts for better file management and readability:
+
+**Changes:**
+- Added multi-part week naming convention: `YYYY-MM-wN-P-month.md` (e.g., `2025-11-w4-1-november.md`, `2025-11-w4-2-november.md`)
+- Established critical cross-reference rule requiring links between all parts at the top of each file
+- Defined clear guidelines for when to split weeks (approximately 500 lines or when difficult to navigate)
+- Documented step-by-step process for creating and managing multi-part weeks
+- Added examples and rationale to both documentation files
+
+**Files Updated:**
+- `/docs/release-notes/00-RN-README.md` - Added comprehensive multi-part week sections with examples and guidelines
+- `/CLAUDE.md` - Updated Special File Rules section to include multi-part week rule and cross-reference requirement (line 210)
+- `/CLAUDE.md` - Updated File Structure section to show multi-part week example (line 383)
+
+**Key Features:**
+- Cross-reference format template for easy navigation between parts
+- Clear file size thresholds for when to split (500 lines guideline)
+- Maintains consistency with existing weekly organization system
+- Prevents any single file from becoming unwieldy while preserving weekly structure
+
+**Verification:**
+- All 96 tests passed (297 assertions)
+- Biome linting checks passed with zero issues
+- TypeScript type checking passed with zero errors
+- All documentation follows professional style without emojis
+
+**Impact:**
+- Improves long-term maintainability of release notes
+- Provides clear guidance for managing high-volume weeks
+- Maintains readability and navigability as project grows
+- Establishes consistent pattern for future multi-part weeks
