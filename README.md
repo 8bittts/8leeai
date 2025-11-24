@@ -191,7 +191,9 @@ Additional tests exist for archived experimental projects (gitignored).
 │       ├── 00-RN-README.md           # Release notes structure guide
 │       ├── 2025-11-w1-november.md    # November Week 1 (Nov 2-8)
 │       ├── 2025-11-w2-november.md    # November Week 2 (Nov 9-15)
-│       └── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
+│       ├── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
+│       └── 2025-11-w4-november.md    # November Week 4 (Nov 22-28)
+│       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
 ├── test-setup.ts                     # Bun test configuration with happy-dom
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
@@ -220,7 +222,7 @@ For detailed release history and comprehensive changelog:
 - **Current (November 2025+)**: See [docs/release-notes](docs/release-notes/) directory with weekly release notes
 - **Historical (September-October 2025)**: See [_docs](_docs/) directory with monthly release notes
 
-Weekly files follow the pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-november.md` for Week 1). See [docs/release-notes/00-RN-README.md](docs/release-notes/00-RN-README.md) for the complete structure guide.
+Weekly files follow the pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-november.md` for Week 1). Large weeks may be split into multiple parts using `YYYY-MM-wN-P-month.md` (e.g., `2025-11-w4-1-november.md`, `2025-11-w4-2-november.md`). See [docs/release-notes/00-RN-README.md](docs/release-notes/00-RN-README.md) for the complete structure guide including multi-part week guidelines.
 
 ## Archived Experimental Projects
 
