@@ -123,3 +123,32 @@ Enhanced release notes documentation to support splitting large weekly files int
 - Provides clear guidance for managing high-volume weeks
 - Maintains readability and navigability as project grows
 - Establishes consistent pattern for future multi-part weeks
+
+---
+
+## November 25, 2025
+
+### Package Updates: Next.js and OpenAI SDK
+
+**Updated two packages with routine maintenance patches**
+
+Routine maintenance updates for Next.js framework and OpenAI SDK:
+
+**Changes:**
+- Updated `next` from version 16.0.3 to 16.0.4 (patch release)
+- Updated `@ai-sdk/openai` from version 2.0.71 to 2.0.72 (patch release)
+- Minor bug fixes and improvements
+
+**Verification:**
+- All 96 tests passed (297 assertions)
+- Biome linting checks passed
+- Production build successful
+
+**Documentation Updated:**
+- CLAUDE.md Tech Stack section (lines 124, 128)
+- README.md badge and Tech Stack sections (lines 18, 135, 140)
+
+**Impact:**
+- Safe updates with no breaking changes
+- No code modifications required
+- All verification tests passed successfully

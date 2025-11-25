@@ -20,13 +20,13 @@
     "test:zendesk": "bun app/zendesk/scripts/zendesk-full-workflow-test.ts"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.71",
+    "@ai-sdk/openai": "^2.0.72",
     "@intercom/messenger-js-sdk": "^0.0.18",
     "@vercel/analytics": "^1.5.0",
     "@vercel/edge-config": "^1.4.3",
     "@vercel/speed-insights": "^1.2.0",
     "ai": "^5.0.101",
-    "next": "16.0.3",
+    "next": "16.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "resend": "^6.5.2"
