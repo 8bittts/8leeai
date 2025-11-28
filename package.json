@@ -20,19 +20,19 @@
     "test:zendesk": "bun app/zendesk/scripts/zendesk-full-workflow-test.ts"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.73",
+    "@ai-sdk/openai": "^2.0.74",
     "@intercom/messenger-js-sdk": "^0.0.18",
     "@vercel/analytics": "^1.5.0",
     "@vercel/edge-config": "^1.4.3",
     "@vercel/speed-insights": "^1.2.0",
-    "ai": "^5.0.102",
-    "next": "16.0.4",
+    "ai": "^5.0.104",
+    "next": "16.0.5",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "resend": "^6.5.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.7",
+    "@biomejs/biome": "^2.3.8",
     "@tailwindcss/postcss": "^4.1.17",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -40,7 +40,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.22",
-    "happy-dom": "20.0.10",
+    "happy-dom": "20.0.11",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
