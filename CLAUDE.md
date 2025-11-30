@@ -367,6 +367,16 @@ test("hides keyboard after command submission on touch devices", () => {
 ├── postcss.config.mjs     # PostCSS + Tailwind
 ├── tsconfig.json          # TypeScript config
 ├── biome.json            # Linting/formatting
+├── app/experiments/      # Experimental features (isolated from main app)
+│   ├── _docs/            # Consolidated experiment documentation
+│   │   ├── intercom-00-readme.md        # Intercom main documentation
+│   │   ├── intercom-01-deletion-guide.md # Intercom deletion guide
+│   │   ├── zendesk-00-readme.md         # Zendesk main documentation
+│   │   ├── zendesk-01-scripts.md        # Zendesk scripts documentation
+│   │   ├── zendesk-02-testing.md        # Zendesk testing documentation
+│   │   └── zendesk-03-deletion-guide.md # Zendesk deletion guide
+│   ├── intercom/         # Intercom Intelligence Portal experiment
+│   └── zendesk/          # Zendesk Intelligence Portal experiment
 ├── _docs/                # Historical documentation
 │   ├── README.md         # Documentation structure guide
 │   ├── 2025-september.md # September 2025 release notes (monthly)

@@ -1,0 +1,356 @@
+{
+  "entries": [
+    {
+      "timestamp": "2025-11-19T16:35:11.441Z",
+      "query": "What tickets need urgent attention?",
+      "response": "Here are the **urgent tickets** that need immediate attention:\n\n### Urgent Tickets Overview\n1. **Ticket #3** \n   - **Status:** Open\n   - **Description:** \"The onboarding process was confusing. I got stuck on step 3 where it asks for API credentials...\"\n\n2. **Ticket #14**\n   - **Status:** Open\n   - **Description:** \"Will the system be down for maintenance this weekend? Our team needs to plan work schedules accordingly...\"\n\n3. **Ticket #22**\n   - **Status:** Open\n   - **Description:** \"We've been ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:35:15.828Z",
+      "query": "Show me statistics about ticket priority distribution",
+      "response": "Here are the statistics for **ticket priority distribution**:\n\n### Total Tickets: 346\n\n#### By Priority:\n- **Urgent:** 88 tickets\n- **High:** 89 tickets\n- **Normal:** 86 tickets\n- **Low:** 83 tickets\n\nThis breakdown provides a clear view of how tickets are prioritized in your support system. If you need further analysis or details, let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:35:19.758Z",
+      "query": "Analyze average response time across all tickets",
+      "response": "The current ticket data does not provide specific information regarding response times for tickets. Therefore, I cannot compute the average response time across all tickets.\n\nIf you have additional data or specific metrics regarding response times, please provide that, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:35:29.007Z",
+      "query": "Tell me about high priority ticket patterns",
+      "response": "### High Priority Ticket Patterns\n\n#### Total High Priority Tickets: **89**\n\n#### Status Breakdown:\n- **Open:** 52 tickets\n- **Closed:** 37 tickets\n\n#### Common Themes in High Priority Tickets:\n1. **Onboarding Process Issues**:\n   - Several tickets (e.g., Ticket #3, Ticket #33) highlight confusion during onboarding, indicating a need for clearer documentation or support.\n\n2. **Integration Challenges**:\n   - Multiple tickets (e.g., Ticket #30, Ticket #49) mention issues with integrations, suggest",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:35:51.957Z",
+      "query": "Analyze the distribution of tickets by status and priority",
+      "response": "### Ticket Distribution Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### By Status:\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n#### Insights:\n- The majority of tickets are currently **open**, indicating an active workload.\n- A significant number of **pending** tickets may require follow-up or escalation.\n\n---\n\n### By Priority:\n- **Urgent:** **88** tickets (25.4%)\n- **High:** **89** tickets (25.7%)\n- **Normal:** **86** tickets (2",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:08.949Z",
+      "query": "Provide comprehensive analysis of ticket patterns including status breakdown, priority distribution, and age analysis",
+      "response": "### Comprehensive Ticket Patterns Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n**Insights:**\n- The majority of tickets are currently **open**, indicating ongoing issues that require resolution.\n- A significant number of **pending** tickets (22.8%) suggests delays in the response or action on these requests.\n\n---\n\n### 2. **Priority Distribution**\n- **Urgent:**",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:11.003Z",
+      "query": "Which tickets are the oldest?",
+      "response": "All tickets in the current dataset are under 7 days old, with no tickets older than 30 days. Therefore, there are no \"oldest\" tickets as they all fall within the same age category.\n\nIf you need information on specific tickets within the last 7 days, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:21.841Z",
+      "query": "What tickets are at risk of missing SLA and what should we do?",
+      "response": "### Tickets at Risk of Missing SLA\n\n**Total Tickets at Risk:** **79** (Pending)\n\n#### Breakdown of Pending Tickets:\n1. **Urgent: 15 tickets**\n   - Examples include:\n     - **Ticket #2:** Compliance certification status\n     - **Ticket #4:** Licensing for internal tools\n     - **Ticket #36:** SOC 2 compliance documentation\n\n2. **High: 20 tickets**\n   - Examples include:\n     - **Ticket #10:** Demo request for team evaluation\n     - **Ticket #42:** Demo request for team evaluation (duplicate)\n    ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:33.713Z",
+      "query": "Tell me about recent ticket activity",
+      "response": "### Recent Ticket Activity Overview\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n### 2. **Priority Distribution**\n- **Urgent:** **88** tickets\n- **High:** **89** tickets\n- **Normal:** **86** tickets\n- **Low:** **83** tickets\n\n### 3. **Age Analysis**\n- **All tickets are less than 7 days old.**\n- **No tickets are older than 30 days.**\n\n---\n\n### Key Insights:\n- A signifi",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:35.498Z",
+      "query": "Show me tickets with status 'invalid_status_12345' from year 1900",
+      "response": "There are no tickets with the status **'invalid_status_12345'** from the year **1900** in the current dataset. All tickets are recent, with none older than 7 days.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:49.403Z",
+      "query": "Analyze the most common support problems in our system",
+      "response": "### Common Support Problems Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### Most Frequent Issues Identified\n\n1. **Onboarding Process Complexity**\n   - **Tickets:** \n     - **#3:** \"The onboarding process was confusing...\"\n     - **#6:** \"The onboarding process was confusing...\"\n     - **#33:** \"The onboarding process was confusing...\"\n   - **Count:** 3 tickets\n   - **Description:** Many users struggle with the onboarding steps, particularly related to API credentials and overall navigation.\n\n2. ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:36:58.144Z",
+      "query": "When were the most recent tickets created and how old are they?",
+      "response": "All tickets in the current dataset are less than 7 days old, with the most recent tickets created within the last 24 hours. Specifically, no tickets are older than 7 days, indicating that all current tickets are recent.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:37:10.995Z",
+      "query": "Analyze tickets mentioning special characters or symbols in their content",
+      "response": "### Analysis of Tickets Mentioning Special Characters or Symbols\n\n#### Total Tickets Analyzed: **346**\n\n---\n\n### Tickets with Special Characters or Symbols:\n\n1. **Ticket #20** - \"Two-factor authentication not working\"\n   - Content includes a special character: **@**\n\n2. **Ticket #22** - \"Multi-language UI support\"\n   - Content includes: **!**\n\n3. **Ticket #38** - \"API token management features\"\n   - Content includes: **&**\n\n4. **Ticket #58** - \"Can't attach files to tickets\"\n   - Content include",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:37:29.172Z",
+      "query": "Provide detailed analysis of all ticket data with full breakdown",
+      "response": "### Detailed Ticket Data Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n---\n\n### 2. **Priority Distribution**\n- **Urgent:** **88** tickets (25.4%)\n- **High:** **89** tickets (25.7%)\n- **Normal:** **86** tickets (24.8%)\n- **Low:** **83** tickets (24.0%)\n\n---\n\n### 3. **Age Analysis**\n- **Less than 24 hours:** **0** tickets\n- **Less than 7 days:** **346** tickets\n",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:37:45.343Z",
+      "query": "Analyze all ticket data comprehensively",
+      "response": "### Comprehensive Ticket Data Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n### 2. **Priority Distribution**\n- **Urgent:** **88** tickets (25.4%)\n- **High:** **89** tickets (25.7%)\n- **Normal:** **86** tickets (24.9%)\n- **Low:** **83** tickets (24.0%)\n\n### 3. **Age Analysis**\n- **< 24 hours:** **0** tickets\n- **< 7 days:** **346** tickets\n- **< 30 days:** **0*",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:01.730Z",
+      "query": "Provide comprehensive analysis of all ticket trends, patterns, and recommendations",
+      "response": "### Comprehensive Ticket Trends and Patterns Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n### 2. **Priority Distribution**\n- **Urgent:** **88** tickets (25.4%)\n- **High:** **89** tickets (25.7%)\n- **Normal:** **86** tickets (24.9%)\n- **Low:** **83** tickets (24.0%)\n\n### 3. **Age Analysis**\n- **All tickets are less than 7 days old.**\n- **No tickets older than ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:12.042Z",
+      "query": "Analyze ticket resolution time patterns and trends",
+      "response": "### Ticket Resolution Time Patterns and Trends Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### 1. **Status Breakdown**\n- **Pending:** **79** tickets (22.8%)\n- **Open:** **191** tickets (55.2%)\n- **Closed:** **76** tickets (21.9%)\n\n### 2. **Resolution Insights**\n- **Average Resolution Time for Closed Tickets:**\n  - **Total Closed Tickets:** **76**\n  - **Resolution Time:** Detailed resolution time data is not available, but the closed ticket count indicates that timely resolutions may be achieved ",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:18.755Z",
+      "query": "Analyze ticket age distribution",
+      "response": "### Ticket Age Distribution Analysis\n\n#### Total Tickets: **346**\n\n---\n\n### Age Breakdown:\n- **<24 hours:** **0** tickets\n- **<7 days:** **346** tickets (100%)\n- **<30 days:** **0** tickets\n- **>30 days:** **0** tickets\n\n---\n\n### Insights:\n- All tickets are less than 7 days old, indicating a very recent influx of support requests.\n- There are no older tickets, suggesting either a new system implementation or recent changes that triggered increased activity.\n\n### Recommendation:\n- Focus on prompt",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:24.823Z",
+      "query": "Show me urgent tickets",
+      "response": "### Urgent Tickets Overview\n\n#### Total Urgent Tickets: **88**\n\n---\n\n### Status Breakdown\n- **Pending:** **11** tickets\n- **Open:** **63** tickets\n- **Closed:** **14** tickets\n\n---\n\n### Recent Urgent Tickets (Selected Examples)\n\n1. **Ticket #3**  \n   - **Status:** Open  \n   - **Description:** \"The onboarding process was confusing. I got stuck on step 3 where it asks for API credentials.\"\n\n2. **Ticket #22**  \n   - **Status:** Open  \n   - **Description:** \"We've been using your platform for 6 mont",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:26.077Z",
+      "query": "How many of those are unassigned?",
+      "response": "There is no specific data regarding the assignment status of tickets in the provided dataset. Therefore, I cannot determine how many tickets are unassigned.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:32.532Z",
+      "query": "Tell me about high priority tickets",
+      "response": "### High Priority Tickets Overview\n\n#### Total High Priority Tickets: **89**\n\n---\n\n### Status Breakdown\n- **Pending:** **22** tickets\n- **Open:** **46** tickets\n- **Closed:** **21** tickets\n\n---\n\n### Notable High Priority Tickets (Open)\n1. **Ticket #30** - \"API documentation unclear\" (32 words)\n2. **Ticket #20** - \"Two-factor authentication not working\" (9 words)\n3. **Ticket #47** - \"Login issues with my account\" (103 words)\n\n---\n\n### Common Themes in High Priority Tickets\n- **Documentation Issu",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-19T16:38:38.724Z",
+      "query": "What about urgent priority?",
+      "response": "### Urgent Priority Tickets Overview\n\n#### Total Urgent Priority Tickets: **88**\n\n---\n\n### Status Breakdown\n- **Pending:** **11** tickets\n- **Open:** **63** tickets\n- **Closed:** **14** tickets\n\n---\n\n### Recent Urgent Tickets\n- **Pending:** \n  - Ticket #36: SOC 2 compliance documentation\n  - Ticket #227: Custom quote request for 500 users\n\n- **Open:** \n  - Ticket #3: Onboarding process too complex\n  - Ticket #14: Migration assistance needed\n\n- **Closed:**\n  - Ticket #25: Need references from sim",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:28.610Z",
+      "query": "how many tickets are tagged billing?",
+      "response": "There are **0 tickets** tagged with billing in the provided dataset.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:32.883Z",
+      "query": "how many technical tickets?",
+      "response": "There are **0 tickets** explicitly tagged as technical in the provided dataset. If you meant tickets related to technical issues, please clarify the criteria, and I can assist further.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:34.579Z",
+      "query": "tickets tagged feature-request",
+      "response": "There are **0 tickets** explicitly tagged as \"feature request\" in the provided dataset. If you need tickets related to specific features or similar requests, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:36.477Z",
+      "query": "show tickets with urgent tag",
+      "response": "### Urgent Tickets Overview\n\n#### Total Urgent Tickets: **88**\n\n---\n\n### Status Breakdown\n- **Pending:** **11** tickets\n- **Open:** **63** tickets\n- **Closed:** **14** tickets\n\n---\n\n### List of Urgent Tickets\n\n1. **Ticket #2** - Pending: Compliance certification status\n   - Description: \"Is there an active community forum or Slack channel where users can help each other? Would be great ...\"\n\n2. **Ticket #3** - Open: Onboarding process too complex\n   - Description: \"The onboarding process was con",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:39.350Z",
+      "query": "how many bug tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"bug\" in the provided dataset. If you need tickets related to specific issues that may be considered bugs, please specify the criteria, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:46.274Z",
+      "query": "breakdown by ticket type",
+      "response": "The provided dataset does not contain explicit tags for different ticket types such as \"bug,\" \"feature request,\" or \"billing.\" However, I can summarize the tickets by their status and priority.\n\n### Ticket Breakdown by Status and Priority\n\n#### Total Tickets: **346**\n\n---\n\n### By Status:\n- **Pending:** **79** tickets\n- **Open:** **191** tickets\n- **Closed:** **76** tickets\n\n---\n\n### By Priority:\n- **Urgent:** **88** tickets\n- **High:** **89** tickets\n- **Normal:** **86** tickets\n- **Low:** **83*",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:48.901Z",
+      "query": "how many incident tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"incident\" in the provided dataset. If you are looking for tickets related to specific incidents or issues, please specify the criteria, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:51.782Z",
+      "query": "show problem tickets",
+      "response": "### Problem Tickets Overview\n\n#### Total Problem Tickets: **0**\n\n---\n\nThe provided dataset does not contain explicit tags or classifications for \"problem\" tickets. If you have specific criteria in mind for what constitutes a problem ticket, please clarify, and I can help further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T16:54:54.029Z",
+      "query": "how many question tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"question\" in the provided dataset. If you are looking for tickets that contain inquiries or requests for information, please specify the criteria, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:24.895Z",
+      "query": "how many tickets are tagged billing?",
+      "response": "There are **0 tickets** tagged with billing in the provided dataset. If you need tickets related to other specific criteria or categories, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:31.812Z",
+      "query": "how many technical tickets?",
+      "response": "There are **0 tickets** explicitly tagged as technical in the provided dataset. If you meant tickets related to specific technical issues, please clarify, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:34.189Z",
+      "query": "tickets tagged feature-request",
+      "response": "There are **0 tickets** explicitly tagged as \"feature request\" in the provided dataset. If you need tickets related to specific features or similar requests, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:41.618Z",
+      "query": "how many bug tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"bug\" in the provided dataset. If you need tickets related to specific issues that may be considered bugs, please specify the criteria, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:44.622Z",
+      "query": "breakdown by ticket type",
+      "response": "The provided dataset does not contain explicit tags for different ticket types such as \"bug,\" \"feature request,\" or \"billing.\" However, I can summarize the tickets by their status and priority.\n\n### Ticket Overview\n\n#### Total Tickets: **346**\n\n---\n\n### By Status:\n- **Pending:** **79**\n- **Open:** **191**\n- **Closed:** **76**\n\n---\n\n### By Priority:\n- **Urgent:** **88**\n- **High:** **89**\n- **Normal:** **86**\n- **Low:** **83**\n\n---\n\nIf you have specific criteria in mind or need further details, p",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:46.231Z",
+      "query": "how many incident tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"incident\" in the provided dataset. If you need tickets related to specific incidents or issues, please specify the criteria, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T17:13:52.112Z",
+      "query": "show problem tickets",
+      "response": "### Problem Tickets Overview\n\n#### Total Problem Tickets: **0**\n\nThe provided dataset does not contain explicit classifications for \"problem\" tickets. If you have specific criteria or types of issues in mind, please share, and I can assist you further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:13.491Z",
+      "query": "how many tickets are tagged billing?",
+      "response": "There are **0 tickets** tagged with billing in the provided dataset. If you need tickets related to other specific criteria or categories, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:15.938Z",
+      "query": "how many technical tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"technical\" in the provided dataset. If you need tickets related to specific technical issues or topics, please clarify, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:18.958Z",
+      "query": "tickets tagged feature-request",
+      "response": "There are **0 tickets** explicitly tagged as \"feature request\" in the provided dataset. If you need tickets related to specific features or similar requests, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:20.651Z",
+      "query": "how many bug tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"bug\" in the provided dataset. If you are looking for tickets related to specific issues that may be considered bugs, please provide more details, and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:25.757Z",
+      "query": "how many incident tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"incident\" in the provided dataset. If you need assistance with tickets related to specific incidents or issues, please specify the criteria!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:26.327Z",
+      "query": "breakdown by ticket type",
+      "response": "The provided dataset does not contain explicit tags for different ticket types such as \"bug,\" \"feature request,\" or \"billing.\" However, I can summarize the tickets by their status and priority.\n\n### Ticket Breakdown\n\n#### By Status:\n- **Pending:** 79\n- **Open:** 191\n- **Closed:** 76\n\n#### By Priority:\n- **Urgent:** 88\n- **High:** 89\n- **Normal:** 86\n- **Low:** 83\n\n#### By Age:\n- **< 24 hours:** 0\n- **< 7 days:** 275\n- **< 30 days:** 71\n- **> 30 days:** 0\n\nIf you need further analysis or specific",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:27.786Z",
+      "query": "show problem tickets",
+      "response": "### Problem Tickets Overview\n\n#### Total Problem Tickets: **0**\n\nThe provided dataset does not contain explicit classifications for \"problem\" tickets. If you have specific criteria or types of issues in mind, please let me know for further assistance!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:30.072Z",
+      "query": "how many question tickets?",
+      "response": "There are **0 tickets** explicitly tagged as \"question\" in the provided dataset. If you need assistance with tickets related to specific inquiries or topics, please let me know!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:33.861Z",
+      "query": "show task tickets",
+      "response": "The provided dataset does not contain explicit classifications for \"task\" tickets. However, I can summarize the tickets by their status and priority if that would be helpful. \n\n### Ticket Overview by Status:\n- **Total Tickets:** 346\n- **Pending:** 79\n- **Open:** 191\n- **Closed:** 76\n\n### Ticket Overview by Priority:\n- **Urgent:** 88\n- **High:** 89\n- **Normal:** 86\n- **Low:** 83\n\nIf you have specific criteria for what you consider \"task\" tickets, please let me know and I can assist further!",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:34.270Z",
+      "query": "show tickets with urgent tag",
+      "response": "### Urgent Tickets Overview\n\n#### Total Urgent Tickets: **88**\n\n---\n\nHere are the urgent tickets currently in the system:\n\n- **#2** [pending] Compliance certification status\n- **#3** [open] Onboarding process too complex\n- **#4** [pending] Licensing for internal tools\n- **#9** [closed] White-label solution inquiry\n- **#14** [open] Migration assistance needed\n- **#22** [open] Multi-language UI support\n- **#23** [pending] How to recover deleted data\n- **#36** [pending] SOC 2 compliance documentati",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:35.609Z",
+      "query": "how many urgent tickets?",
+      "response": "There are **88 urgent tickets** in the dataset.",
+      "source": "ai",
+      "confidence": 0.85
+    },
+    {
+      "timestamp": "2025-11-20T18:57:40.107Z",
+      "query": "how many normal priority tickets?",
+      "response": "There are **86 normal priority tickets** in the dataset.",
+      "source": "ai",
+      "confidence": 0.85
+    }
+  ],
+  "maxEntries": 50,
+  "lastUpdated": "2025-11-20T18:57:40.107Z"
+}

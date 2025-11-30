@@ -134,7 +134,7 @@ export const VALID_COMMANDS = [
   "date",
   "echo",
   "stats",
-  // TEMPORARY: Hidden command for Zendesk portal access (will be removed during cleanup)
+  // Experiments portal access
   "zendesk",
   "zen",
 ] as const
@@ -193,7 +193,7 @@ export const COMMAND_ALIASES: Record<string, string> = {
   date: "current date/time",
   echo: "echo text",
   stats: "portfolio statistics",
-  // TEMPORARY: Hidden command for Zendesk portal (will be removed during cleanup)
+  // Experiments portal access
   zendesk: "Zendesk Portal",
   zen: "Zendesk Portal",
 } as const
