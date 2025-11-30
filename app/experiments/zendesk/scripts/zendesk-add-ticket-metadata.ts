@@ -14,7 +14,7 @@
  * Usage: bun scripts/add-ticket-metadata.ts
  */
 
-import { getZendeskClient } from "../app/zendesk/lib/zendesk-api-client"
+import { getZendeskClient } from "../lib/zendesk-api-client"
 
 // Configuration
 const START_TICKET = 424

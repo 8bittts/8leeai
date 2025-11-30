@@ -42,3 +42,26 @@ Reorganized the experimental features (Zendesk and Intercom Intelligence Portals
 - Intercom portal: `https://8lee.ai/experiments/intercom`
 
 **Build Status:** Passing (96 tests, 297 assertions)
+
+### Post-Move Verification and Cleanup
+
+**Fixed Script Imports:**
+- Fixed broken relative imports in intercom scripts (`../app/intercom/lib/` to `../lib/`)
+- Fixed broken relative imports in zendesk scripts (`../app/zendesk/lib/` to `../lib/`)
+
+**Knip Analysis:**
+- Ran knip to identify unused code
+- Removed unused `app/lib/schemas.ts` (duplicate of experiment-specific schemas)
+- Confirmed experiment components are correctly imported (knip false positives for Next.js dynamic imports)
+
+**Verified:**
+- All 21 routes correctly registered under `/experiments/` path
+- Proxy correctly handles `/experiments` path exclusion
+- CSP allows connections to `api.zendesk.com` and `api.intercom.io`
+- Build passes with all static pages generated
+- All 96 tests passing with 297 assertions
+
+**Main App Isolation Confirmed:**
+- No imports from main app into experiments
+- No imports from experiments into main app
+- Changes isolated to experiment folder structure only

@@ -13,7 +13,7 @@
  * Usage: bun scripts/create-synthetic-tickets.ts [count]
  */
 
-import { getZendeskClient } from "../app/zendesk/lib/zendesk-api-client"
+import { getZendeskClient } from "../lib/zendesk-api-client"
 
 // Configuration
 const DEFAULT_COUNT = 25

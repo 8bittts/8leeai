@@ -14,7 +14,7 @@
  *   - INTERCOM_SUBDOMAIN
  */
 
-import { getIntercomAPIClient } from "../app/intercom/lib/intercom-api-client"
+import { getIntercomAPIClient } from "../lib/intercom-api-client"
 
 // Rich reply templates for different scenarios
 const _supportReplies = {

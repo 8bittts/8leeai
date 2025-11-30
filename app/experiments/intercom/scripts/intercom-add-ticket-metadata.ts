@@ -14,7 +14,7 @@
  * Usage: bun scripts/add-ticket-metadata.ts
  */
 
-import { getIntercomAPIClient } from "../app/intercom/lib/intercom-api-client"
+import { getIntercomAPIClient } from "../lib/intercom-api-client"
 
 // Configuration
 const START_TICKET = 424

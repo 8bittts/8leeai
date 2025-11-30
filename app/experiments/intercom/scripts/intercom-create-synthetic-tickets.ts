@@ -13,7 +13,7 @@
  * Usage: bun scripts/create-synthetic-tickets.ts [count]
  */
 
-import { getIntercomAPIClient } from "../app/intercom/lib/intercom-api-client"
+import { getIntercomAPIClient } from "../lib/intercom-api-client"
 
 // Configuration
 const DEFAULT_COUNT = 25

@@ -14,7 +14,7 @@
  *   - ZENDESK_SUBDOMAIN
  */
 
-import { getZendeskClient } from "../app/zendesk/lib/zendesk-api-client"
+import { getZendeskClient } from "../lib/zendesk-api-client"
 
 // Rich reply templates for different scenarios
 const _supportReplies = {
