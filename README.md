@@ -15,7 +15,7 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-16.0.5-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.6-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.17-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
@@ -132,16 +132,16 @@ Additional tests exist for archived experimental projects (gitignored).
 ## Tech Stack
 
 - **Package Manager & Runtime**: [Bun 1.3.1](https://bun.sh)
-- **Framework**: [Next.js 16.0.5](https://nextjs.org) with App Router & Turbopack
+- **Framework**: [Next.js 16.0.6](https://nextjs.org) with App Router & Turbopack
 - **UI**: [React 19.2.0](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.8](https://biomejs.dev) - 100+ error rules + 5 nursery rules
-- **AI/ML**: [Vercel AI SDK 5.0.104](https://sdk.vercel.ai), [OpenAI SDK 2.0.74](https://github.com/openai/openai-node)
+- **AI/ML**: [Vercel AI SDK 5.0.105](https://sdk.vercel.ai), [OpenAI SDK 2.0.75](https://github.com/openai/openai-node)
 - **Email**: [Resend 6.5.2](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`
-- **Analytics**: [Vercel Analytics 1.5.0](https://vercel.com/analytics) & [Speed Insights 1.2.0](https://vercel.com/docs/speed-insights)
+- **Analytics**: [Vercel Analytics 1.6.0](https://vercel.com/analytics) & [Speed Insights 1.3.0](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com) (death-note team - Pro plan)
   - Team ID: `team_UzPg3vyRGY8HESeUqDwFmCXB`
   - Project ID: `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
