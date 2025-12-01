@@ -16,6 +16,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **If you see any npm/yarn/pnpm references, they are incorrect and must be replaced with Bun equivalents.**
 
+## CLI Tools Preference
+
+**Always prefer CLI tools for external services:**
+
+- **Vercel CLI**: Use `vercel` commands for deployments, environment variables, and project management. Always include `--scope death-note` flag.
+- **Supabase CLI**: Use `supabase` commands for database operations, migrations, and project management.
+- **GitHub CLI**: Use `gh` commands for issues, PRs, and repository operations.
+
+These CLI tools provide faster, more reliable operations than web interfaces and maintain context within the terminal workflow.
+
 ## Quick Start
 
 ```bash
@@ -308,10 +318,10 @@ Tests focus on **user intent and business logic**, not implementation details. T
    - Comments answer: "Why does this matter to users?"
 
 **Test Coverage (96 tests, 297 assertions):**
-- **`lib/utils.test.ts`** - Data integrity, user input validation, security filtering (URL validation, malicious pattern detection)
-- **`hooks/use-typewriter.test.tsx`** - Authentic terminal content reveal
-- **`hooks/use-virtual-keyboard-suppression.test.tsx`** - Mobile keyboard control (hide after Enter)
-- **`components/cursor.test.tsx`** - Visual feedback for terminal readiness
+- **`tests/lib/utils.test.ts`** - Data integrity, user input validation, security filtering (URL validation, malicious pattern detection)
+- **`tests/hooks/use-typewriter.test.tsx`** - Authentic terminal content reveal
+- **`tests/hooks/use-virtual-keyboard-suppression.test.tsx`** - Mobile keyboard control (hide after Enter)
+- **`tests/components/cursor.test.tsx`** - Visual feedback for terminal readiness
 
 **Example: Intent-Focused Test**
 
@@ -353,8 +363,16 @@ test("hides keyboard after command submission on touch devices", () => {
 │   └── use-virtual-keyboard-suppression.ts # Mobile keyboard suppression (simple blur on Enter)
 ├── lib/
 │   ├── data.ts            # All portfolio data
-│   ├── utils.ts           # Utilities, constants, command types, and shared rendering logic
-│   └── utils.test.ts      # Utility function tests
+│   └── utils.ts           # Utilities, constants, command types, and shared rendering logic
+├── tests/                 # Test files (Bun native runner)
+│   ├── setup.ts           # Test configuration with happy-dom
+│   ├── components/        # Component tests
+│   │   └── cursor.test.tsx
+│   ├── hooks/             # Hook tests
+│   │   ├── use-typewriter.test.tsx
+│   │   └── use-virtual-keyboard-suppression.test.tsx
+│   └── lib/               # Utility tests
+│       └── utils.test.ts
 ├── public/
 │   ├── cj.m4a            # Interaction audio
 │   ├── mario.jpg         # 404 page background
@@ -380,18 +398,16 @@ test("hides keyboard after command submission on touch devices", () => {
 ├── _docs/                # Historical documentation
 │   ├── README.md         # Documentation structure guide
 │   ├── 2025-september.md # September 2025 release notes (monthly)
-│   ├── 2025-october.md   # October 2025 release notes (monthly)
-│   ├── 2025-november.md  # November 2025 release notes (archived, pre-weekly split)
-│   └── portfolio-improvements-master.md # Portfolio enhancement tracking
+│   └── 2025-october.md   # October 2025 release notes (monthly)
 ├── docs/                 # Current release notes (November 2025+)
 │   └── release-notes/    # Weekly release notes directory
 │       ├── 00-RN-README.md              # Release notes structure guide
 │       ├── 2025-11-w1-november.md       # November Week 1 (Nov 2-8)
 │       ├── 2025-11-w2-november.md       # November Week 2 (Nov 9-15)
 │       ├── 2025-11-w3-november.md       # November Week 3 (Nov 16-22)
-│       └── 2025-11-w4-november.md       # November Week 4 (Nov 22-28)
+│       ├── 2025-11-w4-november.md       # November Week 4 (Nov 22-28)
+│       └── 2025-11-w5-november.md       # November Week 5 (Nov 29-30)
 │       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
-├── test-setup.ts         # Bun test configuration with happy-dom
 ├── bunfig.toml           # Bun configuration for test preloading
 └── CLAUDE.md             # AI assistant guidance (this file)
 ```

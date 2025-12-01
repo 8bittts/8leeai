@@ -65,3 +65,41 @@ Reorganized the experimental features (Zendesk and Intercom Intelligence Portals
 - No imports from main app into experiments
 - No imports from experiments into main app
 - Changes isolated to experiment folder structure only
+
+---
+
+### Documentation and Test Organization Cleanup
+
+Comprehensive cleanup of documentation and test file organization for better maintainability.
+
+**Stale Documentation Removed:**
+- Deleted `_docs/2025-november.md.tmp` (empty tmp file)
+- Deleted `_docs/2025-november.md` (content migrated to weekly release notes)
+- Deleted `_docs/portfolio-improvements-master.md` (work captured in November Week 3 release notes)
+- Updated `_docs/README.md` to reflect current structure (historical files only)
+
+**Test Organization:**
+- Created dedicated `/tests/` directory with organized subdirectories
+- Moved test files from co-located positions to centralized test directory:
+  - `lib/utils.test.ts` to `tests/lib/utils.test.ts`
+  - `hooks/use-typewriter.test.tsx` to `tests/hooks/use-typewriter.test.tsx`
+  - `hooks/use-virtual-keyboard-suppression.test.tsx` to `tests/hooks/use-virtual-keyboard-suppression.test.tsx`
+  - `components/cursor.test.tsx` to `tests/components/cursor.test.tsx`
+- Moved `test-setup.ts` to `tests/setup.ts`
+- Updated `bunfig.toml` to reference new setup location
+
+**Configuration Updates:**
+- Updated `tsconfig.json` exclude list (`test-setup.ts` to `tests/**/*`)
+- Updated `.gitignore` for experiments new paths (`/app/experiments/zendesk/`, `/app/experiments/intercom/`)
+
+**Documentation Updates:**
+- Added CLI Tools Preference section to CLAUDE.md (Vercel, Supabase, GitHub CLI)
+- Updated file structure documentation in CLAUDE.md and README.md
+- Updated test file path references throughout documentation
+- Added Week 5 release notes reference
+
+**Quality Verification:**
+- All 96 tests passing (297 assertions)
+- Zero Biome lint errors
+- Zero TypeScript errors
+- Build passes

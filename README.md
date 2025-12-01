@@ -119,11 +119,11 @@ For simple updates (SAFE only), the plan file auto-deletes. For complex updates 
 
 **Coverage**: 96 tests, 297 assertions across 12 files (~2.3s execution)
 
-Run `bun test` to execute all tests. Core portfolio tests are co-located with source files:
-- `lib/utils.test.ts` - Data integrity, user input validation, security filtering
-- `hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
-- `hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control
-- `components/cursor.test.tsx` - Visual feedback for terminal readiness
+Run `bun test` to execute all tests. Test files are organized in the `/tests/` directory:
+- `tests/lib/utils.test.ts` - Data integrity, user input validation, security filtering
+- `tests/hooks/use-typewriter.test.tsx` - Authentic terminal content reveal
+- `tests/hooks/use-virtual-keyboard-suppression.test.tsx` - Mobile keyboard control
+- `tests/components/cursor.test.tsx` - Visual feedback for terminal readiness
 
 Additional tests exist for archived experimental projects (gitignored).
 
@@ -170,8 +170,12 @@ Additional tests exist for archived experimental projects (gitignored).
 │   └── use-virtual-keyboard-suppression.ts  # Mobile keyboard (blur on Enter)
 ├── lib/                              # Utilities and data
 │   ├── data.ts                       # Portfolio data (64 projects, 5 education, 6 volunteer)
-│   ├── utils.ts                      # Utilities, constants, command types, rendering logic
-│   └── utils.test.ts                 # Utility function tests
+│   └── utils.ts                      # Utilities, constants, command types, rendering logic
+├── tests/                            # Test files (Bun native runner)
+│   ├── setup.ts                      # Test configuration with happy-dom
+│   ├── components/                   # Component tests
+│   ├── hooks/                        # Hook tests
+│   └── lib/                          # Utility tests
 ├── public/                           # Static assets
 │   ├── cj.m4a                        # Interaction audio
 │   ├── mario.jpg                     # 404 background
@@ -183,18 +187,16 @@ Additional tests exist for archived experimental projects (gitignored).
 ├── _docs/                            # Historical documentation
 │   ├── README.md                     # Documentation structure guide
 │   ├── 2025-september.md             # September 2025 release notes (monthly)
-│   ├── 2025-october.md               # October 2025 release notes (monthly)
-│   ├── 2025-november.md              # November 2025 release notes (archived, pre-weekly split)
-│   └── portfolio-improvements-master.md # Portfolio enhancement tracking
+│   └── 2025-october.md               # October 2025 release notes (monthly)
 ├── docs/                             # Current release notes (November 2025+)
 │   └── release-notes/                # Weekly release notes directory
 │       ├── 00-RN-README.md           # Release notes structure guide
 │       ├── 2025-11-w1-november.md    # November Week 1 (Nov 2-8)
 │       ├── 2025-11-w2-november.md    # November Week 2 (Nov 9-15)
 │       ├── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
-│       └── 2025-11-w4-november.md    # November Week 4 (Nov 22-28)
+│       ├── 2025-11-w4-november.md    # November Week 4 (Nov 22-28)
+│       └── 2025-11-w5-november.md    # November Week 5 (Nov 29-30)
 │       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
-├── test-setup.ts                     # Bun test configuration with happy-dom
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
 

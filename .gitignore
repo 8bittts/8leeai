@@ -66,5 +66,5 @@ CLAUDE.md
 # Archived Experimental Projects (Discontinued)
 # These projects are no longer under active development
 # but remain in production for reference/access via hidden commands
-/app/zendesk/
-/app/intercom/
+/app/experiments/zendesk/
+/app/experiments/intercom/

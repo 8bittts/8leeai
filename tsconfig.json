@@ -42,7 +42,7 @@
     "node_modules",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "test-setup.ts",
+    "tests/**/*",
     "scripts/**/*",
     "app/experiments/**/*"
   ]
