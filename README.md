@@ -141,7 +141,7 @@ Additional tests exist for archived experimental projects (gitignored).
 - **Email**: [Resend 6.5.2](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`
-- **Analytics**: [Vercel Analytics 1.6.1](https://vercel.com/analytics) & [Speed Insights 1.3.0](https://vercel.com/docs/speed-insights)
+- **Analytics**: [Vercel Analytics 1.6.1](https://vercel.com/analytics) & [Speed Insights 1.3.1](https://vercel.com/docs/speed-insights)
 - **Deployment**: [Vercel](https://vercel.com) (death-note team - Pro plan)
   - Team ID: `team_UzPg3vyRGY8HESeUqDwFmCXB`
   - Project ID: `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
