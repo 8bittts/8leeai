@@ -15,8 +15,8 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 See [Security](#security) section below for implementation details.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-16.0.6-black)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19.2.0-blue)](https://react.dev)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0.7-black)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.2.1-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.17-38B2AC)](https://tailwindcss.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org)
 [![Bun](https://img.shields.io/badge/Bun-1.3.1-fbf0df)](https://bun.sh)
@@ -132,8 +132,8 @@ Additional tests exist for archived experimental projects (gitignored).
 ## Tech Stack
 
 - **Package Manager & Runtime**: [Bun 1.3.1](https://bun.sh)
-- **Framework**: [Next.js 16.0.6](https://nextjs.org) with App Router & Turbopack
-- **UI**: [React 19.2.0](https://react.dev)
+- **Framework**: [Next.js 16.0.7](https://nextjs.org) with App Router & Turbopack
+- **UI**: [React 19.2.1](https://react.dev)
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.8](https://biomejs.dev) - 100+ error rules + 5 nursery rules

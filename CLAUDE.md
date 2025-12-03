@@ -131,7 +131,7 @@ Detailed explanation of changes if needed.
 Terminal-style portfolio website featuring authentic DOS simulation with boot sequence, typewriter effects, and command-line interaction.
 
 **Tech Stack:**
-- Next.js 16.0.6 + React 19.2.0 + TypeScript 5.9.3 (strict mode)
+- Next.js 16.0.7 + React 19.2.1 + TypeScript 5.9.3 (strict mode)
 - Tailwind CSS v4.1.17 (utility classes only, zero custom CSS)
 - Vercel Analytics 1.6.1 + Speed Insights 1.3.1
 - Biome 2.3.8 (linting/formatting with 100+ error-level rules)
