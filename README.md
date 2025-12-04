@@ -8,7 +8,7 @@ This codebase is configured for **triple-layer anti-crawling protection** - the 
 
 **Before using this template, update these files:**
 - `/public/robots.txt` - Remove crawler blocking if you want SEO
-- `/middleware.ts` - Adjust X-Robots-Tag headers and CORS for your domain
+- `/proxy.ts` - Adjust X-Robots-Tag headers and CORS for your domain
 - `/app/layout.tsx` - Update robots metadata and OpenGraph data
 - `/lib/data.ts` - Replace with your portfolio content
 
