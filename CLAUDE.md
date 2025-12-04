@@ -379,7 +379,8 @@ test("hides keyboard after command submission on touch devices", () => {
 │   ├── bitcoin.pdf       # Bitcoin whitepaper (easter egg)
 │   └── 8-social.jpeg     # Social media share image
 ├── scripts/
-│   └── package-monitor.js # Intelligent package update monitoring (Bun Edition)
+│   ├── test-contact-forms.ts # Contact form testing script
+│   └── x-package-monitor.js  # Intelligent package update monitoring
 ├── proxy.ts              # Security headers (Next.js 16 proxy convention)
 ├── next.config.ts         # Next.js configuration
 ├── postcss.config.mjs     # PostCSS + Tailwind
@@ -406,7 +407,8 @@ test("hides keyboard after command submission on touch devices", () => {
 │       ├── 2025-11-w2-november.md       # November Week 2 (Nov 9-15)
 │       ├── 2025-11-w3-november.md       # November Week 3 (Nov 16-22)
 │       ├── 2025-11-w4-november.md       # November Week 4 (Nov 22-28)
-│       └── 2025-11-w5-november.md       # November Week 5 (Nov 29-30)
+│       ├── 2025-11-w5-november.md       # November Week 5 (Nov 29-30)
+│       └── 2025-12-w1-december.md       # December Week 1 (Dec 1-7)
 │       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
 ├── bunfig.toml           # Bun configuration for test preloading
 └── CLAUDE.md             # AI assistant guidance (this file)

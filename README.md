@@ -182,6 +182,7 @@ Additional tests exist for archived experimental projects (gitignored).
 │   ├── bitcoin.pdf                   # Bitcoin whitepaper (easter egg)
 │   └── 8-social.jpeg                 # Social share image
 ├── scripts/                          # Development utilities
+│   ├── test-contact-forms.ts         # Contact form testing script
 │   └── x-package-monitor.js          # Intelligent package update monitoring
 ├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
 ├── _docs/                            # Historical documentation
@@ -195,7 +196,8 @@ Additional tests exist for archived experimental projects (gitignored).
 │       ├── 2025-11-w2-november.md    # November Week 2 (Nov 9-15)
 │       ├── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
 │       ├── 2025-11-w4-november.md    # November Week 4 (Nov 22-28)
-│       └── 2025-11-w5-november.md    # November Week 5 (Nov 29-30)
+│       ├── 2025-11-w5-november.md    # November Week 5 (Nov 29-30)
+│       └── 2025-12-w1-december.md    # December Week 1 (Dec 1-7)
 │       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
