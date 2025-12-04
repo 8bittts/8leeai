@@ -94,7 +94,7 @@ bun run check        # Lint and format with Biome (via bunx)
 bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
 ```
 
-**Package Update Monitoring** (via `scripts/x-package-monitor.js`):
+**Package Update Monitoring** (via `scripts/x-package-monitor.ts`):
 ```bash
 bun run packages              # Check all packages with impact analysis
 bun run packages:watch        # Continuous monitoring (checks every 6 hours)
@@ -137,7 +137,7 @@ Additional tests exist for archived experimental projects (gitignored).
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.8](https://biomejs.dev) - 100+ error rules + 5 nursery rules
-- **AI/ML**: [Vercel AI SDK 5.0.106](https://sdk.vercel.ai), [OpenAI SDK 2.0.76](https://github.com/openai/openai-node)
+- **AI/ML**: [Vercel AI SDK 5.0.106](https://sdk.vercel.ai), [OpenAI SDK 2.0.77](https://github.com/openai/openai-node)
 - **Email**: [Resend 6.5.2](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`
@@ -189,7 +189,7 @@ Additional tests exist for archived experimental projects (gitignored).
 │   └── 8-social.jpeg                 # Social share image
 ├── scripts/                          # Development utilities
 │   ├── test-contact-forms.ts         # Contact form testing script
-│   └── x-package-monitor.js          # Intelligent package update monitoring
+│   └── x-package-monitor.ts          # Intelligent package update monitoring (Bun native TypeScript)
 ├── proxy.ts                          # Security headers (CSP, CORS, HSTS) - Next.js 16 convention
 ├── _docs/                            # Historical documentation
 │   ├── README.md                     # Documentation structure guide

@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 /**
- * Package Update Monitor Agent - Bun Edition
+ * Package Update Monitor Agent - Bun Native TypeScript Edition
  *
  * ============================================================
  * RUN THIS SCRIPT WITH ONE OF THESE COMMANDS:
@@ -11,10 +11,10 @@
  * bun run packages:critical     # Critical/security updates only
  *
  * Or directly:
- * bun scripts/package-monitor.js
- * bun scripts/package-monitor.js --watch
- * bun scripts/package-monitor.js --critical
- * bun scripts/package-monitor.js --verify    # Run with verification checks
+ * bun scripts/x-package-monitor.ts
+ * bun scripts/x-package-monitor.ts --watch
+ * bun scripts/x-package-monitor.ts --critical
+ * bun scripts/x-package-monitor.ts --verify    # Run with verification checks
  * ============================================================
  *
  * Monitors library and package updates, analyzes breaking changes,
@@ -35,7 +35,7 @@
  *    - Current tiers: HIGH (core), MEDIUM (build-time), LOW (dev-only)
  *
  * 3. Breaking Changes Database (loadBreakingChangesDB):
- *    - MUST include entries for ALL 17 packages in package.json
+ *    - MUST include entries for ALL packages in package.json
  *    - Organized by category: Production Deps, Dev Deps (Build/Style, Linting, Testing, Types)
  *    - Each entry: { breaking: [...], impact: "high|medium|low", effort: "high|medium|low" }
  *
@@ -44,28 +44,66 @@
  *   - Keeps .md file for complex updates (CAUTION/URGENT) requiring review
  *   - Cleans up old plan files when all packages are up to date
  *
- * Usage:
- *   bun run packages              # Check all packages
- *   bun run packages:watch        # Continuous monitoring
- *   bun run packages:critical     # Only critical/security updates
- *
  * REQUIRED - After Installing Updates:
  * =====================================
- * 1. Update CLAUDE.md (Lines 62-67):
- *    - Update version numbers in "Tech Stack" section
- *    - Pattern: `- Next.js X.Y.Z + React ...`
- * 2. Update README.md (Lines 18-22, 120-127):
- *    - Lines 18-22: Update badge versions
- *    - Lines 120-127: Update "Tech Stack" section
- * 3. Update _docs/2025-november.md (or current month):
- *    - Add new entry with date, versions, and changes
- * 4. Git commit:
- *    - Format: "Updates: [package] to [version] and [details]"
+ * 1. Update CLAUDE.md Tech Stack section
+ * 2. Update README.md badges and Tech Stack section
+ * 3. Update docs/release-notes/YYYY-MM-wN-month.md
+ * 4. Git commit with descriptive message
  */
 
-import { execSync } from "node:child_process"
-import fs from "node:fs"
+// Types
+interface PackageJson {
+  name: string
+  version: string
+  dependencies?: Record<string, string>
+  devDependencies?: Record<string, string>
+}
 
+interface MonitorConfig {
+  exclusions?: {
+    packages?: string[]
+    reasons?: Record<string, string>
+  }
+}
+
+interface BreakingChangeInfo {
+  breaking: string[]
+  impact: "high" | "medium" | "low"
+  effort: "high" | "medium" | "low"
+}
+
+type BreakingChangesDB = Record<string, Record<string, BreakingChangeInfo>>
+
+interface PackageUpdate {
+  name: string
+  current: string
+  latest: string
+  type: string
+}
+
+interface AnalyzedUpdate extends PackageUpdate {
+  priority: "critical" | "high" | "medium" | "low"
+  breakingChanges: string[]
+  impact: "high" | "medium" | "low"
+  effort: "high" | "medium" | "low"
+  hasSecurity: boolean
+  recommendation: "urgent" | "caution" | "safe"
+}
+
+interface ActionPlan {
+  urgent: AnalyzedUpdate[]
+  caution: AnalyzedUpdate[]
+  safe: AnalyzedUpdate[]
+}
+
+interface MonitorOptions {
+  watch?: boolean
+  critical?: boolean
+  verify?: boolean
+}
+
+// Colors for terminal output
 const COLORS = {
   reset: "\x1b[0m",
   bright: "\x1b[1m",
@@ -75,66 +113,57 @@ const COLORS = {
   blue: "\x1b[34m",
   magenta: "\x1b[35m",
   cyan: "\x1b[36m",
-}
+} as const
 
 class PackageMonitorAgent {
-  constructor(options = {}) {
-    this.watchMode = options.watch
-    this.criticalOnly = options.critical
-    this.runVerify = options.verify
-    this.generatedPlanFile = null // Track generated file for cleanup
-    this.packageJson = this.loadPackageJson()
+  private criticalOnly: boolean
+  private runVerify: boolean
+  private generatedPlanFile: string | null = null
+  private knownBreakingChanges: BreakingChangesDB
+  private excludedPackages: Set<string> = new Set()
+
+  constructor(options: MonitorOptions = {}) {
+    this.criticalOnly = options.critical ?? false
+    this.runVerify = options.verify ?? false
+    this.loadPackageJson() // Validate package.json exists
     this.knownBreakingChanges = this.loadBreakingChangesDB()
   }
 
-  loadPackageJson() {
+  private loadPackageJson(): PackageJson {
     try {
-      return JSON.parse(fs.readFileSync("package.json", "utf8"))
+      const fs = require("node:fs")
+      const content = fs.readFileSync("package.json", "utf8")
+      return JSON.parse(content) as PackageJson
     } catch (error) {
-      console.error("[ERROR] Failed to load package.json:", error.message)
+      const message = error instanceof Error ? error.message : String(error)
+      console.error(`${COLORS.red}[ERROR] Failed to load package.json:${COLORS.reset}`, message)
       process.exit(1)
     }
   }
 
-  loadBreakingChangesDB() {
+  private loadBreakingChangesDB(): BreakingChangesDB {
     // Load exclusions configuration
     try {
-      const config = JSON.parse(fs.readFileSync(".package-monitor-config.json", "utf8"))
-      this.excludedPackages = new Set(config.exclusions?.packages || [])
-      this.exclusionReasons = config.exclusions?.reasons || {}
-    } catch (_error) {
+      const content = require("node:fs").readFileSync(".package-monitor-config.json", "utf8")
+      const config = JSON.parse(content) as MonitorConfig
+      this.excludedPackages = new Set(config.exclusions?.packages ?? [])
+    } catch {
       // No config file - no exclusions
       this.excludedPackages = new Set()
-      this.exclusionReasons = {}
     }
 
-    // ⚠️ CRITICAL: Breaking Changes Database
-    // =====================================
-    // MUST include ALL 17 packages from package.json (both dependencies & devDependencies)
-    // If new packages are added to package.json, add entries here!
-    // Format: { breaking: [...], impact: "high|medium|low", effort: "high|medium|low" }
-    //
-    // Organized by dependency type:
-    // 1. Production Dependencies (used in runtime)
-    // 2. Dev Dependencies - Build & Style (used during build)
-    // 3. Dev Dependencies - Linting & Format (code quality)
-    // 4. Dev Dependencies - Testing (test infrastructure)
-    // 5. Dev Dependencies - Type Definitions (TypeScript only)
-
+    // Breaking Changes Database
+    // MUST include ALL packages from package.json
     return {
-      // Production Dependencies
+      // Production Dependencies - Core Framework
       next: {
-        "16.0.0": {
+        "17.0.0": {
           breaking: ["Potential App Router changes", "Node.js version requirements"],
           impact: "high",
           effort: "high",
         },
-        "15.0.0": {
-          breaking: [
-            "App Router stabilized",
-            "Image component optimizations",
-            "Turbopack improvements",
-          ],
+        "16.0.0": {
+          breaking: ["App Router updates", "Turbopack improvements", "React 19 support"],
           impact: "medium",
           effort: "low",
         },
@@ -167,6 +196,8 @@ class PackageMonitorAgent {
           effort: "medium",
         },
       },
+
+      // Production Dependencies - Vercel Services
       "@vercel/analytics": {
         "2.0.0": {
           breaking: ["API changes", "Configuration updates"],
@@ -177,6 +208,55 @@ class PackageMonitorAgent {
       "@vercel/speed-insights": {
         "2.0.0": {
           breaking: ["API changes", "Configuration updates"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+      "@vercel/edge-config": {
+        "2.0.0": {
+          breaking: ["API changes", "Edge runtime updates"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+
+      // Production Dependencies - AI/ML
+      ai: {
+        "6.0.0": {
+          breaking: ["SDK API changes", "Provider interface updates"],
+          impact: "high",
+          effort: "medium",
+        },
+        "5.0.0": {
+          breaking: ["Streaming API updates", "Provider changes"],
+          impact: "medium",
+          effort: "low",
+        },
+      },
+      "@ai-sdk/openai": {
+        "3.0.0": {
+          breaking: ["OpenAI API changes", "Model interface updates"],
+          impact: "medium",
+          effort: "medium",
+        },
+        "2.0.0": {
+          breaking: ["Provider API updates", "Configuration changes"],
+          impact: "low",
+          effort: "low",
+        },
+      },
+
+      // Production Dependencies - Communication
+      resend: {
+        "7.0.0": {
+          breaking: ["API changes", "Email template updates"],
+          impact: "medium",
+          effort: "low",
+        },
+      },
+      "@intercom/messenger-js-sdk": {
+        "1.0.0": {
+          breaking: ["Messenger API changes", "Initialization updates"],
           impact: "low",
           effort: "low",
         },
@@ -225,11 +305,6 @@ class PackageMonitorAgent {
           impact: "medium",
           effort: "medium",
         },
-        "8.0.0": {
-          breaking: ["Safe parser removed", "Plugin API updates"],
-          impact: "medium",
-          effort: "low",
-        },
       },
       autoprefixer: {
         "11.0.0": {
@@ -255,13 +330,13 @@ class PackageMonitorAgent {
 
       // Dev Dependencies - Testing
       "@testing-library/react": {
-        "16.0.0": {
-          breaking: ["React 19 required", "Hook testing changes"],
+        "17.0.0": {
+          breaking: ["React 19+ required", "Hook testing changes"],
           impact: "medium",
           effort: "low",
         },
-        "14.0.0": {
-          breaking: ["React 17+ required", "Query API updates"],
+        "16.0.0": {
+          breaking: ["React 19 required", "Query API updates"],
           impact: "medium",
           effort: "low",
         },
@@ -274,7 +349,7 @@ class PackageMonitorAgent {
         },
       },
       "happy-dom": {
-        "13.0.0": {
+        "21.0.0": {
           breaking: ["DOM API updates", "Event handling changes"],
           impact: "low",
           effort: "low",
@@ -284,26 +359,36 @@ class PackageMonitorAgent {
       // Dev Dependencies - Type Definitions
       "@types/react": {
         "20.0.0": {
-          breaking: ["React 19 API changes", "Hook types updated"],
+          breaking: ["React 20 API changes", "Hook types updated"],
+          impact: "low",
+          effort: "low",
+        },
+        "19.0.0": {
+          breaking: ["React 19 API changes", "Concurrent types"],
           impact: "low",
           effort: "low",
         },
       },
       "@types/react-dom": {
         "20.0.0": {
-          breaking: ["React 19 API changes", "Portal types updated"],
+          breaking: ["React 20 API changes", "Portal types updated"],
+          impact: "low",
+          effort: "low",
+        },
+        "19.0.0": {
+          breaking: ["React 19 API changes", "Hydration types"],
           impact: "low",
           effort: "low",
         },
       },
       "@types/node": {
-        "23.0.0": {
-          breaking: ["Node.js 20+ types", "Removed deprecated APIs"],
+        "25.0.0": {
+          breaking: ["Node.js 22+ types", "Removed deprecated APIs"],
           impact: "low",
           effort: "low",
         },
-        "22.0.0": {
-          breaking: ["Node.js 18+ types", "Some APIs deprecated"],
+        "24.0.0": {
+          breaking: ["Node.js 20+ types", "Some APIs deprecated"],
           impact: "low",
           effort: "low",
         },
@@ -311,9 +396,9 @@ class PackageMonitorAgent {
     }
   }
 
-  checkPackageUpdates() {
+  async checkPackageUpdates(): Promise<void> {
     console.log(
-      `${COLORS.cyan}${COLORS.bright}[MONITOR] Package Update Monitor - Bun Edition${COLORS.reset}\n`
+      `${COLORS.cyan}${COLORS.bright}[MONITOR] Package Update Monitor - Bun Native TypeScript${COLORS.reset}\n`
     )
 
     try {
@@ -321,13 +406,13 @@ class PackageMonitorAgent {
       this.cleanupOldPlans()
 
       // Get bun outdated information
-      const updates = this.getBunOutdated()
+      const updates = await this.getBunOutdated()
 
       if (updates.length === 0) {
         console.log(`${COLORS.green}[OK] All packages are up to date!${COLORS.reset}`)
         if (this.excludedPackages.size > 0) {
           console.log(
-            `${COLORS.yellow}📌 Protected packages (${this.excludedPackages.size}): ${Array.from(this.excludedPackages).join(", ")}${COLORS.reset}`
+            `${COLORS.yellow}Protected packages (${this.excludedPackages.size}): ${Array.from(this.excludedPackages).join(", ")}${COLORS.reset}`
           )
         }
         return
@@ -357,10 +442,10 @@ class PackageMonitorAgent {
 
       // Run verification checks if requested
       if (this.runVerify) {
-        const verifyPassed = this.runVerificationChecks()
+        const verifyPassed = await this.runVerificationChecks()
         if (!verifyPassed) {
           console.error(
-            `${COLORS.red}${COLORS.bright}⚠️  Verification failed. Please fix issues before committing.${COLORS.reset}\n`
+            `${COLORS.red}${COLORS.bright}Verification failed. Please fix issues before committing.${COLORS.reset}\n`
           )
           process.exit(1)
         }
@@ -369,40 +454,40 @@ class PackageMonitorAgent {
       // Cleanup generated plan file at the end
       this.cleanupGeneratedPlan()
     } catch (error) {
-      console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, error.message)
+      const message = error instanceof Error ? error.message : String(error)
+      console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, message)
     }
   }
 
-  getBunOutdated() {
+  private getBunOutdated(): PackageUpdate[] {
+    const { execSync } = require("node:child_process")
     try {
-      // Run bun outdated and capture output
       const output = execSync("bun outdated 2>&1", { encoding: "utf8" })
       return this.parseBunOutdated(output)
     } catch (error) {
       // bun outdated may exit with non-zero if updates are available
-      if (error.stdout) {
-        return this.parseBunOutdated(error.stdout)
+      if (error && typeof error === "object" && "stdout" in error) {
+        return this.parseBunOutdated(String(error.stdout))
       }
-      console.error(`${COLORS.red}Failed to check updates:${COLORS.reset}`, error.message)
+      const message = error instanceof Error ? error.message : String(error)
+      console.error(`${COLORS.red}Failed to check updates:${COLORS.reset}`, message)
       return []
     }
   }
 
-  parseBunOutdated(output) {
-    const updates = []
+  private parseBunOutdated(output: string): PackageUpdate[] {
+    const updates: PackageUpdate[] = []
     const lines = output.split("\n")
 
     // Parse bun outdated table format
-    // Example table row: "| next                       | 16.0.0  | 16.0.0 | 16.0.1  |"
-    // Handles scoped packages and (dev) suffix
+    // Example: "| next                       | 16.0.0  | 16.0.0 | 16.0.1  |"
     for (const line of lines) {
-      // Match: | package-name (optional (dev)) | current | update | latest |
       const match = line.match(
         /^\|\s*(@?[\w-/@.]+)(?:\s+\(dev\))?\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|\s+([\d.]+)\s+\|/
       )
       if (match) {
-        const [, name, current, _update, latest] = match
-        // Filter out excluded packages and only add if there's an actual update (latest > current)
+        const [, name, current, , latest] = match
+        // Filter out excluded packages and only add if there's an actual update
         if (latest !== current && !this.excludedPackages.has(name.trim())) {
           updates.push({
             name: name.trim(),
@@ -417,9 +502,9 @@ class PackageMonitorAgent {
     return updates
   }
 
-  analyzeUpdate(update) {
+  private analyzeUpdate(update: PackageUpdate): AnalyzedUpdate {
     const { name, current, latest } = update
-    const analysis = {
+    const analysis: AnalyzedUpdate = {
       ...update,
       priority: this.calculatePriority(update),
       breakingChanges: [],
@@ -456,7 +541,7 @@ class PackageMonitorAgent {
     }
 
     // Check for security indicators
-    if (this.hasSecurityKeywords(name, latest)) {
+    if (this.hasSecurityKeywords(name)) {
       analysis.hasSecurity = true
       analysis.priority = "critical"
       analysis.recommendation = "urgent"
@@ -465,50 +550,41 @@ class PackageMonitorAgent {
     return analysis
   }
 
-  calculatePriority(update) {
+  private calculatePriority(update: PackageUpdate): "critical" | "high" | "medium" | "low" {
     const { name } = update
 
-    // ⚠️ IMPORTANT: Use EXACT package name matching ONLY
-    // DO NOT use includes() - it causes false positives!
-    // Example bug: name.includes("react") matched "@testing-library/react" as HIGH
-
     // HIGH PRIORITY: Core framework & language
-    // Updates to these may break the entire application
-    const criticalExact = {
+    const criticalExact: Record<string, boolean> = {
       next: true,
       react: true,
       "react-dom": true,
       typescript: true,
     }
-    if (criticalExact[name]) {
-      return "high"
-    }
+    if (criticalExact[name]) return "high"
 
     // HIGH PRIORITY: Production runtime dependencies
-    // Used in production builds, monitoring analytics
-    const highExact = {
+    const highExact: Record<string, boolean> = {
       "@vercel/analytics": true,
       "@vercel/speed-insights": true,
+      "@vercel/edge-config": true,
+      ai: true,
+      "@ai-sdk/openai": true,
+      resend: true,
     }
-    if (highExact[name]) {
-      return "high"
-    }
+    if (highExact[name]) return "high"
 
     // MEDIUM PRIORITY: Build-time dependencies
-    // Used during dev/build, affects CSS and styling
-    const mediumExact = {
+    const mediumExact: Record<string, boolean> = {
       tailwindcss: true,
       "@tailwindcss/postcss": true,
       postcss: true,
       autoprefixer: true,
+      "@intercom/messenger-js-sdk": true,
     }
-    if (mediumExact[name]) {
-      return "medium"
-    }
+    if (mediumExact[name]) return "medium"
 
     // LOW PRIORITY: Development tools only
-    // Test runners, type definitions, linting - dev-only, can update freely
-    const lowExact = {
+    const lowExact: Record<string, boolean> = {
       "@biomejs/biome": true,
       "@testing-library/react": true,
       "@testing-library/jest-dom": true,
@@ -517,21 +593,17 @@ class PackageMonitorAgent {
       "@types/react": true,
       "@types/react-dom": true,
     }
-    if (lowExact[name]) {
-      return "low"
-    }
+    if (lowExact[name]) return "low"
 
-    // Default fallback for any new packages
     return "medium"
   }
 
-  isVersionInRange(current, latest, checkVersion) {
-    const parseVersion = (v) => v.split(".").map((n) => Number.parseInt(n, 10))
+  private isVersionInRange(current: string, latest: string, checkVersion: string): boolean {
+    const parseVersion = (v: string): number[] => v.split(".").map((n) => Number.parseInt(n, 10))
     const [cMajor, cMinor, cPatch] = parseVersion(current)
     const [lMajor] = parseVersion(latest)
     const [chMajor, chMinor, chPatch] = parseVersion(checkVersion)
 
-    // Check if the version we're checking is between current and latest
     if (chMajor > cMajor && chMajor <= lMajor) return true
     if (chMajor === cMajor && chMinor > cMinor) return true
     if (chMajor === cMajor && chMinor === cMinor && chPatch > cPatch) return true
@@ -539,16 +611,14 @@ class PackageMonitorAgent {
     return false
   }
 
-  hasSecurityKeywords(name, _version) {
-    // Heuristic for security-related packages
+  private hasSecurityKeywords(name: string): boolean {
     const securityPackages = ["helmet", "cors", "csrf", "sanitize", "xss"]
     return securityPackages.some((pkg) => name.includes(pkg))
   }
 
-  priorityScore(update) {
+  private priorityScore(update: AnalyzedUpdate): number {
     let score = 0
 
-    // Base priority score
     switch (update.priority) {
       case "critical":
         score += 100
@@ -564,13 +634,9 @@ class PackageMonitorAgent {
         break
     }
 
-    // Security bonus
     if (update.hasSecurity) score += 200
-
-    // Breaking changes penalty (handle carefully)
     if (update.breakingChanges.length > 0) score += 30
 
-    // Impact scoring
     switch (update.impact) {
       case "high":
         score += 20
@@ -578,34 +644,39 @@ class PackageMonitorAgent {
       case "medium":
         score += 10
         break
+      case "low":
+        // No additional score for low impact
+        break
     }
 
     return score
   }
 
-  displayRecommendations(updates) {
+  private displayRecommendations(updates: AnalyzedUpdate[]): void {
     console.log(`${COLORS.bright}[PLAN] Update Recommendations:${COLORS.reset}\n`)
 
     for (const update of updates) {
-      const priorityColor = {
+      const priorityColor: Record<string, string> = {
         critical: COLORS.red,
         high: COLORS.yellow,
         medium: COLORS.blue,
         low: COLORS.cyan,
-      }[update.priority]
+      }
 
-      const recommendationLabel = {
+      const recommendationLabel: Record<string, string> = {
         urgent: "[URGENT]",
         caution: "[CAUTION]",
         safe: "[SAFE]",
-      }[update.recommendation]
+      }
 
-      console.log(`${recommendationLabel} ${COLORS.bright}${update.name}${COLORS.reset}`)
+      console.log(
+        `${recommendationLabel[update.recommendation]} ${COLORS.bright}${update.name}${COLORS.reset}`
+      )
       console.log(
         `   ${COLORS.cyan}Current:${COLORS.reset} ${update.current} → ${COLORS.green}Latest:${COLORS.reset} ${update.latest}`
       )
       console.log(
-        `   ${COLORS.yellow}Priority:${COLORS.reset} ${priorityColor}${update.priority.toUpperCase()}${COLORS.reset}`
+        `   ${COLORS.yellow}Priority:${COLORS.reset} ${priorityColor[update.priority]}${update.priority.toUpperCase()}${COLORS.reset}`
       )
       console.log(
         `   ${COLORS.yellow}Impact:${COLORS.reset} ${update.impact} | ${COLORS.yellow}Effort:${COLORS.reset} ${update.effort}`
@@ -618,7 +689,7 @@ class PackageMonitorAgent {
       if (update.breakingChanges.length > 0) {
         console.log(`   ${COLORS.red}[BREAKING] Breaking changes:${COLORS.reset}`)
         for (const change of update.breakingChanges) {
-          console.log(`      • ${change}`)
+          console.log(`      - ${change}`)
         }
       }
 
@@ -627,7 +698,7 @@ class PackageMonitorAgent {
     }
   }
 
-  displayRecommendation(update) {
+  private displayRecommendation(update: AnalyzedUpdate): void {
     switch (update.recommendation) {
       case "urgent":
         console.log(`   ${COLORS.red}${COLORS.bright}[URGENT] Update immediately${COLORS.reset}`)
@@ -650,7 +721,7 @@ class PackageMonitorAgent {
     }
   }
 
-  generateActionPlan(updates) {
+  private generateActionPlan(updates: AnalyzedUpdate[]): void {
     const urgent = updates.filter((u) => u.recommendation === "urgent")
     const caution = updates.filter((u) => u.recommendation === "caution")
     const safe = updates.filter((u) => u.recommendation === "safe")
@@ -692,11 +763,10 @@ class PackageMonitorAgent {
       console.log("")
     }
 
-    // Save action plan to file (returns filename for cleanup later)
-    return this.saveActionPlan({ urgent, caution, safe })
+    this.saveActionPlan({ urgent, caution, safe })
   }
 
-  formatUrgentUpdates(updates) {
+  private formatUrgentSection(updates: AnalyzedUpdate[]): string {
     if (updates.length === 0) return ""
     let content = `## URGENT UPDATES (${updates.length})\n\n`
     for (const update of updates) {
@@ -708,160 +778,132 @@ class PackageMonitorAgent {
     return content
   }
 
-  formatCautionUpdates(updates) {
+  private formatCautionSection(updates: AnalyzedUpdate[]): string {
     if (updates.length === 0) return ""
     let content = `## PLANNED UPDATES (${updates.length})\n\n`
     for (const update of updates) {
       content += `- **${update.name}**: ${update.current} → ${update.latest}\n`
       content += `  - Impact: ${update.impact} | Effort: ${update.effort}\n`
       if (update.breakingChanges.length > 0) {
-        content += "  - Breaking Changes:\n"
-        for (const change of update.breakingChanges) {
-          content += `    - ${change}\n`
-        }
+        content += `  - Breaking Changes:\n${update.breakingChanges.map((c) => `    - ${c}\n`).join("")}`
       }
       content += `  - Command: \`bun update ${update.name}\`\n\n`
     }
     return content
   }
 
-  formatSafeUpdates(updates) {
+  private formatSafeSection(updates: AnalyzedUpdate[]): string {
     if (updates.length === 0) return ""
-    let content = `## ROUTINE UPDATES (${updates.length})\n\n`
     const safeList = updates.map((u) => u.name).join(" ")
-    content += `\`\`\`bash\nbun update ${safeList}\n\`\`\`\n\n`
-    return content
+    return `## ROUTINE UPDATES (${updates.length})\n\n\`\`\`bash\nbun update ${safeList}\n\`\`\`\n\n`
   }
 
-  saveActionPlan(plan) {
+  private getChecklist(): string {
+    return `\n---\n\n## Documentation Update Checklist\n
+After installing updates, update the following files:
+
+### 1. CLAUDE.md
+- Update version numbers in "Tech Stack" section
+
+### 2. README.md
+- Update badge versions if major versions change
+- Update "Tech Stack" section
+
+### 3. Release Notes
+- Location: \`docs/release-notes/YYYY-MM-wN-month.md\`
+- Add entry with date and updated packages
+
+### 4. Verify Installation
+- Run: \`bun test\` - All tests pass
+- Run: \`bun run check\` - Biome linting passes
+- Run: \`bun run build\` - Production build succeeds\n`
+  }
+
+  private saveActionPlan(plan: ActionPlan): void {
     const timestamp = new Date().toISOString().split("T")[0]
     const filename = `package-update-plan-${timestamp}.md`
 
-    let content = `# Package Update Plan - ${timestamp}\n\n`
-    content += "**Project:** 8leeai\n\n"
-    content += this.formatUrgentUpdates(plan.urgent)
-    content += this.formatCautionUpdates(plan.caution)
-    content += this.formatSafeUpdates(plan.safe)
-
-    // Add documentation update reminder
-    content += "\n---\n\n"
-    content += "## 📝 Documentation Update Checklist\n\n"
-    content += "⚠️ **IMPORTANT:** After installing updates, you MUST update the following files:\n\n"
-    content += "### 1. CLAUDE.md (Lines 62-67)\n"
-    content += "- Location: `/CLAUDE.md`\n"
-    content += '- **Lines 62-67**: Update version numbers in "Tech Stack" section\n'
-    content += "  - Pattern: `- Next.js X.Y.Z + React ...`\n"
-    content +=
-      "  - Update: Next.js, React, TypeScript, Tailwind CSS, Vercel Analytics/Insights, Biome, Bun, @types packages\n\n"
-    content += "### 2. README.md (Lines 18-22, 120-127)\n"
-    content += "- Location: `/README.md`\n"
-    content += "- **Lines 18-22**: Update badge versions if major versions change\n"
-    content += "  - Badges: Next.js, React, Tailwind CSS, TypeScript, Bun\n"
-    content += '- **Lines 120-127**: Update "Tech Stack" section\n'
-    content += "  - Full tech stack with versions\n\n"
-    content += "### 3. Release Notes\n"
-    content += "- Location: `/_docs/2025-november.md` (or current month)\n"
-    content += "- Add new entry with:\n"
-    content += "  - Date: YYYY-MM-DD format\n"
-    content += "  - Updated packages with version numbers\n"
-    content += "  - Brief description of changes/improvements\n"
-    content += "  - Any breaking changes or migration notes\n\n"
-    content += "### 4. Verify Installation\n"
-    content += "- `package.json` - Verify versions are updated\n"
-    content += "- Run: `bun test` - All tests pass\n"
-    content += "- Run: `bun run check` - Biome linting passes\n"
-    content += "- Run: `bun run build` - Production build succeeds\n"
-    content += '- Commit message format: "Updates: [package] to [version] and [details]"\n\n'
-    content += "### 5. Cleanup\n"
-    content += "- ✅ This action plan file will be automatically deleted after you close it\n"
-    content += "- ✅ No manual cleanup required\n\n"
-    content += "**Key packages to track in CLAUDE.md:**\n"
-    content += "- Next.js, React, TypeScript, Tailwind CSS, Biome, Bun\n"
-    content += "- @vercel/analytics, @vercel/speed-insights\n"
-    content += "- @types/node, @types/react, @types/react-dom\n\n"
+    const content =
+      `# Package Update Plan - ${timestamp}\n\n**Project:** 8leeai\n\n` +
+      this.formatUrgentSection(plan.urgent) +
+      this.formatCautionSection(plan.caution) +
+      this.formatSafeSection(plan.safe) +
+      this.getChecklist()
 
     try {
-      fs.writeFileSync(filename, content)
-      this.generatedPlanFile = filename // Track for cleanup
+      require("node:fs").writeFileSync(filename, content)
+      this.generatedPlanFile = filename
       console.log(`${COLORS.green}[SAVED] Action plan saved to: ${filename}${COLORS.reset}`)
       console.log(
         `${COLORS.cyan}   (This file will be automatically deleted after completion)${COLORS.reset}`
       )
       console.log("")
       console.log(
-        `${COLORS.yellow}${COLORS.bright}⚠️  REQUIRED: Update documentation after installation:${COLORS.reset}`
+        `${COLORS.yellow}${COLORS.bright}REQUIRED: Update documentation after installation:${COLORS.reset}`
       )
-      console.log(
-        `${COLORS.yellow}   1. CLAUDE.md (Lines 62-67) → Update versions in Tech Stack${COLORS.reset}`
-      )
-      console.log(
-        `${COLORS.yellow}   2. README.md (Lines 18-22, 120-127) → Update badges + Tech Stack${COLORS.reset}`
-      )
-      console.log(
-        `${COLORS.yellow}   3. _docs/2025-november.md → Add new entry with date and versions${COLORS.reset}`
-      )
+      console.log(`${COLORS.yellow}   1. CLAUDE.md - Update versions in Tech Stack${COLORS.reset}`)
+      console.log(`${COLORS.yellow}   2. README.md - Update badges + Tech Stack${COLORS.reset}`)
+      console.log(`${COLORS.yellow}   3. docs/release-notes/ - Add new entry${COLORS.reset}`)
       console.log(
         `${COLORS.yellow}   4. Verify: bun test && bun run check && bun run build${COLORS.reset}`
       )
     } catch (error) {
-      console.error(
-        `${COLORS.red}[ERROR] Failed to save action plan:${COLORS.reset}`,
-        error.message
-      )
+      const message = error instanceof Error ? error.message : String(error)
+      console.error(`${COLORS.red}[ERROR] Failed to save action plan:${COLORS.reset}`, message)
     }
   }
 
-  cleanupOldPlans() {
+  private cleanupOldPlans(): void {
     try {
-      const files = fs.readdirSync(".")
+      const fs = require("node:fs")
+      const files = fs.readdirSync(".") as string[]
       const planFiles = files.filter(
-        (f) => f.startsWith("package-update-plan-") && f.endsWith(".md")
+        (f: string) => f.startsWith("package-update-plan-") && f.endsWith(".md")
       )
 
       if (planFiles.length > 0) {
         console.log(
-          `${COLORS.cyan}🧹 Cleaning up ${planFiles.length} old update plan file(s)...${COLORS.reset}`
+          `${COLORS.cyan}Cleaning up ${planFiles.length} old update plan file(s)...${COLORS.reset}`
         )
         for (const file of planFiles) {
           fs.unlinkSync(file)
-          console.log(`${COLORS.green}   ✓ Removed: ${file}${COLORS.reset}`)
+          console.log(`${COLORS.green}   Removed: ${file}${COLORS.reset}`)
         }
         console.log("")
       }
     } catch (error) {
-      // Silently fail if cleanup has issues
-      console.log(
-        `${COLORS.yellow}⚠️  Could not clean up old plans: ${error.message}${COLORS.reset}\n`
-      )
+      const message = error instanceof Error ? error.message : String(error)
+      console.log(`${COLORS.yellow}Could not clean up old plans: ${message}${COLORS.reset}\n`)
     }
   }
 
-  cleanupGeneratedPlan() {
-    if (this.generatedPlanFile && fs.existsSync(this.generatedPlanFile)) {
+  private cleanupGeneratedPlan(): void {
+    if (this.generatedPlanFile) {
       try {
-        fs.unlinkSync(this.generatedPlanFile)
-        const filename = this.generatedPlanFile.split("/").pop()
-        console.log(`\n${COLORS.cyan}🧹 Cleaned up generated plan file: ${filename}${COLORS.reset}`)
+        const fs = require("node:fs")
+        if (fs.existsSync(this.generatedPlanFile)) {
+          fs.unlinkSync(this.generatedPlanFile)
+          console.log(
+            `\n${COLORS.cyan}Cleaned up generated plan file: ${this.generatedPlanFile}${COLORS.reset}`
+          )
+        }
       } catch (error) {
-        console.log(
-          `${COLORS.yellow}⚠️  Could not clean up plan file: ${error.message}${COLORS.reset}`
-        )
+        const message = error instanceof Error ? error.message : String(error)
+        console.log(`${COLORS.yellow}Could not clean up plan file: ${message}${COLORS.reset}`)
       }
     }
   }
 
-  runVerificationChecks() {
+  private runVerificationChecks(): boolean {
+    const { execSync } = require("node:child_process")
     console.log(
       `\n${COLORS.cyan}${COLORS.bright}[VERIFY] Running verification checks...${COLORS.reset}\n`
     )
 
     try {
-      // Run core tests only (exclude experimental Zendesk/Intercom tests)
-      console.log(`${COLORS.cyan}[1/3] Running core tests...${COLORS.reset}`)
-      execSync(
-        "bun test lib/utils.test.ts hooks/use-typewriter.test.tsx hooks/use-virtual-keyboard-suppression.test.tsx components/cursor.test.tsx",
-        { stdio: "inherit" }
-      )
+      // Run tests
+      console.log(`${COLORS.cyan}[1/3] Running tests...${COLORS.reset}`)
+      execSync("bun test", { stdio: "inherit" })
 
       // Run Biome linting
       console.log(`\n${COLORS.cyan}[2/3] Running Biome linting...${COLORS.reset}`)
@@ -872,17 +914,18 @@ class PackageMonitorAgent {
       execSync("bun run build", { stdio: "inherit" })
 
       console.log(
-        `\n${COLORS.green}${COLORS.bright}✅ All verification checks passed!${COLORS.reset}\n`
+        `\n${COLORS.green}${COLORS.bright}All verification checks passed!${COLORS.reset}\n`
       )
       return true
     } catch (error) {
-      console.error(`\n${COLORS.red}${COLORS.bright}❌ Verification checks failed!${COLORS.reset}`)
-      console.error(`${COLORS.red}${error.message}${COLORS.reset}\n`)
+      const message = error instanceof Error ? error.message : String(error)
+      console.error(`\n${COLORS.red}${COLORS.bright}Verification checks failed!${COLORS.reset}`)
+      console.error(`${COLORS.red}${message}${COLORS.reset}\n`)
       return false
     }
   }
 
-  async startWatchMode() {
+  async startWatchMode(): Promise<void> {
     console.log(`${COLORS.cyan}[WATCH] Starting package monitor in watch mode...${COLORS.reset}`)
     console.log(`${COLORS.cyan}   Checking every 6 hours. Press Ctrl+C to stop.${COLORS.reset}\n`)
 
@@ -902,9 +945,9 @@ class PackageMonitorAgent {
 }
 
 // CLI Interface
-async function main() {
+async function main(): Promise<void> {
   const args = process.argv.slice(2)
-  const options = {
+  const options: MonitorOptions = {
     watch: args.includes("--watch"),
     critical: args.includes("--critical"),
     verify: args.includes("--verify"),
@@ -925,9 +968,7 @@ process.on("SIGINT", () => {
   process.exit(0)
 })
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((error) => {
-    console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, error)
-    process.exit(1)
-  })
-}
+main().catch((error) => {
+  console.error(`${COLORS.red}[ERROR] Monitor failed:${COLORS.reset}`, error)
+  process.exit(1)
+})

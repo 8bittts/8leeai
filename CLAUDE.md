@@ -59,9 +59,9 @@ bun run packages:watch
 bun run packages:critical
 
 # Or run the script directly with options:
-bun scripts/x-package-monitor.js
-bun scripts/x-package-monitor.js --watch
-bun scripts/x-package-monitor.js --critical
+bun scripts/x-package-monitor.ts
+bun scripts/x-package-monitor.ts --watch
+bun scripts/x-package-monitor.ts --critical
 ```
 
 ## Script Development
@@ -70,7 +70,7 @@ bun scripts/x-package-monitor.js --critical
 
 **When creating or updating utility scripts, use color-coded console output for better readability:**
 
-Use ANSI escape codes for consistent, professional terminal output. Example pattern from `scripts/x-package-monitor.js`:
+Use ANSI escape codes for consistent, professional terminal output. Example pattern from `scripts/x-package-monitor.ts`:
 
 ```javascript
 const COLORS = {
@@ -135,7 +135,7 @@ Terminal-style portfolio website featuring authentic DOS simulation with boot se
 - Tailwind CSS v4.1.17 (utility classes only, zero custom CSS)
 - Vercel Analytics 1.6.1 + Speed Insights 1.3.1
 - Biome 2.3.8 (linting/formatting with 100+ error-level rules)
-- AI/ML: Vercel AI SDK 5.0.106 + OpenAI SDK 2.0.76
+- AI/ML: Vercel AI SDK 5.0.106 + OpenAI SDK 2.0.77
 - Email: Resend 6.5.2
 - Bun 1.3.1 (package manager, runtime, test runner)
 - Type Definitions: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`
@@ -385,8 +385,8 @@ test("hides keyboard after command submission on touch devices", () => {
 │   ├── bitcoin.pdf       # Bitcoin whitepaper (easter egg)
 │   └── 8-social.jpeg     # Social media share image
 ├── scripts/
-│   ├── test-contact-forms.ts # Contact form testing script
-│   └── x-package-monitor.js  # Intelligent package update monitoring
+│   ├── test-contact-forms.ts  # Contact form testing script
+│   └── x-package-monitor.ts   # Intelligent package update monitoring (Bun native TypeScript)
 ├── proxy.ts              # Security headers (Next.js 16 proxy convention)
 ├── next.config.ts         # Next.js configuration
 ├── postcss.config.mjs     # PostCSS + Tailwind
