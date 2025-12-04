@@ -50,6 +50,9 @@ git clone https://github.com/8bittts/8leeai.git
 cd 8leeai
 bun install
 
+# Disable Next.js telemetry (optional, already disabled in this repo)
+bun next telemetry disable
+
 # Run development server (port 1333, auto-kills existing process, clears caches)
 bun run dev
 ```

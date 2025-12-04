@@ -13,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Test runner: Bun's native test runner (not Jest, Vitest, or others)
 - All dependencies installed via `bun install`
 - Biome (linting/formatting) installed as devDependency, executed via `bunx biome` for consistency
+- Next.js telemetry disabled (`bun next telemetry disable`)
 
 **If you see any npm/yarn/pnpm references, they are incorrect and must be replaced with Bun equivalents.**
 

@@ -165,3 +165,13 @@ Comprehensive documentation review ensuring all references are accurate.
 - All documentation files cross-checked for accuracy
 - No stale references to deprecated filenames
 - Code comments reviewed for clarity and helpfulness
+
+### Next.js Telemetry Disabled
+
+Confirmed Next.js telemetry is disabled for privacy.
+
+**Command:** `bun next telemetry disable`
+
+**Documentation Updated:**
+- CLAUDE.md - Added telemetry disabled note to Bun section
+- README.md - Added telemetry disable command to Quick Start
