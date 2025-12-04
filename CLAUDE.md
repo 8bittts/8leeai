@@ -345,10 +345,16 @@ test("hides keyboard after command submission on touch devices", () => {
 ```
 8leeai/
 ├── app/
-│   ├── layout.tsx          # Root layout with metadata, Analytics & SpeedInsights
-│   ├── page.tsx            # Main page component
-│   ├── not-found.tsx       # Custom 404 with Mario background
-│   └── globals.css         # Pure Tailwind import
+│   ├── api/               # API routes
+│   │   └── contact/       # Contact form API (intercom, zendesk integrations)
+│   ├── experiments/       # Experimental features (isolated from main app)
+│   │   ├── _docs/         # Consolidated experiment documentation
+│   │   ├── intercom/      # Intercom Intelligence Portal experiment
+│   │   └── zendesk/       # Zendesk Intelligence Portal experiment
+│   ├── layout.tsx         # Root layout with metadata, Analytics & SpeedInsights
+│   ├── page.tsx           # Main page component
+│   ├── not-found.tsx      # Custom 404 with Mario background
+│   └── globals.css        # Pure Tailwind import
 ├── components/
 │   ├── boot-sequence.tsx   # Terminal boot animation
 │   ├── command-prompt.tsx  # User command interface
@@ -386,16 +392,6 @@ test("hides keyboard after command submission on touch devices", () => {
 ├── postcss.config.mjs     # PostCSS + Tailwind
 ├── tsconfig.json          # TypeScript config
 ├── biome.json            # Linting/formatting
-├── app/experiments/      # Experimental features (isolated from main app)
-│   ├── _docs/            # Consolidated experiment documentation
-│   │   ├── intercom-00-readme.md        # Intercom main documentation
-│   │   ├── intercom-01-deletion-guide.md # Intercom deletion guide
-│   │   ├── zendesk-00-readme.md         # Zendesk main documentation
-│   │   ├── zendesk-01-scripts.md        # Zendesk scripts documentation
-│   │   ├── zendesk-02-testing.md        # Zendesk testing documentation
-│   │   └── zendesk-03-deletion-guide.md # Zendesk deletion guide
-│   ├── intercom/         # Intercom Intelligence Portal experiment
-│   └── zendesk/          # Zendesk Intelligence Portal experiment
 ├── _docs/                # Historical documentation
 │   ├── README.md         # Documentation structure guide
 │   ├── 2025-september.md # September 2025 release notes (monthly)

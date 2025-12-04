@@ -95,6 +95,35 @@ Completed comprehensive Bun adoption audit across all owned repositories.
 - All scripts use `bun`/`bunx` commands
 - No orphan npm/yarn/pnpm artifacts
 
+### Documentation Audit
+
+Comprehensive documentation review and cleanup across all project files.
+
+**CLAUDE.md Updates:**
+- Fixed file structure to include `app/api/` and `app/experiments/` directories
+- Removed duplicate `app/experiments/` section
+- All paths now accurately reflect actual codebase structure
+
+**README.md Updates:**
+- Fixed `middleware.ts` references to `proxy.ts` (Next.js 16 convention)
+- Fixed archived experiments paths from `app/zendesk/` to `app/experiments/zendesk/`
+- Fixed archived experiments paths from `app/intercom/` to `app/experiments/intercom/`
+- Updated documentation references to use correct filenames
+- Added `app/api/` and `app/experiments/` to project structure
+
+**00-RN-README.md Updates:**
+- Updated tech stack versions (Next.js 16.0.7, React 19.2.1)
+- Updated status from November 2025 to December 2025
+- Added Vercel Analytics 1.6.1 and Speed Insights 1.3.1 versions
+- Added November weeks 4-5 to Current Files section
+- Added December 2025 weekly section
+
+**All Documentation Now:**
+- Uses `proxy.ts` (not `middleware.ts`) for security headers reference
+- Has accurate file paths for experimental projects
+- Has up-to-date version numbers
+- Has complete weekly release notes listings
+
 **Quality Verification:**
 - All 96 tests passing (297 assertions)
 - Zero Biome lint errors

@@ -153,6 +153,12 @@ Additional tests exist for archived experimental projects (gitignored).
 ```
 8leeai/
 ├── app/                              # Next.js app router
+│   ├── api/                          # API routes
+│   │   └── contact/                  # Contact form API (intercom, zendesk integrations)
+│   ├── experiments/                  # Experimental features (isolated from main app)
+│   │   ├── _docs/                    # Consolidated experiment documentation
+│   │   ├── intercom/                 # Intercom Intelligence Portal experiment
+│   │   └── zendesk/                  # Zendesk Intelligence Portal experiment
 │   ├── layout.tsx                    # Root layout with metadata, Analytics & SpeedInsights
 │   ├── page.tsx                      # Main terminal page
 │   └── not-found.tsx                 # Custom 404 with Mario background
@@ -184,7 +190,7 @@ Additional tests exist for archived experimental projects (gitignored).
 ├── scripts/                          # Development utilities
 │   ├── test-contact-forms.ts         # Contact form testing script
 │   └── x-package-monitor.js          # Intelligent package update monitoring
-├── middleware.ts                     # Security headers (CSP, CORS, HSTS)
+├── proxy.ts                          # Security headers (CSP, CORS, HSTS) - Next.js 16 convention
 ├── _docs/                            # Historical documentation
 │   ├── README.md                     # Documentation structure guide
 │   ├── 2025-september.md             # September 2025 release notes (monthly)
@@ -206,7 +212,7 @@ Additional tests exist for archived experimental projects (gitignored).
 
 **Triple-Layer Anti-Crawling Protection** (ultra-private mode):
 1. **robots.txt** - Blocks 17+ major crawlers (Google, Bing, social media, SEO tools)
-2. **HTTP Headers (middleware.ts)** - X-Robots-Tag: `noindex, nofollow, noarchive, nosnippet, noimageindex`
+2. **HTTP Headers (proxy.ts)** - X-Robots-Tag: `noindex, nofollow, noarchive, nosnippet, noimageindex`
 3. **HTML Metadata (app/layout.tsx)** - robots: `index: false, follow: false` + googleBot restrictions
 
 **Additional Security Headers:**
@@ -232,17 +238,17 @@ Weekly files follow the pattern `YYYY-MM-wN-month.md` (e.g., `2025-11-w1-novembe
 
 This repository contains two archived experimental projects that are no longer under active development:
 
-### Zendesk Intelligence Portal (`/app/zendesk/`)
+### Zendesk Intelligence Portal (`/app/experiments/zendesk/`)
 - **Status**: Archived (November 2025)
 - **Access**: Hidden command `zendesk` or `zen` in production terminal
 - **Purpose**: Experimental AI-powered ticket intelligence system
-- **Documentation**: See `app/zendesk/_docs/zendesk-MASTER.md` and `DELETION-GUIDE.md`
+- **Documentation**: See `app/experiments/_docs/zendesk-00-readme.md` and `zendesk-03-deletion-guide.md`
 
-### Intercom Intelligence Portal (`/app/intercom/`)
+### Intercom Intelligence Portal (`/app/experiments/intercom/`)
 - **Status**: Archived (November 2025)
 - **Access**: Hidden command `intercom` in production terminal
 - **Purpose**: Experimental AI-powered conversation intelligence system
-- **Documentation**: See `app/intercom/_docs/intercom-MASTER.md` (v2.1) and `DELETION-GUIDE.md`
+- **Documentation**: See `app/experiments/_docs/intercom-00-readme.md` and `intercom-01-deletion-guide.md`
 
 **Important Notes:**
 - Both projects are **100% isolated** from the main portfolio site
