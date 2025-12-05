@@ -2,7 +2,7 @@ import type { CategoryCardProps } from "../lib/figmoo-types"
 
 /**
  * Category Card Component
- * Selectable card for main category selection
+ * Umso-inspired selectable card
  */
 export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCardProps) {
   return (
@@ -11,37 +11,31 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       onClick={onSelect}
       className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
         selected
-          ? "border-purple-600 bg-purple-50"
-          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
+          ? "border-[#171a1a] bg-[#171a1a]/5"
+          : "border-[#171a1a]/10 bg-white hover:border-[#171a1a]/30"
       }`}
       aria-pressed={selected}
     >
       {/* Icon */}
       <div
-        className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center ${
-          selected ? "bg-purple-100" : "bg-gray-100"
+        className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
+          selected ? "bg-[#171a1a] text-white" : "bg-[#171a1a]/5 text-[#171a1a]"
         }`}
       >
-        <CategoryIcon icon={category.icon} selected={selected} />
+        <CategoryIcon icon={category.icon} />
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900">{category.title}</h3>
-        <p className="text-sm text-gray-500 truncate">{category.description}</p>
+        <h3 className="font-semibold text-[#171a1a]">{category.title}</h3>
+        <p className="text-sm text-[#171a1a]/50 truncate">{category.description}</p>
       </div>
 
       {/* Checkmark */}
       {selected && (
-        <div className="flex-shrink-0 w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-          <svg
-            className="w-4 h-4 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <div className="flex-shrink-0 w-5 h-5 bg-[#171a1a] rounded-full flex items-center justify-center">
+          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
           </svg>
         </div>
       )}
@@ -51,27 +45,14 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
 
 /**
  * Category Icon Component
- * Renders the appropriate icon based on category type
  */
-function CategoryIcon({
-  icon,
-  selected,
-}: {
-  icon: "briefcase" | "user" | "calendar" | "sparkles"
-  selected: boolean
-}) {
-  const colorClass = selected ? "text-purple-600" : "text-gray-600"
+function CategoryIcon({ icon }: { icon: "briefcase" | "user" | "calendar" | "sparkles" }) {
+  const iconClass = "w-5 h-5"
 
   switch (icon) {
     case "briefcase":
       return (
-        <svg
-          className={`w-6 h-6 ${colorClass}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -82,13 +63,7 @@ function CategoryIcon({
       )
     case "user":
       return (
-        <svg
-          className={`w-6 h-6 ${colorClass}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -99,13 +74,7 @@ function CategoryIcon({
       )
     case "calendar":
       return (
-        <svg
-          className={`w-6 h-6 ${colorClass}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -116,13 +85,7 @@ function CategoryIcon({
       )
     case "sparkles":
       return (
-        <svg
-          className={`w-6 h-6 ${colorClass}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+        <svg className={iconClass} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
