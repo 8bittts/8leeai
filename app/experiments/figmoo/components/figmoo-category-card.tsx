@@ -3,6 +3,7 @@ import type { CategoryCardProps } from "../lib/figmoo-types"
 /**
  * Category Card Component
  * Umso-inspired selectable card
+ * Colors: text #2c2c2c, accent #d6595b, border #dbdbdb
  */
 export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCardProps) {
   return (
@@ -11,15 +12,15 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       onClick={onSelect}
       className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
         selected
-          ? "border-[#171a1a] bg-[#171a1a]/5"
-          : "border-[#171a1a]/10 bg-white hover:border-[#171a1a]/30"
+          ? "border-[#d6595b] bg-[#d6595b]/5"
+          : "border-[#dbdbdb] bg-white hover:border-[#d6595b]/50"
       }`}
       aria-pressed={selected}
     >
       {/* Icon */}
       <div
         className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
-          selected ? "bg-[#171a1a] text-white" : "bg-[#171a1a]/5 text-[#171a1a]"
+          selected ? "bg-[#d6595b] text-white" : "bg-[#2c2c2c]/5 text-[#2c2c2c]"
         }`}
       >
         <CategoryIcon icon={category.icon} />
@@ -27,13 +28,13 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-[#171a1a]">{category.title}</h3>
-        <p className="text-sm text-[#171a1a]/50 truncate">{category.description}</p>
+        <h3 className="font-semibold text-[#2c2c2c]">{category.title}</h3>
+        <p className="text-sm text-[#3c3c3c]/70 truncate">{category.description}</p>
       </div>
 
       {/* Checkmark */}
       {selected && (
-        <div className="flex-shrink-0 w-5 h-5 bg-[#171a1a] rounded-full flex items-center justify-center">
+        <div className="flex-shrink-0 w-5 h-5 bg-[#d6595b] rounded-full flex items-center justify-center">
           <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
           </svg>

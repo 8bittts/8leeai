@@ -64,16 +64,6 @@ ZENDESK_SUBDOMAIN=
 
 **Note:** Keep `support@8lee.zendesk.com` email in `app/api/contact/zendesk/route.ts` - this is for the contact form, NOT the experiment.
 
-### 5. Remove Shared Component Reference (if last experiment)
-
-If Zendesk is the last experiment using the shared PasswordGate, also delete:
-
-```bash
-rm -rf app/experiments/_shared
-```
-
-**Note:** If Intercom or Figmoo still exist, keep `_shared/` as they depend on it.
-
 ---
 
 ## File Inventory (54 files, 13,569 lines)

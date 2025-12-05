@@ -431,3 +431,61 @@ Comprehensive documentation update for all experiments covering styling architec
 - Added "Two Styling Approaches" section with code examples
 - Updated experiments table with Styling column
 - Added styling legend (Terminal inherited vs Independent)
+
+### Major Experiments Refactor
+
+Complete overhaul of experiments architecture: removed password gate, added shadcn/ui, redesigned Figmoo with Umso's exact color palette.
+
+**Password Gate Removal:**
+- Deleted `app/experiments/_shared/password-gate.tsx`
+- Removed PasswordGate wrapper from all experiments (Figmoo, Intercom, Zendesk)
+- Experiments now directly accessible without authentication
+- Updated all deletion guides to remove `_shared/` references
+
+**shadcn/ui Installation:**
+- Initialized shadcn/ui with `bunx shadcn@latest init --defaults`
+- Added Button, Card, Input components to `components/ui/`
+- Added `cn()` utility function to `lib/utils.ts`
+- Fixed `globals.css` to not override main site body styles (terminal theme preserved)
+- Created `components.json` configuration
+
+**Figmoo Redesign with Umso Colors:**
+
+| Element | Umso Color |
+|---------|------------|
+| Background | `#faf7f4` (cream) |
+| Text | `#2c2c2c` (charcoal) |
+| Secondary text | `#3c3c3c` |
+| Accent | `#d6595b` (coral/rose) |
+| Buttons | `#17161a` (dark) |
+| Borders | `#dbdbdb` |
+| Border radius | `11px` |
+| Max width | `1280px` |
+| Horizontal padding | `30px` |
+
+**Files Updated:**
+- `app/experiments/figmoo/layout.tsx` - Umso color palette
+- `app/experiments/figmoo/page.tsx` - Umso styling
+- `app/experiments/figmoo/components/figmoo-header.tsx` - Umso navigation
+- `app/experiments/figmoo/components/figmoo-category-card.tsx` - Umso card styling
+- `app/experiments/intercom/page.tsx` - Removed PasswordGate
+- `app/experiments/zendesk/page.tsx` - Removed PasswordGate
+
+**Protocol Updated to v2.0:**
+- Removed all password gate requirements
+- Added shadcn/ui usage instructions
+- Updated styling guidelines for independent experiments
+- Added "Using shadcn/ui Components" section
+- Updated deletion workflow checklist
+
+**New Dependencies:**
+- `clsx` - Class name utility
+- `tailwind-merge` - Tailwind class merging
+- `class-variance-authority` - Component variants
+- `lucide-react` - Icon library
+- `tw-animate-css` - Animation utilities
+
+**Quality Verification:**
+- All TypeScript checks passing
+- Production build successful
+- Main site terminal theme preserved

@@ -1,4 +1,11 @@
+import { clsx, type ClassValue } from "clsx"
 import React from "react"
+import { twMerge } from "tailwind-merge"
+
+/** shadcn/ui class name utility - merges Tailwind classes intelligently */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 /** Formats array index to zero-padded display number (0 → "01") */
 export function formatIndex(index: number): string {

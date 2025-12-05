@@ -183,18 +183,6 @@ git revert <commit-hash>
 
 ---
 
-### 5. Remove Shared Component Reference (if last experiment)
-
-If Intercom is the last experiment using the shared PasswordGate, also delete:
-
-```bash
-rm -rf app/experiments/_shared
-```
-
-**Note:** If Zendesk or Figmoo still exist, keep `_shared/` as they depend on it.
-
----
-
 ## What Gets Deleted
 
 ### Directory Structure (62 files total)

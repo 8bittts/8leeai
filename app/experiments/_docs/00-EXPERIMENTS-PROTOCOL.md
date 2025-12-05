@@ -1,7 +1,7 @@
 # Experiments Protocol
 
 **Last Updated:** December 5, 2025
-**Protocol Version:** 1.2
+**Protocol Version:** 2.0
 
 This document defines the standards and protocols for all experiments in the `/app/experiments/` directory. All experiments MUST follow these guidelines to ensure consistency, isolation, and easy removal.
 
@@ -19,53 +19,15 @@ Experiments are isolated proof-of-concept implementations designed to:
 
 ## Experiment Standards
 
-### 1. Password Protection
-
-**All experiments MUST be password-protected using the shared PasswordGate component.**
-
-- **Password:** `booya` (consistent across all experiments)
-- **Storage:** `sessionStorage` with experiment-specific key
-- **Session Key Pattern:** `{experiment_name}_auth`
-- **Shared Component:** `app/experiments/_shared/password-gate.tsx`
-
-**Password Gate Styling (Standardized):**
-All experiments use the same terminal-themed password gate matching the main site brand:
-
-| Property | Value |
-|----------|-------|
-| Background | `bg-black` |
-| Text | `text-green-500` |
-| Border | `border-green-500` |
-| Button | `bg-green-500 text-black` |
-| Font | `font-mono` |
-
-**Implementation (Required):**
-```tsx
-import { PasswordGate } from "../_shared/password-gate"
-
-export default function ExperimentPage() {
-  return (
-    <PasswordGate title="Experiment Name" sessionKey="{experiment}_auth">
-      <ExperimentContent />
-    </PasswordGate>
-  )
-}
-```
-
-**PasswordGate Props:**
-- `title` (string): Display name shown on the gate
-- `sessionKey` (string): Unique key for sessionStorage (e.g., "figmoo_auth")
-- `children` (ReactNode): Content to render after authentication
-
-### 2. Complete Isolation
+### 1. Complete Isolation
 
 **Experiments MUST be 100% isolated from the main application.**
 
 **Required:**
 - All files within `/app/experiments/{name}/` directory
 - All components, hooks, and utilities prefixed with `{experiment}-`
-- No imports from main app code (except `globals.css`)
-- No cross-imports between experiments (except `_shared/` components)
+- No imports from main app code (except `globals.css` and shadcn components)
+- No cross-imports between experiments
 
 **File Naming Convention:**
 ```
@@ -75,13 +37,13 @@ export default function ExperimentPage() {
 {experiment}-types.ts                # Type definitions
 ```
 
-### 3. Directory Structure
+### 2. Directory Structure
 
 Every experiment MUST follow this structure:
 
 ```
 app/experiments/{name}/
-├── page.tsx                    # Entry point with password gate
+├── page.tsx                    # Entry point
 ├── layout.tsx                  # Experiment-specific layout
 ├── not-found.tsx               # Custom 404 page
 ├── components/                 # React components
@@ -97,7 +59,7 @@ app/experiments/{name}/
 └── scripts/                    # Test/utility scripts (if needed)
 ```
 
-### 4. Documentation
+### 3. Documentation
 
 Every experiment MUST have documentation in `/app/experiments/_docs/`:
 
@@ -110,10 +72,10 @@ Every experiment MUST have documentation in `/app/experiments/_docs/`:
 - Technical architecture
 - File structure
 - Environment variables (if any)
-- Access instructions (URL + password)
+- Access instructions (URL)
 - Deletion checklist
 
-### 5. Deletion Workflow
+### 4. Deletion Workflow
 
 **All experiments MUST be safely deletable without affecting the main application.**
 
@@ -123,10 +85,16 @@ Every experiment MUST have documentation in `/app/experiments/_docs/`:
 3. Verify no main app imports: `grep -r "{name}" app/ --include="*.ts" --include="*.tsx" | grep -v "experiments/{name}"`
 4. Check `proxy.ts` for API allowlists (remove if present)
 5. Check `package.json` for experiment-specific dependencies (remove if present)
-6. Run build: `bun run build`
-7. Run tests: `bun test`
+6. Check `globals.css` for experiment-specific animations (remove if present)
+7. Run build: `bun run build`
+8. Run tests: `bun test`
 
-### 6. Styling Guidelines
+### 5. Styling Guidelines
+
+**Available Tools:**
+- **Tailwind CSS v4** - Standard utility classes
+- **shadcn/ui** - Pre-built accessible components (Button, Card, Input, etc.)
+- **CSS Variables** - For theming via `globals.css`
 
 **Two Styling Approaches:**
 
@@ -142,7 +110,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 ```
 
 - Inherits `bg-black`, `text-green-500`, `font-mono` from root layout
-- Password gate uses terminal theme (automatic via shared component)
 - All UI uses green terminal styling
 - Zero custom CSS overrides needed
 
@@ -154,7 +121,7 @@ For experiments that need completely different branding:
 // layout.tsx - Override root styles
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#custom] text-[#custom] font-sans">
+    <div className="min-h-screen bg-stone-50 text-stone-900 font-sans">
       {children}
     </div>
   )
@@ -162,27 +129,44 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 ```
 
 - Wraps content in a div that overrides root terminal styles
-- Password gate still uses terminal theme (shared component)
-- Post-auth content uses experiment's own color palette
+- Uses experiment's own color palette
 - Document the color scheme in experiment README
 
 **General Guidelines:**
 
-- Import `../../globals.css` for base Tailwind
-- Use Tailwind utility classes exclusively (no custom CSS except globals.css)
+- Use Tailwind utility classes exclusively
+- Use shadcn/ui components for common UI patterns
+- Define custom keyframe animations in `globals.css` with `{experiment}-` prefix
 - Ensure responsive design
 - Document styling approach in experiment README
 
-### 7. Design Implementation Standards
+### 6. Using shadcn/ui Components
 
-**All experiments MUST follow these design standards:**
+shadcn/ui is installed globally. Import components from `@/components/ui`:
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+```
+
+**Available Components:**
+- `Button` - Various button styles
+- `Card` - Container with header/content/footer sections
+- `Input` - Form input field
+
+**Adding New Components:**
+```bash
+bunx shadcn@latest add [component-name]
+```
+
+### 7. Design Implementation Standards
 
 **DO:**
 - Use pure Tailwind v4 utility classes
+- Use shadcn/ui components for common patterns
 - Define custom keyframe animations in `globals.css` with `{experiment}-` prefix
-- Use Tailwind arbitrary values for dynamic values: `bg-[var(--theme-color)]`
-- Define CSS custom properties for runtime theming if needed
-- Use consistent typography scale: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`
+- Use consistent typography scale: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`
 - Use consistent spacing scale: `gap-1`, `gap-2`, `gap-3`, `gap-4`, `gap-6`, `gap-8`
 
 **DON'T:**
@@ -190,7 +174,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 - Use styled-jsx or other CSS-in-JS solutions
 - Create custom CSS classes outside globals.css
 - Hardcode pixel values (use Tailwind spacing scale)
-- Mix Tailwind v3 patterns with v4
 
 **Animation Pattern:**
 ```css
@@ -202,19 +185,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 .animate-{experiment}-animation-name {
   animation: {experiment}-animation-name 1s ease infinite;
 }
-```
-
-**Dynamic Theming Pattern (if needed):**
-```css
-/* In globals.css */
-:root {
-  --{experiment}-primary: #7C3AED;
-  --{experiment}-secondary: #EDE9FE;
-}
-```
-```tsx
-// In component
-<div className="bg-[var(--{experiment}-primary)]">
 ```
 
 ### 8. Git Tracking
@@ -230,26 +200,13 @@ Note: Adding to .gitignore only affects future changes. Already committed files 
 
 ---
 
-## Shared Components
-
-The `_shared/` directory contains components used across all experiments:
-
-```
-app/experiments/_shared/
-└── password-gate.tsx    # Standardized terminal-themed auth gate
-```
-
-These components are the ONLY exception to the "no cross-imports" rule.
-
----
-
 ## Current Experiments
 
 | Experiment | Purpose | Styling | URL |
 |------------|---------|---------|-----|
 | **Intercom** | AI-powered support ticket intelligence | Terminal (inherited) | `/experiments/intercom` |
 | **Zendesk** | AI-powered ticket query interface | Terminal (inherited) | `/experiments/zendesk` |
-| **Figmoo** | Frictionless website builder | Independent (Umso) | `/experiments/figmoo` |
+| **Figmoo** | Frictionless website builder | Independent (Umso-inspired) | `/experiments/figmoo` |
 
 **Styling Legend:**
 - **Terminal (inherited)**: Uses root `bg-black text-green-500 font-mono` styles
@@ -260,7 +217,7 @@ These components are the ONLY exception to the "no cross-imports" rule.
 ## Creating a New Experiment
 
 1. **Create directory structure** following the template above
-2. **Add password protection** with `booya` password
+2. **Choose styling approach** (terminal-themed or independent)
 3. **Implement experiment** with proper isolation
 4. **Create documentation** in `_docs/` directory
 5. **Test deletion workflow** to verify isolation
@@ -274,8 +231,9 @@ The only places the main app may reference experiments:
 
 1. **`proxy.ts`** - CSP allowlist for external APIs (if experiment needs external services)
 2. **`package.json`** - Experiment-specific dependencies (avoid if possible)
+3. **`globals.css`** - Experiment-specific animations (prefixed with `{experiment}-`)
 
-Both should be clearly documented in the experiment's deletion guide.
+All should be clearly documented in the experiment's deletion guide.
 
 ---
 
@@ -283,7 +241,7 @@ Both should be clearly documented in the experiment's deletion guide.
 
 All experiments must pass:
 - `bunx tsc --noEmit` - Zero TypeScript errors
-- `bunx biome check` - Zero lint/format issues
+- `bunx biome check` - Zero lint/format issues (experiments may be excluded)
 - `bun run build` - Successful build
 
 ---
