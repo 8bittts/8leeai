@@ -369,16 +369,31 @@ Added post-sign-up overview page showcasing competitive analysis and product vis
 - Sign-up buttons now redirect to overview page instead of showing alerts
 - Overview page presents competitive analysis in a professional, visual format
 
-### Password Gate Redesign
+### Shared Password Gate Component
 
-Simplified Figmoo password gate to standard, clean design.
+Created standardized password gate component for all experiments using main site terminal brand colors.
 
-**Before:** Purple border box with icon, multiple text elements, gray background
-**After:** Clean white background, centered form, minimal text
+**New File:** `app/experiments/_shared/password-gate.tsx`
 
-**Changes:**
-- Removed decorative purple border and icon
-- Changed background from gray-50 to white
-- Simplified copy to just "Figmoo" title and "Enter password to continue"
-- Changed button text from "Access" to "Continue"
-- Cleaner input styling with focus ring
+**Standardized Styling:**
+- Black background (`bg-black`)
+- Green terminal text (`text-green-500`)
+- Green border (`border-green-500`)
+- Monospace font (`font-mono`)
+- Matches main 8lee.ai terminal aesthetic
+
+**Component Props:**
+- `title` - Display name for the experiment
+- `sessionKey` - Unique sessionStorage key
+- `children` - Content to render after auth
+
+**Experiments Updated:**
+- Intercom - Now uses shared PasswordGate
+- Zendesk - Now uses shared PasswordGate
+- Figmoo - Now uses shared PasswordGate
+
+**Protocol Updated:**
+- `00-EXPERIMENTS-PROTOCOL.md` updated to v1.2
+- Documented shared component requirement
+- Added `_shared/` directory to experiment structure
+- Updated isolation rules to allow `_shared/` imports

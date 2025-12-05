@@ -360,8 +360,12 @@ app/experiments/figmoo/
 │   ├── figmoo-types.ts           # TypeScript definitions
 │   ├── figmoo-data.ts            # Categories, themes, fonts, sections
 │   └── figmoo-utils.ts           # Utility functions
-└── onboarding/
-    └── page.tsx                  # Onboarding wizard entry (/figmoo/onboarding)
+├── onboarding/
+│   └── page.tsx                  # Onboarding wizard entry (/figmoo/onboarding)
+├── overview/
+│   └── page.tsx                  # Competitive analysis showcase (/figmoo/overview)
+└── signup/
+    └── page.tsx                  # Sign-up conversion gate (/figmoo/signup)
 ```
 
 ### Isolation Strategy
@@ -491,6 +495,28 @@ Following established experiment patterns:
 - "Create Account" button
 - Terms of Service and Privacy Policy links
 - "Already have an account? Log in" link
+
+### Step 8: Overview Page
+
+**URL:** `/experiments/figmoo/overview`
+
+**Purpose:** Post-sign-up showcase presenting competitive analysis and product vision
+
+**Sections:**
+1. **Hero** - "The Friction Spectrum" title with explanatory subtitle
+2. **Spectrum Visualization** - Interactive gradient showing optimal zone between complexity extremes
+3. **Three Column Insights**:
+   - The Replit Problem (False Simplicity)
+   - The Figma Problem (Overwhelming Complexity)
+   - The Solution (Guided Choices)
+4. **Recommendations** - Five key recommendations with checkmarks
+5. **What Figma Sites Does Well** - Credit for competitor strengths
+6. **Footer Signature** - Contact information with email link
+
+**Footer:**
+- Message: "This was fun! We should do it again."
+- Signature: "Eight Lee"
+- Email: jleekun@gmail.com (mailto link)
 
 ---
 

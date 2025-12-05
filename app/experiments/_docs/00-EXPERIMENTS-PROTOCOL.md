@@ -1,6 +1,7 @@
 # Experiments Protocol
 
 **Last Updated:** December 5, 2025
+**Protocol Version:** 1.2
 
 This document defines the standards and protocols for all experiments in the `/app/experiments/` directory. All experiments MUST follow these guidelines to ensure consistency, isolation, and easy removal.
 
@@ -20,44 +21,41 @@ Experiments are isolated proof-of-concept implementations designed to:
 
 ### 1. Password Protection
 
-**All experiments MUST be password-protected.**
+**All experiments MUST be password-protected using the shared PasswordGate component.**
 
 - **Password:** `booya` (consistent across all experiments)
 - **Storage:** `sessionStorage` with experiment-specific key
 - **Session Key Pattern:** `{experiment_name}_auth`
+- **Shared Component:** `app/experiments/_shared/password-gate.tsx`
 
-**Password Gate Styling:**
-Each experiment's password gate should match its brand colors:
+**Password Gate Styling (Standardized):**
+All experiments use the same terminal-themed password gate matching the main site brand:
 
-| Experiment | Theme | Background | Border | Text | Button |
-|------------|-------|------------|--------|------|--------|
-| **Intercom** | Terminal Green | `bg-black` | `border-green-500` | `text-green-500` | `bg-green-500` |
-| **Zendesk** | Terminal Green | `bg-black` | `border-green-500` | `text-green-500` | `bg-green-500` |
-| **Figmoo** | Modern Purple | `bg-gray-50` | `border-purple-500` | `text-purple-600` | `bg-purple-600` |
+| Property | Value |
+|----------|-------|
+| Background | `bg-black` |
+| Text | `text-green-500` |
+| Border | `border-green-500` |
+| Button | `bg-green-500 text-black` |
+| Font | `font-mono` |
 
-**Implementation Pattern:**
+**Implementation (Required):**
 ```tsx
-const CORRECT_PASSWORD = "booya"
-const SESSION_KEY = "{experiment}_auth"
+import { PasswordGate } from "../_shared/password-gate"
 
-// Check session on mount
-useEffect(() => {
-  const sessionAuth = sessionStorage.getItem(SESSION_KEY)
-  if (sessionAuth === "true") {
-    setIsAuthenticated(true)
-  }
-  setIsLoading(false)
-}, [])
-
-// Handle password submission
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault()
-  if (password === CORRECT_PASSWORD) {
-    setIsAuthenticated(true)
-    sessionStorage.setItem(SESSION_KEY, "true")
-  }
+export default function ExperimentPage() {
+  return (
+    <PasswordGate title="Experiment Name" sessionKey="{experiment}_auth">
+      <ExperimentContent />
+    </PasswordGate>
+  )
 }
 ```
+
+**PasswordGate Props:**
+- `title` (string): Display name shown on the gate
+- `sessionKey` (string): Unique key for sessionStorage (e.g., "figmoo_auth")
+- `children` (ReactNode): Content to render after authentication
 
 ### 2. Complete Isolation
 
@@ -67,7 +65,7 @@ const handleSubmit = (e: React.FormEvent) => {
 - All files within `/app/experiments/{name}/` directory
 - All components, hooks, and utilities prefixed with `{experiment}-`
 - No imports from main app code (except `globals.css`)
-- No cross-imports between experiments
+- No cross-imports between experiments (except `_shared/` components)
 
 **File Naming Convention:**
 ```
@@ -194,13 +192,26 @@ Note: Adding to .gitignore only affects future changes. Already committed files 
 
 ---
 
+## Shared Components
+
+The `_shared/` directory contains components used across all experiments:
+
+```
+app/experiments/_shared/
+└── password-gate.tsx    # Standardized terminal-themed auth gate
+```
+
+These components are the ONLY exception to the "no cross-imports" rule.
+
+---
+
 ## Current Experiments
 
-| Experiment | Purpose | Theme | URL |
-|------------|---------|-------|-----|
-| **Intercom** | AI-powered support ticket intelligence | Terminal Green | `/experiments/intercom` |
-| **Zendesk** | AI-powered ticket query interface | Terminal Green | `/experiments/zendesk` |
-| **Figmoo** | Frictionless website builder | Modern Purple | `/experiments/figmoo` |
+| Experiment | Purpose | URL |
+|------------|---------|-----|
+| **Intercom** | AI-powered support ticket intelligence | `/experiments/intercom` |
+| **Zendesk** | AI-powered ticket query interface | `/experiments/zendesk` |
+| **Figmoo** | Frictionless website builder | `/experiments/figmoo` |
 
 ---
 
@@ -236,4 +247,3 @@ All experiments must pass:
 ---
 
 **Protocol Maintained By:** Development Team
-**Protocol Version:** 1.1

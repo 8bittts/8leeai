@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FigmooHeader } from "../components/figmoo-header"
 
@@ -9,6 +10,7 @@ import { FigmooHeader } from "../components/figmoo-header"
  * Final conversion gate after completing the wizard
  */
 export default function SignUpPage() {
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -16,14 +18,12 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate API call (mock - no actual account creation)
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    alert("This is a demo - no account will be created.")
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    router.push("/experiments/figmoo/overview")
   }
 
   const handleGoogleSignIn = () => {
-    alert("This is a demo - Google sign-in is not implemented.")
+    router.push("/experiments/figmoo/overview")
   }
 
   return (
