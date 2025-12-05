@@ -1,8 +1,7 @@
-"use client"
-
 /**
  * Animated Showcase Component
  * Floating website preview screenshots with continuous scroll animation
+ * Uses global animation classes from globals.css (animate-figmoo-scroll-*)
  */
 export function FigmooAnimatedShowcase() {
   return (
@@ -14,56 +13,23 @@ export function FigmooAnimatedShowcase() {
       {/* Three columns of animated cards */}
       <div className="flex gap-4 h-full">
         {/* Column 1 - Scrolls Up */}
-        <div className="flex-1 animate-scroll-up">
+        <div className="flex-1 animate-figmoo-scroll-up">
           <ShowcaseColumn cards={SHOWCASE_CARDS_1} />
           <ShowcaseColumn cards={SHOWCASE_CARDS_1} aria-hidden={true} />
         </div>
 
         {/* Column 2 - Scrolls Down */}
-        <div className="flex-1 animate-scroll-down">
+        <div className="flex-1 animate-figmoo-scroll-down">
           <ShowcaseColumn cards={SHOWCASE_CARDS_2} />
           <ShowcaseColumn cards={SHOWCASE_CARDS_2} aria-hidden={true} />
         </div>
 
         {/* Column 3 - Scrolls Up (slower) */}
-        <div className="flex-1 animate-scroll-up-slow">
+        <div className="flex-1 animate-figmoo-scroll-up-slow">
           <ShowcaseColumn cards={SHOWCASE_CARDS_3} />
           <ShowcaseColumn cards={SHOWCASE_CARDS_3} aria-hidden={true} />
         </div>
       </div>
-
-      {/* CSS for animations */}
-      <style jsx={true}>{`
-        @keyframes scroll-up {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-50%);
-          }
-        }
-
-        @keyframes scroll-down {
-          0% {
-            transform: translateY(-50%);
-          }
-          100% {
-            transform: translateY(0);
-          }
-        }
-
-        .animate-scroll-up {
-          animation: scroll-up 30s linear infinite;
-        }
-
-        .animate-scroll-down {
-          animation: scroll-down 30s linear infinite;
-        }
-
-        .animate-scroll-up-slow {
-          animation: scroll-up 40s linear infinite;
-        }
-      `}</style>
     </div>
   )
 }

@@ -137,6 +137,61 @@ Every experiment MUST have documentation in `/app/experiments/_docs/`:
 - Match experiment's brand identity in password gate and UI
 - Ensure responsive design
 
+### 7. Design Implementation Standards
+
+**All experiments MUST follow these design standards:**
+
+**DO:**
+- Use pure Tailwind v4 utility classes
+- Define custom keyframe animations in `globals.css` with `{experiment}-` prefix
+- Use Tailwind arbitrary values for dynamic values: `bg-[var(--theme-color)]`
+- Define CSS custom properties for runtime theming if needed
+- Use consistent typography scale: `text-xs`, `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`, `text-3xl`
+- Use consistent spacing scale: `gap-1`, `gap-2`, `gap-3`, `gap-4`, `gap-6`, `gap-8`
+
+**DON'T:**
+- Use inline styles (`style={{ }}`) except for truly dynamic runtime values
+- Use styled-jsx or other CSS-in-JS solutions
+- Create custom CSS classes outside globals.css
+- Hardcode pixel values (use Tailwind spacing scale)
+- Mix Tailwind v3 patterns with v4
+
+**Animation Pattern:**
+```css
+/* In globals.css */
+@keyframes {experiment}-animation-name {
+  /* keyframes */
+}
+
+.animate-{experiment}-animation-name {
+  animation: {experiment}-animation-name 1s ease infinite;
+}
+```
+
+**Dynamic Theming Pattern (if needed):**
+```css
+/* In globals.css */
+:root {
+  --{experiment}-primary: #7C3AED;
+  --{experiment}-secondary: #EDE9FE;
+}
+```
+```tsx
+// In component
+<div className="bg-[var(--{experiment}-primary)]">
+```
+
+### 8. Git Tracking
+
+**Experiments are added to `.gitignore` as archived once complete:**
+
+```gitignore
+# Archived Experimental Projects
+/app/experiments/{name}/
+```
+
+Note: Adding to .gitignore only affects future changes. Already committed files remain tracked until explicitly removed with `git rm --cached`.
+
 ---
 
 ## Current Experiments
@@ -181,4 +236,4 @@ All experiments must pass:
 ---
 
 **Protocol Maintained By:** Development Team
-**Protocol Version:** 1.0
+**Protocol Version:** 1.1

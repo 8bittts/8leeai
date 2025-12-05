@@ -295,3 +295,52 @@ Fixed TypeScript strict mode errors preventing Vercel deployment.
 - Production build successful
 - All TypeScript strict mode checks passing
 - Zero Biome lint errors
+
+### Design Implementation Audit
+
+Comprehensive design audit of Figmoo experiment with refactoring based on findings.
+
+**Issues Identified:**
+1. styled-jsx usage for animations (35+ lines of custom CSS)
+2. Inline styles for dynamic theming (35+ occurrences)
+3. No shadcn/ui components (all custom implementations)
+4. Figmoo not in .gitignore with other archived experiments
+
+**Fixes Applied:**
+1. **Moved animations to globals.css**
+   - Created `@keyframes figmoo-scroll-up` and `figmoo-scroll-down`
+   - Added `.animate-figmoo-scroll-*` utility classes
+   - Removed styled-jsx from `figmoo-animated-showcase.tsx`
+   - Follows experiment naming convention `{experiment}-*`
+
+2. **Updated .gitignore**
+   - Added `/app/experiments/figmoo/` to archived experiments
+   - Consistent with zendesk and intercom patterns
+
+3. **Updated Experiment Protocol (v1.1)**
+   - Added Section 7: Design Implementation Standards
+   - Added Section 8: Git Tracking
+   - Documented animation patterns
+   - Documented dynamic theming patterns with CSS variables
+   - Added DO/DON'T guidelines for styling
+
+**Remaining Technical Debt (Documented):**
+- Inline styles for dynamic theme preview (35+ occurrences) - required for runtime theming feature
+- shadcn/ui not installed - would require major refactor
+- CSS variables for theming - potential future improvement
+
+**Quality Verification:**
+- All 96 tests passing (297 assertions)
+- Zero Biome lint errors
+- Production build successful
+
+### Package Update
+
+Updated Vercel AI SDK to latest version.
+
+**Updated Packages:**
+- ai 5.0.106 to 5.0.107
+
+**Quality Verification:**
+- All 96 tests passing (297 assertions)
+- Production build successful

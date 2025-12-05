@@ -68,3 +68,4 @@ CLAUDE.md
 # but remain in production for reference/access via hidden commands
 /app/experiments/zendesk/
 /app/experiments/intercom/
+/app/experiments/figmoo/

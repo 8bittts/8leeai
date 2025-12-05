@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Main site animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -25,4 +26,35 @@
 
 .animate-logo-pulse {
   animation: logoPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Figmoo experiment animations */
+@keyframes figmoo-scroll-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes figmoo-scroll-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-figmoo-scroll-up {
+  animation: figmoo-scroll-up 30s linear infinite;
+}
+
+.animate-figmoo-scroll-down {
+  animation: figmoo-scroll-down 30s linear infinite;
+}
+
+.animate-figmoo-scroll-up-slow {
+  animation: figmoo-scroll-up 40s linear infinite;
 }
