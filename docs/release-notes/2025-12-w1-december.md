@@ -397,3 +397,37 @@ Created standardized password gate component for all experiments using main site
 - Documented shared component requirement
 - Added `_shared/` directory to experiment structure
 - Updated isolation rules to allow `_shared/` imports
+
+### Experiment Documentation Audit
+
+Comprehensive documentation update for all experiments covering styling architecture and safe deletion.
+
+**Styling Documentation:**
+
+| Experiment | Styling Approach | Documentation |
+|------------|-----------------|---------------|
+| Intercom | Terminal (inherited) | Added "Styling Architecture" section |
+| Zendesk | Terminal (inherited) | Added "Styling Architecture" section |
+| Figmoo | Independent (Umso) | Added prominent styling comparison table |
+
+**Intercom/Zendesk Updates:**
+- Document that they inherit root terminal styles (`bg-black text-green-500 font-mono`)
+- No custom CSS overrides needed
+- Layout uses minimal wrapper that passes through root styles
+
+**Figmoo Updates:**
+- Document complete style independence from main site
+- Added comparison table (Terminal vs Umso palette)
+- Explained why: product simulation, competitor comparison, design range demonstration
+- Layout wraps content in override div (`bg-[#faf7f4] text-[#171a1a] font-sans`)
+
+**Deletion Guide Updates (All Experiments):**
+- Fixed directory paths (`app/experiments/` not `app/`)
+- Added `_shared/` component cleanup instructions
+- Clarified: only delete `_shared/` when removing last experiment
+- Figmoo: Added globals.css animation cleanup step
+
+**Protocol v1.2 Updates:**
+- Added "Two Styling Approaches" section with code examples
+- Updated experiments table with Styling column
+- Added styling legend (Terminal inherited vs Independent)
