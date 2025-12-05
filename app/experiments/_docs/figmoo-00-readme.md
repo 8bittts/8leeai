@@ -111,6 +111,175 @@ Traditional website builders require sign-up before showing value. Figmoo invert
 
 ---
 
+## Deep Competitive Analysis
+
+### The Friction Spectrum
+
+Website builders exist on a spectrum from "overwhelming complexity" to "false simplicity." Both extremes fail users:
+
+```
+OVERWHELMING COMPLEXITY                    FALSE SIMPLICITY
+        |                                        |
+    Webflow                                  Replit
+    Figma Sites                              Blank Prompts
+        |                                        |
+        v                                        v
+"I don't know where to start"         "I don't know what to ask for"
+
+                    OPTIMAL ZONE
+                         |
+                      Figmoo
+                      Umso
+                         |
+                         v
+            "I'm making choices, not decisions"
+```
+
+### The Replit Problem: False Simplicity
+
+Replit's landing page exemplifies "false simplicity" - a minimal interface that actually demands high cognitive load.
+
+**What Replit Shows:**
+```
+Make me [an automation]
+for [remote teams]
+that helps [track project hours and generate invoices automatically]
+[Integrate with tools they already use]
+
+[Start building with AI]
+```
+
+**Why This Fails:**
+
+1. **Blank Canvas Paralysis**
+   - Users must invent their own project from scratch
+   - No guidance on what's possible or recommended
+   - "Get suggestions" helps but still requires knowing what category you want
+
+2. **Technical Vocabulary Required**
+   - "automation" assumes familiarity with the concept
+   - "integrate with tools" requires knowing what integrations mean
+   - Users who would benefit most from AI tools often can't articulate needs
+
+3. **High Creative Burden**
+   - Writing good prompts is a skill
+   - Users freeze when given unlimited freedom
+   - Decision fatigue hits before any value is delivered
+
+4. **False Promise of Simplicity**
+   - The UI looks minimal and approachable
+   - But the cognitive load is actually HIGHER than a guided flow
+   - Users who struggle don't blame the tool - they blame themselves
+
+**The Replit Paradox:**
+> Appears frictionless. Actually demands the user do ALL the thinking.
+
+### The Figma Sites Problem: Overwhelming Complexity
+
+Figma Sites goes to the opposite extreme - providing maximum flexibility but assuming design proficiency.
+
+**Why Figma Sites Struggles:**
+
+1. **Designer-Centric Assumptions**
+   - Assumes users know typography principles
+   - Assumes familiarity with layout systems (Auto Layout, Constraints)
+   - Assumes color theory knowledge
+   - Assumes understanding of responsive breakpoints
+
+2. **Blank Canvas Problem**
+   - Even with templates, users face infinite modification options
+   - No guardrails prevent bad design decisions
+   - "You can do anything" becomes "I don't know what to do"
+
+3. **Tool Proficiency Required**
+   - Must learn Figma before learning website building
+   - Steep initial learning curve (hours to days)
+   - Separate mental models for design vs. web concepts
+
+4. **Integration Friction**
+   - Great if you're already designing in Figma
+   - Unnecessary if you just want a website
+   - Forces design-first thinking on people who think content-first
+
+### What Figma Sites Does Well
+
+Credit where due - Figma Sites has genuine strengths:
+
+**Strengths to Acknowledge:**
+
+1. **Native Ecosystem Integration**
+   - Seamless for existing Figma users
+   - Design system components work directly
+   - Team collaboration is excellent
+   - Real-time multiplayer editing
+
+2. **Visual Fidelity**
+   - What you design is what you get
+   - Pixel-perfect control when needed
+   - No "translation layer" between design and output
+
+3. **Template Quality**
+   - 1,100+ professionally designed templates
+   - Consistently high visual quality
+   - Well-organized categories
+
+4. **Developer Handoff**
+   - Clean export options for custom development
+   - CSS generation is improving
+   - Useful for design-to-development workflows
+
+5. **Brand Consistency**
+   - Easy to apply existing brand guidelines
+   - Design tokens work across projects
+   - Style inheritance is powerful
+
+### Recommendations for Figma's Team
+
+Based on Figmoo's "guided choices" philosophy, here are concrete improvements Figma could implement:
+
+**1. Add a "Quick Start" Mode**
+```
+Instead of:
+  "Here's a blank canvas or 1,100 templates"
+
+Implement:
+  "What kind of site do you need?"
+  → Business / Personal / Event / Other
+  → Subcategory selection
+  → Pre-configured template with smart defaults
+```
+
+**2. Implement Progressive Disclosure**
+```
+Step 1: Core content (what's on the site)
+Step 2: Basic layout (which template structure)
+Step 3: Brand colors (simple palette selection)
+Step 4: Advanced customization (unlocked after basics)
+```
+
+**3. Pre-Populate with Smart Defaults**
+- Auto-select fonts based on industry
+- Suggest color palettes that work together
+- Pre-fill section structures for common site types
+- Default responsive settings that work
+
+**4. Add Constraint Rails**
+- "Beginner mode" that limits options to proven patterns
+- Warn before anti-patterns (too many fonts, clashing colors)
+- Suggest improvements contextually
+
+**5. Value-First Onboarding**
+- Let users see their site preview before sign-up
+- Allow meaningful customization anonymously
+- Gate account creation on "save" not "start"
+
+**6. Mobile-First Consideration**
+- Most small business owners are mobile-first
+- Desktop-first design tool limits accessibility
+- Consider a simplified mobile companion app
+
+---
+
 ## Figmoo Competitive Advantage
 
 ### 1. Zero-Friction Onboarding

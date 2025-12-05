@@ -235,3 +235,63 @@ Established formal protocol for all experiments in `00-EXPERIMENTS-PROTOCOL.md`.
 - Added "Creating Experiments" section referencing protocol
 - Added Figmoo to file structure
 - Updated `_docs/` comment to reference protocol document
+
+### Deep Competitive Analysis
+
+Added comprehensive competitive analysis to Figmoo documentation covering the "friction spectrum" in website builders.
+
+**Key Insights:**
+
+1. **The Friction Spectrum**
+   - Website builders fail at both extremes
+   - "Overwhelming complexity" (Webflow, Figma Sites): "I don't know where to start"
+   - "False simplicity" (Replit blank prompts): "I don't know what to ask for"
+   - Optimal zone: "I'm making choices, not decisions" (Figmoo, Umso)
+
+2. **The Replit Problem: False Simplicity**
+   - Minimal UI that actually demands high cognitive load
+   - Blank canvas paralysis - users must invent projects from scratch
+   - Technical vocabulary required ("automation", "integrate")
+   - High creative burden - writing good prompts is a skill
+   - False promise: appears frictionless but user does ALL the thinking
+
+3. **The Figma Sites Problem: Overwhelming Complexity**
+   - Designer-centric assumptions (typography, Auto Layout, color theory)
+   - Blank canvas problem - infinite modification options
+   - Tool proficiency required before website building
+   - Integration friction for non-Figma users
+
+4. **What Figma Sites Does Well**
+   - Native ecosystem integration for existing users
+   - Visual fidelity - pixel-perfect control
+   - Template quality - 1,100+ professionally designed
+   - Developer handoff - clean export options
+   - Brand consistency - design tokens work across projects
+
+5. **Recommendations for Figma's Team**
+   - Add "Quick Start" mode for non-designers
+   - Implement progressive disclosure (content, layout, colors, advanced)
+   - Pre-populate with smart defaults based on industry
+   - Add constraint rails ("Beginner mode")
+   - Value-first onboarding (preview before sign-up)
+   - Mobile-first consideration
+
+**Documentation Updated:**
+- `figmoo-00-readme.md` - Added 150+ lines of competitive analysis
+
+### Build Fix
+
+Fixed TypeScript strict mode errors preventing Vercel deployment.
+
+**Issues Fixed:**
+- `aria-hidden` prop type: Changed from string `"true"` to boolean `{true}` in animated showcase component
+- Theme prop type: Added explicit `| undefined` to handle `exactOptionalPropertyTypes` strict mode
+
+**Files Fixed:**
+- `figmoo-animated-showcase.tsx` - 3 occurrences of aria-hidden type
+- `figmoo-site-preview.tsx` - Theme prop type definition
+
+**Verification:**
+- Production build successful
+- All TypeScript strict mode checks passing
+- Zero Biome lint errors

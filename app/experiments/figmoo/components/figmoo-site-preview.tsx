@@ -155,7 +155,13 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
  * Preview Section Component
  * Renders a preview of each section type
  */
-function PreviewSection({ sectionId, theme }: { sectionId: string; theme?: { colors: string[] } }) {
+function PreviewSection({
+  sectionId,
+  theme,
+}: {
+  sectionId: string
+  theme?: { colors: string[] } | undefined
+}) {
   const primaryColor = theme?.colors[0] || "#1A1A1A"
   const accentColor = theme?.colors[2] || "#7C3AED"
 

@@ -16,19 +16,19 @@ export function FigmooAnimatedShowcase() {
         {/* Column 1 - Scrolls Up */}
         <div className="flex-1 animate-scroll-up">
           <ShowcaseColumn cards={SHOWCASE_CARDS_1} />
-          <ShowcaseColumn cards={SHOWCASE_CARDS_1} aria-hidden="true" />
+          <ShowcaseColumn cards={SHOWCASE_CARDS_1} aria-hidden={true} />
         </div>
 
         {/* Column 2 - Scrolls Down */}
         <div className="flex-1 animate-scroll-down">
           <ShowcaseColumn cards={SHOWCASE_CARDS_2} />
-          <ShowcaseColumn cards={SHOWCASE_CARDS_2} aria-hidden="true" />
+          <ShowcaseColumn cards={SHOWCASE_CARDS_2} aria-hidden={true} />
         </div>
 
         {/* Column 3 - Scrolls Up (slower) */}
         <div className="flex-1 animate-scroll-up-slow">
           <ShowcaseColumn cards={SHOWCASE_CARDS_3} />
-          <ShowcaseColumn cards={SHOWCASE_CARDS_3} aria-hidden="true" />
+          <ShowcaseColumn cards={SHOWCASE_CARDS_3} aria-hidden={true} />
         </div>
       </div>
 
