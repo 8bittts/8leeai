@@ -151,6 +151,17 @@ A production-ready web application that acts as an intelligent command center fo
 - **Error Boundaries**: Graceful degradation
 - **Safe Batch Operations**: Controlled data generation (5 tickets/batch, 3s delays)
 
+### Styling Architecture
+
+**Intercom inherits styles from the main 8lee.ai terminal theme:**
+
+- **Layout**: Uses minimal layout wrapper that inherits root terminal styling
+- **Password Gate**: Uses shared `PasswordGate` component from `_shared/password-gate.tsx`
+- **Colors**: `bg-black`, `text-green-500`, `font-mono` (inherited from root)
+- **No Custom Styles**: Zero experiment-specific CSS overrides
+
+This design ensures visual consistency with the main portfolio site while maintaining complete code isolation.
+
 ---
 
 ## ARCHITECTURE OVERVIEW

@@ -34,7 +34,7 @@ Before deleting, ensure you have:
 
 ```bash
 # Delete the entire Intercom portal
-rm -rf app/intercom
+rm -rf app/experiments/intercom
 ```
 
 **Impact:** Removes all 62 Intercom files (13,569 lines of code)
@@ -180,6 +180,18 @@ git revert <commit-hash>
 2. Revert changes to `proxy.ts` and `package.json`
 3. Run `bun install`
 4. Restart dev server
+
+---
+
+### 5. Remove Shared Component Reference (if last experiment)
+
+If Intercom is the last experiment using the shared PasswordGate, also delete:
+
+```bash
+rm -rf app/experiments/_shared
+```
+
+**Note:** If Zendesk or Figmoo still exist, keep `_shared/` as they depend on it.
 
 ---
 

@@ -95,6 +95,17 @@ Display to User
 - **APIs**: Zendesk REST v2, OpenAI GPT-4o-mini
 - **Build**: Turbopack (Next.js compiler)
 
+### Styling Architecture
+
+**Zendesk inherits styles from the main 8lee.ai terminal theme:**
+
+- **Layout**: Uses minimal layout wrapper that inherits root terminal styling
+- **Password Gate**: Uses shared `PasswordGate` component from `_shared/password-gate.tsx`
+- **Colors**: `bg-black`, `text-green-500`, `font-mono` (inherited from root)
+- **No Custom Styles**: Zero experiment-specific CSS overrides
+
+This design ensures visual consistency with the main portfolio site while maintaining complete code isolation.
+
 ---
 
 ## File Structure

@@ -78,6 +78,29 @@ Unlike the Intercom/Zendesk experiments, Figmoo doesn't require external API acc
 
 Figmoo doesn't add any new dependencies, so no changes to `package.json` are needed.
 
+### Step 6: Remove Shared Component Reference (if last experiment)
+
+If Figmoo is the last experiment using the shared PasswordGate, also delete:
+
+```bash
+rm -rf app/experiments/_shared
+```
+
+**Note:** If Intercom or Zendesk still exist, keep `_shared/` as they depend on it.
+
+### Step 7: Clean Up globals.css Animations (Optional)
+
+Remove Figmoo-specific animations from `app/globals.css`:
+
+```css
+/* Remove these blocks */
+@keyframes figmoo-scroll-up { ... }
+@keyframes figmoo-scroll-down { ... }
+.animate-figmoo-scroll-up { ... }
+.animate-figmoo-scroll-down { ... }
+.animate-figmoo-scroll-up-slow { ... }
+```
+
 ---
 
 ## Post-Deletion Verification

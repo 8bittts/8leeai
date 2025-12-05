@@ -128,12 +128,50 @@ Every experiment MUST have documentation in `/app/experiments/_docs/`:
 
 ### 6. Styling Guidelines
 
-**Use experiment-specific styling that doesn't conflict with main app:**
+**Two Styling Approaches:**
+
+**A. Terminal-Themed (Inherit from Root)** - Intercom, Zendesk
+
+For experiments that should match the main 8lee.ai terminal aesthetic:
+
+```tsx
+// layout.tsx - Minimal wrapper, inherits root styles
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
+}
+```
+
+- Inherits `bg-black`, `text-green-500`, `font-mono` from root layout
+- Password gate uses terminal theme (automatic via shared component)
+- All UI uses green terminal styling
+- Zero custom CSS overrides needed
+
+**B. Independent Styling** - Figmoo
+
+For experiments that need completely different branding:
+
+```tsx
+// layout.tsx - Override root styles
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-[#custom] text-[#custom] font-sans">
+      {children}
+    </div>
+  )
+}
+```
+
+- Wraps content in a div that overrides root terminal styles
+- Password gate still uses terminal theme (shared component)
+- Post-auth content uses experiment's own color palette
+- Document the color scheme in experiment README
+
+**General Guidelines:**
 
 - Import `../../globals.css` for base Tailwind
-- Use Tailwind utility classes exclusively (no custom CSS)
-- Match experiment's brand identity in password gate and UI
+- Use Tailwind utility classes exclusively (no custom CSS except globals.css)
 - Ensure responsive design
+- Document styling approach in experiment README
 
 ### 7. Design Implementation Standards
 
@@ -207,11 +245,15 @@ These components are the ONLY exception to the "no cross-imports" rule.
 
 ## Current Experiments
 
-| Experiment | Purpose | URL |
-|------------|---------|-----|
-| **Intercom** | AI-powered support ticket intelligence | `/experiments/intercom` |
-| **Zendesk** | AI-powered ticket query interface | `/experiments/zendesk` |
-| **Figmoo** | Frictionless website builder | `/experiments/figmoo` |
+| Experiment | Purpose | Styling | URL |
+|------------|---------|---------|-----|
+| **Intercom** | AI-powered support ticket intelligence | Terminal (inherited) | `/experiments/intercom` |
+| **Zendesk** | AI-powered ticket query interface | Terminal (inherited) | `/experiments/zendesk` |
+| **Figmoo** | Frictionless website builder | Independent (Umso) | `/experiments/figmoo` |
+
+**Styling Legend:**
+- **Terminal (inherited)**: Uses root `bg-black text-green-500 font-mono` styles
+- **Independent**: Has own color palette, overrides root styles via layout wrapper
 
 ---
 

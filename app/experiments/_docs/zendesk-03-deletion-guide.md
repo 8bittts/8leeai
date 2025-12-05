@@ -12,7 +12,7 @@ To completely remove the Zendesk experiment from the codebase:
 
 ### 1. Delete the Zendesk Directory
 ```bash
-rm -rf experiments/zendesk
+rm -rf app/experiments/zendesk
 ```
 
 ### 2. Remove Command References (4 files)
@@ -63,6 +63,16 @@ ZENDESK_SUBDOMAIN=
 ```
 
 **Note:** Keep `support@8lee.zendesk.com` email in `app/api/contact/zendesk/route.ts` - this is for the contact form, NOT the experiment.
+
+### 5. Remove Shared Component Reference (if last experiment)
+
+If Zendesk is the last experiment using the shared PasswordGate, also delete:
+
+```bash
+rm -rf app/experiments/_shared
+```
+
+**Note:** If Intercom or Figmoo still exist, keep `_shared/` as they depend on it.
 
 ---
 

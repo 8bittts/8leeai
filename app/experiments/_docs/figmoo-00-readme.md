@@ -1,12 +1,41 @@
 # Figmoo: Frictionless Website Builder Experiment
 
-**Version:** 1.0 (PLANNING)
-**Status:** DEVELOPMENT
+**Version:** 1.0
+**Status:** COMPLETE
 **Isolation:** 100% ISOLATED (Safe to delete)
-**Target Completion:** In Progress
+**Last Updated:** December 5, 2025
 
 > **DELETION GUIDE:** See `figmoo-01-deletion-guide.md` for complete removal instructions.
 > The experiment is fully isolated and can be safely deleted without affecting the main site.
+
+---
+
+## Styling Architecture
+
+**IMPORTANT: Figmoo has INDEPENDENT styling from the main 8lee.ai site.**
+
+Unlike Intercom and Zendesk (which inherit the terminal theme), Figmoo uses a completely separate design system inspired by [Umso](https://umso.com):
+
+| Property | Main Site (Terminal) | Figmoo (Umso-inspired) |
+|----------|---------------------|------------------------|
+| Background | `bg-black` | `bg-[#faf7f4]` (warm beige) |
+| Text | `text-green-500` | `text-[#171a1a]` (dark charcoal) |
+| Font | `font-mono` | `font-sans` |
+| Buttons | Green terminal | Dark rounded pills |
+| Overall Feel | Retro terminal | Modern minimal |
+
+**Why Independent Styling?**
+
+Figmoo is a product experiment simulating a real website builder. It must:
+1. Look like a standalone product (not part of a portfolio)
+2. Match the competitor (Umso) for A/B comparison
+3. Demonstrate design range beyond terminal aesthetics
+
+**Implementation:**
+
+- **Layout** (`layout.tsx`): Wraps content in `<div className="min-h-screen bg-[#faf7f4] text-[#171a1a] font-sans">` to override root terminal styles
+- **Password Gate**: Uses shared `PasswordGate` component (terminal-themed for consistency across all experiments)
+- **Post-Auth Content**: All Figmoo UI uses Umso color palette
 
 ---
 
