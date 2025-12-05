@@ -175,3 +175,63 @@ Confirmed Next.js telemetry is disabled for privacy.
 **Documentation Updated:**
 - CLAUDE.md - Added telemetry disabled note to Bun section
 - README.md - Added telemetry disable command to Quick Start
+
+## December 5, 2025
+
+### Figmoo Experiment
+
+New experiment: Figmoo - a frictionless website builder proof-of-concept inspired by Umso.
+
+**Purpose:**
+- Demonstrate AI-powered website builder workflow
+- Showcase "Value First, Account Later" philosophy
+- Competitive positioning against Figma Sites, Framer, Webflow
+
+**Features Implemented:**
+- Landing page with animated website showcase
+- Multi-step onboarding wizard (category, name, design, content, final)
+- Live website preview component
+- Font and theme selection system
+- Section toggle/ordering system
+- Sign-up page with email authentication
+
+**Technical Implementation:**
+- 22 files in `/app/experiments/figmoo/`
+- Complete isolation with `figmoo-` namespace prefix
+- Password-protected with purple brand styling
+- Pure Tailwind utility classes (no custom CSS)
+- CSS keyframe animations for floating website previews
+
+**Documentation:**
+- `figmoo-00-readme.md` - Comprehensive planning and architecture
+- `figmoo-01-deletion-guide.md` - Safe removal instructions
+
+### Experiments Protocol
+
+Established formal protocol for all experiments in `00-EXPERIMENTS-PROTOCOL.md`.
+
+**Protocol Standards:**
+- Password protection: `booya` password with brand-appropriate styling
+- Session storage pattern: `{experiment}_auth` key
+- Complete isolation from main app
+- File naming convention: `{experiment}-{component}.tsx`
+- Required documentation structure
+- Deletion workflow checklist
+
+**Theme Guidelines:**
+| Experiment | Theme | Background | Border | Text |
+|------------|-------|------------|--------|------|
+| Intercom | Terminal Green | bg-black | border-green-500 | text-green-500 |
+| Zendesk | Terminal Green | bg-black | border-green-500 | text-green-500 |
+| Figmoo | Modern Purple | bg-gray-50 | border-purple-500 | text-purple-600 |
+
+**Quality Verification:**
+- All 3 experiments audited for consistency
+- All experiments follow protocol standards
+- Zero Biome lint errors
+- Zero TypeScript errors
+
+**CLAUDE.md Updated:**
+- Added "Creating Experiments" section referencing protocol
+- Added Figmoo to file structure
+- Updated `_docs/` comment to reference protocol document

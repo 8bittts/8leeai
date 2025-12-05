@@ -244,6 +244,19 @@ These files are manually curated by the project maintainer. Only modify release 
 **Animation Timing:**
 - Adjust constants in `/lib/utils.ts` ANIMATION_DELAYS
 
+### Creating Experiments
+
+Experiments are isolated proof-of-concept implementations in `/app/experiments/`. All experiments MUST follow the protocol defined in `/app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md`.
+
+**Key Requirements:**
+- **Password Protection**: All experiments require `booya` password with brand-appropriate styling
+- **Complete Isolation**: No imports from main app code (except `globals.css`)
+- **File Naming**: All files prefixed with `{experiment}-` (e.g., `figmoo-header.tsx`)
+- **Documentation**: Required files in `_docs/`: `{name}-00-readme.md`, `{name}-01-deletion-guide.md`
+- **Safe Deletion**: Must be removable without affecting main application
+
+See protocol document for complete standards, directory structure, and deletion workflow.
+
 ### Security Configuration
 
 **Headers:**
@@ -349,7 +362,8 @@ test("hides keyboard after command submission on touch devices", () => {
 │   ├── api/               # API routes
 │   │   └── contact/       # Contact form API (intercom, zendesk integrations)
 │   ├── experiments/       # Experimental features (isolated from main app)
-│   │   ├── _docs/         # Consolidated experiment documentation
+│   │   ├── _docs/         # Experiment documentation (see 00-EXPERIMENTS-PROTOCOL.md)
+│   │   ├── figmoo/        # Figmoo frictionless website builder experiment
 │   │   ├── intercom/      # Intercom Intelligence Portal experiment
 │   │   └── zendesk/       # Zendesk Intelligence Portal experiment
 │   ├── layout.tsx         # Root layout with metadata, Analytics & SpeedInsights
