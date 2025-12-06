@@ -561,3 +561,30 @@ Fixed Biome CSS parser to recognize Tailwind v4 directives.
 
 **Files Updated:**
 - `biome.json` - Added CSS parser configuration with `tailwindDirectives: true`
+
+### CLAUDE.md Optimization
+
+Major refactor of CLAUDE.md following HumanLayer best practices for AI assistant instructions.
+
+**Before:** 427 lines with duplicated content, code examples, task-specific details
+**After:** 60 lines focused on universal workflows and file references
+
+**Key Changes:**
+- Reduced from 427 to 60 lines (86% reduction)
+- Removed code style guidelines (linter's job)
+- Removed duplicated file structure (already in README)
+- Removed task-specific instructions (security config, adding commands)
+- Added "Key Files" reference table instead of reproducing content
+- Moved Architecture section to README.md
+- Added Figmoo to README project structure
+
+**Principles Applied (from humanlayer.dev/blog/writing-a-good-claude-md):**
+- Target < 100 lines (achieved: 60)
+- Focus on WHAT, WHY, HOW
+- Reference over reproduction
+- Universal applicability for every session
+- Progressive disclosure via file references
+
+**Files Updated:**
+- `CLAUDE.md` - Trimmed to 60 lines
+- `README.md` - Added Architecture section, added Figmoo to structure

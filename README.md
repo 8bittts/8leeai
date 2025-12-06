@@ -151,6 +151,21 @@ Additional tests exist for archived experimental projects (gitignored).
   - Live: https://8lee.ai
   - Configuration fixed November 21, 2025 (see release notes)
 
+## Architecture
+
+**Component Hierarchy:**
+1. `BootSequence` - Terminal boot animation with typewriter effect
+2. `TerminalContainer` - State orchestration (React hooks only, no external libraries)
+3. `CVContent` - Portfolio display with auto-scroll pagination
+4. `CommandPrompt` - User input handling
+5. `MatrixBackground` - Canvas Matrix rain (mobile only, 13fps)
+
+**State Management:** All state in `TerminalContainer`, passed via props. No Redux/Zustand.
+
+**Data Layer:** Portfolio data in `lib/data.ts` - 64 projects, 5 education, 6 volunteer entries. Links use `openExternalLink()` for security.
+
+**Styling:** Tailwind utilities only. Terminal theme: `text-green-500`, `bg-black`, IBM Plex Mono.
+
 ## Project Structure
 
 ```
@@ -160,6 +175,7 @@ Additional tests exist for archived experimental projects (gitignored).
 │   │   └── contact/                  # Contact form API (intercom, zendesk integrations)
 │   ├── experiments/                  # Experimental features (isolated from main app)
 │   │   ├── _docs/                    # Consolidated experiment documentation
+│   │   ├── figmoo/                   # Figmoo website builder experiment
 │   │   ├── intercom/                 # Intercom Intelligence Portal experiment
 │   │   └── zendesk/                  # Zendesk Intelligence Portal experiment
 │   ├── layout.tsx                    # Root layout with metadata, Analytics & SpeedInsights
