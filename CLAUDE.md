@@ -136,7 +136,7 @@ Terminal-style portfolio website featuring authentic DOS simulation with boot se
 - Tailwind CSS v4.1.17 (utility classes only, zero custom CSS)
 - Vercel Analytics 1.6.1 + Speed Insights 1.3.1
 - Biome 2.3.8 (linting/formatting with 100+ error-level rules)
-- AI/ML: Vercel AI SDK 5.0.106 + OpenAI SDK 2.0.77
+- AI/ML: Vercel AI SDK 5.0.108 + OpenAI SDK 2.0.77
 - Email: Resend 6.5.2
 - Bun 1.3.1 (package manager, runtime, test runner)
 - Type Definitions: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`

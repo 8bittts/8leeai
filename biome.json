@@ -212,6 +212,10 @@
   "css": {
     "linter": {
       "enabled": false
+    },
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
     }
   }
 }

@@ -140,7 +140,7 @@ Additional tests exist for archived experimental projects (gitignored).
 - **Styling**: [Tailwind CSS v4.1.17](https://tailwindcss.com) pure utilities
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.8](https://biomejs.dev) - 100+ error rules + 5 nursery rules
-- **AI/ML**: [Vercel AI SDK 5.0.106](https://sdk.vercel.ai), [OpenAI SDK 2.0.77](https://github.com/openai/openai-node)
+- **AI/ML**: [Vercel AI SDK 5.0.108](https://sdk.vercel.ai), [OpenAI SDK 2.0.77](https://github.com/openai/openai-node)
 - **Email**: [Resend 6.5.2](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.1`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`

@@ -533,3 +533,31 @@ Comprehensive refactor of Figmoo experiment: removed all third-party references,
 - `app/experiments/_docs/figmoo-00-readme.md` - Documentation cleanup
 - `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` - Updated styling reference
 - `docs/release-notes/2025-12-w1-december.md` - Updated references
+
+## December 6, 2025
+
+### Package Updates
+
+Updated Vercel AI SDK to latest version.
+
+**Updated Packages:**
+- ai 5.0.107 to 5.0.108
+
+**Quality Verification:**
+- All 96 tests passing (297 assertions)
+- Production build successful
+
+**Documentation Updated:**
+- CLAUDE.md Tech Stack section
+- README.md Tech Stack section
+
+### Biome CSS Parser Fix
+
+Fixed Biome CSS parser to recognize Tailwind v4 directives.
+
+**Issue:** Biome was erroring on Tailwind v4 syntax (`@custom-variant`, `@theme inline`, `@apply`) in globals.css
+
+**Fix:** Enabled `tailwindDirectives: true` in biome.json CSS parser options
+
+**Files Updated:**
+- `biome.json` - Added CSS parser configuration with `tailwindDirectives: true`
