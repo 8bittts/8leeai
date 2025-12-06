@@ -1,5 +1,6 @@
 "use client"
 
+import { Card } from "@/components/ui/card"
 import { FONTS, SECTIONS, THEMES } from "../lib/figmoo-data"
 import type { WizardState } from "../lib/figmoo-types"
 
@@ -18,44 +19,27 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
   const enabledSectionData = SECTIONS.filter((s) => state.enabledSections.includes(s.id))
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+    <Card className="overflow-hidden border-gray-200 bg-white shadow-lg">
       {/* Browser Chrome */}
-      <div className="bg-gray-100 px-4 py-3 flex items-center gap-3 border-b border-gray-200">
+      <div className="flex items-center gap-3 border-b border-gray-200 bg-gray-100 px-4 py-3">
         <div className="flex gap-2">
-          <button type="button" className="text-gray-400 hover:text-gray-600" aria-label="Go back">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+          <button
+            type="button"
+            className="text-gray-400 hover:text-gray-600"
+            aria-label="Go back"
+          >
+            <ChevronLeftIcon />
           </button>
           <button
             type="button"
             className="text-gray-400 hover:text-gray-600"
             aria-label="Go forward"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRightIcon />
           </button>
         </div>
 
-        <div className="flex-1 bg-white rounded-full px-4 py-1.5 text-sm text-gray-400 text-center border border-gray-200">
+        <div className="flex-1 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-center text-sm text-gray-400">
           example.com
         </div>
 
@@ -65,148 +49,103 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
             className="text-gray-400 hover:text-gray-600"
             aria-label="Add bookmark"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
+            <PlusIcon />
           </button>
-          <button type="button" className="text-gray-400 hover:text-gray-600" aria-label="Bookmark">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-              />
-            </svg>
+          <button
+            type="button"
+            className="text-gray-400 hover:text-gray-600"
+            aria-label="Bookmark"
+          >
+            <BookmarkIcon />
           </button>
         </div>
       </div>
 
       {/* Website Preview Content */}
       <div
-        className="h-[500px] overflow-y-auto"
-        style={{
-          fontFamily: selectedFont?.family || "system-ui",
-          backgroundColor: selectedTheme?.colors[3] || "#FFFFFF",
-        }}
+        className="h-[500px] overflow-y-auto bg-[var(--preview-bg)] font-[family-name:var(--preview-font)]"
+        style={
+          {
+            "--preview-font": selectedFont?.family || "system-ui",
+            "--preview-bg": selectedTheme?.colors[3] || "#FFFFFF",
+            "--preview-primary": selectedTheme?.colors[0] || "#1A1A1A",
+            "--preview-accent": selectedTheme?.colors[2] || "#7C3AED",
+          } as React.CSSProperties
+        }
       >
         {/* Navigation Preview */}
-        <nav className="px-6 py-4 flex items-center justify-between border-b border-gray-100">
-          <span className="font-semibold" style={{ color: selectedTheme?.colors[0] || "#1A1A1A" }}>
+        <nav className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+          <span className="font-semibold text-[var(--preview-primary)]">
             {state.siteName || "Your Site"}
           </span>
-          <div className="hidden sm:flex items-center gap-4 text-sm">
+          <div className="hidden items-center gap-4 text-sm sm:flex">
             <span className="text-gray-500">Features</span>
             <span className="text-gray-500">Another One</span>
             <span className="text-gray-500">Team</span>
-            <span
-              className="px-3 py-1 rounded-full border text-xs"
-              style={{
-                borderColor: selectedTheme?.colors[2] || "#7C3AED",
-                color: selectedTheme?.colors[2] || "#7C3AED",
-              }}
-            >
+            <span className="rounded-full border border-[var(--preview-accent)] px-3 py-1 text-xs text-[var(--preview-accent)]">
               Learn More
             </span>
-            <span
-              className="px-3 py-1 rounded-full text-white text-xs"
-              style={{ backgroundColor: selectedTheme?.colors[0] || "#7C3AED" }}
-            >
+            <span className="rounded-full bg-[var(--preview-primary)] px-3 py-1 text-xs text-white">
               Get Started
             </span>
           </div>
         </nav>
 
         {/* Sections */}
-        <div className="p-6 space-y-8">
+        <div className="space-y-8 p-6">
           {enabledSectionData.map((section) => (
-            <PreviewSection key={section.id} sectionId={section.id} theme={selectedTheme} />
+            <PreviewSection key={section.id} sectionId={section.id} />
           ))}
 
           {enabledSectionData.length === 0 && (
-            <div className="text-center py-12 text-gray-400">
+            <div className="py-12 text-center text-gray-400">
               Select sections to preview your website
             </div>
           )}
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 
 /**
  * Preview Section Component
  * Renders a preview of each section type
+ * Uses CSS custom properties from parent for theming
  */
-function PreviewSection({
-  sectionId,
-  theme,
-}: {
-  sectionId: string
-  theme?: { colors: string[] } | undefined
-}) {
-  const primaryColor = theme?.colors[0] || "#1A1A1A"
-  const accentColor = theme?.colors[2] || "#7C3AED"
-
+function PreviewSection({ sectionId }: { sectionId: string }) {
   switch (sectionId) {
     case "hero":
       return (
         <div className="py-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid items-center gap-8 md:grid-cols-2">
             <div>
-              <h1 className="text-3xl font-bold mb-4" style={{ color: primaryColor }}>
-                Welcome to Your Beautiful <span style={{ color: accentColor }}>new Website</span>
+              <h1 className="mb-4 text-3xl font-bold text-[var(--preview-primary)]">
+                Welcome to Your Beautiful{" "}
+                <span className="text-[var(--preview-accent)]">new Website</span>
               </h1>
-              <p className="text-gray-600 mb-6">
+              <p className="mb-6 text-gray-600">
                 Tell your visitors more about what you do and why they should choose you.
               </p>
               <div className="flex gap-3">
-                <span
-                  className="px-4 py-2 rounded-lg text-white text-sm"
-                  style={{ backgroundColor: accentColor }}
-                >
+                <span className="rounded-lg bg-[var(--preview-accent)] px-4 py-2 text-sm text-white">
                   Learn More
                 </span>
-                <span
-                  className="px-4 py-2 rounded-lg text-sm"
-                  style={{ backgroundColor: primaryColor, color: "#FFFFFF" }}
-                >
+                <span className="rounded-lg bg-[var(--preview-primary)] px-4 py-2 text-sm text-white">
                   Get Started
                 </span>
               </div>
             </div>
-            <div
-              className="rounded-xl h-48"
-              style={{
-                background: `linear-gradient(135deg, ${accentColor}30 0%, ${primaryColor}30 100%)`,
-              }}
-            />
+            <div className="h-48 rounded-xl bg-gradient-to-br from-[var(--preview-accent)]/30 to-[var(--preview-primary)]/30" />
           </div>
         </div>
       )
 
     case "logos":
       return (
-        <div className="py-6 text-center border-y border-gray-100">
-          <p className="text-xs text-gray-400 mb-4">Trusted by imaginary Companies</p>
-          <div className="flex flex-wrap justify-center gap-6 text-gray-400 text-sm">
+        <div className="border-y border-gray-100 py-6 text-center">
+          <p className="mb-4 text-xs text-gray-400">Trusted by imaginary Companies</p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
             <span>Podium</span>
             <span>M.C.P.</span>
             <span>EPISM</span>
@@ -220,32 +159,23 @@ function PreviewSection({
     case "features":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-2" style={{ color: primaryColor }}>
-            Grid
-          </h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <h2 className="mb-2 text-xl font-bold text-[var(--preview-primary)]">Grid</h2>
+          <p className="mb-6 text-sm text-gray-600">
             Great for displaying multiple features and things like that.
           </p>
-          <div className="h-24 rounded-lg" style={{ backgroundColor: accentColor }} />
+          <div className="h-24 rounded-lg bg-[var(--preview-accent)]" />
         </div>
       )
 
     case "team":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-4" style={{ color: primaryColor }}>
-            Meet the Team
-          </h2>
+          <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">Meet the Team</h2>
           <div className="grid grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="text-center">
-                <div
-                  className="w-16 h-16 rounded-full mx-auto mb-2"
-                  style={{ backgroundColor: `${accentColor}30` }}
-                />
-                <p className="text-sm font-medium" style={{ color: primaryColor }}>
-                  Team Member
-                </p>
+              <div key={`team-${i}`} className="text-center">
+                <div className="mx-auto mb-2 h-16 w-16 rounded-full bg-[var(--preview-accent)]/30" />
+                <p className="text-sm font-medium text-[var(--preview-primary)]">Team Member</p>
                 <p className="text-xs text-gray-400">Role</p>
               </div>
             ))}
@@ -256,14 +186,12 @@ function PreviewSection({
     case "form":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-4" style={{ color: primaryColor }}>
-            Get in Touch
-          </h2>
-          <div className="space-y-3 max-w-sm">
+          <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">Get in Touch</h2>
+          <div className="max-w-sm space-y-3">
             <div className="h-10 rounded-lg bg-gray-100" />
             <div className="h-10 rounded-lg bg-gray-100" />
             <div className="h-24 rounded-lg bg-gray-100" />
-            <div className="h-10 rounded-lg" style={{ backgroundColor: accentColor }} />
+            <div className="h-10 rounded-lg bg-[var(--preview-accent)]" />
           </div>
         </div>
       )
@@ -272,22 +200,16 @@ function PreviewSection({
     case "single-pricing":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-4" style={{ color: primaryColor }}>
-            Pricing
-          </h2>
+          <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">Pricing</h2>
           <div className="grid grid-cols-3 gap-4">
             {["Basic", "Pro", "Enterprise"].map((plan) => (
-              <div key={plan} className="p-4 rounded-lg border border-gray-200 text-center">
-                <p className="font-medium text-sm" style={{ color: primaryColor }}>
-                  {plan}
-                </p>
-                <p className="text-2xl font-bold my-2" style={{ color: accentColor }}>
-                  $99
-                </p>
+              <div key={plan} className="rounded-lg border border-gray-200 p-4 text-center">
+                <p className="text-sm font-medium text-[var(--preview-primary)]">{plan}</p>
+                <p className="my-2 text-2xl font-bold text-[var(--preview-accent)]">$99</p>
                 <div className="space-y-1">
-                  <div className="h-2 bg-gray-100 rounded" />
-                  <div className="h-2 bg-gray-100 rounded" />
-                  <div className="h-2 bg-gray-100 rounded" />
+                  <div className="h-2 rounded bg-gray-100" />
+                  <div className="h-2 rounded bg-gray-100" />
+                  <div className="h-2 rounded bg-gray-100" />
                 </div>
               </div>
             ))}
@@ -300,22 +222,15 @@ function PreviewSection({
     case "reviews":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-4" style={{ color: primaryColor }}>
-            What People Say
-          </h2>
-          <div className="p-6 rounded-lg bg-gray-50 border border-gray-100">
-            <p className="text-gray-600 italic mb-4">
+          <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">What People Say</h2>
+          <div className="rounded-lg border border-gray-100 bg-gray-50 p-6">
+            <p className="mb-4 italic text-gray-600">
               "This is an amazing product that has changed how we work!"
             </p>
             <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-full"
-                style={{ backgroundColor: `${accentColor}30` }}
-              />
+              <div className="h-10 w-10 rounded-full bg-[var(--preview-accent)]/30" />
               <div>
-                <p className="text-sm font-medium" style={{ color: primaryColor }}>
-                  Happy Customer
-                </p>
+                <p className="text-sm font-medium text-[var(--preview-primary)]">Happy Customer</p>
                 <p className="text-xs text-gray-400">CEO, Company</p>
               </div>
             </div>
@@ -326,15 +241,13 @@ function PreviewSection({
     case "faq":
       return (
         <div className="py-8">
-          <h2 className="text-xl font-bold mb-4" style={{ color: primaryColor }}>
+          <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">
             Frequently Asked Questions
           </h2>
           <div className="space-y-3">
             {["How does it work?", "What's included?", "Can I cancel?"].map((q) => (
-              <div key={q} className="p-4 rounded-lg bg-gray-50 border border-gray-100">
-                <p className="text-sm font-medium" style={{ color: primaryColor }}>
-                  {q}
-                </p>
+              <div key={q} className="rounded-lg border border-gray-100 bg-gray-50 p-4">
+                <p className="text-sm font-medium text-[var(--preview-primary)]">{q}</p>
               </div>
             ))}
           </div>
@@ -352,9 +265,7 @@ function PreviewSection({
               { value: "5x", label: "Faster" },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xl font-bold" style={{ color: accentColor }}>
-                  {stat.value}
-                </p>
+                <p className="text-2xl font-bold text-[var(--preview-accent)]">{stat.value}</p>
                 <p className="text-xs text-gray-500">{stat.label}</p>
               </div>
             ))}
@@ -365,13 +276,47 @@ function PreviewSection({
     default:
       return (
         <div className="py-8">
-          <div
-            className="h-32 rounded-lg flex items-center justify-center text-sm text-gray-400"
-            style={{ backgroundColor: `${accentColor}10` }}
-          >
+          <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--preview-accent)]/10 text-sm text-gray-400">
             {sectionId.replace(/-/g, " ")} section
           </div>
         </div>
       )
   }
+}
+
+function ChevronLeftIcon() {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  )
+}
+
+function PlusIcon() {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+    </svg>
+  )
+}
+
+function BookmarkIcon() {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+      />
+    </svg>
+  )
 }

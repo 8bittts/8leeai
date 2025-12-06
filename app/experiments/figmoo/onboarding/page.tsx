@@ -1,5 +1,7 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense, useEffect, useState } from "react"
 import { FigmooHeader } from "../components/figmoo-header"
@@ -14,7 +16,7 @@ import type { OnboardingStep, WizardState } from "../lib/figmoo-types"
 
 /**
  * Onboarding Wizard Page
- * Multi-step website builder configuration
+ * Multi-step website builder configuration inspired by great design patterns
  */
 function OnboardingContent() {
   const searchParams = useSearchParams()
@@ -76,10 +78,10 @@ function OnboardingContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-figmoo-bg">
       <FigmooHeader />
 
-      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main id="main-content" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Content step gets full width for preview panel */}
         {currentStep?.id === "content" ? (
           <FigmooStepContent
@@ -90,81 +92,52 @@ function OnboardingContent() {
             onStartOver={handleStartOver}
           />
         ) : (
-          <div className="max-w-xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-              {/* Header with Progress */}
-              <div className="flex items-start justify-between mb-6">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{currentStep?.title}</h1>
-                  <p className="text-gray-600 mt-2">{currentStep?.description}</p>
+          <div className="mx-auto max-w-xl">
+            <Card className="border-gray-200 bg-white shadow-sm">
+              <CardContent className="p-8">
+                {/* Header with Progress */}
+                <div className="mb-6 flex items-start justify-between">
+                  <div>
+                    <h1 className="text-2xl font-bold text-figmoo-text">{currentStep?.title}</h1>
+                    <p className="mt-2 text-gray-500">{currentStep?.description}</p>
+                  </div>
+                  <FigmooProgressBar currentStep={state.step} totalSteps={STEPS.length} />
                 </div>
-                <FigmooProgressBar currentStep={state.step} totalSteps={STEPS.length} />
-              </div>
 
-              {/* Step Content */}
-              {currentStep?.id === "category" && (
-                <FigmooStepCategory state={state} onUpdate={updateState} />
-              )}
+                {/* Step Content */}
+                {currentStep?.id === "category" && (
+                  <FigmooStepCategory state={state} onUpdate={updateState} />
+                )}
 
-              {currentStep?.id === "name" && (
-                <FigmooStepName state={state} onUpdate={updateState} />
-              )}
+                {currentStep?.id === "name" && (
+                  <FigmooStepName state={state} onUpdate={updateState} />
+                )}
 
-              {currentStep?.id === "design" && (
-                <FigmooStepDesign state={state} onUpdate={updateState} />
-              )}
+                {currentStep?.id === "design" && (
+                  <FigmooStepDesign state={state} onUpdate={updateState} />
+                )}
 
-              {currentStep?.id === "final" && (
-                <FigmooStepFinal state={state} onUpdate={updateState} />
-              )}
+                {currentStep?.id === "final" && (
+                  <FigmooStepFinal state={state} onUpdate={updateState} />
+                )}
 
-              {/* Navigation */}
-              <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
+                {/* Navigation */}
+                <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
+                  <Button variant="ghost" onClick={handleBack} className="text-gray-600">
+                    <ArrowLeftIcon />
+                    Back
+                  </Button>
+
+                  <Button
+                    onClick={handleNext}
+                    className="rounded-lg bg-violet-600 text-white hover:bg-violet-700"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                  Back
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors"
-                >
-                  {currentStep?.nextButtonLabel}
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
+                    {currentStep?.nextButtonLabel}
+                    <ArrowRightIcon />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
       </main>
@@ -182,8 +155,36 @@ export default function OnboardingPage() {
 
 function OnboardingLoading() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-figmoo-bg">
       <div className="text-gray-500">Loading...</div>
     </div>
+  )
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg
+      className="mr-1 h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg
+      className="ml-1 h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
   )
 }

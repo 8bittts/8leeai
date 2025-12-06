@@ -206,7 +206,7 @@ Note: Adding to .gitignore only affects future changes. Already committed files 
 |------------|---------|---------|-----|
 | **Intercom** | AI-powered support ticket intelligence | Terminal (inherited) | `/experiments/intercom` |
 | **Zendesk** | AI-powered ticket query interface | Terminal (inherited) | `/experiments/zendesk` |
-| **Figmoo** | Frictionless website builder | Independent (Umso-inspired) | `/experiments/figmoo` |
+| **Figmoo** | Frictionless website builder | Independent (Modern minimal) | `/experiments/figmoo` |
 
 **Styling Legend:**
 - **Terminal (inherited)**: Uses root `bg-black text-green-500 font-mono` styles

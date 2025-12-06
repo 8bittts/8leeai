@@ -180,7 +180,7 @@ Confirmed Next.js telemetry is disabled for privacy.
 
 ### Figmoo Experiment
 
-New experiment: Figmoo - a frictionless website builder proof-of-concept inspired by Umso.
+New experiment: Figmoo - a frictionless website builder proof-of-concept inspired by great product design.
 
 **Purpose:**
 - Demonstrate AI-powered website builder workflow
@@ -246,7 +246,7 @@ Added comprehensive competitive analysis to Figmoo documentation covering the "f
    - Website builders fail at both extremes
    - "Overwhelming complexity" (Webflow, Figma Sites): "I don't know where to start"
    - "False simplicity" (Replit blank prompts): "I don't know what to ask for"
-   - Optimal zone: "I'm making choices, not decisions" (Figmoo, Umso)
+   - Optimal zone: "I'm making choices, not decisions" (Figmoo)
 
 2. **The Replit Problem: False Simplicity**
    - Minimal UI that actually demands high cognitive load
@@ -408,7 +408,7 @@ Comprehensive documentation update for all experiments covering styling architec
 |------------|-----------------|---------------|
 | Intercom | Terminal (inherited) | Added "Styling Architecture" section |
 | Zendesk | Terminal (inherited) | Added "Styling Architecture" section |
-| Figmoo | Independent (Umso) | Added prominent styling comparison table |
+| Figmoo | Independent (Modern minimal) | Added prominent styling comparison table |
 
 **Intercom/Zendesk Updates:**
 - Document that they inherit root terminal styles (`bg-black text-green-500 font-mono`)
@@ -417,7 +417,7 @@ Comprehensive documentation update for all experiments covering styling architec
 
 **Figmoo Updates:**
 - Document complete style independence from main site
-- Added comparison table (Terminal vs Umso palette)
+- Added comparison table (Terminal vs Modern minimal palette)
 - Explained why: product simulation, competitor comparison, design range demonstration
 - Layout wraps content in override div (`bg-[#faf7f4] text-[#171a1a] font-sans`)
 
@@ -434,7 +434,7 @@ Comprehensive documentation update for all experiments covering styling architec
 
 ### Major Experiments Refactor
 
-Complete overhaul of experiments architecture: removed password gate, added shadcn/ui, redesigned Figmoo with Umso's exact color palette.
+Complete overhaul of experiments architecture: removed password gate, added shadcn/ui, redesigned Figmoo with modern minimal color palette.
 
 **Password Gate Removal:**
 - Deleted `app/experiments/_shared/password-gate.tsx`
@@ -449,9 +449,9 @@ Complete overhaul of experiments architecture: removed password gate, added shad
 - Fixed `globals.css` to not override main site body styles (terminal theme preserved)
 - Created `components.json` configuration
 
-**Figmoo Redesign with Umso Colors:**
+**Figmoo Redesign with Modern Minimal Colors:**
 
-| Element | Umso Color |
+| Element | Color |
 |---------|------------|
 | Background | `#faf7f4` (cream) |
 | Text | `#2c2c2c` (charcoal) |
@@ -464,10 +464,10 @@ Complete overhaul of experiments architecture: removed password gate, added shad
 | Horizontal padding | `30px` |
 
 **Files Updated:**
-- `app/experiments/figmoo/layout.tsx` - Umso color palette
-- `app/experiments/figmoo/page.tsx` - Umso styling
-- `app/experiments/figmoo/components/figmoo-header.tsx` - Umso navigation
-- `app/experiments/figmoo/components/figmoo-category-card.tsx` - Umso card styling
+- `app/experiments/figmoo/layout.tsx` - Modern minimal color palette
+- `app/experiments/figmoo/page.tsx` - Modern minimal styling
+- `app/experiments/figmoo/components/figmoo-header.tsx` - Clean navigation
+- `app/experiments/figmoo/components/figmoo-category-card.tsx` - Card styling
 - `app/experiments/intercom/page.tsx` - Removed PasswordGate
 - `app/experiments/zendesk/page.tsx` - Removed PasswordGate
 
@@ -489,3 +489,47 @@ Complete overhaul of experiments architecture: removed password gate, added shad
 - All TypeScript checks passing
 - Production build successful
 - Main site terminal theme preserved
+
+### Figmoo Design Audit and Privacy Hardening
+
+Comprehensive refactor of Figmoo experiment: removed all third-party references, added CSS variables for brand colors, eliminated inline styles, updated Hire Eight page for Figma PM application context, and hardened privacy with maximum no-index directives.
+
+**Brand Reference Removal:**
+- Removed all third-party brand references from code comments and documentation
+- Updated to generic "inspired by great product design" language
+- Cleaned 13 component files, 4 documentation files, and globals.css
+
+**CSS Variables for Brand Colors:**
+- Added `--figmoo-bg`, `--figmoo-text`, `--figmoo-button` to globals.css
+- Registered with Tailwind v4 via `@theme inline` block
+- Replaced all hardcoded hex values (`#faf7f4`, `#2c2c2c`) with CSS variable classes
+
+**Inline Styles Elimination:**
+- Refactored `figmoo-step-design.tsx` to use CSS custom properties for font preview
+- Refactored `figmoo-site-preview.tsx` to use CSS custom properties for theme colors
+- Pattern: Set CSS variables on container, consume with Tailwind arbitrary values
+
+**Hire Eight Page Update:**
+- Rewritten for Figma PM application context
+- Key message: "The Problem Isn't Features. It's Onboarding."
+- Four-step approach: Immediate value signal, Progressive disclosure, Live feedback, Delayed authentication
+- PM-relevant skills: User Research, Data Analysis, Product Strategy, Prototyping, Design Systems, Experimentation
+
+**Privacy Hardening:**
+- Maximum robots meta directives in layout.tsx:
+  - `index: false`, `follow: false`, `nocache: true`
+  - `noarchive: true`, `nosnippet: true`, `noimageindex: true`
+  - Specific googleBot directives with `max-video-preview: -1`, `max-image-preview: "none"`
+- `referrer: "no-referrer"` to prevent referrer leakage
+- Explicitly nulled `openGraph` and `twitter` metadata
+- Combined with existing proxy.ts X-Robots-Tag headers
+
+**Files Updated:**
+- `app/experiments/figmoo/layout.tsx` - Enhanced privacy metadata
+- `app/experiments/figmoo/hire-eight/page.tsx` - PM application narrative
+- `app/experiments/figmoo/components/*.tsx` - CSS variable classes
+- `app/experiments/figmoo/*/page.tsx` - CSS variable classes
+- `app/globals.css` - Figmoo brand CSS variables
+- `app/experiments/_docs/figmoo-00-readme.md` - Documentation cleanup
+- `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` - Updated styling reference
+- `docs/release-notes/2025-12-w1-december.md` - Updated references

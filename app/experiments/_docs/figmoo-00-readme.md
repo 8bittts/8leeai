@@ -14,9 +14,9 @@
 
 **IMPORTANT: Figmoo has INDEPENDENT styling from the main 8lee.ai site.**
 
-Unlike Intercom and Zendesk (which inherit the terminal theme), Figmoo uses a completely separate design system inspired by [Umso](https://umso.com):
+Unlike Intercom and Zendesk (which inherit the terminal theme), Figmoo uses a completely separate design system inspired by great product design:
 
-| Property | Main Site (Terminal) | Figmoo (Umso-inspired) |
+| Property | Main Site (Terminal) | Figmoo (Modern Minimal) |
 |----------|---------------------|------------------------|
 | Background | `bg-black` | `bg-[#faf7f4]` (warm beige) |
 | Text | `text-green-500` | `text-[#171a1a]` (dark charcoal) |
@@ -28,20 +28,20 @@ Unlike Intercom and Zendesk (which inherit the terminal theme), Figmoo uses a co
 
 Figmoo is a product experiment simulating a real website builder. It must:
 1. Look like a standalone product (not part of a portfolio)
-2. Match the competitor (Umso) for A/B comparison
+2. Reflect modern website builder aesthetics for realistic comparison
 3. Demonstrate design range beyond terminal aesthetics
 
 **Implementation:**
 
 - **Layout** (`layout.tsx`): Wraps content in `<div className="min-h-screen bg-[#faf7f4] text-[#171a1a] font-sans">` to override root terminal styles
 - **Password Gate**: Uses shared `PasswordGate` component (terminal-themed for consistency across all experiments)
-- **Post-Auth Content**: All Figmoo UI uses Umso color palette
+- **Post-Auth Content**: All Figmoo UI uses modern minimal color palette
 
 ---
 
 ## Executive Summary
 
-Figmoo is a frictionless website builder experiment that clones and improves upon the Umso onboarding workflow. The key competitive advantage is **friction removal** - users can build a complete website structure before ever needing to create an account, dramatically increasing engagement and conversion.
+Figmoo is a frictionless website builder experiment inspired by the best onboarding patterns in the industry. The key competitive advantage is **friction removal** - users can build a complete website structure before ever needing to create an account, dramatically increasing engagement and conversion.
 
 ### Strategic Positioning
 
@@ -50,7 +50,7 @@ Figmoo is a frictionless website builder experiment that clones and improves upo
 | **Figma Sites** | Designers with Figma expertise | High | Requires Figma proficiency, design-first |
 | **Framer** | Design-savvy creators | Medium-High | Learning curve for interactions |
 | **Webflow** | Professional developers | Very High | Steep learning curve, overwhelming UI |
-| **Umso** | Non-technical entrepreneurs | Low | Simple but limited templates |
+| **Simple builders** | Non-technical entrepreneurs | Low | Simple but limited templates |
 | **Figmoo** | Anyone who wants a website | Very Low | Zero friction until value delivered |
 
 ### Core Philosophy
@@ -121,13 +121,13 @@ Traditional website builders require sign-up before showing value. Figmoo invert
 
 **Onboarding Friction:** Very High - significant time investment required
 
-### Umso (Our Inspiration)
+### Simple Website Builders (Category Inspiration)
 
 **Strengths:**
 - Extreme simplicity
 - Fast loading sites
 - All-in-one (forms, analytics, blog)
-- $0-$25/month affordable pricing
+- Affordable pricing
 
 **Weaknesses:**
 - Limited customization
@@ -158,7 +158,6 @@ OVERWHELMING COMPLEXITY                    FALSE SIMPLICITY
                     OPTIMAL ZONE
                          |
                       Figmoo
-                      Umso
                          |
                          v
             "I'm making choices, not decisions"
@@ -895,8 +894,8 @@ font-weight: 400;
 - [Framer vs Webflow 2025 Comparison](https://zapier.com/blog/framer-vs-webflow/)
 
 ### Design Inspiration
-- [Umso.com](https://www.umso.com/) - Primary inspiration for onboarding flow
-- [Umso Generator](https://app.umso.com/generator) - Onboarding workflow reference
+- Modern minimal website builders - Inspiration for onboarding flow
+- Industry best practices for progressive disclosure and value-first design
 
 ---
 

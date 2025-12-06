@@ -1,5 +1,12 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { cn } from "@/lib/utils"
 import { SECTIONS } from "../lib/figmoo-data"
 import type { WizardState } from "../lib/figmoo-types"
 import { FigmooProgressBar } from "./figmoo-progress-bar"
@@ -35,111 +42,94 @@ export function FigmooStepContent({
   }
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
+    <div className="grid gap-8 lg:grid-cols-2">
       {/* Left Panel - Section Builder */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        {/* Header with Progress */}
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Homepage Content</h1>
-            <p className="text-gray-600 mt-1 text-sm">
-              This is just a starting point. You can add more sections after creating your site.
-            </p>
+      <Card className="border-gray-200 bg-white shadow-sm">
+        <CardContent className="p-8">
+          {/* Header with Progress */}
+          <div className="mb-6 flex items-start justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-figmoo-text">Homepage Content</h1>
+              <p className="mt-1 text-sm text-gray-500">
+                This is just a starting point. You can add more sections after creating your site.
+              </p>
+            </div>
+            <FigmooProgressBar currentStep={2} totalSteps={5} />
           </div>
-          <FigmooProgressBar currentStep={2} totalSteps={5} />
-        </div>
 
-        {/* Default Sections */}
-        <div className="space-y-2 mb-6">
-          {defaultSections.map((section) => (
-            <SectionToggle
-              key={section.id}
-              name={section.name}
-              enabled={state.enabledSections.includes(section.id)}
-              onToggle={() => toggleSection(section.id)}
-            />
-          ))}
-        </div>
-
-        {/* Add a Section */}
-        <div className="mb-6">
-          <p className="text-sm font-medium text-gray-700 mb-3">Add a Section</p>
-          <div className="flex flex-wrap gap-2">
-            {additionalSections.map((section) => (
-              <button
+          {/* Default Sections */}
+          <div className="mb-6 space-y-2">
+            {defaultSections.map((section) => (
+              <SectionToggle
                 key={section.id}
-                type="button"
-                onClick={() => toggleSection(section.id)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border transition-all ${
-                  state.enabledSections.includes(section.id)
-                    ? "border-purple-600 bg-purple-50 text-purple-700"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
-                }`}
-              >
-                <span className="text-gray-400">+</span>
-                {section.name}
-              </button>
+                id={section.id}
+                name={section.name}
+                enabled={state.enabledSections.includes(section.id)}
+                onToggle={() => toggleSection(section.id)}
+              />
             ))}
           </div>
-        </div>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between pt-6 border-t border-gray-100">
-          <button
-            type="button"
-            onClick={onStartOver}
-            className="text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors"
-          >
-            Start Over
-          </button>
-
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              onClick={onBack}
-              className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium transition-colors"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Back
-            </button>
-
-            <button
-              type="button"
-              onClick={onNext}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors"
-            >
-              Design
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+          {/* Add a Section */}
+          <div className="mb-6">
+            <p className="mb-3 text-sm font-medium text-gray-700">Add a Section</p>
+            <div className="flex flex-wrap gap-2">
+              {additionalSections.map((section) => {
+                const isSelected = state.enabledSections.includes(section.id)
+                return (
+                  <button
+                    key={section.id}
+                    type="button"
+                    onClick={() => toggleSection(section.id)}
+                    className="focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-full"
+                  >
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "cursor-pointer px-3 py-1.5 text-sm transition-all",
+                        isSelected
+                          ? "border-violet-600 bg-violet-50 text-violet-700"
+                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                      )}
+                    >
+                      <span className="mr-1 text-gray-400">+</span>
+                      {section.name}
+                    </Badge>
+                  </button>
+                )
+              })}
+            </div>
           </div>
-        </div>
-      </div>
+
+          <Separator className="my-6" />
+
+          {/* Navigation */}
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onStartOver}
+              className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-700"
+            >
+              Start Over
+            </button>
+
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" onClick={onBack} className="text-gray-600">
+                <ArrowLeftIcon />
+                Back
+              </Button>
+
+              <Button
+                onClick={onNext}
+                className="rounded-lg bg-violet-600 text-white hover:bg-violet-700"
+              >
+                Design
+                <ArrowRightIcon />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Right Panel - Live Preview */}
       <div className="hidden lg:block">
@@ -151,46 +141,69 @@ export function FigmooStepContent({
 
 /**
  * Section Toggle Component
- * Individual toggleable section item
+ * Individual toggleable section item with checkbox
  */
 function SectionToggle({
+  id,
   name,
   enabled,
   onToggle,
 }: {
+  id: string
   name: string
   enabled: boolean
   onToggle: () => void
 }) {
   return (
-    <button
-      type="button"
-      onClick={onToggle}
-      className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all text-left ${
+    <div
+      className={cn(
+        "flex items-center gap-3 rounded-lg p-3 transition-all",
         enabled ? "bg-gray-50" : "bg-white opacity-60"
-      }`}
+      )}
     >
-      <svg
-        className={`w-5 h-5 ${enabled ? "text-gray-600" : "text-gray-300"}`}
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        {enabled ? (
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        ) : (
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
+      <Checkbox
+        id={`section-${id}`}
+        checked={enabled}
+        onCheckedChange={onToggle}
+        className="border-gray-300 data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600"
+      />
+      <Label
+        htmlFor={`section-${id}`}
+        className={cn(
+          "cursor-pointer text-sm font-medium",
+          enabled ? "text-figmoo-text" : "text-gray-400"
         )}
-      </svg>
-      <span className={`text-sm font-medium ${enabled ? "text-gray-900" : "text-gray-400"}`}>
+      >
         {name}
-      </span>
-    </button>
+      </Label>
+    </div>
+  )
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg
+      className="mr-1 h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg
+      className="ml-1 h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
   )
 }

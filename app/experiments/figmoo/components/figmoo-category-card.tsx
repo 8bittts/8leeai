@@ -1,54 +1,66 @@
+import { cn } from "@/lib/utils"
 import type { CategoryCardProps } from "../lib/figmoo-types"
 
 /**
  * Category Card Component
- * Umso-inspired selectable card
- * Colors: text #2c2c2c, accent #d6595b, border #dbdbdb
+ * Selectable card with icon, title, and description
  */
 export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCardProps) {
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
+      className={cn(
+        "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left",
         selected
-          ? "border-[#d6595b] bg-[#d6595b]/5"
-          : "border-[#dbdbdb] bg-white hover:border-[#d6595b]/50"
-      }`}
+          ? "border-violet-600 bg-violet-50"
+          : "border-gray-200 bg-white hover:border-violet-300"
+      )}
       aria-pressed={selected}
     >
-      {/* Icon */}
+      {/* Icon with colored background */}
       <div
-        className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
-          selected ? "bg-[#d6595b] text-white" : "bg-[#2c2c2c]/5 text-[#2c2c2c]"
-        }`}
+        className={cn(
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg",
+          getCategoryIconStyle(category.icon)
+        )}
       >
         <CategoryIcon icon={category.icon} />
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-[#2c2c2c]">{category.title}</h3>
-        <p className="text-sm text-[#3c3c3c]/70 truncate">{category.description}</p>
+      <div className="min-w-0 flex-1">
+        <h3 className="font-semibold text-figmoo-text">{category.title}</h3>
+        <p className="truncate text-sm text-gray-500">{category.description}</p>
       </div>
 
-      {/* Checkmark */}
+      {/* Selection indicator */}
       {selected && (
-        <div className="flex-shrink-0 w-5 h-5 bg-[#d6595b] rounded-full flex items-center justify-center">
-          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-          </svg>
+        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-600">
+          <CheckIcon />
         </div>
       )}
     </button>
   )
 }
 
-/**
- * Category Icon Component
- */
+function getCategoryIconStyle(icon: string): string {
+  switch (icon) {
+    case "briefcase":
+      return "bg-violet-100 text-violet-600"
+    case "user":
+      return "bg-orange-100 text-orange-600"
+    case "calendar":
+      return "bg-amber-100 text-amber-600"
+    case "sparkles":
+      return "bg-pink-100 text-pink-600"
+    default:
+      return "bg-gray-100 text-gray-600"
+  }
+}
+
 function CategoryIcon({ icon }: { icon: "briefcase" | "user" | "calendar" | "sparkles" }) {
-  const iconClass = "w-5 h-5"
+  const iconClass = "h-5 w-5"
 
   switch (icon) {
     case "briefcase":
@@ -96,4 +108,12 @@ function CategoryIcon({ icon }: { icon: "briefcase" | "user" | "calendar" | "spa
         </svg>
       )
   }
+}
+
+function CheckIcon() {
+  return (
+    <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+    </svg>
+  )
 }
