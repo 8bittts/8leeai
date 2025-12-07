@@ -1,5 +1,46 @@
 # December 2025 - Week 1 (Dec 1-7)
 
+## December 7, 2025
+
+### Enhanced Update Workflow
+
+Ported comprehensive package update workflow from deathnote project.
+
+**New File:** `update.md`
+
+Root-level documentation providing detailed package update workflow:
+- Step-by-step commands with explanations
+- Quality gates table
+- Split week protocol for release notes
+- Version consistency check locations
+- Quick reference command table
+
+**Updated File:** `.claude/commands/update.md`
+
+Enhanced slash command with:
+- Security vulnerability check (`bun audit`)
+- Aggressive fix requirements (0 errors, 0 warnings)
+- Global version number search (CLAUDE.md, README.md, package.json, etc.)
+- Split week protocol for long release notes
+- Quality gates checklist
+
+**Files Changed:**
+- `.claude/commands/update.md` - Enhanced update workflow
+- `update.md` - New comprehensive workflow documentation
+
+### Package Updates
+
+Updated AI SDK OpenAI provider to latest version.
+
+**Updated Packages:**
+- @ai-sdk/openai 2.0.77 -> 2.0.79
+
+**Quality Verification:**
+- TypeScript: Zero errors
+- Biome: Zero warnings
+- Tests: All 96 passing (297 assertions)
+- Build: Successful
+
 ## December 1, 2025
 
 ### Package Updates

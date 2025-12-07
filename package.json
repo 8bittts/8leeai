@@ -20,7 +20,7 @@
     "test:zendesk": "bun app/experiments/zendesk/scripts/zendesk-full-workflow-test.ts"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.77",
+    "@ai-sdk/openai": "^2.0.79",
     "@intercom/messenger-js-sdk": "^0.0.18",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-label": "^2.1.8",
