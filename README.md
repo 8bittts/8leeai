@@ -97,26 +97,12 @@ bun run check        # Lint and format with Biome (via bunx)
 bun run clean        # Clean all caches (.next, .turbo, node_modules/.cache)
 ```
 
-**Package Update Monitoring** (via `scripts/x-package-monitor.ts`):
+**Package Update Monitoring** (native Bun commands):
 ```bash
-bun run packages              # Check all packages with impact analysis
-bun run packages:watch        # Continuous monitoring (checks every 6 hours)
-bun run packages:critical     # Only critical/security updates
+bun outdated     # Check what needs updating
+bun update       # Update within semver range
+bun audit        # Check for vulnerabilities
 ```
-
-The package monitor features enhanced console output with color-coded messages for better visibility:
-- Green: Success messages and safe updates
-- Yellow: Warnings and caution updates
-- Red: Errors and urgent updates
-- Cyan: Information and headers
-- Blue/Magenta: Section separators
-
-The monitor analyzes breaking changes and categorizes updates by priority:
-- **URGENT**: Security-related or major version changes (apply immediately)
-- **CAUTION**: Known breaking changes (review changelog and test thoroughly)
-- **SAFE**: Patch/minor updates with low impact (apply when convenient)
-
-For simple updates (SAFE only), the plan file auto-deletes. For complex updates (CAUTION/URGENT), it's saved for review.
 
 ## Testing
 
@@ -207,8 +193,7 @@ Additional tests exist for archived experimental projects (gitignored).
 │   ├── bitcoin.pdf                   # Bitcoin whitepaper (easter egg)
 │   └── 8-social.jpeg                 # Social share image
 ├── scripts/                          # Development utilities
-│   ├── test-contact-forms.ts         # Contact form testing script
-│   └── x-package-monitor.ts          # Intelligent package update monitoring (Bun native TypeScript)
+│   └── test-contact-forms.ts         # Contact form testing script
 ├── proxy.ts                          # Security headers (CSP, CORS, HSTS) - Next.js 16 convention
 ├── _docs/                            # Historical documentation
 │   ├── README.md                     # Documentation structure guide

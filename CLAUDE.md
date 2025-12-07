@@ -9,7 +9,9 @@ bun run dev      # Development (port 1333, Turbopack)
 bun run build    # Production build
 bun test         # Run tests (96 tests, 297 assertions)
 bun run check    # Biome lint/format
-bun run packages # Check for updates
+bun outdated     # Check for updates
+bun update       # Update within semver range
+bun audit        # Check for vulnerabilities
 ```
 
 ## CLI Tools

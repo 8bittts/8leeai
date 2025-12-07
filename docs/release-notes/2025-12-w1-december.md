@@ -588,3 +588,28 @@ Major refactor of CLAUDE.md following HumanLayer best practices for AI assistant
 **Files Updated:**
 - `CLAUDE.md` - Trimmed to 60 lines
 - `README.md` - Added Architecture section, added Figmoo to structure
+
+### Package Monitor Archival
+
+Archived custom package monitor script in favor of native Bun commands.
+
+**Rationale:** Bun 1.3.1 natively provides `bun outdated`, `bun update`, and `bun audit` commands that cover the core functionality.
+
+**Files Removed:**
+- `scripts/x-package-monitor.ts` - Custom package monitoring script
+- `.package-monitor-config.json.example` - Configuration template
+
+**New Slash Command:** `.claude/commands/update.md`
+
+Comprehensive dependency update workflow:
+1. `bun outdated` - Check for available updates
+2. `bun update` - Update within semver range
+3. `bun audit` - Check for vulnerabilities
+4. Update documentation (CLAUDE.md, README.md, release notes)
+5. Fix all lint/type issues
+6. Push to main
+
+**Files Updated:**
+- `package.json` - Removed `packages`, `packages:watch`, `packages:critical` scripts
+- `CLAUDE.md` - Replaced custom script with native bun commands
+- `README.md` - Simplified package monitoring section

@@ -17,9 +17,6 @@
     "format": "bunx biome format --write .",
     "check": "bunx biome check --write .",
     "clean": "rm -rf .next node_modules/.cache .turbo",
-    "packages": "bun scripts/x-package-monitor.ts",
-    "packages:watch": "bun scripts/x-package-monitor.ts --watch",
-    "packages:critical": "bun scripts/x-package-monitor.ts --critical",
     "test:zendesk": "bun app/experiments/zendesk/scripts/zendesk-full-workflow-test.ts"
   },
   "dependencies": {
