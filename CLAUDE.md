@@ -53,6 +53,7 @@ type: Brief description
 
 ## Rules
 
+- **Documentation**: Use Context7 MCP to validate current documentation about software libraries
 - **Styling**: Tailwind utilities only, zero custom CSS
 - **State**: React hooks only, no external libraries
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)

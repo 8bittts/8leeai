@@ -169,6 +169,7 @@ All content follows a clear, professional format without emojis or decorative el
 
 ### December 2025 (Weekly)
 - `2025-12-w1-december.md` - Week 1 (Dec 1-7): Package updates, Bun adoption audit, documentation cleanup
+- `2025-12-w2-december.md` - Week 2 (Dec 8-14): Context7 MCP integration
 
 ### Future Months
 As the project continues, new weekly files will be created following the same pattern.
