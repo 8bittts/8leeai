@@ -20,6 +20,22 @@ Complete quality check + git commit + push to main. Only commits if all checks p
 /ship
 ```
 
+### /push
+Fix lint/type issues (touched files only), update release notes with size splitting (1800 word threshold), and push to main. No Claude attribution.
+
+**Usage:**
+```
+/push
+```
+
+### /design
+Comprehensive design implementation review (ultrathink mode). Checks for pure shadcn, Tailwind v4, zero inline styles/custom components/hardcoded values, WCAG/ARIA coverage, and normalized patterns. Asks before making changes.
+
+**Usage:**
+```
+/design
+```
+
 ## How It Works
 
 Slash commands are markdown files in `.claude/commands/`. When you type `/commandname`, Claude reads that file and follows the instructions inside.

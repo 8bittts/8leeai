@@ -41,6 +41,18 @@ type: Brief description
 - Details if needed
 ```
 
+## Slash Commands
+
+Custom Claude Code commands in `.claude/commands/`:
+
+| Command | Purpose |
+|---------|---------|
+| `/check` | Quality checks (TypeScript, Biome, tests) |
+| `/ship` | Quality check + commit + push |
+| `/push` | Fix issues (touched files), update release notes (1800 word split threshold), push |
+| `/design` | Comprehensive design review (11-point checklist, ultrathink mode) |
+| `/update` | Package update workflow |
+
 ## Key Files
 
 | Purpose | Location |
@@ -50,6 +62,7 @@ type: Brief description
 | Security headers | `proxy.ts` |
 | Experiments protocol | `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` |
 | Release notes guide | `docs/release-notes/00-RN-README.md` |
+| Slash commands | `.claude/commands/` |
 
 ## Rules
 

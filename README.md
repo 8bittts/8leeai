@@ -207,8 +207,16 @@ Additional tests exist for archived experimental projects (gitignored).
 │       ├── 2025-11-w3-november.md    # November Week 3 (Nov 16-22)
 │       ├── 2025-11-w4-november.md    # November Week 4 (Nov 22-28)
 │       ├── 2025-11-w5-november.md    # November Week 5 (Nov 29-30)
-│       └── 2025-12-w1-december.md    # December Week 1 (Dec 1-7)
+│       ├── 2025-12-w1-december.md    # December Week 1 (Dec 1-7)
+│       └── 2025-12-w2-december.md    # December Week 2 (Dec 8-14)
 │       # Multi-part weeks (when needed): 2025-11-wN-1-month.md, 2025-11-wN-2-month.md, etc.
+├── .claude/                          # Claude Code configuration
+│   └── commands/                     # Custom slash commands
+│       ├── check.md                  # /check - Quality checks (TypeScript, Biome, tests)
+│       ├── ship.md                   # /ship - Quality check + commit + push
+│       ├── push.md                   # /push - Fix issues, update release notes, push
+│       ├── design.md                 # /design - Comprehensive design review
+│       └── update.md                 # /update - Package update workflow
 └── bunfig.toml                       # Bun configuration for test preloading
 ```
 
