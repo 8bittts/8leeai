@@ -67,7 +67,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
             {projects.slice(0, visibleProjects).map((project, index) => (
               <div key={project.id} className="flex">
-                <span className="mr-3 text-gray-400">{formatIndex(index)}.</span>
+                <span className="mr-3 text-green-700">{formatIndex(index)}.</span>
                 {project.url ? (
                   <SecureExternalLink
                     url={project.url}

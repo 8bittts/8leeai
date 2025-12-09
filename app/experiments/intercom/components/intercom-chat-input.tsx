@@ -125,7 +125,7 @@ export function ChatInput({
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           placeholder="Enter a query..."
-          className="flex-1 bg-black text-green-500 outline-none caret-green-500 placeholder-green-900 disabled:opacity-50"
+          className="flex-1 bg-black text-green-500 outline-none caret-green-500 placeholder-green-700 disabled:opacity-50 focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
           autoComplete="off"
           spellCheck="false"
           aria-label="Chat input"

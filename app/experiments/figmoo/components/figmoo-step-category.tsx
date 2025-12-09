@@ -20,7 +20,7 @@ export function FigmooStepCategory({ state, onUpdate }: StepCategoryProps) {
   return (
     <div className="space-y-6">
       {/* Main category label */}
-      <p className="text-center text-sm text-gray-500">
+      <p className="text-center text-sm text-gray-600">
         Main Category:{" "}
         <span className="font-medium capitalize text-figmoo-text">{state.mainCategory}</span>
       </p>

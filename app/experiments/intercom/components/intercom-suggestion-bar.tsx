@@ -49,7 +49,7 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
             type="button"
             key={suggestion.label}
             onClick={() => onSuggestionClick(suggestion.query)}
-            className="group px-3 py-1.5 text-xs border border-green-500/50 rounded-md text-green-500 hover:bg-green-500/10 hover:border-green-500/80 hover:shadow-sm hover:shadow-green-500/20 transition-all duration-200 flex items-center gap-1.5"
+            className="group px-3 py-1.5 text-xs border border-green-500/50 rounded-md text-green-500 hover:bg-green-500/10 hover:border-green-500/80 hover:shadow-sm hover:shadow-green-500/20 transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black"
             title={suggestion.description}
             aria-label={suggestion.description}
           >

@@ -17,6 +17,7 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
           : "border-gray-200 bg-white hover:border-violet-300"
       )}
       aria-pressed={selected}
+      aria-label={`Select ${category.title} category`}
     >
       {/* Icon with colored background */}
       <div
@@ -31,7 +32,7 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       {/* Content */}
       <div className="min-w-0 flex-1">
         <h3 className="font-semibold text-figmoo-text">{category.title}</h3>
-        <p className="truncate text-sm text-gray-500">{category.description}</p>
+        <p className="truncate text-sm text-gray-600">{category.description}</p>
       </div>
 
       {/* Selection indicator */}

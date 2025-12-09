@@ -30,7 +30,7 @@ export function FigmooStepName({ state, onUpdate }: StepNameProps) {
         onChange={(e) => onUpdate({ siteName: e.target.value })}
         placeholder={placeholder}
         maxLength={100}
-        className="h-12 rounded-lg border-gray-200 bg-gray-50 px-4 text-figmoo-text placeholder:text-gray-400 focus:border-violet-500 focus:ring-violet-500"
+        className="h-12 rounded-lg border-gray-200 bg-gray-50 px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
       />
     </div>
   )

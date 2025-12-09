@@ -99,7 +99,7 @@ function OnboardingContent() {
                 <div className="mb-6 flex items-start justify-between">
                   <div>
                     <h1 className="text-2xl font-bold text-figmoo-text">{currentStep?.title}</h1>
-                    <p className="mt-2 text-gray-500">{currentStep?.description}</p>
+                    <p className="mt-2 text-gray-600">{currentStep?.description}</p>
                   </div>
                   <FigmooProgressBar currentStep={state.step} totalSteps={STEPS.length} />
                 </div>
@@ -156,7 +156,7 @@ export default function OnboardingPage() {
 function OnboardingLoading() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-figmoo-bg">
-      <div className="text-gray-500">Loading...</div>
+      <div className="text-gray-600">Loading...</div>
     </div>
   )
 }

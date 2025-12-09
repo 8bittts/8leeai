@@ -76,6 +76,7 @@ function FigmooLogo() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Figmoo logo"
+      role="img"
     >
       <path
         d="M6 8C6 5.79086 7.79086 4 10 4H22C24.2091 4 26 5.79086 26 8V24C26 26.2091 24.2091 28 22 28H10C7.79086 28 6 26.2091 6 24V8Z"

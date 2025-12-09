@@ -91,7 +91,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
         <button
           type="button"
           onClick={onClose}
-          className="text-green-500 hover:text-green-400 text-sm font-bold"
+          className="text-green-500 hover:text-green-400 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
           aria-label="Close ticket form"
         >
           [close]
@@ -108,7 +108,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
             disabled={isSubmitting}
             required={true}
           />
@@ -123,7 +123,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
             disabled={isSubmitting}
             required={true}
           />
@@ -138,7 +138,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
             type="text"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
             placeholder="Brief description (5-100 chars)"
             disabled={isSubmitting}
             required={true}
@@ -153,7 +153,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
             id="ticket-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none resize-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm resize-none"
             placeholder="Detailed description (10-2000 chars)"
             rows={5}
             disabled={isSubmitting}
@@ -170,7 +170,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
               id="ticket-category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               disabled={isSubmitting}
             >
               <option value="general">General</option>
@@ -188,7 +188,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
               id="ticket-priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               disabled={isSubmitting}
             >
               <option value="low">Low</option>
@@ -215,7 +215,7 @@ export function IntercomTicketForm({ onClose }: IntercomTicketFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-300 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
         >
           {isSubmitting ? "Creating Ticket..." : "Create Ticket"}
         </button>

@@ -220,13 +220,8 @@ export function IntercomChatContainer() {
 
       {/* Terminal window container - wide with minimal vertical spacing */}
       <div
-        className="relative z-10 w-full h-full border-2 border-green-500/30 rounded-lg bg-black flex flex-col overflow-hidden"
+        className="relative z-10 w-full h-[calc(100vh-64px)] border-2 border-green-500/30 rounded-lg bg-black flex flex-col overflow-hidden shadow-[0_-10px_40px_-5px_rgba(34,197,94,0.3),0_10px_40px_-5px_rgba(34,197,94,0.3),0_0_60px_rgba(34,197,94,0.15)]"
         onClick={handleMainClick}
-        style={{
-          height: "calc(100vh - 64px)",
-          boxShadow:
-            "0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3), 0 0 60px rgba(34, 197, 94, 0.15)",
-        }}
       >
         {/* Intercom Header with ASCII Art */}
         <IntercomHeader />

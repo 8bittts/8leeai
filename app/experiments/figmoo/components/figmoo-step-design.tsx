@@ -33,14 +33,14 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
       {/* Font Selection */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-sm font-medium text-gray-500">Fonts</h3>
+          <h3 className="text-sm font-medium text-gray-600">Fonts</h3>
           <div className="flex gap-1">
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={() => setFontPage(Math.max(0, fontPage - 1))}
               disabled={fontPage === 0}
-              className="text-gray-400 hover:text-gray-600 disabled:opacity-30"
+              className="text-gray-600 hover:text-gray-800 disabled:opacity-30"
               aria-label="Previous fonts"
             >
               <ChevronLeftIcon />
@@ -50,7 +50,7 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
               size="icon-sm"
               onClick={() => setFontPage(Math.min(totalFontPages - 1, fontPage + 1))}
               disabled={fontPage >= totalFontPages - 1}
-              className="text-gray-400 hover:text-gray-600 disabled:opacity-30"
+              className="text-gray-600 hover:text-gray-800 disabled:opacity-30"
               aria-label="Next fonts"
             >
               <ChevronRightIcon />
@@ -75,7 +75,7 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
               <p className="mb-1 text-lg font-semibold font-[family-name:var(--preview-font)]">
                 {font.name}
               </p>
-              <p className="text-xs text-gray-400">Body Text Font</p>
+              <p className="text-xs text-gray-600">Body Text Font</p>
             </button>
           ))}
         </div>
@@ -84,14 +84,14 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
       {/* Theme Selection */}
       <div>
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-sm font-medium text-gray-500">Themes</h3>
+          <h3 className="text-sm font-medium text-gray-600">Themes</h3>
           <div className="flex gap-1">
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={() => setThemePage(Math.max(0, themePage - 1))}
               disabled={themePage === 0}
-              className="text-gray-400 hover:text-gray-600 disabled:opacity-30"
+              className="text-gray-600 hover:text-gray-800 disabled:opacity-30"
               aria-label="Previous themes"
             >
               <ChevronLeftIcon />
@@ -101,7 +101,7 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
               size="icon-sm"
               onClick={() => setThemePage(Math.min(totalThemePages - 1, themePage + 1))}
               disabled={themePage >= totalThemePages - 1}
-              className="text-gray-400 hover:text-gray-600 disabled:opacity-30"
+              className="text-gray-600 hover:text-gray-800 disabled:opacity-30"
               aria-label="Next themes"
             >
               <ChevronRightIcon />

@@ -152,6 +152,40 @@ Additional tests exist for archived experimental projects (gitignored).
 
 **Styling:** Tailwind utilities only. Terminal theme: `text-green-500`, `bg-black`, IBM Plex Mono.
 
+## Design System
+
+This project enforces strict design system compliance via the `/design` slash command. Run it to audit all 11 checkpoints.
+
+**11-Point Compliance Checklist:**
+
+| # | Rule | Description |
+|---|------|-------------|
+| 1 | Pure shadcn | Components in `components/ui/` unmodified from official versions |
+| 2 | Pure Tailwind v4 | Uses `@import "tailwindcss"`, `@theme inline`, no v3 patterns |
+| 3 | Zero inline styles | Exception: CSS custom properties, canvas animations |
+| 4 | Zero custom components | Use shadcn primitives or standard HTML+Tailwind |
+| 5 | Zero custom classes | Exception: required animations in `globals.css` |
+| 6 | Zero hardcoded values | Use Tailwind tokens. Exception: canvas, SVG, email templates |
+| 7 | Zero duplicate styles | Extract repeated className patterns |
+| 8 | Zero style conflicts | No conflicting classes (e.g., `hidden flex`) |
+| 9 | Zero unused styles | Remove orphaned CSS variables and classes |
+| 10 | Full WCAG/ARIA | Focus indicators, aria-labels, 4.5:1 contrast, keyboard nav |
+| 11 | Normalized patterns | Consistent typography, spacing, sizing |
+
+**Color Contrast Standards (WCAG 2.1 AA):**
+
+| Theme | Background | Secondary Text | Minimum Contrast |
+|-------|------------|----------------|------------------|
+| Terminal | Black (`#000`) | `text-green-700` | 4.5:1+ |
+| Figmoo | Light (`#faf7f4`) | `text-gray-600` | 4.5:1+ |
+| Placeholders | Any | `placeholder:text-gray-500` | 4.5:1+ |
+
+**Accessibility Requirements:**
+- All interactive elements must have visible focus indicators (`focus:ring-2`)
+- Form inputs must show disabled state (`disabled:opacity-50 disabled:cursor-not-allowed`)
+- Skip-to-content target: `id="main-content"` on main element
+- Reduced motion: animations disabled via `prefers-reduced-motion: reduce`
+
 ## Project Structure
 
 ```

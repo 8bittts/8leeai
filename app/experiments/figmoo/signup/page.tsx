@@ -40,7 +40,7 @@ export default function SignUpPage() {
         <Card className="border-gray-200 bg-white shadow-sm">
           <CardContent className="p-8">
             <h1 className="mb-2 text-2xl font-bold text-figmoo-text">Sign up for Figmoo</h1>
-            <p className="mb-8 text-gray-500">Get started for free. No credit card required.</p>
+            <p className="mb-8 text-gray-600">Get started for free. No credit card required.</p>
 
             {/* Google Sign In */}
             <Button
@@ -55,7 +55,7 @@ export default function SignUpPage() {
             {/* Divider */}
             <div className="relative my-6">
               <Separator />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-400">
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-600">
                 or
               </span>
             </div>
@@ -73,7 +73,7 @@ export default function SignUpPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   required
-                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-400 focus:border-violet-500 focus:ring-violet-500"
+                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
                 />
               </div>
 
@@ -89,7 +89,7 @@ export default function SignUpPage() {
                   placeholder="••••••••••"
                   required
                   minLength={8}
-                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-400 focus:border-violet-500 focus:ring-violet-500"
+                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
                 />
               </div>
 
@@ -103,7 +103,7 @@ export default function SignUpPage() {
             </form>
 
             {/* Terms */}
-            <p className="mt-6 text-center text-xs text-gray-500">
+            <p className="mt-6 text-center text-xs text-gray-600">
               By clicking the "Create Account" or "Continue with Google" button, you agree to the{" "}
               <Link
                 href="/experiments/figmoo"
@@ -122,7 +122,7 @@ export default function SignUpPage() {
             </p>
 
             {/* Login Link */}
-            <p className="mt-6 text-center text-sm text-gray-500">
+            <p className="mt-6 text-center text-sm text-gray-600">
               Already have an account?{" "}
               <Link
                 href="/experiments/figmoo"

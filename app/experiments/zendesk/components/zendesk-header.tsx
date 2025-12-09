@@ -9,18 +9,21 @@ export function ZendeskHeader() {
     <div className="w-full">
       {/* macOS-style Window Controls */}
       <div className="px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center gap-2 border-b border-green-500/30">
-        <div
-          className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors cursor-pointer"
+        <button
+          type="button"
+          className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-black"
           title="Close"
           aria-label="Close window"
         />
-        <div
-          className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors cursor-pointer"
+        <button
+          type="button"
+          className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black"
           title="Minimize"
           aria-label="Minimize window"
         />
-        <div
-          className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors cursor-pointer"
+        <button
+          type="button"
+          className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black"
           title="Maximize"
           aria-label="Maximize window"
         />

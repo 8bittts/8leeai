@@ -50,7 +50,7 @@ export function FigmooStepContent({
           <div className="mb-6 flex items-start justify-between">
             <div>
               <h1 className="text-2xl font-bold text-figmoo-text">Homepage Content</h1>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-gray-600">
                 This is just a starting point. You can add more sections after creating your site.
               </p>
             </div>
@@ -92,7 +92,7 @@ export function FigmooStepContent({
                           : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
                       )}
                     >
-                      <span className="mr-1 text-gray-400">+</span>
+                      <span className="mr-1 text-gray-600">+</span>
                       {section.name}
                     </Badge>
                   </button>
@@ -108,7 +108,7 @@ export function FigmooStepContent({
             <button
               type="button"
               onClick={onStartOver}
-              className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-700"
+              className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-sm"
             >
               Start Over
             </button>
@@ -171,7 +171,7 @@ function SectionToggle({
         htmlFor={`section-${id}`}
         className={cn(
           "cursor-pointer text-sm font-medium",
-          enabled ? "text-figmoo-text" : "text-gray-400"
+          enabled ? "text-figmoo-text" : "text-gray-600"
         )}
       >
         {name}

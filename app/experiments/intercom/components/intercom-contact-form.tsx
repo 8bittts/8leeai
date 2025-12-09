@@ -93,7 +93,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
         <button
           type="button"
           onClick={onClose}
-          className="text-green-500 hover:text-green-400 text-sm font-bold"
+          className="text-green-500 hover:text-green-400 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
           aria-label="Close contact form"
         >
           [close]
@@ -110,7 +110,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
             required={true}
           />
@@ -125,7 +125,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
             required={true}
           />
@@ -139,7 +139,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             id="contact-message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none resize-none"
+            className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm resize-none disabled:opacity-50 disabled:cursor-not-allowed"
             placeholder="Your message here..."
             rows={5}
             disabled={isSubmitting}
@@ -163,7 +163,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-300 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
         >
           {isSubmitting ? "Creating Ticket..." : "Create Ticket"}
         </button>

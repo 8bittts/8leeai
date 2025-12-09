@@ -25,35 +25,35 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
         <div className="flex gap-2">
           <button
             type="button"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-600 hover:text-gray-800"
             aria-label="Go back"
           >
             <ChevronLeftIcon />
           </button>
           <button
             type="button"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-600 hover:text-gray-800"
             aria-label="Go forward"
           >
             <ChevronRightIcon />
           </button>
         </div>
 
-        <div className="flex-1 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-center text-sm text-gray-400">
+        <div className="flex-1 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-center text-sm text-gray-600">
           example.com
         </div>
 
         <div className="flex gap-2">
           <button
             type="button"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-600 hover:text-gray-800"
             aria-label="Add bookmark"
           >
             <PlusIcon />
           </button>
           <button
             type="button"
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-600 hover:text-gray-800"
             aria-label="Bookmark"
           >
             <BookmarkIcon />
@@ -79,9 +79,9 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
             {state.siteName || "Your Site"}
           </span>
           <div className="hidden items-center gap-4 text-sm sm:flex">
-            <span className="text-gray-500">Features</span>
-            <span className="text-gray-500">Another One</span>
-            <span className="text-gray-500">Team</span>
+            <span className="text-gray-600">Features</span>
+            <span className="text-gray-600">Another One</span>
+            <span className="text-gray-600">Team</span>
             <span className="rounded-full border border-[var(--preview-accent)] px-3 py-1 text-xs text-[var(--preview-accent)]">
               Learn More
             </span>
@@ -98,7 +98,7 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
           ))}
 
           {enabledSectionData.length === 0 && (
-            <div className="py-12 text-center text-gray-400">
+            <div className="py-12 text-center text-gray-600">
               Select sections to preview your website
             </div>
           )}
@@ -144,8 +144,8 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
     case "logos":
       return (
         <div className="border-y border-gray-100 py-6 text-center">
-          <p className="mb-4 text-xs text-gray-400">Trusted by imaginary Companies</p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
+          <p className="mb-4 text-xs text-gray-600">Trusted by imaginary Companies</p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
             <span>Podium</span>
             <span>M.C.P.</span>
             <span>EPISM</span>
@@ -176,7 +176,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
               <div key={`team-${i}`} className="text-center">
                 <div className="mx-auto mb-2 h-16 w-16 rounded-full bg-[var(--preview-accent)]/30" />
                 <p className="text-sm font-medium text-[var(--preview-primary)]">Team Member</p>
-                <p className="text-xs text-gray-400">Role</p>
+                <p className="text-xs text-gray-600">Role</p>
               </div>
             ))}
           </div>
@@ -231,7 +231,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
               <div className="h-10 w-10 rounded-full bg-[var(--preview-accent)]/30" />
               <div>
                 <p className="text-sm font-medium text-[var(--preview-primary)]">Happy Customer</p>
-                <p className="text-xs text-gray-400">CEO, Company</p>
+                <p className="text-xs text-gray-600">CEO, Company</p>
               </div>
             </div>
           </div>
@@ -266,7 +266,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
             ].map((stat) => (
               <div key={stat.label}>
                 <p className="text-2xl font-bold text-[var(--preview-accent)]">{stat.value}</p>
-                <p className="text-xs text-gray-500">{stat.label}</p>
+                <p className="text-xs text-gray-600">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -276,7 +276,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
     default:
       return (
         <div className="py-8">
-          <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--preview-accent)]/10 text-sm text-gray-400">
+          <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--preview-accent)]/10 text-sm text-gray-600">
             {sectionId.replace(/-/g, " ")} section
           </div>
         </div>

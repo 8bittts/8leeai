@@ -34,9 +34,9 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
         <CardContent className="p-6">
           <div className="mb-4">
             <h3 className="font-semibold text-figmoo-text">
-              Personalize text with AI <span className="font-normal text-gray-400">(Optional)</span>
+              Personalize text with AI <span className="font-normal text-gray-600">(Optional)</span>
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-600">
               Enter a brief description of your site content to help the AI generate text for your
               site.
             </p>
@@ -52,7 +52,7 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
               onChange={(e) => onUpdate({ aiDescription: e.target.value })}
               placeholder="My website is about..."
               rows={4}
-              className="w-full resize-none rounded-lg border border-gray-200 bg-white px-4 py-3 text-figmoo-text placeholder:text-gray-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full resize-none rounded-lg border border-gray-200 bg-white px-4 py-3 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
             />
 
             <Button
@@ -74,20 +74,20 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
       </Card>
 
       {/* Summary */}
-      <div className="space-y-2 text-sm text-gray-500">
+      <div className="space-y-2 text-sm text-gray-600">
         <p>
           Site Name:{" "}
-          <span className="font-medium text-[#2c2c2c]">{state.siteName || "Untitled"}</span>
+          <span className="font-medium text-figmoo-text">{state.siteName || "Untitled"}</span>
         </p>
         <p>
           Category:{" "}
-          <span className="font-medium capitalize text-[#2c2c2c]">
+          <span className="font-medium capitalize text-figmoo-text">
             {state.subCategory || state.mainCategory}
           </span>
         </p>
         <p>
           Sections:{" "}
-          <span className="font-medium text-[#2c2c2c]">{state.enabledSections.length}</span>
+          <span className="font-medium text-figmoo-text">{state.enabledSections.length}</span>
         </p>
       </div>
     </div>

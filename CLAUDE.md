@@ -73,4 +73,25 @@ Custom Claude Code commands in `.claude/commands/`:
 - **Docs**: No emojis in any markdown files
 - **Experiments**: Follow protocol in `app/experiments/_docs/`
 
+## Design System (11-Point Compliance)
+
+Run `/design` to audit. All code must pass:
+
+1. **Pure shadcn** - Components in `components/ui/` unmodified from official versions
+2. **Pure Tailwind v4** - Use `@import "tailwindcss"`, `@theme inline`, no v3 patterns
+3. **Zero inline styles** - Exception: truly dynamic values (CSS custom properties, canvas)
+4. **Zero custom components** - Use shadcn primitives or standard HTML+Tailwind
+5. **Zero custom classes** - Exception: required animations in `globals.css`
+6. **Zero hardcoded values** - Use Tailwind tokens. Exception: canvas, SVG, email templates
+7. **Zero duplicate styles** - Extract repeated className patterns
+8. **Zero style conflicts** - No conflicting classes (e.g., `hidden flex`, `w-full w-1/2`)
+9. **Zero unused styles** - Remove orphaned CSS variables and classes
+10. **Full WCAG/ARIA** - Focus indicators, aria-labels, 4.5:1 contrast, keyboard nav
+11. **Normalized patterns** - Consistent typography, spacing, sizing across similar elements
+
+**Color Contrast Rules:**
+- Terminal theme (black bg): Use `text-green-700` for secondary text (not gray-400)
+- Light theme (Figmoo): Use `text-gray-600` minimum (not gray-400/500)
+- Placeholders: Use `placeholder:text-gray-500` minimum on light backgrounds
+
 See README.md for architecture, testing philosophy, and detailed documentation.

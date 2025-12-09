@@ -45,7 +45,7 @@ export default function FigmooLandingPage() {
               <h2 className="text-2xl font-bold text-figmoo-text">
                 What do you need a website for?
               </h2>
-              <p className="mt-2 text-gray-500">Select the most suitable category below.</p>
+              <p className="mt-2 text-gray-600">Select the most suitable category below.</p>
 
               <div className="mt-8 space-y-3">
                 {MAIN_CATEGORIES.map((category) => (
@@ -75,7 +75,7 @@ export default function FigmooLandingPage() {
 
         {/* Footer */}
         <footer className="mx-auto mt-16 max-w-4xl text-center">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-600">
             Made with Figmoo - A frictionless website builder experiment
           </p>
         </footer>

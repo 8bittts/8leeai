@@ -117,7 +117,7 @@ export function TerminalContainer() {
       </main>
 
       {bootComplete && (
-        <div className="sticky bottom-0 bg-black p-4 sm:p-6 lg:p-8 pt-0">
+        <div className="sticky bottom-0 bg-black pt-0 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
           <CommandPrompt
             ref={commandPromptRef}
             showMoreProjects={showMoreProjects}
