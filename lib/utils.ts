@@ -141,6 +141,8 @@ export const VALID_COMMANDS = [
   "date",
   "echo",
   "stats",
+  // Theme switcher
+  "theme",
   // Experiments portal access
   "zendesk",
   "zen",
@@ -200,6 +202,8 @@ export const COMMAND_ALIASES: Record<string, string> = {
   date: "current date/time",
   echo: "echo text",
   stats: "portfolio statistics",
+  // Theme switcher
+  theme: "theme switcher",
   // Experiments portal access
   zendesk: "Zendesk Portal",
   zen: "Zendesk Portal",

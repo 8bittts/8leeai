@@ -1,13 +1,21 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
-import { IBM_Plex_Mono } from "next/font/google"
+import { IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
+import { ThemeProvider } from "@/contexts/theme-context"
 import "./globals.css"
 
 const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-mono",
+})
+
+const pressStart2P = Press_Start_2P({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-8bit",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -96,17 +104,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="h-full bg-black">
-      <body
-        className={`${ibmPlexMono.variable} h-full bg-black text-green-500 font-mono antialiased`}
-      >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-black focus:text-green-500 focus:px-4 focus:py-2 focus:border focus:border-green-500"
-        >
-          Skip to main content
-        </a>
-        {children}
+    <html lang="en" className={`h-full ${ibmPlexMono.variable} ${pressStart2P.variable}`}>
+      <body className="h-full bg-theme-bg text-theme-fg font-[family-name:var(--theme-font-primary)] antialiased transition-colors duration-0">
+        <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-theme-bg focus:text-theme-fg focus:px-4 focus:py-2 focus:border focus:border-theme-border"
+          >
+            Skip to main content
+          </a>
+          {children}
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>

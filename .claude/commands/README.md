@@ -36,6 +36,19 @@ Comprehensive design implementation review (ultrathink mode). Checks for pure sh
 /design
 ```
 
+### /theme
+Global theme switcher for 8lee.ai. Lists available themes, switches between themes, or shows implementation status.
+
+**Usage:**
+```
+/theme              # List available themes
+/theme terminal     # Switch to terminal theme (default)
+/theme 8bit         # Switch to 8-bit retro theme
+/theme reset        # Reset to default theme
+```
+
+See `docs/00-ROADMAP.md` for theme system architecture and implementation phases.
+
 ## How It Works
 
 Slash commands are markdown files in `.claude/commands/`. When you type `/commandname`, Claude reads that file and follows the instructions inside.

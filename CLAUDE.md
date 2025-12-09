@@ -51,6 +51,7 @@ Custom Claude Code commands in `.claude/commands/`:
 | `/ship` | Quality check + commit + push |
 | `/push` | Fix issues (touched files), update release notes (1800 word split threshold), push |
 | `/design` | Comprehensive design review (11-point checklist, ultrathink mode) |
+| `/theme` | Global theme switcher (terminal, 8bit) |
 | `/update` | Package update workflow |
 
 ## Key Files
@@ -60,6 +61,8 @@ Custom Claude Code commands in `.claude/commands/`:
 | Portfolio data | `lib/data.ts` |
 | Utilities/commands | `lib/utils.ts` |
 | Security headers | `proxy.ts` |
+| Project roadmap | `docs/00-ROADMAP.md` |
+| Theme protocol | `docs/00-ROADMAP.md#global-theme-switcher-protocol` |
 | Experiments protocol | `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` |
 | Release notes guide | `docs/release-notes/00-RN-README.md` |
 | Slash commands | `.claude/commands/` |

@@ -2,8 +2,10 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
+import { useTheme } from "@/hooks/use-theme"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
+import { isValidThemeId } from "@/lib/themes"
 import {
   COMMAND_ALIASES,
   DATA_OFFSETS,
@@ -50,6 +52,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
       useVirtualKeyboardSuppression(inputRef)
+    const { currentTheme, setTheme, availableThemes } = useTheme()
 
     // Auto-focus input on mount (after boot sequence completes)
     useEffect(() => {
@@ -130,10 +133,48 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       setStatusMessage("Social and professional links displayed")
     }
 
-    // Easter egg command handlers
-    const handleEasterEggCommands = (cmd: string): boolean => {
-      const cmdLower = cmd.toLowerCase()
+    // Theme command helper - show list
+    const showThemeList = () => {
+      const list = availableThemes
+        .map((t) => {
+          const marker = t.id === currentTheme ? " (active)" : ""
+          return `• ${t.id}${marker}`.padEnd(20) + t.description
+        })
+        .join("\n")
+      setDisplayContent(`Available Themes\n${"═".repeat(50)}\n${list}\n\nUsage: theme <name>`)
+      setStatusMessage("Available themes displayed")
+    }
 
+    // Theme command helper - switch theme
+    const switchTheme = (themeArg: string) => {
+      const theme = availableThemes.find((t) => t.id === themeArg)
+      if (themeArg === currentTheme) {
+        setDisplayContent(`Theme: ${themeArg} (already active)\n${theme?.description || ""}`)
+        setStatusMessage(`${themeArg} theme already active`)
+      } else {
+        setTheme(themeArg as "terminal" | "8bit")
+        setDisplayContent(`Theme switched to: ${themeArg}\n${theme?.description || ""}`)
+        setStatusMessage(`Switched to ${themeArg} theme`)
+      }
+    }
+
+    // Theme command handler
+    const handleThemeCommand = (cmdLower: string): boolean => {
+      if (cmdLower !== "theme" && !cmdLower.startsWith("theme ")) return false
+      hideAllSections()
+      const themeArg = cmdLower === "theme" ? "" : cmdLower.slice(6).trim()
+      if (themeArg === "" || themeArg === "list") showThemeList()
+      else if (isValidThemeId(themeArg)) switchTheme(themeArg)
+      else {
+        setDisplayContent(`Unknown theme: ${themeArg}\nType 'theme' for available themes.`)
+        setStatusMessage("Unknown theme")
+      }
+      setCommand("")
+      return true
+    }
+
+    // System info commands (whoami, uname, date)
+    const handleSystemInfoCommands = (cmdLower: string): boolean => {
       if (cmdLower === "whoami") {
         hideAllSections()
         setDisplayContent(
@@ -146,16 +187,14 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
       if (cmdLower === "uname") {
         hideAllSections()
-        // Calculate age using same logic as boot sequence
         const birthYear = 1982
-        const birthMonth = 10 // November (0-indexed)
+        const birthMonth = 10
         const birthDay = 9
         const now = new Date()
         const year = now.getFullYear()
         const birthdayThisYear = new Date(year, birthMonth, birthDay)
         const hasHadBirthday = now >= birthdayThisYear
         const age = year - birthYear - (hasHadBirthday ? 0 : 1)
-
         setDisplayContent(
           `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0`
         )
@@ -172,9 +211,19 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         return true
       }
 
+      return false
+    }
+
+    // Easter egg command handlers
+    const handleEasterEggCommands = (cmd: string): boolean => {
+      const cmdLower = cmd.toLowerCase()
+
+      if (handleThemeCommand(cmdLower)) return true
+      if (handleSystemInfoCommands(cmdLower)) return true
+
       if (cmdLower.startsWith("echo ")) {
         hideAllSections()
-        const text = cmd.slice(5) // Remove 'echo ' prefix (case-insensitive via original cmd)
+        const text = cmd.slice(5)
         setDisplayContent(text || "")
         setCommand("")
         setStatusMessage("Echo")
@@ -363,6 +412,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               <p>• date · Current date/time</p>
               <p>• echo [text] · Echo text back</p>
               <p>• stats · Portfolio statistics</p>
+              <p>• theme [name] · Switch visual theme</p>
             </div>
           </section>
         )}
@@ -374,7 +424,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
             <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
-                className="hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+                className="hover:text-theme-accent transition-colors underline focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
               >
                 jleekun@gmail.com
               </a>
@@ -412,7 +462,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
         {/* Command Prompt */}
         <nav className="relative z-10" aria-label="Terminal commands">
           <form className="flex items-center gap-1" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="terminal-input" className="text-green-500">
+            <label htmlFor="terminal-input" className="text-theme-primary">
               $:
             </label>
             <input
@@ -420,7 +470,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               id="terminal-input"
               type="text"
               inputMode="text"
-              className="flex-1 bg-transparent text-green-500 placeholder:text-green-700 outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+              className="flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
               placeholder='Hit "return" for more projects, "help" for all commands'
               value={command}
               onChange={(e) => setCommand(e.target.value)}
@@ -431,7 +481,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               aria-describedby="command-instructions"
             />
           </form>
-          <p id="command-instructions" className="text-xs text-green-700 mt-2">
+          <p id="command-instructions" className="text-xs text-theme-muted mt-2">
             Commands: email, help, clear
           </p>
         </nav>

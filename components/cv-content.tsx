@@ -47,7 +47,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {!isTyping && (
             <button
               type="button"
-              className="underline hover:text-green-400 hover:bg-green-500/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
+              className="underline hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg"
               onClick={() => setCommand?.("email")}
               aria-label="Show contact email"
             >
@@ -67,7 +67,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
             {projects.slice(0, visibleProjects).map((project, index) => (
               <div key={project.id} className="flex">
-                <span className="mr-3 text-green-700">{formatIndex(index)}.</span>
+                <span className="mr-3 text-theme-muted">{formatIndex(index)}.</span>
                 {project.url ? (
                   <SecureExternalLink
                     url={project.url}

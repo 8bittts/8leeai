@@ -24,7 +24,7 @@ export function DataGridSection({ title, items, startOffset, ariaLabel }: DataGr
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
         {items.map((item, index) => (
           <div key={item.id} className="flex">
-            <span className="mr-3 text-green-700">
+            <span className="mr-3 text-theme-muted">
               {formatIndexWithOffset(index, startOffset)}.
             </span>
             {item.url ? (

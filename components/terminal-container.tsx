@@ -95,7 +95,7 @@ export function TerminalContainer() {
 
         {/* Desktop: Small top-right logo with slow pulsing animation (4s cycle) */}
         <div
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-green-500 text-xs font-mono hidden md:block z-20 animate-logo-pulse"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-theme-primary text-xs font-mono hidden md:block z-20 animate-logo-pulse"
           role="img"
           aria-label="Eight Lee logo"
         >
@@ -117,7 +117,7 @@ export function TerminalContainer() {
       </main>
 
       {bootComplete && (
-        <div className="sticky bottom-0 bg-black pt-0 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
+        <div className="sticky bottom-0 bg-theme-bg pt-0 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
           <CommandPrompt
             ref={commandPromptRef}
             showMoreProjects={showMoreProjects}

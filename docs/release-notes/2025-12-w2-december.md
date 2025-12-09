@@ -194,3 +194,96 @@ Executed comprehensive `/design` slash command audit across entire codebase with
 - Biome: 42 files checked, no issues
 - Tests: 96 tests, 297 assertions
 - Build: Successful (25 routes)
+
+---
+
+### Global Theme Switcher System
+
+Implemented complete theme switching infrastructure enabling dynamic visual transformations across the entire application. First additional theme: 8-Bit Retro using patterns from 8bitcn-ui.
+
+**Architecture Overview:**
+
+The theme system uses React Context + CSS Custom Properties for runtime theme switching with localStorage persistence and SSR-safe initialization.
+
+**New Files Created (6 total):**
+
+| File | Purpose |
+|------|---------|
+| `lib/themes/types.ts` | TypeScript interfaces for theme definitions |
+| `lib/themes/theme-terminal.ts` | Terminal theme (green-on-black DOS aesthetic) |
+| `lib/themes/theme-8bit.ts` | 8-bit retro theme (Press Start 2P, pixel borders) |
+| `lib/themes/index.ts` | Theme registry and utilities |
+| `contexts/theme-context.tsx` | React context provider with localStorage persistence |
+| `hooks/use-theme.ts` | Hook for components to access theme |
+
+**New Component Created:**
+
+| File | Purpose |
+|------|---------|
+| `components/theme-switcher.tsx` | Floating button (bottom-right) to cycle themes |
+
+**Files Modified (12 total):**
+
+- `app/layout.tsx` - Added ThemeProvider wrapper and Press Start 2P font
+- `app/page.tsx` - Added ThemeSwitcher component, migrated to theme variables
+- `app/globals.css` - Added 15+ theme CSS variables and 8-bit animations
+- `app/not-found.tsx` - Migrated to theme variables
+- `components/terminal-container.tsx` - Migrated colors to theme variables
+- `components/command-prompt.tsx` - Added theme switching, migrated colors
+- `components/cv-content.tsx` - Migrated colors to theme variables
+- `components/boot-sequence.tsx` - Migrated colors to theme variables
+- `components/cursor.tsx` - Renamed variant from "black" to "contrast"
+- `components/data-grid-section.tsx` - Migrated colors to theme variables
+- `components/secure-external-link.tsx` - Migrated colors to theme variables
+- `lib/utils.ts` - Added `theme` to VALID_COMMANDS
+
+**8-Bit Theme Features:**
+
+- **Font:** Press Start 2P at 0.625rem base size
+- **Colors:** Coral red (#ff6b6b), teal cyan (#4ecdc4), golden yellow (#ffd93d) on dark blue-purple (#1a1a2e)
+- **Borders:** 3px solid, no border-radius (pixel-perfect)
+- **Shadows:** 4px 4px 0 offset shadows (no blur)
+- **Animations:** Stepped transitions (blink, bounce, glow)
+- **Typography:** Uppercase headings, pixel-perfect rendering
+
+**CSS Variables Added:**
+
+```
+--theme-bg, --theme-fg, --theme-primary, --theme-secondary
+--theme-accent, --theme-muted, --theme-border
+--theme-success, --theme-error, --theme-warning
+--theme-font-primary, --theme-font-mono, --theme-font-size
+--theme-border-width, --theme-border-style, --theme-border-radius
+--theme-shadow, --theme-shadow-hover, --theme-shadow-active
+--theme-duration, --theme-timing
+```
+
+**8-Bit Animations Added:**
+
+- `theme-8bit-blink` - Stepped cursor blink
+- `theme-8bit-bounce` - Pixel bounce effect
+- `theme-8bit-glow` - Pulsing glow with shadow
+
+**User Interaction:**
+
+Terminal command:
+```
+$: theme              # List available themes
+$: theme terminal     # Switch to terminal theme
+$: theme 8bit         # Switch to 8-bit retro theme
+```
+
+Theme switcher button: Fixed bottom-right corner, cycles through themes on click.
+
+**Documentation Updates:**
+
+- `CLAUDE.md` - Added /theme to slash commands, added roadmap/theme protocol to key files
+- `.claude/commands/theme.md` - New Claude Code slash command for theme management
+- `.claude/commands/README.md` - Added /theme command documentation
+- `docs/00-ROADMAP.md` - Comprehensive theme protocol with all 6 phases marked complete
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 49 files checked, no issues
+- Tests: 96 tests, 297 assertions
+- Build: Successful (25 routes)

@@ -3,69 +3,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Main site animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 300ms ease-in;
-}
-
-@keyframes logoPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-logo-pulse {
-  animation: logoPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Reduced motion support for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .animate-fadeIn,
-  .animate-logo-pulse {
-    animation: none;
-  }
-}
-
-@theme inline {
-  /* Figmoo experiment brand colors - direct values for Tailwind v4 */
-  --color-figmoo-bg: #faf7f4;
-  --color-figmoo-text: #2c2c2c;
-  --color-figmoo-button: #17161a;
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-}
+/* ============================================
+   THEME SYSTEM CSS VARIABLES
+   Applied via ThemeProvider JavaScript
+   ============================================ */
 
 :root {
+  /* Theme colors (set by ThemeProvider, defaults to terminal) */
+  --theme-bg: #000000;
+  --theme-fg: #22c55e;
+  --theme-primary: #22c55e;
+  --theme-secondary: #15803d;
+  --theme-accent: #4ade80;
+  --theme-muted: #15803d;
+  --theme-border: #22c55e;
+  --theme-success: #22c55e;
+  --theme-error: #ef4444;
+  --theme-warning: #eab308;
+
+  /* Theme typography */
+  --theme-font-primary: var(--font-mono), ui-monospace, monospace;
+  --theme-font-mono: var(--font-mono), ui-monospace, monospace;
+  --theme-font-size: 1rem;
+  --theme-line-height: 1.5;
+
+  /* Theme borders */
+  --theme-border-width: 1px;
+  --theme-border-style: solid;
+  --theme-border-radius: 0.125rem;
+
+  /* Theme shadows */
+  --theme-shadow: none;
+  --theme-shadow-hover: 0 0 10px rgba(34, 197, 94, 0.3);
+  --theme-shadow-active: 0 0 5px rgba(34, 197, 94, 0.5);
+
+  /* Theme animation */
+  --theme-duration: 150ms;
+  --theme-timing: ease-in-out;
+
+  /* shadcn/ui base variables */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -108,11 +84,230 @@
   --ring: oklch(0.556 0 0);
 }
 
+@theme inline {
+  /* Figmoo experiment brand colors */
+  --color-figmoo-bg: #faf7f4;
+  --color-figmoo-text: #2c2c2c;
+  --color-figmoo-button: #17161a;
+
+  /* Theme system colors for Tailwind */
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-fg: var(--theme-fg);
+  --color-theme-primary: var(--theme-primary);
+  --color-theme-secondary: var(--theme-secondary);
+  --color-theme-accent: var(--theme-accent);
+  --color-theme-muted: var(--theme-muted);
+  --color-theme-border: var(--theme-border);
+
+  /* shadcn/ui color mappings */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  /* Note: body styles intentionally NOT applied globally
-     Main site uses bg-black text-green-500 terminal theme
-     Experiments can apply bg-background text-foreground as needed */
+}
+
+/* ============================================
+   MAIN SITE ANIMATIONS (Terminal theme)
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 300ms ease-in;
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-logo-pulse {
+  animation: logoPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================
+   8-BIT THEME ANIMATIONS
+   ============================================ */
+
+@keyframes theme-8bit-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-8bit-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes theme-8bit-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes theme-8bit-glow {
+  0%,
+  100% {
+    box-shadow: 4px 4px 0 var(--theme-primary);
+  }
+  50% {
+    box-shadow:
+      4px 4px 0 var(--theme-accent),
+      0 0 20px var(--theme-accent);
+  }
+}
+
+/* 8-bit cursor blink */
+.animate-8bit-blink {
+  animation: theme-8bit-blink 1s steps(1) infinite;
+}
+
+/* 8-bit bounce effect */
+.animate-8bit-bounce {
+  animation: theme-8bit-bounce 0.5s steps(2) infinite;
+}
+
+/* 8-bit glow pulse */
+.animate-8bit-glow {
+  animation: theme-8bit-glow 2s steps(2) infinite;
+}
+
+/* ============================================
+   8-BIT THEME SPECIFIC STYLES
+   Applied when data-theme="8bit"
+   ============================================ */
+
+[data-theme="8bit"] {
+  /* Force pixel-perfect rendering */
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+/* 8-bit typography adjustments */
+[data-theme="8bit"] h1,
+[data-theme="8bit"] h2,
+[data-theme="8bit"] h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 8-bit link styling */
+[data-theme="8bit"] a {
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+}
+
+[data-theme="8bit"] a:hover {
+  background-color: var(--theme-primary);
+  color: var(--theme-bg);
+}
+
+/* 8-bit input styling */
+[data-theme="8bit"] input,
+[data-theme="8bit"] textarea {
+  border: 3px solid var(--theme-border);
+  background: var(--theme-bg);
+  color: var(--theme-fg);
+  padding: 0.5rem;
+}
+
+[data-theme="8bit"] input:focus,
+[data-theme="8bit"] textarea:focus {
+  outline: none;
+  box-shadow: 4px 4px 0 var(--theme-accent);
+}
+
+/* 8-bit button base (via Tailwind classes in components) */
+[data-theme="8bit"] button {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* 8-bit scrollbar */
+[data-theme="8bit"]::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="8bit"]::-webkit-scrollbar-track {
+  background: var(--theme-bg);
+  border: 2px solid var(--theme-muted);
+}
+
+[data-theme="8bit"]::-webkit-scrollbar-thumb {
+  background: var(--theme-primary);
+  border: 2px solid var(--theme-bg);
+}
+
+[data-theme="8bit"]::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent);
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-logo-pulse,
+  .animate-8bit-blink,
+  .animate-8bit-bounce,
+  .animate-8bit-glow {
+    animation: none;
+  }
+
+  [data-theme="8bit"] * {
+    transition: none !important;
+  }
 }
