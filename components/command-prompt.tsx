@@ -374,7 +374,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
             <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
-                className="hover:text-green-400 transition-colors underline"
+                className="hover:text-green-400 transition-colors underline focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               >
                 jleekun@gmail.com
               </a>
@@ -420,7 +420,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               id="terminal-input"
               type="text"
               inputMode="text"
-              className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
+              className="flex-1 bg-transparent text-green-500 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               placeholder='Hit "return" for more projects, "help" for all commands'
               value={command}
               onChange={(e) => setCommand(e.target.value)}
@@ -431,7 +431,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               aria-describedby="command-instructions"
             />
           </form>
-          <p id="command-instructions" className="text-xs text-gray-500 mt-2">
+          <p id="command-instructions" className="text-xs text-gray-400 mt-2">
             Commands: email, help, clear
           </p>
         </nav>
