@@ -287,3 +287,55 @@ Theme switcher button: Fixed bottom-right corner, cycles through themes on click
 - Biome: 49 files checked, no issues
 - Tests: 96 tests, 297 assertions
 - Build: Successful (25 routes)
+
+---
+
+### Design System Compliance Audit - Theme System
+
+Post-implementation audit to ensure theme system adheres to 11-point design guidelines.
+
+**Issues Found and Resolved:**
+
+1. **Inline Style Violation** (`components/theme-switcher.tsx`)
+   - Issue: Used inline `style={{}}` for borderWidth, borderStyle, borderRadius, boxShadow
+   - Fix: Created `.theme-button` utility class in `globals.css` that uses CSS variables
+   - Result: Zero inline styles in theme-switcher component
+
+2. **Hardcoded Values in 8-bit Theme CSS** (`app/globals.css`)
+   - Issue: `[data-theme="8bit"]` rules used hardcoded `3px`, `12px`, `0.5rem`
+   - Fix: Replaced with CSS variables: `var(--theme-border-width)`, `var(--spacing-3)`, `var(--spacing-2)`
+   - Result: All 8-bit theme styles now use design tokens
+
+**Justified Exceptions (per design guidelines):**
+
+| File | Exception Type | Reason |
+|------|---------------|--------|
+| `theme-context.tsx` | SSR fallback inline styles | Prevents hydration flash with CSS custom properties |
+| `progress.tsx` | Dynamic transform | Truly dynamic percentage value for progress bar |
+| `matrix-background.tsx` | Canvas hex colors | Canvas-based animation requires direct color values |
+| `theme-8bit.ts` | Theme definition hex colors | Source of truth for theme color tokens |
+
+**New CSS Utilities Added:**
+
+```css
+.theme-button {
+  border-width: var(--theme-border-width);
+  border-style: var(--theme-border-style);
+  border-radius: var(--theme-border-radius);
+  box-shadow: var(--theme-shadow);
+}
+```
+
+**shadcn/ui Compliance:**
+- 8 shadcn components in `components/ui/` remain unmodified
+- Theme system extends shadcn via CSS variables, not component modification
+- Button, Input, Label, Badge, Card, Separator, Checkbox, Progress all compatible
+
+**Files Modified:**
+- `app/globals.css` - Added theme-button utility, fixed hardcoded values
+- `components/theme-switcher.tsx` - Removed inline styles, uses theme-button class
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 49 files checked, no issues
+- Tests: 96 tests, 297 assertions

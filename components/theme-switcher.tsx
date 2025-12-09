@@ -48,13 +48,7 @@ export function ThemeSwitcher() {
     <button
       type="button"
       onClick={cycleTheme}
-      className="fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center bg-theme-bg text-theme-fg border-theme-border transition-all duration-150 hover:bg-theme-primary hover:text-theme-bg focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg"
-      style={{
-        borderWidth: "var(--theme-border-width)",
-        borderStyle: "var(--theme-border-style)",
-        borderRadius: "var(--theme-border-radius)",
-        boxShadow: "var(--theme-shadow)",
-      }}
+      className="theme-button fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center bg-theme-bg text-theme-fg border-theme-border transition-all duration-150 hover:bg-theme-primary hover:text-theme-bg focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg"
       aria-label={`Current theme: ${theme.name}. Click to switch theme.`}
       title={`Theme: ${theme.name} - Click to cycle`}
     >

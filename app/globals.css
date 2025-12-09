@@ -256,16 +256,18 @@
 /* 8-bit input styling */
 [data-theme="8bit"] input,
 [data-theme="8bit"] textarea {
-  border: 3px solid var(--theme-border);
+  border-width: var(--theme-border-width);
+  border-style: var(--theme-border-style);
+  border-color: var(--theme-border);
   background: var(--theme-bg);
   color: var(--theme-fg);
-  padding: 0.5rem;
+  padding: var(--spacing-2, 0.5rem);
 }
 
 [data-theme="8bit"] input:focus,
 [data-theme="8bit"] textarea:focus {
   outline: none;
-  box-shadow: 4px 4px 0 var(--theme-accent);
+  box-shadow: var(--theme-shadow-hover);
 }
 
 /* 8-bit button base (via Tailwind classes in components) */
@@ -274,20 +276,44 @@
   letter-spacing: 0.1em;
 }
 
+/* ============================================
+   THEME-AWARE BUTTON UTILITIES
+   Used by theme-switcher and other theme-styled buttons
+   ============================================ */
+
+.theme-button {
+  border-width: var(--theme-border-width);
+  border-style: var(--theme-border-style);
+  border-radius: var(--theme-border-radius);
+  box-shadow: var(--theme-shadow);
+}
+
+.theme-button:hover {
+  box-shadow: var(--theme-shadow-hover);
+}
+
+.theme-button:active {
+  box-shadow: var(--theme-shadow-active);
+}
+
 /* 8-bit scrollbar */
 [data-theme="8bit"]::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: var(--spacing-3, 0.75rem);
+  height: var(--spacing-3, 0.75rem);
 }
 
 [data-theme="8bit"]::-webkit-scrollbar-track {
   background: var(--theme-bg);
-  border: 2px solid var(--theme-muted);
+  border-width: calc(var(--theme-border-width) / 1.5);
+  border-style: var(--theme-border-style);
+  border-color: var(--theme-muted);
 }
 
 [data-theme="8bit"]::-webkit-scrollbar-thumb {
   background: var(--theme-primary);
-  border: 2px solid var(--theme-bg);
+  border-width: calc(var(--theme-border-width) / 1.5);
+  border-style: var(--theme-border-style);
+  border-color: var(--theme-bg);
 }
 
 [data-theme="8bit"]::-webkit-scrollbar-thumb:hover {
