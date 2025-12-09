@@ -100,6 +100,8 @@ export interface ThemeContextValue {
   theme: ThemeDefinition
   /** Switch to a different theme */
   setTheme: (id: ThemeId) => void
+  /** Reset to default terminal theme */
+  resetTheme: () => void
   /** List of all available themes */
   availableThemes: ThemeDefinition[]
 }

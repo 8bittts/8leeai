@@ -82,15 +82,22 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
     localStorage.setItem(THEME_STORAGE_KEY, id)
   }, [])
 
+  // Reset to default terminal theme
+  const resetTheme = useCallback(() => {
+    setCurrentTheme(DEFAULT_THEME)
+    localStorage.removeItem(THEME_STORAGE_KEY)
+  }, [])
+
   // Memoize context value
   const value = useMemo<ThemeContextValue>(
     () => ({
       currentTheme,
       theme: getTheme(currentTheme),
       setTheme,
+      resetTheme,
       availableThemes: themeList,
     }),
-    [currentTheme, setTheme]
+    [currentTheme, setTheme, resetTheme]
   )
 
   // Prevent flash by not rendering until hydrated

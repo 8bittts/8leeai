@@ -6,6 +6,15 @@ Switch the global visual theme for 8lee.ai.
 
 The theme system allows complete visual transformation of the application. Each theme defines its own colors, typography, borders, shadows, and animations. Themes are not incremental changes - they are complete visual identity transformations.
 
+## Current Implementation
+
+**Status:** COMPLETE (December 9, 2025)
+
+**User Access:**
+- Terminal command only: `$: theme` or `$: theme <name>`
+- UI switcher button: REMOVED (preserved in `components/theme-switcher.tsx` for future use)
+- Clear/reset command (`$: clear`, Ctrl+L, Cmd+K): Resets theme to terminal
+
 ## Usage
 
 ### List Available Themes
@@ -16,40 +25,21 @@ If user runs `/theme` without arguments, respond with:
 - **terminal** (default) - Classic green-on-black DOS terminal aesthetic
 - **8bit** - Retro 8-bit gaming style with pixel fonts (Press Start 2P)
 
-### Switch Theme
+### Terminal Commands
 
-If user specifies a theme name (e.g., `/theme 8bit`):
+```
+$: theme              # List available themes
+$: theme terminal     # Switch to terminal theme
+$: theme 8bit         # Switch to 8-bit theme
+$: clear              # Reset terminal AND theme to default
+```
 
-1. Check if theme system is implemented:
-   - Look for `lib/themes/index.ts`
-   - Look for `contexts/theme-context.tsx`
-   - Look for `hooks/use-theme.ts`
+### Reset Behavior
 
-2. If NOT implemented yet:
-   - Inform user: "Theme system is planned but not yet implemented. See `docs/00-ROADMAP.md` for implementation phases."
-   - Offer to begin implementation if requested
-
-3. If implemented:
-   - Validate theme exists in theme registry
-   - Guide user on how to use the theme switcher UI
-   - Or modify the default theme in code if permanent change requested
-
-### Reset Theme
-
-If user runs `/theme reset`:
-- Set theme back to 'terminal' (default)
-- Clear any localStorage override if applicable
-
-## Implementation Status
-
-Check `docs/00-ROADMAP.md` for current implementation phase:
-
-- **Phase 1:** Foundation (infrastructure)
-- **Phase 2:** Variable Migration
-- **Phase 3:** 8-Bit Theme
-- **Phase 4:** Theme Switcher UI
-- **Phase 5:** /theme Command
-- **Phase 6:** Documentation
+Theme resets to terminal (default) when:
+- User runs `clear` command
+- User presses Ctrl+L or Cmd+K
+- User calls `resetTheme()` programmatically
 
 ## Theme Architecture
 
@@ -61,7 +51,6 @@ lib/themes/
 ├── types.ts           # TypeScript interfaces
 ├── theme-terminal.ts  # Default terminal theme
 ├── theme-8bit.ts      # 8-bit retro theme
-└── utils.ts           # Theme utilities
 ```
 
 Each theme provides:
@@ -70,10 +59,17 @@ Each theme provides:
 - Animation definitions
 - Component style overrides
 
+## Re-enabling UI Switcher
+
+The floating theme switcher button is preserved but not rendered. To re-enable:
+
+1. Edit `app/page.tsx`
+2. Uncomment the ThemeSwitcher import and component
+3. Or see instructions in `components/theme-switcher.tsx`
+
 ## Notes
 
 - Theme changes affect the entire application globally
-- User preferences persist in localStorage
+- User preferences persist in localStorage (cleared on reset)
 - All themes must meet WCAG 2.1 AA contrast requirements
 - Themes can dramatically change the visual appearance - this is intentional
-- See `docs/00-ROADMAP.md#global-theme-switcher-protocol` for full documentation

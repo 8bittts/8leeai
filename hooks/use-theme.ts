@@ -36,6 +36,9 @@ export function useTheme(): ThemeContextValue {
       setTheme: () => {
         console.warn("useTheme: setTheme called outside ThemeProvider")
       },
+      resetTheme: () => {
+        console.warn("useTheme: resetTheme called outside ThemeProvider")
+      },
       availableThemes: [],
     }
   }

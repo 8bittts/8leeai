@@ -5,10 +5,12 @@ import { BootSequence } from "@/components/boot-sequence"
 import { CommandPrompt, type CommandPromptRef } from "@/components/command-prompt"
 import { CVContent } from "@/components/cv-content"
 import { MatrixBackground } from "@/components/matrix-background"
+import { useTheme } from "@/hooks/use-theme"
 import { projects } from "@/lib/data"
 import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 export function TerminalContainer() {
+  const { resetTheme } = useTheme()
   const [bootComplete, setBootComplete] = useState(false)
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
   const [command, setCommand] = useState("")
@@ -48,8 +50,9 @@ export function TerminalContainer() {
     setBootComplete(false)
     setVisibleProjects(PROJECTS_PER_PAGE)
     setCommand("")
+    resetTheme() // Reset to terminal theme on clear
     setTimeout(() => setBootComplete(true), 100)
-  }, [])
+  }, [resetTheme])
 
   const triggerFlash = useCallback(() => {
     setIsFlashing(true)

@@ -7,6 +7,14 @@ import { useTheme } from "@/hooks/use-theme"
  *
  * Floating button that cycles through available themes.
  * Positioned in bottom-right corner with theme-aware styling.
+ *
+ * STATUS: PRESERVED BUT NOT IN USE
+ * This component has been temporarily removed from the UI.
+ * Theme switching is currently available only via the terminal 'theme' command.
+ *
+ * To re-enable:
+ * 1. Import in app/page.tsx: import { ThemeSwitcher } from "@/components/theme-switcher"
+ * 2. Add <ThemeSwitcher /> inside the main element
  */
 export function ThemeSwitcher() {
   const { currentTheme, setTheme, availableThemes, theme } = useTheme()
