@@ -5,7 +5,7 @@ import { DataGridSection } from "@/components/data-grid-section"
 import { useTheme } from "@/hooks/use-theme"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
-import { isValidThemeId } from "@/lib/themes"
+import { isValidThemeId, type ThemeId } from "@/lib/themes"
 import {
   COMMAND_ALIASES,
   DATA_OFFSETS,
@@ -152,7 +152,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         setDisplayContent(`Theme: ${themeArg} (already active)\n${theme?.description || ""}`)
         setStatusMessage(`${themeArg} theme already active`)
       } else {
-        setTheme(themeArg as "terminal" | "8bit")
+        setTheme(themeArg as ThemeId)
         setDisplayContent(`Theme switched to: ${themeArg}\n${theme?.description || ""}`)
         setStatusMessage(`Switched to ${themeArg} theme`)
       }

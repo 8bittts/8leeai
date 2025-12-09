@@ -448,3 +448,40 @@ Expanded theme system from 2 to 16 total themes, built using parallel agents for
 - TypeScript: 0 errors
 - Biome: 63 files checked, no issues
 - Tests: 96 tests, 297 assertions
+
+---
+
+### Theme System Audit and Bug Fix
+
+Post-implementation audit identified and resolved a critical bug.
+
+**Bug Found:**
+- `components/command-prompt.tsx` line 155 had hardcoded type cast `as "terminal" | "8bit"`
+- This prevented new themes from working via terminal command
+- The `isValidThemeId()` check passed, but the cast limited actual theme switching
+
+**Fix Applied:**
+- Changed `setTheme(themeArg as "terminal" | "8bit")` to `setTheme(themeArg as ThemeId)`
+- Added `type ThemeId` import from `@/lib/themes`
+- All 16 themes now work correctly via terminal command
+
+**Audit Verified:**
+- No core app contamination (page.tsx, layout.tsx, components/ unchanged)
+- All 16 theme files follow identical pattern
+- Theme-specific CSS properly scoped with `[data-theme="..."]`
+- Reduced motion support covers all animated themes
+- Clean removal path documented in roadmap
+
+**Documentation Updated:**
+- `docs/00-ROADMAP.md` - Comprehensive architecture and separation docs
+- Added "Removing Themes" section with step-by-step instructions
+- Added "Theme Requirements" for accessibility compliance
+
+**Files Modified:**
+- `components/command-prompt.tsx` - Fixed ThemeId type cast
+- `docs/00-ROADMAP.md` - Complete rewrite with architecture docs
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 63 files checked, no issues
+- Tests: 96 tests, 297 assertions
