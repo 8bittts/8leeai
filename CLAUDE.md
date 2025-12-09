@@ -25,7 +25,7 @@ Prefer CLI over web interfaces:
 
 Terminal-style portfolio at https://8lee.ai featuring DOS simulation, typewriter effects, and command-line interaction.
 
-**Tech Stack:** Next.js 16.0.7, React 19.2.1, TypeScript 5.9.3, Tailwind v4.1.17, Biome 2.3.8, Vercel AI SDK 5.0.108
+**Tech Stack:** Next.js 16.0.8, React 19.2.1, TypeScript 5.9.3, Tailwind v4.1.17, Biome 2.3.8, Vercel AI SDK 5.0.108
 
 **Deployment:** Vercel team `death-note` (Pro), Project ID `prj_mAdE8dzVUbtHLhb4ckbtHqowOwiK`
 
