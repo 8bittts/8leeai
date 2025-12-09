@@ -321,6 +321,41 @@
 }
 
 /* ============================================
+   THEME-SPECIFIC OVERRIDES
+   Each theme is self-contained but may need
+   CSS that can't be expressed in the definition
+   ============================================ */
+
+/* Gameboy: LCD pixel-perfect rendering */
+[data-theme="gameboy"] {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+/* Brutalist: 90s web link underlines */
+[data-theme="brutalist"] a {
+  text-decoration: underline;
+}
+
+/* Accessibility: No animations, forced focus */
+[data-theme="accessibility"] * {
+  transition: none !important;
+  animation: none !important;
+}
+
+[data-theme="accessibility"] :focus {
+  outline: 3px solid var(--theme-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* Matrix: Green glow cursor */
+[data-theme="matrix"] ::selection {
+  background: var(--theme-primary);
+  color: var(--theme-bg);
+}
+
+/* ============================================
    REDUCED MOTION SUPPORT
    ============================================ */
 
@@ -333,7 +368,12 @@
     animation: none;
   }
 
-  [data-theme="8bit"] * {
+  [data-theme="8bit"] *,
+  [data-theme="gameboy"] *,
+  [data-theme="matrix"] *,
+  [data-theme="synthwave"] *,
+  [data-theme="cyberpunk"] *,
+  [data-theme="vaporwave"] * {
     transition: none !important;
   }
 }

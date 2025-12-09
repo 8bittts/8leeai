@@ -378,3 +378,73 @@ Refined theme system behavior based on UX review.
 - TypeScript: 0 errors
 - Biome: 49 files checked, no issues
 - Tests: 96 tests, 297 assertions
+
+---
+
+### 14 New Themes Added
+
+Expanded theme system from 2 to 16 total themes, built using parallel agents for efficiency.
+
+**Tier 1: Fun and Playful**
+| Theme | Description |
+|-------|-------------|
+| `gameboy` | Classic Game Boy 4-color LCD palette (#9bbc0f, #8bac0f, #306230, #0f380f) |
+| `paper` | Academic sepia/cream with Georgia serif typography |
+| `vaporwave` | 80s/90s nostalgia with pink/cyan on dark purple |
+| `cyberpunk` | Neon noir with hot pink/cyan, Blade Runner vibes |
+
+**Tier 2: Seasonal/Event**
+| Theme | Description |
+|-------|-------------|
+| `halloween` | Orange/purple/black spooky season theme |
+| `christmas` | Red/green/gold holiday festive theme |
+| `matrix` | Bright green on black, digital rain aesthetic |
+| `synthwave` | Hot pink/cyan/purple 80s retro futurism |
+
+**Tier 3: Experimental**
+| Theme | Description |
+|-------|-------------|
+| `accessibility` | High contrast (21:1), no animations, enhanced focus |
+| `minimal` | Black on white, system fonts, zero decorations |
+| `brutalist` | Times New Roman, blue links, gray background, 90s web |
+| `ocean` | Deep blues with cyan accents, calm underwater feel |
+| `sunset` | Warm orange/pink/purple gradients |
+| `forest` | Deep greens with brown accents, organic natural feel |
+
+**Architecture:**
+- Each theme is a self-contained file in `lib/themes/theme-{name}.ts`
+- Themes define ONLY colors, fonts, borders, shadows, and animations
+- No theme modifies core app behavior or adds dependencies
+- To remove: delete file, remove import/registration from `index.ts`
+
+**Theme-Specific CSS (globals.css):**
+- `gameboy`: Pixel-perfect rendering (image-rendering: pixelated)
+- `brutalist`: Underlined links (90s web style)
+- `accessibility`: Forced focus indicators, no animations
+- `matrix`: Green selection highlighting
+
+**Files Created (14 new):**
+- `lib/themes/theme-gameboy.ts`
+- `lib/themes/theme-paper.ts`
+- `lib/themes/theme-vaporwave.ts`
+- `lib/themes/theme-cyberpunk.ts`
+- `lib/themes/theme-halloween.ts`
+- `lib/themes/theme-christmas.ts`
+- `lib/themes/theme-matrix.ts`
+- `lib/themes/theme-synthwave.ts`
+- `lib/themes/theme-accessibility.ts`
+- `lib/themes/theme-minimal.ts`
+- `lib/themes/theme-brutalist.ts`
+- `lib/themes/theme-ocean.ts`
+- `lib/themes/theme-sunset.ts`
+- `lib/themes/theme-forest.ts`
+
+**Files Modified:**
+- `lib/themes/types.ts` - Added 14 new ThemeId values
+- `lib/themes/index.ts` - Registered all themes with separation docs
+- `app/globals.css` - Added theme-specific CSS overrides
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 63 files checked, no issues
+- Tests: 96 tests, 297 assertions

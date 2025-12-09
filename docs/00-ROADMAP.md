@@ -8,19 +8,36 @@ Active development roadmap for the 8lee.ai project. Completed work is archived i
 
 ## Table of Contents
 
-1. [Theme System - Future Themes](#theme-system---future-themes)
+1. [Theme System - Current State](#theme-system---current-state)
 2. [Adding New Themes](#adding-new-themes)
-3. [Theme Ideas Backlog](#theme-ideas-backlog)
+3. [Future Ideas](#future-ideas)
 
 ---
 
-## Theme System - Future Themes
+## Theme System - Current State
 
-The theme system is complete and supports runtime theme switching via the terminal `theme` command.
+The theme system is complete with 16 themes available via the terminal `theme` command.
 
-**Current Themes:**
-- `terminal` (default) - Classic green-on-black DOS terminal aesthetic
-- `8bit` - Retro 8-bit gaming style with Press Start 2P font
+**All Themes (16 total):**
+
+| Theme | Description | Category |
+|-------|-------------|----------|
+| `terminal` | Green-on-black DOS aesthetic (default) | Core |
+| `8bit` | Retro gaming with Press Start 2P font | Core |
+| `gameboy` | Classic 4-color Game Boy LCD palette | Tier 1 |
+| `paper` | Academic sepia with serif typography | Tier 1 |
+| `vaporwave` | 80s/90s pink/cyan nostalgia | Tier 1 |
+| `cyberpunk` | Neon noir Blade Runner vibes | Tier 1 |
+| `halloween` | Orange/purple spooky season | Tier 2 |
+| `christmas` | Red/green/gold festive | Tier 2 |
+| `matrix` | Bright green digital rain | Tier 2 |
+| `synthwave` | 80s retro futurism | Tier 2 |
+| `accessibility` | High contrast, no animations | Tier 3 |
+| `minimal` | Black on white, system fonts | Tier 3 |
+| `brutalist` | 90s web with Times New Roman | Tier 3 |
+| `ocean` | Deep blues, calm underwater | Tier 3 |
+| `sunset` | Warm orange/pink gradients | Tier 3 |
+| `forest` | Deep greens, organic natural | Tier 3 |
 
 **Architecture:** See `lib/themes/` for implementation details.
 
@@ -97,57 +114,17 @@ export const exampleTheme: ThemeDefinition = {
 
 ---
 
-## Theme Ideas Backlog
+## Future Ideas
 
-Future theme concepts for implementation. Each theme should provide a complete visual transformation while maintaining usability and accessibility.
+All 14 planned themes have been implemented. Potential future additions:
 
-### Tier 1: High Priority (Fun and Playful)
-
-| Theme | Description | Key Features | Complexity |
-|-------|-------------|--------------|------------|
-| `vaporwave` | 80s/90s nostalgia aesthetic | Pink/cyan gradients, sunset palette, Japanese text accents, VHS scan lines | Medium |
-| `gameboy` | Classic Game Boy green | 4-color palette (#0f380f, #306230, #8bac0f, #9bbc0f), pixel font, LCD effect | Low |
-| `cyberpunk` | Neon noir future | Hot pink/electric blue on dark, glitch effects, Blade Runner vibes | Medium |
-| `paper` | Minimal academic | Sepia/cream background, serif fonts, paper texture, ink colors | Low |
-
-### Tier 2: Medium Priority (Seasonal/Event)
-
-| Theme | Description | Key Features | Complexity |
-|-------|-------------|--------------|------------|
-| `halloween` | Spooky season | Orange/purple/black, dripping text, cobweb decorations | Low |
-| `christmas` | Holiday cheer | Red/green/gold, snow effects, festive fonts | Low |
-| `matrix` | Digital rain | Bright green on black, falling characters effect, Neo vibes | Medium |
-| `synthwave` | Retro future | Grid horizon, sunset gradient, chrome text, 80s synth aesthetic | Medium |
-
-### Tier 3: Experimental
-
-| Theme | Description | Key Features | Complexity |
-|-------|-------------|--------------|------------|
-| `accessibility` | High contrast mode | Maximum contrast, large fonts, no animations, screen reader optimized | Low |
-| `minimal` | Ultra-clean | Black text on white, system fonts, zero decorations | Low |
-| `brutalist` | Raw web | Times New Roman, blue links, gray backgrounds, 90s web | Low |
-| `ocean` | Underwater calm | Deep blues, wave animations, bubble effects | High |
-| `sunset` | Warm gradients | Orange/pink sky, warm tones, peaceful vibes | Medium |
-| `forest` | Nature inspired | Deep greens, wood textures, organic shapes | Medium |
-
-### Implementation Notes
-
-**Quick Wins (Low Complexity):**
-- `gameboy`, `paper`, `halloween`, `christmas`, `accessibility`, `minimal`, `brutalist`
-- Can be implemented in 1-2 hours each
-- Mostly color/font changes, minimal custom CSS
-
-**Medium Effort:**
-- `vaporwave`, `cyberpunk`, `matrix`, `synthwave`, `sunset`, `forest`
-- Require custom animations or effects
-- May need additional fonts
-- 2-4 hours each
-
-**High Effort:**
-- `ocean`
-- Complex animations, particle effects
-- May require Canvas or WebGL
-- 4+ hours
+| Theme | Description |
+|-------|-------------|
+| `nord` | Arctic blue color scheme from Nord palette |
+| `dracula` | Popular dark theme with purple accents |
+| `monokai` | Classic code editor color scheme |
+| `solarized` | Ethan Schoonover's precision colors |
+| `catppuccin` | Pastel theme with multiple flavors |
 
 ### Theme Requirements
 

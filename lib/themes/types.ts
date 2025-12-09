@@ -5,7 +5,26 @@
  * typography, borders, shadows, and animations.
  */
 
-export type ThemeId = "terminal" | "8bit"
+export type ThemeId =
+  | "terminal"
+  | "8bit"
+  // Tier 1: Fun and Playful
+  | "gameboy"
+  | "paper"
+  | "vaporwave"
+  | "cyberpunk"
+  // Tier 2: Seasonal/Event
+  | "halloween"
+  | "christmas"
+  | "matrix"
+  | "synthwave"
+  // Tier 3: Experimental
+  | "accessibility"
+  | "minimal"
+  | "brutalist"
+  | "ocean"
+  | "sunset"
+  | "forest"
 
 export interface ThemeColors {
   /** Main background color */
