@@ -339,3 +339,42 @@ Post-implementation audit to ensure theme system adheres to 11-point design guid
 - TypeScript: 0 errors
 - Biome: 49 files checked, no issues
 - Tests: 96 tests, 297 assertions
+
+---
+
+### Theme System Refinements
+
+Refined theme system behavior based on UX review.
+
+**Changes:**
+
+1. **Theme Reset on Clear**
+   - `clear` command now resets theme to terminal (default)
+   - Keyboard shortcuts (Ctrl+L, Cmd+K) also reset theme
+   - Added `resetTheme()` function to theme context and hook
+   - localStorage preference cleared on reset
+
+2. **UI Switcher Removed (Preserved)**
+   - Floating theme switcher button removed from UI
+   - Theme switching now only via terminal `theme` command
+   - Component preserved in `components/theme-switcher.tsx` for future use
+   - Clear re-enablement instructions in component and page.tsx comments
+
+**Rationale:**
+- Terminal-only theme switching maintains the DOS aesthetic
+- Reset on clear provides consistent "fresh start" behavior
+- Preserved code allows easy re-enablement if needed
+
+**Files Modified:**
+- `lib/themes/types.ts` - Added `resetTheme` to ThemeContextValue
+- `contexts/theme-context.tsx` - Implemented resetTheme function
+- `hooks/use-theme.ts` - Added resetTheme to fallback value
+- `components/terminal-container.tsx` - clearToStart now calls resetTheme
+- `app/page.tsx` - Removed ThemeSwitcher, added re-enablement comments
+- `components/theme-switcher.tsx` - Added preservation status documentation
+- `.claude/commands/theme.md` - Updated with reset behavior documentation
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 49 files checked, no issues
+- Tests: 96 tests, 297 assertions
