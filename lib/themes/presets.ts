@@ -128,6 +128,17 @@ export const createOffsetShadows = (color: string): ThemeShadows => ({
   active: `1px 1px 0 ${color}`,
 })
 
+/** Multi-color offset shadows - for 8-bit theme with different colors per state */
+export const createMultiColorOffsetShadows = (
+  defaultColor: string,
+  hoverColor: string,
+  activeColor: string
+): ThemeShadows => ({
+  default: `4px 4px 0 ${defaultColor}`,
+  hover: `6px 6px 0 ${hoverColor}`,
+  active: `2px 2px 0 ${activeColor}`,
+})
+
 // ============================================
 // ANIMATION PRESETS
 // ============================================

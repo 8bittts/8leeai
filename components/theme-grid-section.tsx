@@ -12,7 +12,7 @@ export function ThemeGridSection() {
   return (
     <section className="mb-8 animate-fadeIn" aria-label="Available Themes">
       <h2 className="text-xl font-bold mb-4">Available Themes</h2>
-      <p className="text-sm text-theme-muted mb-4">
+      <p className="text-sm text-green-500 mb-4">
         Type a theme name to switch (e.g., &quot;terminal&quot;, &quot;gameboy&quot;)
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">

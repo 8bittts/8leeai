@@ -1,4 +1,4 @@
-import { ANIMATION_INSTANT, BORDERS_CHUNKY } from "./presets"
+import { ANIMATION_INSTANT, BORDERS_CHUNKY, createMultiColorOffsetShadows } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -35,12 +35,8 @@ export const eightBitTheme: ThemeDefinition = {
 
   borders: BORDERS_CHUNKY,
 
-  // 8-bit uses multi-color offset shadows
-  shadows: {
-    default: "4px 4px 0 #ff6b6b",
-    hover: "6px 6px 0 #4ecdc4",
-    active: "2px 2px 0 #ffd93d",
-  },
+  // 8-bit uses multi-color offset shadows (red default, cyan hover, yellow active)
+  shadows: createMultiColorOffsetShadows("#ff6b6b", "#4ecdc4", "#ffd93d"),
 
   animation: ANIMATION_INSTANT,
 
