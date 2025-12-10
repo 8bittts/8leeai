@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
+import { ThemeGridSection } from "@/components/theme-grid-section"
 import { useTheme } from "@/hooks/use-theme"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { education, projects, volunteer } from "@/lib/data"
@@ -45,6 +46,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
   ) {
     const [showEducation, setShowEducation] = useState(false)
     const [showVolunteer, setShowVolunteer] = useState(false)
+    const [showThemes, setShowThemes] = useState(false)
     const [showEmail, setShowEmail] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
     const [displayContent, setDisplayContent] = useState("")
@@ -62,6 +64,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     const hideAllSections = () => {
       setShowEducation(false)
       setShowVolunteer(false)
+      setShowThemes(false)
       setShowEmail(false)
       setShowHelp(false)
       setDisplayContent("")
@@ -133,18 +136,6 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       setStatusMessage("Social and professional links displayed")
     }
 
-    // Theme command helper - show list
-    const showThemeList = () => {
-      const list = availableThemes
-        .map((t) => {
-          const marker = t.id === currentTheme ? " (active)" : ""
-          return `• ${t.id}${marker}`.padEnd(20) + t.description
-        })
-        .join("\n")
-      setDisplayContent(`Available Themes\n${"═".repeat(50)}\n${list}\n\nUsage: theme <name>`)
-      setStatusMessage("Available themes displayed")
-    }
-
     // Theme command helper - switch theme
     const switchTheme = (themeArg: string) => {
       const theme = availableThemes.find((t) => t.id === themeArg)
@@ -158,19 +149,39 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       }
     }
 
-    // Theme command handler
+    // Theme command handler - shows grid section like volunteer/education
     const handleThemeCommand = (cmdLower: string): boolean => {
-      if (cmdLower !== "theme" && !cmdLower.startsWith("theme ")) return false
-      hideAllSections()
-      const themeArg = cmdLower === "theme" ? "" : cmdLower.slice(6).trim()
-      if (themeArg === "" || themeArg === "list") showThemeList()
-      else if (isValidThemeId(themeArg)) switchTheme(themeArg)
-      else {
-        setDisplayContent(`Unknown theme: ${themeArg}\nType 'theme' for available themes.`)
-        setStatusMessage("Unknown theme")
+      // Show theme grid when typing "theme" or "/theme"
+      if (cmdLower === "theme" || cmdLower === "themes") {
+        hideAllSections()
+        setShowThemes(true)
+        setCommand("")
+        setStatusMessage("Available themes displayed")
+        return true
       }
-      setCommand("")
-      return true
+
+      // Handle "theme <name>" syntax
+      if (cmdLower.startsWith("theme ")) {
+        hideAllSections()
+        const themeArg = cmdLower.slice(6).trim()
+        if (isValidThemeId(themeArg)) switchTheme(themeArg)
+        else {
+          setDisplayContent(`Unknown theme: ${themeArg}\nType 'theme' for available themes.`)
+          setStatusMessage("Unknown theme")
+        }
+        setCommand("")
+        return true
+      }
+
+      // Allow bare theme names when theme list is visible (e.g., just "terminal")
+      if (showThemes && isValidThemeId(cmdLower)) {
+        switchTheme(cmdLower)
+        setShowThemes(false)
+        setCommand("")
+        return true
+      }
+
+      return false
     }
 
     // System info commands (whoami, uname, date)
@@ -412,7 +423,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               <p>• date · Current date/time</p>
               <p>• echo [text] · Echo text back</p>
               <p>• stats · Portfolio statistics</p>
-              <p>• theme [name] · Switch visual theme</p>
+              <p>• theme · Browse and switch visual themes</p>
             </div>
           </section>
         )}
@@ -451,6 +462,9 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
             ariaLabel="Volunteer Experience"
           />
         )}
+
+        {/* Theme Selection Section */}
+        {showThemes && <ThemeGridSection />}
 
         {/* Easter Egg / Command Output */}
         {displayContent && (

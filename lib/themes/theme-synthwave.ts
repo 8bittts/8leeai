@@ -1,3 +1,4 @@
+import { BORDERS_ROUNDED, createGlowShadows, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,24 +25,9 @@ export const synthwaveTheme: ThemeDefinition = {
     warning: "#ffd60a",
   },
 
-  fonts: {
-    primary: "var(--font-sans), ui-sans-serif, system-ui, sans-serif",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.6",
-  },
-
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0.25rem",
-  },
-
-  shadows: {
-    default: "0 0 10px rgba(255, 41, 117, 0.3)",
-    hover: "0 0 20px rgba(255, 41, 117, 0.5), 0 0 30px rgba(0, 255, 249, 0.3)",
-    active: "0 0 30px rgba(255, 41, 117, 0.7), 0 0 40px rgba(0, 255, 249, 0.5)",
-  },
+  fonts: FONTS_SANS,
+  borders: BORDERS_ROUNDED,
+  shadows: createGlowShadows("rgba(255, 41, 117, 0.35)", "rgba(0, 255, 249, 0.25)"),
 
   animation: {
     duration: "250ms",

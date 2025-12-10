@@ -140,7 +140,7 @@ All content follows a clear, professional format without emojis or decorative el
 - Better historical reference and archival management
 
 **When to Split a Week Into Multiple Parts**:
-- If a weekly file exceeds approximately 500 lines or becomes difficult to navigate
+- If a weekly file exceeds approximately 1800 words
 - When a week has an unusually high volume of changes, updates, or releases
 - To maintain readability and prevent any single file from becoming too large
 - Split proactively rather than waiting for the file to become unmanageably large
@@ -169,7 +169,9 @@ All content follows a clear, professional format without emojis or decorative el
 
 ### December 2025 (Weekly)
 - `2025-12-w1-december.md` - Week 1 (Dec 1-7): Package updates, Bun adoption audit, documentation cleanup
-- `2025-12-w2-december.md` - Week 2 (Dec 8-14): Context7 MCP integration
+- `2025-12-w2-1-december.md` - Week 2 Part 1 (Dec 8): Package updates, slash commands, Context7 MCP, WCAG improvements
+- `2025-12-w2-2-december.md` - Week 2 Part 2 (Dec 9): Design audit, theme system architecture
+- `2025-12-w2-3-december.md` - Week 2 Part 3 (Dec 9): 14 new themes, presets system, theme UI redesign
 
 ### Future Months
 As the project continues, new weekly files will be created following the same pattern.

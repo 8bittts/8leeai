@@ -1,3 +1,4 @@
+import { ANIMATION_INSTANT, BORDERS_CHUNKY } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -5,13 +6,6 @@ import type { ThemeDefinition } from "./types"
  *
  * Inspired by 8bitcn-ui - retro gaming aesthetic with pixel fonts,
  * hard-edged borders, offset shadows, and vibrant colors.
- *
- * Features:
- * - Press Start 2P pixel font
- * - No border radius (pixel-perfect edges)
- * - Offset solid shadows (no blur)
- * - High contrast retro color palette
- * - Stepped/instant animations
  */
 export const eightBitTheme: ThemeDefinition = {
   id: "8bit",
@@ -31,30 +25,24 @@ export const eightBitTheme: ThemeDefinition = {
     warning: "#ffd93d", // Golden yellow
   },
 
+  // 8-bit has unique pixel font settings
   fonts: {
     primary: "var(--font-8bit), 'Press Start 2P', monospace",
     mono: "var(--font-8bit), 'Press Start 2P', monospace",
-    sizeBase: "0.625rem", // Smaller for pixel font readability
-    lineHeight: "2", // Extra line height for pixel font
+    sizeBase: "0.625rem",
+    lineHeight: "2",
   },
 
-  borders: {
-    width: "3px",
-    style: "solid",
-    radius: "0", // No border radius - pixel perfect
-  },
+  borders: BORDERS_CHUNKY,
 
+  // 8-bit uses multi-color offset shadows
   shadows: {
     default: "4px 4px 0 #ff6b6b",
     hover: "6px 6px 0 #4ecdc4",
     active: "2px 2px 0 #ffd93d",
   },
 
-  animation: {
-    duration: "0ms", // Instant - no smooth transitions
-    timing: "steps(1)",
-    stepped: true,
-  },
+  animation: ANIMATION_INSTANT,
 
   metadata: {
     author: "Eight Lee",

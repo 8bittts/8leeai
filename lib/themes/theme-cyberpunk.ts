@@ -1,3 +1,4 @@
+import { ANIMATION_SMOOTH, BORDERS_ROUNDED, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,19 +25,10 @@ export const cyberpunkTheme: ThemeDefinition = {
     warning: "#ffbe0b",
   },
 
-  fonts: {
-    primary: "var(--font-sans), ui-sans-serif, sans-serif",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.5",
-  },
+  fonts: { ...FONTS_SANS, lineHeight: "1.5" },
+  borders: BORDERS_ROUNDED,
 
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0.25rem",
-  },
-
+  // Cyberpunk uses unique multi-layer neon glow
   shadows: {
     default: "0 0 15px rgba(255, 42, 109, 0.2), 0 0 5px rgba(5, 217, 232, 0.1)",
     hover:
@@ -44,11 +36,7 @@ export const cyberpunkTheme: ThemeDefinition = {
     active: "0 0 20px rgba(5, 217, 232, 0.5), 0 0 10px rgba(255, 42, 109, 0.3)",
   },
 
-  animation: {
-    duration: "200ms",
-    timing: "cubic-bezier(0.4, 0, 0.2, 1)",
-    stepped: false,
-  },
+  animation: ANIMATION_SMOOTH,
 
   metadata: {
     author: "Eight Lee",
