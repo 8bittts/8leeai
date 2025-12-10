@@ -1,8 +1,5 @@
 # Experiments Protocol
 
-**Last Updated:** December 5, 2025
-**Protocol Version:** 2.0
-
 This document defines the standards and protocols for all experiments in the `/app/experiments/` directory. All experiments MUST follow these guidelines to ensure consistency, isolation, and easy removal.
 
 ---
