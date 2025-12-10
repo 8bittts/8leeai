@@ -156,3 +156,72 @@ Refined theme system behavior based on UX review.
 - TypeScript: 0 errors
 - Biome: 49 files checked, no issues
 - Tests: 96 tests, 297 assertions
+
+---
+
+## Theme System Architecture (Archived from Roadmap)
+
+### File Structure
+
+```
+lib/themes/
+├── index.ts              # Theme registry (imports, exports, utilities)
+├── types.ts              # TypeScript interfaces (ThemeId, ThemeDefinition)
+├── presets.ts            # Shared font, border, shadow, animation presets
+├── theme-terminal.ts     # Core: Default terminal theme
+├── theme-8bit.ts         # Core: 8-bit retro theme
+├── theme-gameboy.ts      # Tier 1: Game Boy LCD theme
+├── theme-paper.ts        # Tier 1: Academic paper theme
+├── theme-vaporwave.ts    # Tier 1: Vaporwave theme
+├── theme-cyberpunk.ts    # Tier 1: Cyberpunk theme
+├── theme-halloween.ts    # Tier 2: Halloween theme
+├── theme-christmas.ts    # Tier 2: Christmas theme
+├── theme-matrix.ts       # Tier 2: Matrix theme
+├── theme-synthwave.ts    # Tier 2: Synthwave theme
+├── theme-accessibility.ts # Tier 3: High contrast theme
+├── theme-minimal.ts      # Tier 3: Minimal theme
+├── theme-brutalist.ts    # Tier 3: Brutalist theme
+├── theme-ocean.ts        # Tier 3: Ocean theme
+├── theme-sunset.ts       # Tier 3: Sunset theme
+└── theme-forest.ts       # Tier 3: Forest theme
+```
+
+### Isolation Principles
+
+1. **Self-Contained Files**: Each theme is a single TypeScript file exporting a `ThemeDefinition`
+2. **No External Dependencies**: Themes use only CSS custom properties and standard fonts
+3. **No Core App Modifications**: Themes never modify components, hooks, or app logic
+4. **Data Attribute Scoping**: Theme-specific CSS uses `[data-theme="..."]` selectors
+5. **Clean Removal**: Delete file + remove from index.ts + remove from types.ts
+
+### What Themes Define
+
+Each theme provides ONLY:
+- **Colors**: background, foreground, primary, secondary, accent, muted, border, success, error, warning
+- **Fonts**: primary font family, mono font family, base size, line height
+- **Borders**: width, style, radius
+- **Shadows**: default, hover, active states
+- **Animation**: duration, timing function, stepped flag
+
+### Adding New Themes
+
+1. Create `lib/themes/theme-{name}.ts` with ThemeDefinition
+2. Add theme ID to `lib/themes/types.ts` ThemeId union
+3. Import and register in `lib/themes/index.ts`
+4. Add theme-specific CSS to `globals.css` if needed (scoped with `[data-theme="..."]`)
+5. Run quality checks: `bun run check && bun test && bunx tsc --noEmit`
+
+### Removing Themes
+
+1. Delete `lib/themes/theme-{name}.ts`
+2. Remove from ThemeId union in `types.ts`
+3. Remove import and registration from `index.ts`
+4. Remove any CSS rules for `[data-theme="{name}"]` in `globals.css`
+
+### Theme Requirements
+
+All themes must comply with:
+- WCAG 2.1 AA color contrast (4.5:1 normal text, 3:1 large text)
+- Respect `prefers-reduced-motion` media query
+- Work across Chrome, Firefox, Safari, Edge
+- Function on all viewport sizes
