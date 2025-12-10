@@ -111,9 +111,9 @@ export function ChatInput({
   )
 
   return (
-    <div className="border-t border-green-500/30 pt-4">
+    <div className="border-t border-theme-primary/30 pt-4">
       <div className="flex items-center gap-2 font-mono text-sm">
-        <span className="text-green-500">$</span>
+        <span className="text-theme-primary">$</span>
         <input
           ref={setInputRef}
           type="text"
@@ -125,14 +125,14 @@ export function ChatInput({
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           placeholder="Enter a query..."
-          className="flex-1 bg-black text-green-500 outline-none caret-green-500 placeholder-green-700 disabled:opacity-50 focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+          className="flex-1 bg-theme-bg text-theme-primary outline-none caret-theme-primary placeholder-theme-secondary disabled:opacity-50 focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
           autoComplete="off"
           spellCheck="false"
           aria-label="Chat input"
         />
-        {isLoading && <span className="text-green-400 text-xs animate-pulse">processing...</span>}
+        {isLoading && <span className="text-theme-accent text-xs animate-pulse">processing...</span>}
       </div>
-      <div className="mt-2 text-xs text-green-400 opacity-50">
+      <div className="mt-2 text-xs text-theme-accent opacity-50">
         Press Enter to submit • ↑↓ for history • Ctrl+C to clear
       </div>
     </div>

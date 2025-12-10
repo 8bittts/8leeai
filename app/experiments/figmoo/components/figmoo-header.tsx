@@ -9,7 +9,7 @@ import Link from "next/link"
  */
 export function FigmooHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 bg-figmoo-bg/95 backdrop-blur supports-[backdrop-filter]:bg-figmoo-bg/60">
+    <header className="sticky top-0 z-50 w-full border-b border-figmoo-border/50 bg-figmoo-bg/95 backdrop-blur supports-[backdrop-filter]:bg-figmoo-bg/60">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
@@ -23,19 +23,19 @@ export function FigmooHeader() {
         <nav className="hidden md:flex md:items-center md:gap-6">
           <Link
             href="/experiments/figmoo"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-figmoo-text"
+            className="text-sm font-medium text-figmoo-muted transition-colors hover:text-figmoo-text"
           >
             Documentation
           </Link>
           <Link
             href="/experiments/figmoo"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-figmoo-text"
+            className="text-sm font-medium text-figmoo-muted transition-colors hover:text-figmoo-text"
           >
             Changelog
           </Link>
           <Link
             href="/experiments/figmoo"
-            className="text-sm font-medium text-gray-600 transition-colors hover:text-figmoo-text"
+            className="text-sm font-medium text-figmoo-muted transition-colors hover:text-figmoo-text"
           >
             Feedback
           </Link>
@@ -46,14 +46,14 @@ export function FigmooHeader() {
           <Button
             variant="ghost"
             size="sm"
-            className="text-gray-600 hover:text-figmoo-text hover:bg-transparent"
+            className="text-figmoo-muted hover:text-figmoo-text hover:bg-transparent"
             asChild
           >
             <Link href="/experiments/figmoo/signup">Log in</Link>
           </Button>
           <Button
             size="sm"
-            className="rounded-lg bg-violet-600 text-white hover:bg-violet-700"
+            className="rounded-lg bg-figmoo-accent text-white hover:bg-figmoo-accent-hover"
             asChild
           >
             <Link href="/experiments/figmoo/signup">

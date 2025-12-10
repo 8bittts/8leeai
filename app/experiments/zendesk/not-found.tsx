@@ -41,7 +41,7 @@ export default function NotFound() {
 
   return (
     <div
-      className="relative min-h-screen w-full flex flex-col items-center justify-center text-green-500 font-mono cursor-pointer"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center text-theme-primary font-mono cursor-pointer"
       role="main"
       aria-label="404 error page"
     >
@@ -49,7 +49,7 @@ export default function NotFound() {
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-[url('/mario.jpg')]"
         aria-hidden="true"
       />
-      <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
+      <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-theme-bg max-w-4xl">
         <h1 className="text-6xl font-bold">
           {heading.displayedText}
           {heading.isTyping && <Cursor variant="contrast" />}

@@ -10,6 +10,7 @@ function Progress({
   value,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+  const translateValue = 100 - (value || 0)
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
@@ -18,8 +19,10 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="bg-primary h-full transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        className={cn(
+          "bg-primary h-full w-full transition-all",
+          `translate-x-[-${translateValue}%]`
+        )}
       />
     </ProgressPrimitive.Root>
   )

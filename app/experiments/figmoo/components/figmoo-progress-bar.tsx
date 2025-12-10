@@ -21,10 +21,10 @@ export function FigmooProgressBar({ currentStep, totalSteps }: ProgressBarProps)
           className={cn(
             "h-1.5 w-8 rounded-full transition-colors",
             index < currentStep
-              ? "bg-violet-600"
+              ? "bg-figmoo-accent"
               : index === currentStep
-                ? "bg-blue-500"
-                : "bg-gray-200"
+                ? "bg-figmoo-accent"
+                : "bg-figmoo-border"
           )}
           aria-hidden="true"
         />

@@ -20,7 +20,7 @@ export function FigmooStepCategory({ state, onUpdate }: StepCategoryProps) {
   return (
     <div className="space-y-6">
       {/* Main category label */}
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-figmoo-muted">
         Main Category:{" "}
         <span className="font-medium capitalize text-figmoo-text">{state.mainCategory}</span>
       </p>
@@ -36,21 +36,21 @@ export function FigmooStepCategory({ state, onUpdate }: StepCategoryProps) {
               onClick={() => onUpdate({ subCategory })}
               aria-label={`Select ${subCategory} category`}
               aria-pressed={isSelected}
-              className="focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-full"
+              className="focus:outline-none focus:ring-2 focus:ring-figmoo-accent focus:ring-offset-2 rounded-full"
             >
               <Badge
                 variant="outline"
                 className={cn(
                   "cursor-pointer px-4 py-2 text-sm font-medium transition-all",
                   isSelected
-                    ? "border-violet-600 bg-violet-50 text-violet-700 hover:bg-violet-100"
-                    : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                    ? "border-figmoo-accent bg-figmoo-accent-light text-figmoo-accent-hover hover:bg-figmoo-surface-hover"
+                    : "border-figmoo-border bg-white text-figmoo-text hover:border-figmoo-border-hover hover:bg-figmoo-surface"
                 )}
               >
                 <span
                   className={cn(
                     "mr-2 inline-flex h-4 w-4 items-center justify-center rounded-full border",
-                    isSelected ? "border-violet-600 bg-violet-600" : "border-gray-300 bg-white"
+                    isSelected ? "border-figmoo-accent bg-figmoo-accent" : "border-figmoo-border-hover bg-white"
                   )}
                 >
                   {isSelected && <CheckIcon />}

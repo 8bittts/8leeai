@@ -44,13 +44,13 @@ export function FigmooStepContent({
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       {/* Left Panel - Section Builder */}
-      <Card className="border-gray-200 bg-white shadow-sm">
+      <Card className="border-figmoo-border bg-white shadow-sm">
         <CardContent className="p-8">
           {/* Header with Progress */}
           <div className="mb-6 flex items-start justify-between">
             <div>
               <h1 className="text-2xl font-bold text-figmoo-text">Homepage Content</h1>
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-1 text-sm text-figmoo-muted">
                 This is just a starting point. You can add more sections after creating your site.
               </p>
             </div>
@@ -72,7 +72,7 @@ export function FigmooStepContent({
 
           {/* Add a Section */}
           <div className="mb-6">
-            <p className="mb-3 text-sm font-medium text-gray-700">Add a Section</p>
+            <p className="mb-3 text-sm font-medium text-figmoo-text">Add a Section</p>
             <div className="flex flex-wrap gap-2">
               {additionalSections.map((section) => {
                 const isSelected = state.enabledSections.includes(section.id)
@@ -81,18 +81,18 @@ export function FigmooStepContent({
                     key={section.id}
                     type="button"
                     onClick={() => toggleSection(section.id)}
-                    className="focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-full"
+                    className="focus:outline-none focus:ring-2 focus:ring-figmoo-accent focus:ring-offset-2 rounded-full"
                   >
                     <Badge
                       variant="outline"
                       className={cn(
                         "cursor-pointer px-3 py-1.5 text-sm transition-all",
                         isSelected
-                          ? "border-violet-600 bg-violet-50 text-violet-700"
-                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                          ? "border-figmoo-accent bg-figmoo-accent-light text-figmoo-accent-hover"
+                          : "border-figmoo-border bg-white text-figmoo-muted hover:border-figmoo-border-hover"
                       )}
                     >
-                      <span className="mr-1 text-gray-600">+</span>
+                      <span className="mr-1 text-figmoo-muted">+</span>
                       {section.name}
                     </Badge>
                   </button>
@@ -108,20 +108,20 @@ export function FigmooStepContent({
             <button
               type="button"
               onClick={onStartOver}
-              className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-sm"
+              className="text-sm font-medium text-figmoo-muted transition-colors hover:text-figmoo-text focus:outline-none focus:ring-2 focus:ring-figmoo-accent focus:ring-offset-2 rounded-sm"
             >
               Start Over
             </button>
 
             <div className="flex items-center gap-4">
-              <Button variant="ghost" onClick={onBack} className="text-gray-600">
+              <Button variant="ghost" onClick={onBack} className="text-figmoo-muted">
                 <ArrowLeftIcon />
                 Back
               </Button>
 
               <Button
                 onClick={onNext}
-                className="rounded-lg bg-violet-600 text-white hover:bg-violet-700"
+                className="rounded-lg bg-figmoo-accent text-white hover:bg-figmoo-accent-hover"
               >
                 Design
                 <ArrowRightIcon />
@@ -158,20 +158,20 @@ function SectionToggle({
     <div
       className={cn(
         "flex items-center gap-3 rounded-lg p-3 transition-all",
-        enabled ? "bg-gray-50" : "bg-white opacity-60"
+        enabled ? "bg-figmoo-surface" : "bg-white opacity-60"
       )}
     >
       <Checkbox
         id={`section-${id}`}
         checked={enabled}
         onCheckedChange={onToggle}
-        className="border-gray-300 data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600"
+        className="border-figmoo-border-hover data-[state=checked]:border-figmoo-accent data-[state=checked]:bg-figmoo-accent"
       />
       <Label
         htmlFor={`section-${id}`}
         className={cn(
           "cursor-pointer text-sm font-medium",
-          enabled ? "text-figmoo-text" : "text-gray-600"
+          enabled ? "text-figmoo-text" : "text-figmoo-muted"
         )}
       >
         {name}

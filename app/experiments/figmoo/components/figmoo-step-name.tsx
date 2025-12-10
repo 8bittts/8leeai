@@ -20,7 +20,7 @@ export function FigmooStepName({ state, onUpdate }: StepNameProps) {
 
   return (
     <div className="space-y-3">
-      <Label htmlFor="site-name" className="text-sm font-medium text-gray-700">
+      <Label htmlFor="site-name" className="text-sm font-medium text-figmoo-text">
         {label}
       </Label>
       <Input
@@ -30,7 +30,7 @@ export function FigmooStepName({ state, onUpdate }: StepNameProps) {
         onChange={(e) => onUpdate({ siteName: e.target.value })}
         placeholder={placeholder}
         maxLength={100}
-        className="h-12 rounded-lg border-gray-200 bg-gray-50 px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
+        className="h-12 rounded-lg border-figmoo-border bg-figmoo-surface px-4 text-figmoo-text placeholder:text-figmoo-muted focus:border-figmoo-accent focus:ring-figmoo-accent"
       />
     </div>
   )

@@ -27,7 +27,7 @@ export function SecureExternalLink({
         e.preventDefault()
         openExternalLink(url)
       }}
-      className={`hover:text-green-400 hover:bg-green-500/10 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black ${className}`}
+      className={`hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg ${className}`}
       aria-label={`${name} (opens in new tab)`}
     >
       {renderTextWithUnderlinedWord(name, linkWord)}

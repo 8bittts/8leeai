@@ -19,41 +19,41 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
   const enabledSectionData = SECTIONS.filter((s) => state.enabledSections.includes(s.id))
 
   return (
-    <Card className="overflow-hidden border-gray-200 bg-white shadow-lg">
+    <Card className="overflow-hidden border-figmoo-border bg-white shadow-lg">
       {/* Browser Chrome */}
-      <div className="flex items-center gap-3 border-b border-gray-200 bg-gray-100 px-4 py-3">
+      <div className="flex items-center gap-3 border-b border-figmoo-border bg-figmoo-surface-hover px-4 py-3">
         <div className="flex gap-2">
           <button
             type="button"
-            className="text-gray-600 hover:text-gray-800"
+            className="text-figmoo-muted hover:text-figmoo-text"
             aria-label="Go back"
           >
             <ChevronLeftIcon />
           </button>
           <button
             type="button"
-            className="text-gray-600 hover:text-gray-800"
+            className="text-figmoo-muted hover:text-figmoo-text"
             aria-label="Go forward"
           >
             <ChevronRightIcon />
           </button>
         </div>
 
-        <div className="flex-1 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-center text-sm text-gray-600">
+        <div className="flex-1 rounded-full border border-figmoo-border bg-white px-4 py-1.5 text-center text-sm text-figmoo-muted">
           example.com
         </div>
 
         <div className="flex gap-2">
           <button
             type="button"
-            className="text-gray-600 hover:text-gray-800"
+            className="text-figmoo-muted hover:text-figmoo-text"
             aria-label="Add bookmark"
           >
             <PlusIcon />
           </button>
           <button
             type="button"
-            className="text-gray-600 hover:text-gray-800"
+            className="text-figmoo-muted hover:text-figmoo-text"
             aria-label="Bookmark"
           >
             <BookmarkIcon />
@@ -74,14 +74,14 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
         }
       >
         {/* Navigation Preview */}
-        <nav className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+        <nav className="flex items-center justify-between border-b border-figmoo-surface px-6 py-4">
           <span className="font-semibold text-[var(--preview-primary)]">
             {state.siteName || "Your Site"}
           </span>
           <div className="hidden sm:flex sm:items-center sm:gap-4 text-sm">
-            <span className="text-gray-600">Features</span>
-            <span className="text-gray-600">Another One</span>
-            <span className="text-gray-600">Team</span>
+            <span className="text-figmoo-muted">Features</span>
+            <span className="text-figmoo-muted">Another One</span>
+            <span className="text-figmoo-muted">Team</span>
             <span className="rounded-full border border-[var(--preview-accent)] px-3 py-1 text-xs text-[var(--preview-accent)]">
               Learn More
             </span>
@@ -98,7 +98,7 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
           ))}
 
           {enabledSectionData.length === 0 && (
-            <div className="py-12 text-center text-gray-600">
+            <div className="py-12 text-center text-figmoo-muted">
               Select sections to preview your website
             </div>
           )}
@@ -124,7 +124,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
                 Welcome to Your Beautiful{" "}
                 <span className="text-[var(--preview-accent)]">new Website</span>
               </h1>
-              <p className="mb-6 text-gray-600">
+              <p className="mb-6 text-figmoo-muted">
                 Tell your visitors more about what you do and why they should choose you.
               </p>
               <div className="flex gap-3">
@@ -143,9 +143,9 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
 
     case "logos":
       return (
-        <div className="border-y border-gray-100 py-6 text-center">
-          <p className="mb-4 text-xs text-gray-600">Trusted by imaginary Companies</p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+        <div className="border-y border-figmoo-surface py-6 text-center">
+          <p className="mb-4 text-xs text-figmoo-muted">Trusted by imaginary Companies</p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-figmoo-muted">
             <span>Podium</span>
             <span>M.C.P.</span>
             <span>EPISM</span>
@@ -160,7 +160,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
       return (
         <div className="py-8">
           <h2 className="mb-2 text-xl font-bold text-[var(--preview-primary)]">Grid</h2>
-          <p className="mb-6 text-sm text-gray-600">
+          <p className="mb-6 text-sm text-figmoo-muted">
             Great for displaying multiple features and things like that.
           </p>
           <div className="h-24 rounded-lg bg-[var(--preview-accent)]" />
@@ -176,7 +176,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
               <div key={`team-${i}`} className="text-center">
                 <div className="mx-auto mb-2 h-16 w-16 rounded-full bg-[var(--preview-accent)]/30" />
                 <p className="text-sm font-medium text-[var(--preview-primary)]">Team Member</p>
-                <p className="text-xs text-gray-600">Role</p>
+                <p className="text-xs text-figmoo-muted">Role</p>
               </div>
             ))}
           </div>
@@ -188,9 +188,9 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
         <div className="py-8">
           <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">Get in Touch</h2>
           <div className="max-w-sm space-y-3">
-            <div className="h-10 rounded-lg bg-gray-100" />
-            <div className="h-10 rounded-lg bg-gray-100" />
-            <div className="h-24 rounded-lg bg-gray-100" />
+            <div className="h-10 rounded-lg bg-figmoo-surface-hover" />
+            <div className="h-10 rounded-lg bg-figmoo-surface-hover" />
+            <div className="h-24 rounded-lg bg-figmoo-surface-hover" />
             <div className="h-10 rounded-lg bg-[var(--preview-accent)]" />
           </div>
         </div>
@@ -203,13 +203,13 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
           <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">Pricing</h2>
           <div className="grid grid-cols-3 gap-4">
             {["Basic", "Pro", "Enterprise"].map((plan) => (
-              <div key={plan} className="rounded-lg border border-gray-200 p-4 text-center">
+              <div key={plan} className="rounded-lg border border-figmoo-border p-4 text-center">
                 <p className="text-sm font-medium text-[var(--preview-primary)]">{plan}</p>
                 <p className="my-2 text-2xl font-bold text-[var(--preview-accent)]">$99</p>
                 <div className="space-y-1">
-                  <div className="h-2 rounded bg-gray-100" />
-                  <div className="h-2 rounded bg-gray-100" />
-                  <div className="h-2 rounded bg-gray-100" />
+                  <div className="h-2 rounded bg-figmoo-surface-hover" />
+                  <div className="h-2 rounded bg-figmoo-surface-hover" />
+                  <div className="h-2 rounded bg-figmoo-surface-hover" />
                 </div>
               </div>
             ))}
@@ -223,15 +223,15 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
       return (
         <div className="py-8">
           <h2 className="mb-4 text-xl font-bold text-[var(--preview-primary)]">What People Say</h2>
-          <div className="rounded-lg border border-gray-100 bg-gray-50 p-6">
-            <p className="mb-4 italic text-gray-600">
+          <div className="rounded-lg border border-figmoo-surface bg-figmoo-surface p-6">
+            <p className="mb-4 italic text-figmoo-muted">
               "This is an amazing product that has changed how we work!"
             </p>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-[var(--preview-accent)]/30" />
               <div>
                 <p className="text-sm font-medium text-[var(--preview-primary)]">Happy Customer</p>
-                <p className="text-xs text-gray-600">CEO, Company</p>
+                <p className="text-xs text-figmoo-muted">CEO, Company</p>
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
           </h2>
           <div className="space-y-3">
             {["How does it work?", "What's included?", "Can I cancel?"].map((q) => (
-              <div key={q} className="rounded-lg border border-gray-100 bg-gray-50 p-4">
+              <div key={q} className="rounded-lg border border-figmoo-surface bg-figmoo-surface p-4">
                 <p className="text-sm font-medium text-[var(--preview-primary)]">{q}</p>
               </div>
             ))}
@@ -266,7 +266,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
             ].map((stat) => (
               <div key={stat.label}>
                 <p className="text-2xl font-bold text-[var(--preview-accent)]">{stat.value}</p>
-                <p className="text-xs text-gray-600">{stat.label}</p>
+                <p className="text-xs text-figmoo-muted">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -276,7 +276,7 @@ function PreviewSection({ sectionId }: { sectionId: string }) {
     default:
       return (
         <div className="py-8">
-          <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--preview-accent)]/10 text-sm text-gray-600">
+          <div className="flex h-32 items-center justify-center rounded-lg bg-[var(--preview-accent)]/10 text-sm text-figmoo-muted">
             {sectionId.replace(/-/g, " ")} section
           </div>
         </div>

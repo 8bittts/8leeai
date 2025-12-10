@@ -51,9 +51,6 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
     root.style.setProperty("--theme-accent", theme.colors.accent)
     root.style.setProperty("--theme-muted", theme.colors.muted)
     root.style.setProperty("--theme-border", theme.colors.border)
-    root.style.setProperty("--theme-success", theme.colors.success)
-    root.style.setProperty("--theme-error", theme.colors.error)
-    root.style.setProperty("--theme-warning", theme.colors.warning)
 
     // Typography
     root.style.setProperty("--theme-font-primary", theme.fonts.primary)

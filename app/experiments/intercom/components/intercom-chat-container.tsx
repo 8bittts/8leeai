@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import type { ChatMessage } from "@/app/experiments/intercom/lib/intercom-types"
-import { TERMINAL_CONTAINER_SHADOW } from "@/lib/themes/presets"
 import { MatrixBackground } from "@/components/matrix-background"
 import { ChatHistory } from "./intercom-chat-history"
 import { ChatInput } from "./intercom-chat-input"
@@ -215,14 +214,13 @@ export function IntercomChatContainer() {
   }, [])
 
   return (
-    <main className="min-h-screen w-full bg-black text-green-500 font-mono relative flex items-center justify-center px-8 py-8">
+    <main className="min-h-screen w-full bg-theme-bg text-theme-primary font-mono relative flex items-center justify-center px-8 py-8">
       {/* Matrix background effect */}
       <MatrixBackground />
 
       {/* Terminal window container - wide with minimal vertical spacing */}
       <div
-        className="relative z-10 w-full h-[calc(100vh-64px)] border-2 border-green-500/30 rounded-lg bg-black flex flex-col overflow-hidden"
-        style={{ boxShadow: TERMINAL_CONTAINER_SHADOW }}
+        className="relative z-10 w-full h-[calc(100vh-4rem)] border-2 border-theme-primary/30 rounded-lg bg-theme-bg flex flex-col overflow-hidden shadow-[var(--terminal-glow)]"
         onClick={handleMainClick}
       >
         {/* Intercom Header with ASCII Art */}

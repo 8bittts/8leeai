@@ -5,16 +5,16 @@ import Link from "next/link"
  */
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-figmoo-surface flex items-center justify-center px-4">
       <div className="text-center">
-        <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Page not found</h2>
-        <p className="text-gray-600 mb-8">
+        <h1 className="text-6xl font-bold text-figmoo-text mb-4">404</h1>
+        <h2 className="text-2xl font-semibold text-figmoo-text mb-2">Page not found</h2>
+        <p className="text-figmoo-muted mb-8">
           The page you're looking for doesn't exist or has been moved.
         </p>
         <Link
           href="/experiments/figmoo"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-figmoo-accent text-white font-medium rounded-lg hover:bg-figmoo-accent-hover transition-colors"
         >
           <svg
             className="w-4 h-4"

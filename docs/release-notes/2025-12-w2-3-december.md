@@ -9,6 +9,62 @@
 
 ## December 10, 2025
 
+### Experiment Theme Variable Migration
+
+Complete migration of all experiment hardcoded colors to theme CSS variables for full design system compliance.
+
+**Intercom Experiment (10 files updated):**
+
+All `green-*`, `black`, `red-*` colors converted to theme variables:
+- `green-500` -> `theme-primary`
+- `green-400` -> `theme-accent`
+- `green-700` -> `theme-secondary`
+- `black`/`bg-black` -> `theme-bg`
+- `red-500`/`red-900` -> `destructive`
+- `gray-400`/`gray-500` -> `theme-muted`
+
+Files: `intercom-chat-container.tsx`, `intercom-chat-input.tsx`, `intercom-message-bubble.tsx`, `intercom-suggestion-bar.tsx`, `intercom-header.tsx`, `intercom-contact-form.tsx`, `intercom-ticket-form.tsx`, `intercom-boot-sequence.tsx`, `intercom-secure-external-link.tsx`, `intercom-ai-response-viewer.tsx`, `intercom-command-prompt.tsx`, `intercom-cv-content.tsx`, `intercom-terminal-container.tsx`, `intercom-not-found.tsx`
+
+**Zendesk Experiment (10 files updated):**
+
+Identical conversions to Intercom (mirrored component structure).
+
+**New CSS Variables Added (`globals.css`):**
+
+```css
+/* Terminal container glow (Intercom/Zendesk experiments) */
+--terminal-glow: 0 -10px 40px -5px rgba(34, 197, 94, 0.3), ...;
+
+/* Figmoo theme variables */
+--color-figmoo-accent: #7c3aed;
+--color-figmoo-accent-hover: #6d28d9;
+--color-figmoo-accent-light: #ede9fe;
+--color-figmoo-muted: #6b7280;
+--color-figmoo-border: #e5e7eb;
+--color-figmoo-border-hover: #d1d5db;
+--color-figmoo-surface: #f9fafb;
+--color-figmoo-surface-hover: #f3f4f6;
+```
+
+**Shadow System Update:**
+
+Chat container `boxShadow` inline style replaced with Tailwind arbitrary value:
+- Before: `style={{ boxShadow: TERMINAL_CONTAINER_SHADOW }}`
+- After: `className="shadow-[var(--terminal-glow)]"`
+- `TERMINAL_CONTAINER_SHADOW` export removed from presets.ts (orphaned)
+
+**Unused CSS Variables Removed (`theme-context.tsx`):**
+- `--theme-success`
+- `--theme-error`
+- `--theme-warning`
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 65 files checked, 2 auto-fixed
+- Tests: 92 tests, 293 assertions
+
+---
+
 ### Documentation Audit and Consolidation
 
 Comprehensive audit of all project documentation to eliminate duplication and establish clear separation of concerns.

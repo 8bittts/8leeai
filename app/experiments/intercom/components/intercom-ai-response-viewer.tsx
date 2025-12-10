@@ -63,7 +63,7 @@ export function AIResponseViewer({
 
   return (
     <section
-      className="mb-8 p-4 border border-green-500 rounded"
+      className="mb-8 p-4 border border-theme-primary rounded"
       aria-label="AI Response Suggestions"
     >
       <div className="flex justify-between items-center mb-4">
@@ -71,17 +71,17 @@ export function AIResponseViewer({
         <button
           type="button"
           onClick={onClose}
-          className="text-green-500 hover:text-green-400 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+          className="text-theme-primary hover:text-theme-accent text-sm font-bold focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
           aria-label="Close AI suggestions"
         >
           [close]
         </button>
       </div>
 
-      <div className="bg-black border border-green-500 rounded p-3 mb-4">
-        <p className="text-xs text-gray-400 mb-2">Ticket #{ticketId}</p>
+      <div className="bg-theme-bg border border-theme-primary rounded p-3 mb-4">
+        <p className="text-xs text-theme-muted mb-2">Ticket #{ticketId}</p>
         <p className="text-sm font-bold">Subject: {subject}</p>
-        <p className="text-xs text-gray-400 mt-2">
+        <p className="text-xs text-theme-muted mt-2">
           {description.substring(0, 100)}
           {description.length > 100 ? "..." : ""}
         </p>
@@ -97,7 +97,7 @@ export function AIResponseViewer({
               id="ai-tone"
               value={tone}
               onChange={(e) => setTone(e.target.value)}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+              className="w-full bg-theme-bg border border-theme-primary text-theme-primary px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
               disabled={isLoading}
             >
               <option value="professional">Professional</option>
@@ -115,7 +115,7 @@ export function AIResponseViewer({
               id="ai-count"
               value={responseCount}
               onChange={(e) => setResponseCount(Number.parseInt(e.target.value, 10))}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+              className="w-full bg-theme-bg border border-theme-primary text-theme-primary px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
               disabled={isLoading}
             >
               <option value={1}>1</option>
@@ -131,14 +131,14 @@ export function AIResponseViewer({
           type="button"
           onClick={generateSuggestions}
           disabled={isLoading}
-          className="w-full bg-green-500 text-black px-3 py-1 text-sm font-bold hover:bg-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-theme-primary text-theme-bg px-3 py-1 text-sm font-bold hover:bg-theme-accent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? "Generating..." : "Generate Suggestions"}
         </button>
       </div>
 
       {error && (
-        <div className="text-sm p-2 border border-red-500 text-red-500 bg-black rounded mb-4">
+        <div className="text-sm p-2 border border-destructive text-destructive bg-theme-bg rounded mb-4">
           {error}
         </div>
       )}
@@ -146,17 +146,17 @@ export function AIResponseViewer({
       {suggestions.length > 0 && (
         <div className="space-y-3">
           {suggestions.map((suggestion, index) => (
-            <div key={index} className="bg-black border border-green-500 rounded p-3 text-sm">
+            <div key={index} className="bg-theme-bg border border-theme-primary rounded p-3 text-sm">
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-green-500">Option {index + 1}</p>
-                <span className="text-xs text-gray-400">
+                <p className="font-bold text-theme-primary">Option {index + 1}</p>
+                <span className="text-xs text-theme-muted">
                   Confidence: {Math.round(suggestion.confidence * 100)}%
                 </span>
               </div>
 
-              <p className="mb-2 text-green-400">{suggestion.response}</p>
+              <p className="mb-2 text-theme-accent">{suggestion.response}</p>
 
-              <p className="text-xs text-gray-400 italic">Why: {suggestion.reasoning}</p>
+              <p className="text-xs text-theme-muted italic">Why: {suggestion.reasoning}</p>
 
               <div className="mt-2 flex gap-2">
                 <button
@@ -164,7 +164,7 @@ export function AIResponseViewer({
                   onClick={() => {
                     navigator.clipboard.writeText(suggestion.response)
                   }}
-                  className="text-xs px-2 py-1 border border-green-500 text-green-500 hover:bg-green-500 hover:text-black rounded"
+                  className="text-xs px-2 py-1 border border-theme-primary text-theme-primary hover:bg-theme-primary hover:text-theme-bg rounded"
                 >
                   Copy
                 </button>
@@ -175,7 +175,7 @@ export function AIResponseViewer({
                       "Send to Intercom functionality would be implemented here with actual ticket update API"
                     )
                   }}
-                  className="text-xs px-2 py-1 border border-green-500 text-green-500 hover:bg-green-500 hover:text-black rounded"
+                  className="text-xs px-2 py-1 border border-theme-primary text-theme-primary hover:bg-theme-primary hover:text-theme-bg rounded"
                 >
                   Use
                 </button>
@@ -186,7 +186,7 @@ export function AIResponseViewer({
       )}
 
       {!isLoading && suggestions.length === 0 && !error && (
-        <p className="text-green-500 text-sm text-center py-4">
+        <p className="text-theme-primary text-sm text-center py-4">
           Click "Generate Suggestions" to see AI-powered response options
         </p>
       )}

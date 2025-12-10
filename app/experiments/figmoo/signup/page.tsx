@@ -37,16 +37,16 @@ export default function SignUpPage() {
       <FigmooHeader />
 
       <main id="main-content" className="mx-auto max-w-md px-4 py-16">
-        <Card className="border-gray-200 bg-white shadow-sm">
+        <Card className="border-figmoo-border bg-white shadow-sm">
           <CardContent className="p-8">
             <h1 className="mb-2 text-2xl font-bold text-figmoo-text">Sign up for Figmoo</h1>
-            <p className="mb-8 text-gray-600">Get started for free. No credit card required.</p>
+            <p className="mb-8 text-figmoo-muted">Get started for free. No credit card required.</p>
 
             {/* Google Sign In */}
             <Button
               variant="outline"
               onClick={handleGoogleSignIn}
-              className="w-full justify-center gap-3 rounded-lg border-gray-200 py-6 text-figmoo-text hover:bg-gray-50"
+              className="w-full justify-center gap-3 rounded-lg border-figmoo-border py-6 text-figmoo-text hover:bg-figmoo-surface"
             >
               <GoogleIcon />
               Continue with Google
@@ -55,7 +55,7 @@ export default function SignUpPage() {
             {/* Divider */}
             <div className="relative my-6">
               <Separator />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-600">
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-figmoo-muted">
                 or
               </span>
             </div>
@@ -63,7 +63,7 @@ export default function SignUpPage() {
             {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                <Label htmlFor="email" className="text-sm font-medium text-figmoo-text">
                   Email
                 </Label>
                 <Input
@@ -73,12 +73,12 @@ export default function SignUpPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   required
-                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
+                  className="h-12 rounded-lg border-figmoo-border bg-white px-4 text-figmoo-text placeholder:text-figmoo-muted focus:border-figmoo-accent focus:ring-figmoo-accent"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                <Label htmlFor="password" className="text-sm font-medium text-figmoo-text">
                   Password
                 </Label>
                 <Input
@@ -89,32 +89,32 @@ export default function SignUpPage() {
                   placeholder="••••••••••"
                   required
                   minLength={8}
-                  className="h-12 rounded-lg border-gray-200 bg-white px-4 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:ring-violet-500"
+                  className="h-12 rounded-lg border-figmoo-border bg-white px-4 text-figmoo-text placeholder:text-figmoo-muted focus:border-figmoo-accent focus:ring-figmoo-accent"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full rounded-lg bg-violet-600 py-6 text-base font-medium text-white hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full rounded-lg bg-figmoo-accent py-6 text-base font-medium text-white hover:bg-figmoo-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
 
             {/* Terms */}
-            <p className="mt-6 text-center text-xs text-gray-600">
+            <p className="mt-6 text-center text-xs text-figmoo-muted">
               By clicking the "Create Account" or "Continue with Google" button, you agree to the{" "}
               <Link
                 href="/experiments/figmoo"
-                className="font-medium text-gray-700 hover:text-violet-600"
+                className="font-medium text-figmoo-text hover:text-figmoo-accent"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
                 href="/experiments/figmoo"
-                className="font-medium text-gray-700 hover:text-violet-600"
+                className="font-medium text-figmoo-text hover:text-figmoo-accent"
               >
                 Privacy Policy
               </Link>
@@ -122,11 +122,11 @@ export default function SignUpPage() {
             </p>
 
             {/* Login Link */}
-            <p className="mt-6 text-center text-sm text-gray-600">
+            <p className="mt-6 text-center text-sm text-figmoo-muted">
               Already have an account?{" "}
               <Link
                 href="/experiments/figmoo"
-                className="font-medium text-gray-700 hover:text-violet-600"
+                className="font-medium text-figmoo-text hover:text-figmoo-accent"
               >
                 Log in
               </Link>

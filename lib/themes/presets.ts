@@ -140,17 +140,6 @@ export const createMultiColorOffsetShadows = (
 })
 
 // ============================================
-// TERMINAL EXPERIMENT SHADOWS
-// ============================================
-
-/**
- * Terminal container ambient glow - for Intercom/Zendesk experiments
- * Creates a soft green glow effect around the terminal window
- */
-export const TERMINAL_CONTAINER_SHADOW =
-  "0 -10px 40px -5px rgba(34,197,94,0.3), 0 10px 40px -5px rgba(34,197,94,0.3), 0 0 60px rgba(34,197,94,0.15)"
-
-// ============================================
 // ANIMATION PRESETS
 // ============================================
 

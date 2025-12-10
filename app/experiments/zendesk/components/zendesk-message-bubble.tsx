@@ -15,7 +15,7 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
   return (
     <div className={`mb-3 font-mono text-sm ${isSystem ? "opacity-60" : ""}`}>
       {isUser && (
-        <div className="text-green-500 mb-1">
+        <div className="text-theme-primary mb-1">
           {"> "}
           {message.content}
         </div>
@@ -23,7 +23,7 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
 
       {!(isUser || isError || isSystem) && (
         <div
-          className={`text-green-500 whitespace-pre-wrap break-words ${
+          className={`text-theme-primary whitespace-pre-wrap break-words ${
             message.metadata?.isStreaming ? "animate-pulse" : ""
           }`}
         >
@@ -32,7 +32,7 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
             <button
               type="button"
               onClick={onCopy}
-              className="ml-2 text-green-400 hover:text-green-300 text-xs opacity-50 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
+              className="ml-2 text-theme-accent hover:text-theme-fg text-xs opacity-50 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
               title="Copy response"
               aria-label="Copy response"
             >
@@ -40,12 +40,12 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
             </button>
           )}
           {message.metadata?.executionTime && (
-            <div className="text-green-400 text-xs opacity-60 mt-1">
+            <div className="text-theme-accent text-xs opacity-60 mt-1">
               ⟳ {message.metadata.executionTime}ms
             </div>
           )}
           {message.metadata?.recordCount !== undefined && (
-            <div className="text-green-400 text-xs opacity-60">
+            <div className="text-theme-accent text-xs opacity-60">
               ◻ {message.metadata.recordCount} results
             </div>
           )}
@@ -53,13 +53,13 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
       )}
 
       {isError && (
-        <div className="text-red-500 border border-red-500/50 rounded px-3 py-2 bg-red-900/20">
+        <div className="text-destructive border border-destructive/50 rounded px-3 py-2 bg-destructive/20">
           ❌ Error: {message.content}
         </div>
       )}
 
       {isSystem && (
-        <div className="text-green-400 border border-green-500/30 rounded px-3 py-2 bg-green-900/10">
+        <div className="text-theme-accent border border-theme-primary/30 rounded px-3 py-2 bg-theme-primary/10">
           ℹ {message.content}
         </div>
       )}

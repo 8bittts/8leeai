@@ -93,13 +93,13 @@ function OnboardingContent() {
           />
         ) : (
           <div className="mx-auto max-w-xl">
-            <Card className="border-gray-200 bg-white shadow-sm">
+            <Card className="border-figmoo-border bg-white shadow-sm">
               <CardContent className="p-8">
                 {/* Header with Progress */}
                 <div className="mb-6 flex items-start justify-between">
                   <div>
                     <h1 className="text-2xl font-bold text-figmoo-text">{currentStep?.title}</h1>
-                    <p className="mt-2 text-gray-600">{currentStep?.description}</p>
+                    <p className="mt-2 text-figmoo-muted">{currentStep?.description}</p>
                   </div>
                   <FigmooProgressBar currentStep={state.step} totalSteps={STEPS.length} />
                 </div>
@@ -122,15 +122,15 @@ function OnboardingContent() {
                 )}
 
                 {/* Navigation */}
-                <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
-                  <Button variant="ghost" onClick={handleBack} className="text-gray-600">
+                <div className="mt-8 flex items-center justify-between border-t border-figmoo-surface pt-6">
+                  <Button variant="ghost" onClick={handleBack} className="text-figmoo-muted">
                     <ArrowLeftIcon />
                     Back
                   </Button>
 
                   <Button
                     onClick={handleNext}
-                    className="rounded-lg bg-violet-600 text-white hover:bg-violet-700"
+                    className="rounded-lg bg-figmoo-accent text-white hover:bg-figmoo-accent-hover"
                   >
                     {currentStep?.nextButtonLabel}
                     <ArrowRightIcon />
@@ -156,7 +156,7 @@ export default function OnboardingPage() {
 function OnboardingLoading() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-figmoo-bg">
-      <div className="text-gray-600">Loading...</div>
+      <div className="text-figmoo-muted">Loading...</div>
     </div>
   )
 }

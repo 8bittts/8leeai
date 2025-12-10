@@ -252,7 +252,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
             <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
-                className="hover:text-green-400 transition-colors underline"
+                className="hover:text-theme-accent transition-colors underline"
               >
                 jleekun@gmail.com
               </a>
@@ -286,7 +286,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         {/* Command Prompt */}
         <nav className="relative z-10" aria-label="Terminal commands">
           <form className="flex items-center gap-1" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="terminal-input" className="text-green-500">
+            <label htmlFor="terminal-input" className="text-theme-primary">
               $:
             </label>
             <input
@@ -294,7 +294,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               id="terminal-input"
               type="text"
               inputMode="text"
-              className="flex-1 bg-transparent text-green-500 placeholder:text-gray-500 outline-none"
+              className="flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none"
               placeholder='Hit "return" for more projects, "help" for all commands'
               value={command}
               onChange={(e) => setCommand(e.target.value)}
@@ -305,7 +305,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               aria-describedby="command-instructions"
             />
           </form>
-          <p id="command-instructions" className="text-xs text-gray-500 mt-2">
+          <p id="command-instructions" className="text-xs text-theme-muted mt-2">
             Commands: email, help, clear
           </p>
         </nav>

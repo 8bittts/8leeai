@@ -11,10 +11,10 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       type="button"
       onClick={onSelect}
       className={cn(
-        "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2",
+        "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left focus:outline-none focus:ring-2 focus:ring-figmoo-accent focus:ring-offset-2",
         selected
-          ? "border-violet-600 bg-violet-50"
-          : "border-gray-200 bg-white hover:border-violet-300"
+          ? "border-figmoo-accent bg-figmoo-accent-light"
+          : "border-figmoo-border bg-white hover:border-figmoo-accent-light"
       )}
       aria-pressed={selected}
       aria-label={`Select ${category.title} category`}
@@ -32,12 +32,12 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       {/* Content */}
       <div className="min-w-0 flex-1">
         <h3 className="font-semibold text-figmoo-text">{category.title}</h3>
-        <p className="truncate text-sm text-gray-600">{category.description}</p>
+        <p className="truncate text-sm text-figmoo-muted">{category.description}</p>
       </div>
 
       {/* Selection indicator */}
       {selected && (
-        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-600">
+        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-figmoo-accent">
           <CheckIcon />
         </div>
       )}
@@ -48,7 +48,7 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
 function getCategoryIconStyle(icon: string): string {
   switch (icon) {
     case "briefcase":
-      return "bg-violet-100 text-violet-600"
+      return "bg-figmoo-accent-light text-figmoo-accent"
     case "user":
       return "bg-orange-100 text-orange-600"
     case "calendar":
@@ -56,7 +56,7 @@ function getCategoryIconStyle(icon: string): string {
     case "sparkles":
       return "bg-pink-100 text-pink-600"
     default:
-      return "bg-gray-100 text-gray-600"
+      return "bg-figmoo-surface-hover text-figmoo-muted"
   }
 }
 

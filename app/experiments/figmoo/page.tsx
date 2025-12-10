@@ -32,7 +32,7 @@ export default function FigmooLandingPage() {
           <h1 className="text-4xl font-bold tracking-tight text-figmoo-text sm:text-5xl lg:text-6xl">
             The Easiest Way To Build a Website.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-figmoo-muted">
             You don&apos;t need any experience to build a beautiful website for yourself, your small
             business, or anything else. Don&apos;t believe us? See for yourself!
           </p>
@@ -40,12 +40,12 @@ export default function FigmooLandingPage() {
 
         {/* Category Selection */}
         <section className="mx-auto mt-12 max-w-xl">
-          <Card className="border-gray-200 bg-white shadow-sm">
+          <Card className="border-figmoo-border bg-white shadow-sm">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold text-figmoo-text">
                 What do you need a website for?
               </h2>
-              <p className="mt-2 text-gray-600">Select the most suitable category below.</p>
+              <p className="mt-2 text-figmoo-muted">Select the most suitable category below.</p>
 
               <div className="mt-8 space-y-3">
                 {MAIN_CATEGORIES.map((category) => (
@@ -75,7 +75,7 @@ export default function FigmooLandingPage() {
 
         {/* Footer */}
         <footer className="mx-auto mt-16 max-w-4xl text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-figmoo-muted">
             Made with Figmoo - A frictionless website builder experiment
           </p>
         </footer>

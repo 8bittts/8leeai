@@ -34,6 +34,11 @@
   --theme-shadow-hover: 0 0 10px rgba(34, 197, 94, 0.3);
   --theme-shadow-active: 0 0 5px rgba(34, 197, 94, 0.5);
 
+  /* Terminal container glow (Intercom/Zendesk experiments) */
+  --terminal-glow:
+    0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3), 0 0 60px
+    rgba(34, 197, 94, 0.15);
+
   /* Theme animation */
   --theme-duration: 150ms;
   --theme-timing: ease-in-out;
@@ -86,6 +91,14 @@
   --color-figmoo-bg: #faf7f4;
   --color-figmoo-text: #2c2c2c;
   --color-figmoo-button: #17161a;
+  --color-figmoo-accent: #7c3aed;
+  --color-figmoo-accent-hover: #6d28d9;
+  --color-figmoo-accent-light: #ede9fe;
+  --color-figmoo-muted: #6b7280;
+  --color-figmoo-border: #e5e7eb;
+  --color-figmoo-border-hover: #d1d5db;
+  --color-figmoo-surface: #f9fafb;
+  --color-figmoo-surface-hover: #f3f4f6;
 
   /* Theme system colors for Tailwind */
   --color-theme-bg: var(--theme-bg);

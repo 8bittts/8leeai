@@ -30,13 +30,13 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
   return (
     <div className="space-y-6">
       {/* AI Generation Card */}
-      <Card className="border-gray-200 bg-gray-50">
+      <Card className="border-figmoo-border bg-figmoo-surface">
         <CardContent className="p-6">
           <div className="mb-4">
             <h3 className="font-semibold text-figmoo-text">
-              Personalize text with AI <span className="font-normal text-gray-600">(Optional)</span>
+              Personalize text with AI <span className="font-normal text-figmoo-muted">(Optional)</span>
             </h3>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-figmoo-muted">
               Enter a brief description of your site content to help the AI generate text for your
               site.
             </p>
@@ -52,13 +52,13 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
               onChange={(e) => onUpdate({ aiDescription: e.target.value })}
               placeholder="My website is about..."
               rows={4}
-              className="w-full resize-none rounded-lg border border-gray-200 bg-white px-4 py-3 text-figmoo-text placeholder:text-gray-500 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              className="w-full resize-none rounded-lg border border-figmoo-border bg-white px-4 py-3 text-figmoo-text placeholder:text-figmoo-muted focus:border-figmoo-accent focus:outline-none focus:ring-2 focus:ring-figmoo-accent/20"
             />
 
             <Button
               onClick={handleGenerate}
               disabled={!state.aiDescription.trim() || isGenerating}
-              className="w-full bg-gray-600 text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full bg-figmoo-muted text-white hover:bg-figmoo-text disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isGenerating ? (
                 <span className="flex items-center justify-center gap-2">
@@ -74,7 +74,7 @@ export function FigmooStepFinal({ state, onUpdate }: StepFinalProps) {
       </Card>
 
       {/* Summary */}
-      <div className="space-y-2 text-sm text-gray-600">
+      <div className="space-y-2 text-sm text-figmoo-muted">
         <p>
           Site Name:{" "}
           <span className="font-medium text-figmoo-text">{state.siteName || "Untitled"}</span>

@@ -104,7 +104,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
 
   return (
     <div
-      className="text-green-500 font-mono"
+      className="text-theme-primary font-mono"
       role="status"
       aria-live="polite"
       aria-label="Boot sequence"

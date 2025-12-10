@@ -8,31 +8,31 @@ export function IntercomHeader() {
   return (
     <div className="w-full">
       {/* macOS-style Window Controls */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center gap-2 border-b border-green-500/30">
+      <div className="px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center gap-2 border-b border-theme-primary/30">
         <button
           type="button"
-          className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-black"
+          className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-theme-bg"
           title="Close"
           aria-label="Close window"
         />
         <button
           type="button"
-          className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black"
+          className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-theme-bg"
           title="Minimize"
           aria-label="Minimize window"
         />
         <button
           type="button"
-          className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black"
+          className="w-3 h-3 rounded-full bg-theme-primary hover:bg-theme-accent transition-colors focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg"
           title="Maximize"
           aria-label="Maximize window"
         />
       </div>
 
       {/* Header Content */}
-      <div className="px-4 sm:px-6 lg:px-8 pb-2 border-b border-green-500/20">
+      <div className="px-4 sm:px-6 lg:px-8 pb-2 border-b border-theme-primary/20">
         {/* ASCII Art Logo */}
-        <pre className="text-green-500 font-mono text-xs md:text-sm leading-tight">
+        <pre className="text-theme-primary font-mono text-xs md:text-sm leading-tight">
           {` __     __   __     ______   ______     ______     ______     ______     __    __
 /\\ \\   /\\ "-.\\ \\   /\\__  _\\ /\\  ___\\   /\\  == \\   /\\  ___\\   /\\  __ \\   /\\ "-./  \\
 \\ \\ \\  \\ \\ \\-.  \\  \\/_/\\ \\/ \\ \\  __\\   \\ \\  __<   \\ \\ \\____  \\ \\ \\/\\ \\  \\ \\ \\-./\\ \\
@@ -42,16 +42,16 @@ export function IntercomHeader() {
 
         {/* Welcome Message */}
         <div className="mt-3 space-y-1 text-sm">
-          <p className="text-green-500">
+          <p className="text-theme-primary">
             Intercom Intelligence Portal - EXPERIMENTAL MODE ACTIVATED
           </p>
-          <p className="text-green-400 opacity-70 text-xs">
+          <p className="text-theme-accent opacity-70 text-xs">
             Ask questions about your support tickets, customers, analytics, and more.
           </p>
         </div>
 
         {/* Quick Tips */}
-        <div className="mt-2 text-xs text-green-400 opacity-50 space-y-0.5">
+        <div className="mt-2 text-xs text-theme-accent opacity-50 space-y-0.5">
           <p>💡 Try: "show open tickets" or "what's our average response time?"</p>
           <p>⌨️ Use ↑↓ for command history • Ctrl+L to clear screen</p>
         </div>

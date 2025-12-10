@@ -39,9 +39,9 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
   ]
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-3 border-t border-green-500/30 bg-black/50">
+    <div className="px-4 sm:px-6 lg:px-8 py-3 border-t border-theme-primary/30 bg-theme-bg/50">
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="text-xs font-semibold text-green-400 opacity-80 tracking-wide">
+        <div className="text-xs font-semibold text-theme-accent opacity-80 tracking-wide">
           ⚡ Quick queries:
         </div>
         {suggestions.map((suggestion) => (
@@ -49,7 +49,7 @@ export function SuggestionBar({ onSuggestionClick }: SuggestionBarProps) {
             type="button"
             key={suggestion.label}
             onClick={() => onSuggestionClick(suggestion.query)}
-            className="group px-3 py-1.5 text-xs border border-green-500/50 rounded-md text-green-500 hover:bg-green-500/10 hover:border-green-500/80 hover:shadow-sm hover:shadow-green-500/20 transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black"
+            className="group px-3 py-1.5 text-xs border border-theme-primary/50 rounded-md text-theme-primary hover:bg-theme-primary/10 hover:border-theme-primary/80 hover:shadow-sm hover:shadow-theme-primary/20 transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-theme-accent focus:ring-offset-2 focus:ring-offset-theme-bg"
             title={suggestion.description}
             aria-label={suggestion.description}
           >
