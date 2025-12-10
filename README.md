@@ -127,7 +127,7 @@ Additional tests exist for archived experimental projects (gitignored).
 - **Language**: [TypeScript 5.9.3](https://www.typescriptlang.org) with strict config + 4 ultra-strict flags
 - **Code Quality**: [Biome 2.3.8](https://biomejs.dev) - 100+ error rules + 5 nursery rules
 - **AI/ML**: [Vercel AI SDK 5.0.108](https://sdk.vercel.ai), [OpenAI SDK 2.0.77](https://github.com/openai/openai-node)
-- **Email**: [Resend 6.5.2](https://resend.com)
+- **Email**: [Resend 6.6.0](https://resend.com)
 - **Test Runner**: Bun native with happy-dom (not Jest/Vitest)
 - **Type Definitions**: `@types/node@24.10.2`, `@types/react@19.2.7`, `@types/react-dom@19.2.3`
 - **Analytics**: [Vercel Analytics 1.6.1](https://vercel.com/analytics) & [Speed Insights 1.3.1](https://vercel.com/docs/speed-insights)
