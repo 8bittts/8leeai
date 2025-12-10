@@ -64,8 +64,10 @@ export function FigmooStepDesign({ state, onUpdate }: StepDesignProps) {
               key={font.id}
               type="button"
               onClick={() => onUpdate({ selectedFont: font.id })}
+              aria-label={`Select ${font.name} font`}
+              aria-pressed={state.selectedFont === font.id}
               className={cn(
-                "rounded-xl border-2 p-4 text-left transition-all",
+                "rounded-xl border-2 p-4 text-left transition-all focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2",
                 state.selectedFont === font.id
                   ? "border-violet-600 bg-violet-50"
                   : "border-gray-200 bg-white hover:border-gray-300"

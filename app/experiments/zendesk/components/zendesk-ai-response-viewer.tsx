@@ -71,7 +71,7 @@ export function AIResponseViewer({
         <button
           type="button"
           onClick={onClose}
-          className="text-green-500 hover:text-green-400 text-sm font-bold"
+          className="text-green-500 hover:text-green-400 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
           aria-label="Close AI suggestions"
         >
           [close]
@@ -97,7 +97,7 @@ export function AIResponseViewer({
               id="ai-tone"
               value={tone}
               onChange={(e) => setTone(e.target.value)}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               disabled={isLoading}
             >
               <option value="professional">Professional</option>
@@ -115,7 +115,7 @@ export function AIResponseViewer({
               id="ai-count"
               value={responseCount}
               onChange={(e) => setResponseCount(Number.parseInt(e.target.value, 10))}
-              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none"
+              className="w-full bg-black border border-green-500 text-green-500 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               disabled={isLoading}
             >
               <option value={1}>1</option>

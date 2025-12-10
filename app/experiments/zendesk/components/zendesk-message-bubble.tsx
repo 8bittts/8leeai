@@ -32,7 +32,7 @@ export function MessageBubble({ message, onCopy }: MessageBubbleProps) {
             <button
               type="button"
               onClick={onCopy}
-              className="ml-2 text-green-400 hover:text-green-300 text-xs opacity-50 hover:opacity-100 transition-opacity"
+              className="ml-2 text-green-400 hover:text-green-300 text-xs opacity-50 hover:opacity-100 transition-opacity focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black rounded-sm"
               title="Copy response"
               aria-label="Copy response"
             >

@@ -3,13 +3,13 @@
  * Uses Tailwind's animate-pulse (2s fade cycle: 100% → 50% → 100% opacity)
  */
 interface CursorProps {
-  /** Color variant: 'theme' uses current theme primary, 'contrast' for light backgrounds (404 page) */
-  variant?: "theme" | "contrast"
+  /** Color variant: 'theme' uses current theme primary, 'green' for terminal experiments, 'contrast' for light backgrounds */
+  variant?: "theme" | "green" | "contrast"
 }
 
 export function Cursor({ variant = "theme" }: CursorProps) {
-  // 'contrast' variant uses black for light backgrounds (e.g., 404 page with white backdrop)
-  const colorClass = variant === "contrast" ? "bg-black" : "bg-theme-primary"
+  const colorClass =
+    variant === "contrast" ? "bg-black" : variant === "green" ? "bg-green-500" : "bg-theme-primary"
 
   return (
     <span

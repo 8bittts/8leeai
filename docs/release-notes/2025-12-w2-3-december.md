@@ -7,6 +7,48 @@
 
 ---
 
+## December 9, 2025 (Design Audit Fixes)
+
+### Comprehensive 11-Point Design Audit
+
+Parallel agent audit identified and fixed multiple design system violations.
+
+**Tailwind v4 Compliance:**
+- Replaced `@apply border-border outline-ring/50` with direct CSS properties
+- Now uses `border-color: var(--color-border)` and `color-mix()` for outline
+
+**Unused Styles Removed:**
+- Removed `--theme-success`, `--theme-error`, `--theme-warning` (unused CSS variables)
+- Removed `.theme-button` class (component no longer in use)
+- Deleted orphaned cursor components and tests from experiments
+
+**Component Consolidation:**
+- Extended shared `Cursor` component with "green" variant for terminal experiments
+- Experiment 404 pages now use shared cursor with "contrast" variant
+- Message bubble components restored with added focus ring accessibility
+
+**Shadow System:**
+- Created `TERMINAL_CONTAINER_SHADOW` preset in `lib/themes/presets.ts`
+- Intercom/Zendesk chat containers now use the shared preset via style prop
+- Eliminates hardcoded rgba shadow values in className
+
+**WCAG/ARIA Fixes:**
+- Added `aria-label` and `aria-pressed` to font selection buttons (figmoo-step-design)
+- Added `aria-label` and `aria-pressed` to category selection buttons (figmoo-step-category)
+- Added focus rings to AI response viewer close buttons and select elements
+- Added focus ring to figmoo category card
+
+**Normalization:**
+- Standardized preview container height to rem units (`h-[31.25rem]`)
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 65 files checked, no issues
+- Tests: 92 tests, 293 assertions
+- Build: Successful (Next.js 16.0.8)
+
+---
+
 ## December 9, 2025 (Package Update)
 
 ### Package Update: resend

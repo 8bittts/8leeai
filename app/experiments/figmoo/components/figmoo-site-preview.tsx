@@ -63,7 +63,7 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
 
       {/* Website Preview Content */}
       <div
-        className="h-[500px] overflow-y-auto bg-[var(--preview-bg)] font-[family-name:var(--preview-font)]"
+        className="h-[31.25rem] overflow-y-auto bg-[var(--preview-bg)] font-[family-name:var(--preview-font)]"
         style={
           {
             "--preview-font": selectedFont?.family || "system-ui",

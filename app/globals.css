@@ -17,9 +17,6 @@
   --theme-accent: #4ade80;
   --theme-muted: #15803d;
   --theme-border: #22c55e;
-  --theme-success: #22c55e;
-  --theme-error: #ef4444;
-  --theme-warning: #eab308;
 
   /* Theme typography */
   --theme-font-primary: var(--font-mono), ui-monospace, monospace;
@@ -122,7 +119,8 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--color-border);
+    outline-color: color-mix(in oklch, var(--color-ring) 50%, transparent);
   }
 }
 
@@ -209,26 +207,6 @@
 [data-theme="8bit"] button {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-}
-
-/* ============================================
-   THEME-AWARE BUTTON UTILITIES
-   Used by theme-switcher and other theme-styled buttons
-   ============================================ */
-
-.theme-button {
-  border-width: var(--theme-border-width);
-  border-style: var(--theme-border-style);
-  border-radius: var(--theme-border-radius);
-  box-shadow: var(--theme-shadow);
-}
-
-.theme-button:hover {
-  box-shadow: var(--theme-shadow-hover);
-}
-
-.theme-button:active {
-  box-shadow: var(--theme-shadow-active);
 }
 
 /* 8-bit scrollbar */

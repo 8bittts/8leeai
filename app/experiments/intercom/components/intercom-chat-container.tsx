@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import type { ChatMessage } from "@/app/experiments/intercom/lib/intercom-types"
+import { TERMINAL_CONTAINER_SHADOW } from "@/lib/themes/presets"
 import { MatrixBackground } from "@/components/matrix-background"
 import { ChatHistory } from "./intercom-chat-history"
 import { ChatInput } from "./intercom-chat-input"
@@ -220,7 +221,8 @@ export function IntercomChatContainer() {
 
       {/* Terminal window container - wide with minimal vertical spacing */}
       <div
-        className="relative z-10 w-full h-[calc(100vh-64px)] border-2 border-green-500/30 rounded-lg bg-black flex flex-col overflow-hidden shadow-[0_-10px_40px_-5px_rgba(34,197,94,0.3),0_10px_40px_-5px_rgba(34,197,94,0.3),0_0_60px_rgba(34,197,94,0.15)]"
+        className="relative z-10 w-full h-[calc(100vh-64px)] border-2 border-green-500/30 rounded-lg bg-black flex flex-col overflow-hidden"
+        style={{ boxShadow: TERMINAL_CONTAINER_SHADOW }}
         onClick={handleMainClick}
       >
         {/* Intercom Header with ASCII Art */}

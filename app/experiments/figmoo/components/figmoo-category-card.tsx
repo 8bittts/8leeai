@@ -11,7 +11,7 @@ export function FigmooCategoryCard({ category, selected, onSelect }: CategoryCar
       type="button"
       onClick={onSelect}
       className={cn(
-        "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left",
+        "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2",
         selected
           ? "border-violet-600 bg-violet-50"
           : "border-gray-200 bg-white hover:border-violet-300"

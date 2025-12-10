@@ -34,6 +34,8 @@ export function FigmooStepCategory({ state, onUpdate }: StepCategoryProps) {
               key={subCategory}
               type="button"
               onClick={() => onUpdate({ subCategory })}
+              aria-label={`Select ${subCategory} category`}
+              aria-pressed={isSelected}
               className="focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded-full"
             >
               <Badge

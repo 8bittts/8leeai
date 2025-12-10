@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-import { Cursor } from "./components/intercom-cursor"
+import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "./hooks/intercom-use-typewriter"
 import { ANIMATION_DELAYS } from "./lib/intercom-utils"
 
@@ -52,12 +52,12 @@ export default function NotFound() {
       <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
         <h1 className="text-6xl font-bold">
           {heading.displayedText}
-          {heading.isTyping && <Cursor variant="black" />}
+          {heading.isTyping && <Cursor variant="contrast" />}
         </h1>
         {showSubtext && (
           <p className="text-sm">
             {subtext.displayedText}
-            {subtext.isTyping && <Cursor variant="black" />}
+            {subtext.isTyping && <Cursor variant="contrast" />}
           </p>
         )}
       </div>
