@@ -158,71 +158,6 @@
 }
 
 /* ============================================
-   8-BIT THEME ANIMATIONS
-   ============================================ */
-
-@keyframes theme-8bit-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes theme-8bit-bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-@keyframes theme-8bit-shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-2px);
-  }
-  75% {
-    transform: translateX(2px);
-  }
-}
-
-@keyframes theme-8bit-glow {
-  0%,
-  100% {
-    box-shadow: 4px 4px 0 var(--theme-primary);
-  }
-  50% {
-    box-shadow:
-      4px 4px 0 var(--theme-accent),
-      0 0 20px var(--theme-accent);
-  }
-}
-
-/* 8-bit cursor blink */
-.animate-8bit-blink {
-  animation: theme-8bit-blink 1s steps(1) infinite;
-}
-
-/* 8-bit bounce effect */
-.animate-8bit-bounce {
-  animation: theme-8bit-bounce 0.5s steps(2) infinite;
-}
-
-/* 8-bit glow pulse */
-.animate-8bit-glow {
-  animation: theme-8bit-glow 2s steps(2) infinite;
-}
-
-/* ============================================
    8-BIT THEME SPECIFIC STYLES
    Applied when data-theme="8bit"
    ============================================ */
@@ -361,10 +296,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fadeIn,
-  .animate-logo-pulse,
-  .animate-8bit-blink,
-  .animate-8bit-bounce,
-  .animate-8bit-glow {
+  .animate-logo-pulse {
     animation: none;
   }
 
@@ -373,7 +305,12 @@
   [data-theme="matrix"] *,
   [data-theme="synthwave"] *,
   [data-theme="cyberpunk"] *,
-  [data-theme="vaporwave"] * {
+  [data-theme="vaporwave"] *,
+  [data-theme="halloween"] *,
+  [data-theme="christmas"] *,
+  [data-theme="ocean"] *,
+  [data-theme="sunset"] *,
+  [data-theme="forest"] * {
     transition: none !important;
   }
 }

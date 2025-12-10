@@ -1,3 +1,4 @@
+import { createSoftShadows, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,12 +25,7 @@ export const sunsetTheme: ThemeDefinition = {
     warning: "#fb8500",
   },
 
-  fonts: {
-    primary: "var(--font-geist-sans), system-ui, sans-serif",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.6",
-  },
+  fonts: FONTS_SANS,
 
   borders: {
     width: "2px",
@@ -37,11 +33,7 @@ export const sunsetTheme: ThemeDefinition = {
     radius: "0.75rem",
   },
 
-  shadows: {
-    default: "0 4px 12px rgba(255, 123, 0, 0.15)",
-    hover: "0 8px 24px rgba(255, 0, 110, 0.25)",
-    active: "0 2px 8px rgba(131, 56, 236, 0.3)",
-  },
+  shadows: createSoftShadows("rgba(255, 123, 0, 0.2)"),
 
   animation: {
     duration: "350ms",

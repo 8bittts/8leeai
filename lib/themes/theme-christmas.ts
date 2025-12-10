@@ -1,3 +1,4 @@
+import { ANIMATION_SMOOTH, BORDERS_ROUNDED, createGlowShadows, FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,30 +25,10 @@ export const christmasTheme: ThemeDefinition = {
     warning: "#ffd700",
   },
 
-  fonts: {
-    primary: "var(--font-mono), ui-monospace, monospace",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.5",
-  },
-
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0.25rem",
-  },
-
-  shadows: {
-    default: "0 0 15px rgba(255, 215, 0, 0.15)",
-    hover: "0 0 20px rgba(196, 30, 58, 0.4), 0 0 30px rgba(255, 215, 0, 0.3)",
-    active: "0 0 10px rgba(196, 30, 58, 0.6), 0 0 15px rgba(255, 215, 0, 0.5)",
-  },
-
-  animation: {
-    duration: "200ms",
-    timing: "ease-in-out",
-    stepped: false,
-  },
+  fonts: FONTS_MONO,
+  borders: BORDERS_ROUNDED,
+  shadows: createGlowShadows("rgba(255, 215, 0, 0.2)", "rgba(196, 30, 58, 0.3)"),
+  animation: ANIMATION_SMOOTH,
 
   metadata: {
     author: "Eight Lee",

@@ -1,3 +1,4 @@
+import { createSoftShadows, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,12 +25,7 @@ export const forestTheme: ThemeDefinition = {
     warning: "#f77f00",
   },
 
-  fonts: {
-    primary: "var(--font-geist-sans), system-ui, sans-serif",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.6",
-  },
+  fonts: FONTS_SANS,
 
   borders: {
     width: "2px",
@@ -37,11 +33,7 @@ export const forestTheme: ThemeDefinition = {
     radius: "0.375rem",
   },
 
-  shadows: {
-    default: "0 4px 12px rgba(29, 53, 87, 0.2)",
-    hover: "0 8px 24px rgba(64, 145, 108, 0.3)",
-    active: "0 2px 8px rgba(45, 106, 79, 0.4)",
-  },
+  shadows: createSoftShadows("rgba(29, 53, 87, 0.2)"),
 
   animation: {
     duration: "250ms",

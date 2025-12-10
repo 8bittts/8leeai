@@ -1,3 +1,4 @@
+import { ANIMATION_INSTANT, BORDERS_SHARP, createOffsetShadows, FONTS_PIXEL } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -11,13 +12,6 @@ import type { ThemeDefinition } from "./types"
  * - #8bac0f: Light green (highlights)
  * - #306230: Dark green (shadows)
  * - #0f380f: Darkest green (text/pixels)
- *
- * Features:
- * - Authentic 4-shade Game Boy palette
- * - Pixel-perfect sharp edges (no border radius)
- * - Monospace font for LCD authenticity
- * - Stepped animations (no smooth transitions)
- * - Hard shadows for LCD depth effect
  */
 export const gameboyTheme: ThemeDefinition = {
   id: "gameboy",
@@ -37,30 +31,10 @@ export const gameboyTheme: ThemeDefinition = {
     warning: "#306230", // Dark green - warning state
   },
 
-  fonts: {
-    primary: "var(--font-geist-mono), 'Courier New', monospace",
-    mono: "var(--font-geist-mono), 'Courier New', monospace",
-    sizeBase: "0.875rem", // Slightly smaller for LCD feel
-    lineHeight: "1.6",
-  },
-
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0", // Pixel-perfect - no rounded corners
-  },
-
-  shadows: {
-    default: "2px 2px 0 #306230", // Dark green offset shadow
-    hover: "3px 3px 0 #0f380f", // Darkest green for hover depth
-    active: "1px 1px 0 #306230", // Pressed state
-  },
-
-  animation: {
-    duration: "0ms", // No smooth animations - instant like LCD
-    timing: "steps(1)", // Stepped transitions
-    stepped: true,
-  },
+  fonts: FONTS_PIXEL,
+  borders: BORDERS_SHARP,
+  shadows: createOffsetShadows("#306230"),
+  animation: ANIMATION_INSTANT,
 
   metadata: {
     author: "Eight Lee",

@@ -1,3 +1,4 @@
+import { ANIMATION_QUICK, FONTS_SYSTEM, SHADOWS_NONE } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,39 +17,25 @@ export const minimalTheme: ThemeDefinition = {
     background: "#ffffff",
     foreground: "#111111",
     primary: "#111111",
-    secondary: "#6b7280", // gray-500
+    secondary: "#4b5563", // gray-600 (WCAG compliant)
     accent: "#374151", // gray-700
-    muted: "#9ca3af", // gray-400
-    border: "#e5e7eb", // gray-200
+    muted: "#6b7280", // gray-500 (WCAG: 4.6:1 contrast)
+    border: "#d1d5db", // gray-300 (WCAG: 3:1 for UI)
     success: "#111111",
     error: "#111111",
     warning: "#111111",
   },
 
-  fonts: {
-    primary: "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-    mono: "ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.6",
-  },
+  fonts: FONTS_SYSTEM,
 
   borders: {
     width: "1px",
     style: "solid",
-    radius: "0px",
+    radius: "0",
   },
 
-  shadows: {
-    default: "none",
-    hover: "none",
-    active: "none",
-  },
-
-  animation: {
-    duration: "100ms",
-    timing: "ease-out",
-    stepped: false,
-  },
+  shadows: SHADOWS_NONE,
+  animation: ANIMATION_QUICK,
 
   metadata: {
     author: "Eight Lee",

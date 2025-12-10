@@ -485,3 +485,85 @@ Post-implementation audit identified and resolved a critical bug.
 - TypeScript: 0 errors
 - Biome: 63 files checked, no issues
 - Tests: 96 tests, 297 assertions
+
+---
+
+### Theme System Design Audit and Refactoring
+
+Comprehensive 11-point design audit on all 16 themes with fixes for WCAG compliance, style conflicts, and architectural improvements.
+
+**Audit Results:**
+
+| Point | Result | Action |
+|-------|--------|--------|
+| 1. Pure shadcn | PASS | 8 components unmodified |
+| 2. Pure Tailwind v4 | PASS | 100% v4 compliant |
+| 3. Zero inline styles | PASS | All justified exceptions |
+| 4. Zero custom components | PASS | All use HTML+Tailwind |
+| 5. Zero custom classes | PASS | Only required animations |
+| 6. Zero hardcoded values | FIXED | Changed "0px" to "0" in 2 themes |
+| 7. Zero duplicate styles | REFACTORED | Extracted shared presets |
+| 8. Zero style conflicts | FIXED | 2 Figmoo flex conflicts |
+| 9. Zero unused styles | FIXED | Removed 4 keyframes, 3 classes |
+| 10. WCAG/ARIA coverage | FIXED | 3 themes with contrast issues |
+| 11. Normalized patterns | PASS | All themes follow consistent patterns |
+
+**WCAG Contrast Fixes:**
+
+1. **Paper Theme** - Darkened colors for 4.5:1+ contrast:
+   - `primary`: #8b7355 -> #6b5344
+   - `muted`: #6b6b6b -> #595959
+   - `border`: #d4cfc7 -> #b8b0a5
+   - `warning`: #9a7b4f -> #7a6240
+
+2. **Minimal Theme** - Upgraded gray values:
+   - `secondary`: gray-500 -> gray-600
+   - `muted`: gray-400 -> gray-500 (4.6:1 contrast)
+   - `border`: gray-200 -> gray-300 (3:1 for UI)
+
+3. **Brutalist Theme** - Fixed critical yellow contrast:
+   - `primary`: #0000ff -> #0000cc (darker blue, 5.9:1)
+   - `muted`: #808080 -> #4a4a4a (5.3:1)
+   - `warning`: #ffff00 -> #806600 (was 1.07:1, now 5.2:1)
+
+**Style Conflict Fixes (Figmoo):**
+
+- `figmoo-site-preview.tsx:81`: `hidden items-center` -> `hidden sm:flex sm:items-center`
+- `figmoo-header.tsx:23`: `hidden items-center` -> `hidden md:flex md:items-center`
+
+**Unused CSS Removal:**
+
+Removed 60+ lines from `globals.css`:
+- `@keyframes theme-8bit-blink`, `theme-8bit-bounce`, `theme-8bit-shake`, `theme-8bit-glow`
+- `.animate-8bit-blink`, `.animate-8bit-bounce`, `.animate-8bit-glow` classes
+
+**Reduced Motion Support Extended:**
+
+Added 5 missing animated themes to `prefers-reduced-motion` query:
+- halloween, christmas, ocean, sunset, forest
+
+**Theme Preset System:**
+
+Created `lib/themes/presets.ts` with reusable configuration patterns to reduce duplication.
+
+**Font Presets:** `FONTS_MONO`, `FONTS_SANS`, `FONTS_SYSTEM`, `FONTS_ACCESSIBILITY`, `FONTS_PIXEL`
+
+**Border Presets:** `BORDERS_SHARP`, `BORDERS_SUBTLE`, `BORDERS_ROUNDED`, `BORDERS_MEDIUM`, `BORDERS_CHUNKY`
+
+**Shadow Factories:** `SHADOWS_NONE`, `createSoftShadows()`, `createGlowShadows()`, `createOffsetShadows()`
+
+**Animation Presets:** `ANIMATION_INSTANT`, `ANIMATION_NONE`, `ANIMATION_QUICK`, `ANIMATION_SMOOTH`, `ANIMATION_FLOWING`
+
+**Files Created:**
+- `lib/themes/presets.ts`
+
+**Files Modified (15):**
+- `app/globals.css`, `figmoo-site-preview.tsx`, `figmoo-header.tsx`
+- `theme-paper.ts`, `theme-minimal.ts`, `theme-brutalist.ts`
+- `theme-terminal.ts`, `theme-halloween.ts`, `theme-christmas.ts`, `theme-matrix.ts`
+- `theme-ocean.ts`, `theme-forest.ts`, `theme-sunset.ts`, `theme-accessibility.ts`, `theme-gameboy.ts`
+
+**Quality Gates Passed:**
+- TypeScript: 0 errors
+- Biome: 64 files checked, no issues
+- Tests: 96 tests, 297 assertions

@@ -1,3 +1,4 @@
+import { ANIMATION_NONE, BORDERS_CHUNKY, createOffsetShadows } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -14,14 +15,14 @@ export const brutalistTheme: ThemeDefinition = {
   colors: {
     background: "#c0c0c0",
     foreground: "#000000",
-    primary: "#0000ff",
-    secondary: "#800080", // purple for visited links
-    accent: "#ff0000",
-    muted: "#808080",
+    primary: "#0000cc", // darker blue (WCAG: 5.9:1)
+    secondary: "#660066", // darker purple (WCAG compliant)
+    accent: "#cc0000", // darker red (WCAG compliant)
+    muted: "#4a4a4a", // darker gray (WCAG: 5.3:1)
     border: "#000000",
-    success: "#008000",
-    error: "#ff0000",
-    warning: "#ffff00",
+    success: "#006600", // darker green (WCAG compliant)
+    error: "#cc0000",
+    warning: "#806600", // dark yellow (WCAG: 5.2:1)
   },
 
   fonts: {
@@ -31,23 +32,9 @@ export const brutalistTheme: ThemeDefinition = {
     lineHeight: "1.4",
   },
 
-  borders: {
-    width: "3px",
-    style: "solid",
-    radius: "0px",
-  },
-
-  shadows: {
-    default: "2px 2px 0px #000000",
-    hover: "4px 4px 0px #000000",
-    active: "1px 1px 0px #000000",
-  },
-
-  animation: {
-    duration: "0ms",
-    timing: "linear",
-    stepped: false,
-  },
+  borders: BORDERS_CHUNKY,
+  shadows: createOffsetShadows("#000000"),
+  animation: ANIMATION_NONE,
 
   metadata: {
     author: "Eight Lee",

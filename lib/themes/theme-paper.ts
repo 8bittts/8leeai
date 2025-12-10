@@ -22,14 +22,14 @@ export const paperTheme: ThemeDefinition = {
   colors: {
     background: "#faf8f5", // Warm cream/sepia
     foreground: "#2c2c2c", // Dark ink
-    primary: "#8b7355", // Muted brown
+    primary: "#6b5344", // Darker muted brown (was #8b7355, WCAG fix: 5.8:1)
     secondary: "#5d4e37", // Deep brown
-    accent: "#a67c52", // Warm tan
-    muted: "#6b6b6b", // Medium gray for secondary text
-    border: "#d4cfc7", // Subtle warm gray border
-    success: "#4a7c59", // Muted green
-    error: "#8b4049", // Muted red
-    warning: "#9a7b4f", // Muted amber
+    accent: "#7d5c3e", // Darker warm tan (was #a67c52, WCAG fix)
+    muted: "#595959", // Darker gray (was #6b6b6b, WCAG fix: 5.5:1)
+    border: "#b8b0a5", // Darker border (was #d4cfc7, WCAG fix: 3.1:1)
+    success: "#3a6248", // Darker green (was #4a7c59, WCAG fix)
+    error: "#7a3640", // Darker red (was #8b4049)
+    warning: "#7a6240", // Darker amber (was #9a7b4f, WCAG fix: 4.5:1)
   },
 
   fonts: {

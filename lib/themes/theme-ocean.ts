@@ -1,3 +1,4 @@
+import { ANIMATION_FLOWING, BORDERS_MEDIUM, createSoftShadows, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,30 +25,10 @@ export const oceanTheme: ThemeDefinition = {
     warning: "#fbbf24",
   },
 
-  fonts: {
-    primary: "var(--font-geist-sans), system-ui, sans-serif",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.6",
-  },
-
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0.5rem",
-  },
-
-  shadows: {
-    default: "0 4px 12px rgba(0, 119, 182, 0.15)",
-    hover: "0 8px 24px rgba(72, 202, 228, 0.25)",
-    active: "0 2px 8px rgba(0, 119, 182, 0.3)",
-  },
-
-  animation: {
-    duration: "300ms",
-    timing: "cubic-bezier(0.4, 0, 0.2, 1)",
-    stepped: false,
-  },
+  fonts: FONTS_SANS,
+  borders: BORDERS_MEDIUM,
+  shadows: createSoftShadows("rgba(0, 119, 182, 0.2)"),
+  animation: ANIMATION_FLOWING,
 
   metadata: {
     author: "Eight Lee",

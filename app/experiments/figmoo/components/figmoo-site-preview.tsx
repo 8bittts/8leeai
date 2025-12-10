@@ -78,7 +78,7 @@ export function FigmooSitePreview({ state }: SitePreviewProps) {
           <span className="font-semibold text-[var(--preview-primary)]">
             {state.siteName || "Your Site"}
           </span>
-          <div className="hidden items-center gap-4 text-sm sm:flex">
+          <div className="hidden sm:flex sm:items-center sm:gap-4 text-sm">
             <span className="text-gray-600">Features</span>
             <span className="text-gray-600">Another One</span>
             <span className="text-gray-600">Team</span>

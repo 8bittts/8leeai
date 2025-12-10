@@ -1,3 +1,4 @@
+import { createGlowShadows, FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,24 +25,15 @@ export const matrixTheme: ThemeDefinition = {
     warning: "#ffff00",
   },
 
-  fonts: {
-    primary: "var(--font-mono), ui-monospace, monospace",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.5",
-  },
+  fonts: FONTS_MONO,
 
   borders: {
     width: "1px",
     style: "solid",
-    radius: "0rem",
+    radius: "0",
   },
 
-  shadows: {
-    default: "0 0 5px rgba(0, 255, 0, 0.3)",
-    hover: "0 0 15px rgba(0, 255, 0, 0.5)",
-    active: "0 0 20px rgba(0, 255, 0, 0.7)",
-  },
+  shadows: createGlowShadows("rgba(0, 255, 0, 0.3)"),
 
   animation: {
     duration: "200ms",

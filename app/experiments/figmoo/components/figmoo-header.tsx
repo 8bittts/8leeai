@@ -20,7 +20,7 @@ export function FigmooHeader() {
         </Link>
 
         {/* Navigation */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden md:flex md:items-center md:gap-6">
           <Link
             href="/experiments/figmoo"
             className="text-sm font-medium text-gray-600 transition-colors hover:text-figmoo-text"

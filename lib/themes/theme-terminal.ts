@@ -1,3 +1,4 @@
+import { FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -24,12 +25,7 @@ export const terminalTheme: ThemeDefinition = {
     warning: "#eab308",
   },
 
-  fonts: {
-    primary: "var(--font-mono), ui-monospace, monospace",
-    mono: "var(--font-mono), ui-monospace, monospace",
-    sizeBase: "1rem",
-    lineHeight: "1.5",
-  },
+  fonts: FONTS_MONO,
 
   borders: {
     width: "1px",

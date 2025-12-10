@@ -1,3 +1,4 @@
+import { ANIMATION_NONE, BORDERS_SHARP, FONTS_ACCESSIBILITY, SHADOWS_NONE } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -25,30 +26,10 @@ export const accessibilityTheme: ThemeDefinition = {
     warning: "#000000",
   },
 
-  fonts: {
-    primary: "system-ui, -apple-system, sans-serif",
-    mono: "ui-monospace, monospace",
-    sizeBase: "1.125rem",
-    lineHeight: "1.75",
-  },
-
-  borders: {
-    width: "2px",
-    style: "solid",
-    radius: "0px",
-  },
-
-  shadows: {
-    default: "none",
-    hover: "none",
-    active: "none",
-  },
-
-  animation: {
-    duration: "0ms",
-    timing: "linear",
-    stepped: false,
-  },
+  fonts: FONTS_ACCESSIBILITY,
+  borders: BORDERS_SHARP,
+  shadows: SHADOWS_NONE,
+  animation: ANIMATION_NONE,
 
   metadata: {
     author: "Eight Lee",
