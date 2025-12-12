@@ -54,9 +54,9 @@ Chat container `boxShadow` inline style replaced with Tailwind arbitrary value:
 - `TERMINAL_CONTAINER_SHADOW` export removed from presets.ts (orphaned)
 
 **Unused CSS Variables Removed (`theme-context.tsx`):**
-- `--theme-success`
-- `--theme-error`
-- `--theme-warning`
+- `--theme-success` (removed, unused)
+- `--theme-warning` (removed, unused)
+- `--theme-error` (removed from context, re-added to globals.css as component variable in Dec 15 update)
 
 **Quality Gates Passed:**
 - TypeScript: 0 errors

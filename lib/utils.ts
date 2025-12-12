@@ -11,10 +11,10 @@ export function cn(...inputs: ClassValue[]) {
  * Standardized focus ring utility for consistent focus states across components
  * Uses theme-aware colors and proper accessibility patterns
  */
-export function focusRing(className?: string): string {
+export function focusRing(...inputs: ClassValue[]): string {
   return cn(
     "focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm",
-    className
+    ...inputs
   )
 }
 

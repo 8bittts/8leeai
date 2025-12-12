@@ -171,6 +171,24 @@ bunx shadcn@latest add [component-name]
 - Use styled-jsx or other CSS-in-JS solutions
 - Create custom CSS classes outside globals.css
 - Hardcode pixel values (use Tailwind spacing scale)
+- Hardcode colors (use CSS variables or Tailwind tokens)
+- Duplicate focus ring patterns (use `focusRing()` utility from `@/lib/utils`)
+
+**Focus Ring Utility:**
+
+Use the standardized `focusRing()` utility for consistent focus states:
+
+```tsx
+import { focusRing } from "@/lib/utils"
+
+// Single class string
+<button className={focusRing("hover:bg-accent")} />
+
+// Multiple classes
+<a className={focusRing("hover:text-accent", className)} />
+```
+
+This ensures WCAG-compliant focus indicators across all interactive elements.
 
 **Animation Pattern:**
 ```css

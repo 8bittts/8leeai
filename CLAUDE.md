@@ -62,6 +62,7 @@ type: Brief description
 - **Styling**: Tailwind utilities only, zero custom CSS
 - **State**: React hooks only, no external libraries
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)
+- **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
 - **Design**: Run `/design` for 11-point compliance audit (see README.md for full checklist)
 - **Experiments**: Follow protocol in `app/experiments/_docs/`

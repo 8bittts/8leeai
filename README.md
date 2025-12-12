@@ -96,6 +96,11 @@ Once loaded, visitors can use:
 
 **Themes:** 16 themes in `lib/themes/` with self-contained preset system.
 
+**Utilities:** 
+- `cn()` - Tailwind class name merger (shadcn pattern)
+- `focusRing()` - Standardized focus ring utility for WCAG compliance
+- `openExternalLink()` - Secure external link handler
+
 ### Design System (11-Point Compliance)
 
 Run `/design` slash command to audit. All code must pass:
@@ -104,11 +109,11 @@ Run `/design` slash command to audit. All code must pass:
 |---|------|-------------|
 | 1 | Pure shadcn | Components in `components/ui/` unmodified from official |
 | 2 | Pure Tailwind v4 | Uses `@import "tailwindcss"`, `@theme inline`, no v3 patterns |
-| 3 | Zero inline styles | Exception: CSS custom properties, canvas animations |
+| 3 | Zero inline styles | Exception: CSS custom properties, canvas animations, dynamic runtime values |
 | 4 | Zero custom components | Use shadcn primitives or standard HTML+Tailwind |
 | 5 | Zero custom classes | Exception: required animations in `globals.css` |
-| 6 | Zero hardcoded values | Use Tailwind tokens. Exception: canvas, SVG, email |
-| 7 | Zero duplicate styles | Extract repeated className patterns |
+| 6 | Zero hardcoded values | Use CSS variables or Tailwind tokens. Exception: canvas, SVG, email |
+| 7 | Zero duplicate styles | Extract repeated className patterns (e.g., `focusRing()` utility) |
 | 8 | Zero style conflicts | No conflicting classes (e.g., `hidden flex`) |
 | 9 | Zero unused styles | Remove orphaned CSS variables and classes |
 | 10 | Full WCAG/ARIA | Focus indicators, aria-labels, 4.5:1 contrast, keyboard nav |
