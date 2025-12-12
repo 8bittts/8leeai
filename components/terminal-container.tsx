@@ -89,7 +89,14 @@ export function TerminalContainer() {
 
   return (
     <div
-      className={`h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse bg-red-900/20" : ""} transition-colors duration-150`}
+      className={`h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse" : ""} transition-colors duration-150`}
+      style={
+        isFlashing
+          ? {
+              backgroundColor: "color-mix(in srgb, var(--theme-error) 20%, transparent)",
+            }
+          : undefined
+      }
     >
       {/* Background branding */}
       <header>

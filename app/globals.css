@@ -43,6 +43,12 @@
   --theme-duration: 150ms;
   --theme-timing: ease-in-out;
 
+  /* Component-specific variables */
+  --not-found-bg-image: url("/mario.jpg");
+  --matrix-opacity: 0.08;
+  --theme-error: #ef4444;
+  --error-flash-bg: rgba(239, 68, 68, 0.2);
+
   /* shadcn/ui base variables */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -128,6 +134,18 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Component-specific color mappings */
+  --color-not-found-bg-image: var(--not-found-bg-image);
+  --color-matrix-opacity: var(--matrix-opacity);
+  --color-theme-error: var(--theme-error);
+  --color-error-flash-bg: var(--error-flash-bg);
+}
+
+/* SSR fallback theme styles - applied before hydration */
+.ssr-theme-fallback {
+  --theme-bg: #000000;
+  --theme-fg: #22c55e;
 }
 
 @layer base {

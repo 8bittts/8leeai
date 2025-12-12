@@ -108,7 +108,8 @@ export function MatrixBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none opacity-[0.08] md:hidden"
+      className="absolute inset-0 pointer-events-none md:hidden"
+      style={{ opacity: "var(--matrix-opacity)" }}
       tabIndex={-1}
       aria-hidden="true"
     />

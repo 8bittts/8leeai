@@ -7,6 +7,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/**
+ * Standardized focus ring utility for consistent focus states across components
+ * Uses theme-aware colors and proper accessibility patterns
+ */
+export function focusRing(className?: string): string {
+  return cn(
+    "focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm",
+    className
+  )
+}
+
 /** Formats array index to zero-padded display number (0 → "01") */
 export function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0")

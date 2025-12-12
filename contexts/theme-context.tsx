@@ -51,6 +51,7 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
     root.style.setProperty("--theme-accent", theme.colors.accent)
     root.style.setProperty("--theme-muted", theme.colors.muted)
     root.style.setProperty("--theme-border", theme.colors.border)
+    root.style.setProperty("--theme-error", theme.colors.error)
 
     // Typography
     root.style.setProperty("--theme-font-primary", theme.fonts.primary)
@@ -98,21 +99,12 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
   )
 
   // Prevent flash by not rendering until hydrated
-  // Use a wrapper div that applies theme classes for SSR
+  // Use CSS class for SSR fallback instead of inline styles
   return (
     <ThemeContext.Provider value={value}>
       <div
         data-theme={currentTheme}
-        className="contents"
-        style={
-          isHydrated
-            ? undefined
-            : {
-                // SSR fallback styles (terminal theme)
-                ["--theme-bg" as string]: "#000000",
-                ["--theme-fg" as string]: "#22c55e",
-              }
-        }
+        className={isHydrated ? "contents" : "contents ssr-theme-fallback"}
       >
         {children}
       </div>

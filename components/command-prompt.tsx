@@ -10,6 +10,7 @@ import { isValidThemeId, type ThemeId } from "@/lib/themes"
 import {
   COMMAND_ALIASES,
   DATA_OFFSETS,
+  focusRing,
   openExternalLink,
   PROJECTS_PER_PAGE,
   VALID_COMMANDS,
@@ -435,7 +436,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
             <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
-                className="hover:text-theme-accent transition-colors underline focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
+                className={focusRing("hover:text-theme-accent transition-colors underline")}
               >
                 jleekun@gmail.com
               </a>

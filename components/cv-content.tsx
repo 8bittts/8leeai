@@ -5,7 +5,7 @@ import { Cursor } from "@/components/cursor"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, formatIndex } from "@/lib/utils"
+import { ANIMATION_DELAYS, focusRing, formatIndex } from "@/lib/utils"
 
 const summaryText =
   "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
@@ -47,7 +47,9 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {!isTyping && (
             <button
               type="button"
-              className="underline hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg"
+              className={focusRing(
+                "underline hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
+              )}
               onClick={() => setCommand?.("email")}
               aria-label="Show contact email"
             >

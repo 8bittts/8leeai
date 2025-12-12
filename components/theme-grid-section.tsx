@@ -1,4 +1,5 @@
 import { useTheme } from "@/hooks/use-theme"
+import { focusRing } from "@/lib/utils"
 
 /**
  * Theme Grid Section
@@ -23,9 +24,9 @@ export function ThemeGridSection() {
               <button
                 type="button"
                 onClick={() => setTheme(theme.id)}
-                className={`text-left hover:text-theme-accent transition-colors focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm ${
-                  isActive ? "text-theme-accent" : ""
-                }`}
+                className={focusRing(
+                  `text-left hover:text-theme-accent transition-colors ${isActive ? "text-theme-accent" : ""}`
+                )}
                 aria-pressed={isActive}
                 aria-label={`${theme.name} theme${isActive ? " (active)" : ""}`}
               >

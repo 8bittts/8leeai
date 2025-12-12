@@ -1,6 +1,7 @@
 "use client"
 
 import { useTheme } from "@/hooks/use-theme"
+import { focusRing } from "@/lib/utils"
 
 /**
  * ThemeSwitcher
@@ -56,7 +57,9 @@ export function ThemeSwitcher() {
     <button
       type="button"
       onClick={cycleTheme}
-      className="fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-md border bg-theme-bg text-theme-fg border-theme-border transition-all duration-150 hover:bg-theme-primary hover:text-theme-bg focus:outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg"
+      className={focusRing(
+        "fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-md border bg-theme-bg text-theme-fg border-theme-border transition-all duration-150 hover:bg-theme-primary hover:text-theme-bg"
+      )}
       aria-label={`Current theme: ${theme.name}. Click to switch theme.`}
       title={`Theme: ${theme.name} - Click to cycle`}
     >
