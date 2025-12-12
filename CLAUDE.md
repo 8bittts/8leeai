@@ -69,7 +69,7 @@ type: Brief description
 
 ## Tech Stack
 
-Next.js 16.0.8, React 19.2.1, TypeScript 5.9.3, Tailwind v4.1.17, Biome 2.3.8
+Next.js 16.0.10, React 19.2.1, TypeScript 5.9.3, Tailwind v4.1.18, Biome 2.3.8
 
 See [README.md#tech-stack](README.md#tech-stack) for complete stack with versions.
 
