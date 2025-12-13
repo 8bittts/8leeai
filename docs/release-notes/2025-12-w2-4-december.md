@@ -2,6 +2,40 @@
 
 ## December 15, 2025
 
+### Theme Differentiation: Minimal vs Accessibility
+
+Made minimal and accessibility themes more visually distinct to improve theme selection clarity.
+
+**Minimal Theme Updates:**
+- Changed background from pure white (#ffffff) to warm off-white (#fafafa) for elegance
+- Updated foreground from dark gray (#111111) to soft charcoal (#2d2d2d) for refinement
+- Refined color palette with sophisticated grays (secondary: #5a5a5a, accent: #404040, muted: #8a8a8a)
+- Changed borders from sharp (0 radius) to subtle rounded corners (0.25rem radius) using `BORDERS_SUBTLE` preset
+- Updated description to "Elegant minimalist with warm tones and refined grays"
+
+**Accessibility Theme Updates:**
+- Added blue accent color (#0066cc) for interactive elements (primary, accent, success) to distinguish from minimal theme
+- Updated muted color from pure black to dark gray (#333333) for better text hierarchy while maintaining WCAG AAA contrast
+- Added distinct error (#cc0000) and warning (#cc6600) colors for better state indication
+- Updated description to "Maximum contrast with blue accents, screen reader optimized, zero animations"
+- Maintained pure black/white base for maximum contrast (21:1 ratio)
+
+**Visual Distinctions:**
+- **Minimal**: Warm off-white background, soft charcoal text, refined grays, subtle rounded corners, elegant aesthetic
+- **Accessibility**: Pure white background, pure black text, blue accents for interactivity, sharp borders, functional aesthetic
+
+**Files Modified:**
+- `lib/themes/theme-minimal.ts` - Updated colors, borders, description
+- `lib/themes/theme-accessibility.ts` - Added blue accents, updated colors, description
+
+**Quality Validation:**
+- TypeScript: 0 errors
+- Biome: All files checked, no issues
+- Build: Successful
+- WCAG AAA compliance maintained for accessibility theme
+
+---
+
 ### Reset Command Alias
 
 Added `reset` command as an alias for `clear` command.

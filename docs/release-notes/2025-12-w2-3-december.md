@@ -202,8 +202,8 @@ Expanded theme system from 2 to 16 total themes, built using parallel agents for
 **Tier 3: Experimental**
 | Theme | Description |
 |-------|-------------|
-| `accessibility` | High contrast (21:1), no animations, enhanced focus |
-| `minimal` | Black on white, system fonts, zero decorations |
+| `accessibility` | Maximum contrast (21:1) with blue accents, no animations, large fonts, screen reader optimized |
+| `minimal` | Elegant minimalist with warm off-white background, refined grays, subtle rounded corners |
 | `brutalist` | Times New Roman, blue links, gray background, 90s web |
 | `ocean` | Deep blues with cyan accents, calm underwater feel |
 | `sunset` | Warm orange/pink/purple gradients |

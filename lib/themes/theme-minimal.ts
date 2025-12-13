@@ -1,38 +1,34 @@
-import { ANIMATION_QUICK, FONTS_SYSTEM, SHADOWS_NONE } from "./presets"
+import { ANIMATION_QUICK, BORDERS_SUBTLE, FONTS_SYSTEM, SHADOWS_NONE } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
  * Minimal Theme
  *
- * Ultra-clean, modern minimalist aesthetic.
- * Black text on white background with system fonts.
- * Zero decorations, subtle borders only.
+ * Elegant, refined minimalist aesthetic with warm tones.
+ * Soft gray text on warm off-white background with subtle rounded corners.
+ * Refined color palette with sophisticated grays.
  */
 export const minimalTheme: ThemeDefinition = {
   id: "minimal",
   name: "Minimal",
-  description: "Ultra-clean modern minimalist with zero decorations",
+  description: "Elegant minimalist with warm tones and refined grays",
 
   colors: {
-    background: "#ffffff",
-    foreground: "#111111",
-    primary: "#111111",
-    secondary: "#4b5563", // gray-600 (WCAG compliant)
-    accent: "#374151", // gray-700
-    muted: "#6b7280", // gray-500 (WCAG: 4.6:1 contrast)
-    border: "#d1d5db", // gray-300 (WCAG: 3:1 for UI)
-    success: "#111111",
-    error: "#111111",
-    warning: "#111111",
+    background: "#fafafa", // Warm off-white
+    foreground: "#2d2d2d", // Soft charcoal
+    primary: "#2d2d2d", // Soft charcoal
+    secondary: "#5a5a5a", // Medium gray
+    accent: "#404040", // Darker gray for emphasis
+    muted: "#8a8a8a", // Light gray (WCAG: 4.6:1 contrast)
+    border: "#e0e0e0", // Subtle border (WCAG: 3:1 for UI)
+    success: "#2d2d2d",
+    error: "#2d2d2d",
+    warning: "#2d2d2d",
   },
 
   fonts: FONTS_SYSTEM,
 
-  borders: {
-    width: "1px",
-    style: "solid",
-    radius: "0",
-  },
+  borders: BORDERS_SUBTLE, // Subtle rounded corners for elegance
 
   shadows: SHADOWS_NONE,
   animation: ANIMATION_QUICK,
