@@ -137,6 +137,7 @@ export const VALID_COMMANDS = [
   "twitter",
   "random",
   "clear",
+  "reset",
   "contact",
   // Natural language aliases
   "resume",
@@ -197,6 +198,7 @@ export const COMMAND_ALIASES: Record<string, string> = {
   email: "email",
   help: "help",
   clear: "clear",
+  reset: "clear",
   random: "random project",
   contact: "contact email",
   // Natural language aliases

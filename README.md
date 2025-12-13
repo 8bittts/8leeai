@@ -58,7 +58,7 @@ Once loaded, visitors can use:
 - `random` - Open random project
 - `email` / `contact` - Contact info
 - `social` - All social links
-- `clear` - Reset terminal
+- `clear` / `reset` - Reset terminal
 - `Ctrl+L` / `Cmd+K` - Clear shortcut
 
 ---

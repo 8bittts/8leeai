@@ -1,5 +1,33 @@
 # December 2025 - Week 2 Part 4 (Dec 12-15)
 
+## December 15, 2025
+
+### Reset Command Alias
+
+Added `reset` command as an alias for `clear` command.
+
+**Changes:**
+- Added `reset` to `VALID_COMMANDS` array in `lib/utils.ts`
+- Added `reset: "clear"` mapping to `COMMAND_ALIASES` in `lib/utils.ts`
+- Updated `handleTerminalCommand` in `components/command-prompt.tsx` to handle both `clear` and `reset`
+- Updated help text to show `clear (reset)` as command with alias
+- Updated command instructions to include `reset`
+- Added test case for `reset` command validation
+- Updated `README.md` to document `reset` as alias for `clear`
+
+**Behavior:**
+- Both `/reset` and `reset` commands now behave identically to `/clear` and `clear`
+- Resets terminal, hides all sections, resets theme to terminal default
+- Displays "Terminal cleared" status message
+
+**Quality Validation:**
+- TypeScript: 0 errors
+- Biome: All files checked, no issues
+- Tests: All passing (21/21)
+- Build: Successful
+
+---
+
 ## December 12, 2025
 
 ### Comprehensive Design Implementation Review (Second Audit)

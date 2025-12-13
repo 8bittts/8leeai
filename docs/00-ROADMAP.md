@@ -23,7 +23,7 @@ The portfolio is feature-complete with:
 ```
 $: theme              # Show all 16 themes in grid
 $: theme [name]       # Switch to specific theme
-$: clear              # Reset terminal and theme
+$: clear / reset      # Reset terminal and theme
 ```
 
 **Available themes:** terminal, 8bit, gameboy, paper, vaporwave, cyberpunk, halloween, christmas, matrix, synthwave, accessibility, minimal, brutalist, ocean, sunset, forest

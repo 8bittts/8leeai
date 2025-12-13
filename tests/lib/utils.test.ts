@@ -32,6 +32,7 @@ describe("isValidCommand - User input validation for clear feedback", () => {
     expect(isValidCommand("email")).toBe(true)
     expect(isValidCommand("github")).toBe(true)
     expect(isValidCommand("clear")).toBe(true)
+    expect(isValidCommand("reset")).toBe(true) // Alias for clear
     expect(isValidCommand("education")).toBe(true)
     expect(isValidCommand("ed")).toBe(true) // Shortcut alias
   })

@@ -103,7 +103,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     }
 
     const handleTerminalCommand = (cmdLower: string) => {
-      if (cmdLower === "clear") {
+      if (cmdLower === "clear" || cmdLower === "reset") {
         hideAllSections()
         clearToStart()
         setStatusMessage("Terminal cleared")
@@ -418,7 +418,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               <p>• twitter/x · X/Twitter profile</p>
               <p>• social · Show all social links</p>
               <p>• random · Open a random project</p>
-              <p>• clear · Reset terminal</p>
+              <p>• clear (reset) · Reset terminal</p>
               <p>• whoami · User info</p>
               <p>• uname · System info</p>
               <p>• date · Current date/time</p>
@@ -497,7 +497,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
             />
           </form>
           <p id="command-instructions" className="text-xs text-theme-muted mt-2">
-            Commands: email, help, clear
+            Commands: email, help, clear, reset
           </p>
         </nav>
 
