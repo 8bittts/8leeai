@@ -2,6 +2,28 @@
 
 ## December 15, 2025
 
+### Documentation Updates: Theme Differentiation
+
+Updated all documentation to reflect the differentiated minimal and accessibility themes.
+
+**Files Updated:**
+- `.claude/commands/theme.md` - Added minimal and accessibility theme descriptions, updated reset command documentation, updated status date
+- `docs/00-ROADMAP.md` - Updated last updated date to December 15, 2025
+- `docs/release-notes/2025-12-w2-2-december.md` - Updated theme file comments with accurate descriptions
+
+**Documentation Changes:**
+- Added minimal theme description: "Elegant minimalist with warm off-white background, refined grays, subtle rounded corners"
+- Added accessibility theme description: "Maximum contrast (21:1) with blue accents, no animations, large fonts, screen reader optimized"
+- Updated reset command documentation to include `reset` alias alongside `clear`
+- Updated theme command examples to showcase minimal and accessibility themes
+- Updated theme file comments to reflect their distinct visual characteristics
+
+**Quality Validation:**
+- Build: Successful
+- All documentation now accurately reflects theme differentiation
+
+---
+
 ### Theme Differentiation: Minimal vs Accessibility
 
 Made minimal and accessibility themes more visually distinct to improve theme selection clarity.
