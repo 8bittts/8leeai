@@ -178,8 +178,8 @@ lib/themes/
 ├── theme-christmas.ts    # Tier 2: Christmas theme
 ├── theme-matrix.ts       # Tier 2: Matrix theme
 ├── theme-synthwave.ts    # Tier 2: Synthwave theme
-├── theme-accessibility.ts # Tier 3: High contrast theme
-├── theme-minimal.ts      # Tier 3: Minimal theme
+├── theme-accessibility.ts # Tier 3: Maximum contrast with blue accents, screen reader optimized
+├── theme-minimal.ts      # Tier 3: Elegant minimalist with warm tones and refined grays
 ├── theme-brutalist.ts    # Tier 3: Brutalist theme
 ├── theme-ocean.ts        # Tier 3: Ocean theme
 ├── theme-sunset.ts       # Tier 3: Sunset theme

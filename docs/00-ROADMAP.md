@@ -1,6 +1,6 @@
 # 8lee.ai Roadmap
 
-**Last Updated:** December 9, 2025
+**Last Updated:** December 15, 2025
 
 Active development roadmap for the 8lee.ai project.
 

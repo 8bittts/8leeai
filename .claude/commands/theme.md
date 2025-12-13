@@ -8,12 +8,12 @@ The theme system allows complete visual transformation of the application. Each 
 
 ## Current Implementation
 
-**Status:** COMPLETE (December 9, 2025)
+**Status:** COMPLETE (December 15, 2025)
 
 **User Access:**
 - Terminal command only: `$: theme` or `$: theme <name>`
 - UI switcher button: REMOVED (preserved in `components/theme-switcher.tsx` for future use)
-- Clear/reset command (`$: clear`, Ctrl+L, Cmd+K): Resets theme to terminal
+- Clear/reset command (`$: clear`, `$: reset`, Ctrl+L, Cmd+K): Resets theme to terminal
 
 ## Usage
 
@@ -24,20 +24,23 @@ If user runs `/theme` without arguments, respond with:
 **Available Themes:**
 - **terminal** (default) - Classic green-on-black DOS terminal aesthetic
 - **8bit** - Retro 8-bit gaming style with pixel fonts (Press Start 2P)
+- **minimal** - Elegant minimalist with warm off-white background, refined grays, subtle rounded corners
+- **accessibility** - Maximum contrast (21:1) with blue accents, no animations, large fonts, screen reader optimized
 
 ### Terminal Commands
 
 ```
 $: theme              # List available themes
 $: theme terminal     # Switch to terminal theme
-$: theme 8bit         # Switch to 8-bit theme
-$: clear              # Reset terminal AND theme to default
+$: theme minimal      # Switch to minimal theme
+$: theme accessibility # Switch to accessibility theme
+$: clear / reset      # Reset terminal AND theme to default
 ```
 
 ### Reset Behavior
 
 Theme resets to terminal (default) when:
-- User runs `clear` command
+- User runs `clear` or `reset` command
 - User presses Ctrl+L or Cmd+K
 - User calls `resetTheme()` programmatically
 
