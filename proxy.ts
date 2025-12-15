@@ -1,35 +1,7 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+import { generateCORSHeaders, generateCSP } from "./lib/api-security"
 import { isSemanticUrl } from "./lib/utils"
-
-const ALLOWED_ORIGINS = [
-  "https://8lee.ai",
-  "https://www.8lee.ai",
-  "https://8bit.io",
-  "https://www.8bit.io",
-  "https://john.do",
-  "https://www.john.do",
-  "https://btc.jobs",
-  "https://www.btc.jobs",
-  "https://yen.chat",
-  "https://www.yen.chat",
-  "https://btc.email",
-  "https://www.btc.email",
-  "https://eightlee.com",
-  "https://www.eightlee.com",
-  "https://particular.ly",
-  "https://www.particular.ly",
-  "https://johnsaddington.com",
-  "https://www.johnsaddington.com",
-  "https://deathnote.ai",
-  "https://www.deathnote.ai",
-  "https://8leeai.vercel.app",
-  "https://8leeai-death-note.vercel.app",
-  "https://8leeai-git-main-death-note.vercel.app",
-  // Development and localhost
-  "http://localhost:1333",
-  "http://127.0.0.1:1333",
-]
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -83,31 +55,13 @@ export function proxy(request: NextRequest) {
   )
 
   // CSP: Restrict resource loading, allow Vercel analytics/live and third-party APIs
-  const cspDirectives = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob: https:",
-    "font-src 'self' data:",
-    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.zendesk.com https://api.intercom.io",
-    "media-src 'self' blob:",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "frame-ancestors 'none'",
-    "upgrade-insecure-requests",
-  ].join("; ")
-
-  response.headers.set("Content-Security-Policy", cspDirectives)
+  response.headers.set("Content-Security-Policy", generateCSP())
 
   // CORS: Allow requests from approved domains only
   const origin = request.headers.get("origin")
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
-    response.headers.set("Access-Control-Allow-Origin", origin)
-    response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    response.headers.set("Access-Control-Max-Age", "86400")
-    response.headers.set("Access-Control-Allow-Credentials", "true")
+  const corsHeaders = generateCORSHeaders(origin)
+  for (const [key, value] of Object.entries(corsHeaders)) {
+    response.headers.set(key, value)
   }
 
   // HSTS: Force HTTPS for 1 year, include subdomains, enable browser preload

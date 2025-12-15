@@ -1,10 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
+import { generateCORSHeaders } from "@/lib/api-security"
 
 interface ContactFormData {
   name: string
   email: string
   message: string
+}
+
+export function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  const corsHeaders = generateCORSHeaders(origin)
+  return NextResponse.json({}, { headers: corsHeaders })
 }
 
 export async function POST(request: NextRequest) {
@@ -16,15 +23,24 @@ export async function POST(request: NextRequest) {
 
     const { name, email, message } = body
 
+    const origin = request.headers.get("origin")
+    const corsHeaders = generateCORSHeaders(origin)
+
     // Validate required fields
     if (!(name && email && message)) {
-      return NextResponse.json({ message: "Missing required fields" }, { status: 400 })
+      return NextResponse.json(
+        { message: "Missing required fields" },
+        { status: 400, headers: corsHeaders }
+      )
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      return NextResponse.json({ message: "Invalid email format" }, { status: 400 })
+      return NextResponse.json(
+        { message: "Invalid email format" },
+        { status: 400, headers: corsHeaders }
+      )
     }
 
     // Send email via Resend
@@ -53,15 +69,23 @@ export async function POST(request: NextRequest) {
 
     if (response.error) {
       console.error("Resend error:", response.error)
-      return NextResponse.json({ message: "Failed to send email" }, { status: 500 })
+      return NextResponse.json(
+        { message: "Failed to send email" },
+        { status: 500, headers: corsHeaders }
+      )
     }
 
     return NextResponse.json(
       { message: "Email sent successfully", id: response.data?.id },
-      { status: 200 }
+      { status: 200, headers: corsHeaders }
     )
   } catch (error) {
     console.error("Contact form error:", error)
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 })
+    const origin = request.headers.get("origin")
+    const corsHeaders = generateCORSHeaders(origin)
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500, headers: corsHeaders }
+    )
   }
 }

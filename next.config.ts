@@ -1,4 +1,5 @@
 import type { NextConfig } from "next"
+import { generateCSP } from "./lib/api-security"
 
 const nextConfig: NextConfig = {
   // Enable Turbopack for faster dev builds
@@ -38,6 +39,10 @@ const nextConfig: NextConfig = {
           {
             key: "Link",
             value: "</cj.m4a>; rel=preload; as=audio",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: generateCSP(),
           },
         ],
       },

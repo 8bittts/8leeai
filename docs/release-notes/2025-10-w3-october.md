@@ -4,6 +4,59 @@
 
 ---
 
+## Centralized Security Configuration - October 21, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Implemented centralized security configuration with CSP generation, comprehensive CORS support, and enhanced API route security.
+
+**Changes:**
+
+1. **Centralized CSP Generation (lib/api-security.ts):**
+   - Created new security module with centralized CSP generation function
+   - Extracted CORS configuration into reusable utilities
+   - Added helper functions for origin validation and CORS header generation
+   - Single source of truth for security policies across the application
+
+2. **Enhanced proxy.ts Middleware:**
+   - Updated to use centralized CSP generation from api-security.ts
+   - Refactored CORS header generation to use shared utilities
+   - Maintains all existing security headers (CSP, CORS, HSTS, X-Frame-Options, Permissions Policy, XSS Protection)
+   - Improved code maintainability and consistency
+
+3. **API Route Security Enhancements:**
+   - Added OPTIONS handlers to all API routes for CORS preflight support
+   - Updated POST handlers to include CORS headers in all responses
+   - Enhanced error responses with proper CORS headers
+   - Routes updated: `/api/contact/zendesk` and `/api/contact/intercom`
+
+4. **Next.js Configuration Consistency:**
+   - Added CSP header to next.config.ts headers() configuration
+   - Ensures CSP is applied consistently across middleware and Next.js headers
+   - Uses centralized generateCSP() function for consistency
+
+**Technical Implementation:**
+- `lib/api-security.ts`: Centralized security utilities
+  - `generateCSP()`: Generates Content Security Policy header value
+  - `ALLOWED_ORIGINS`: Array of approved CORS origins
+  - `isAllowedOrigin()`: Validates origin against allowed list
+  - `generateCORSHeaders()`: Creates CORS headers for valid origins
+- `proxy.ts`: Updated to import and use centralized functions
+- `app/api/contact/*/route.ts`: Added OPTIONS handlers and CORS headers to all responses
+- `next.config.ts`: Added CSP header using centralized generation
+
+**Benefits:**
+- Single source of truth for security policies
+- Easier maintenance and updates to security configuration
+- Consistent CORS handling across all API routes
+- Proper preflight request handling for cross-origin requests
+- Improved code organization and reusability
+
+**Files Changed**: 5 files (lib/api-security.ts created, proxy.ts, app/api/contact/zendesk/route.ts, app/api/contact/intercom/route.ts, next.config.ts)
+
+---
+
 ## Removed Ghostty Terminal Configuration - October 21, 2025
 
 **Status**: COMPLETE
