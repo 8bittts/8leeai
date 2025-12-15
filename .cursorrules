@@ -1,0 +1,36 @@
+# 8lee.ai Cursor Rules
+
+**CLAUDE.md is the canonical technical resource** - Always reference it first.
+
+## Documentation Hierarchy
+
+- **CLAUDE.md** - Technical canonical (commands, workflow, coding rules, references)
+- **README.md** - Architecture, design system, tech stack (source of truth)
+- **docs/00-ROADMAP.md** - Active TODOs and future work (ONLY place for plans)
+- **docs/release-notes/** - Weekly development logs
+- **app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md** - Experiment standards
+
+## Quick Reference
+
+**Runtime:** Bun 1.3.1 only (never npm/yarn/pnpm)
+
+**Quality Checks:** Run `/check` command or `bunx tsc --noEmit && bunx biome check --write . && bun test`
+
+**Design System:** Run `/design` for 11-point compliance audit (see README.md)
+
+**Styling:** Tailwind v4 utilities only, shadcn/ui components, zero inline styles, zero custom classes
+
+**Testing:** Focus on user intent and business logic, not implementation details
+
+**Documentation:** No emojis in markdown files. See release notes protocol for content rules.
+
+## Core Principles
+
+- Prefer simple solutions using existing patterns
+- Avoid duplication - check codebase first
+- Fix issues without introducing new patterns/technologies
+- Keep codebase clean and organized
+- Reference documentation instead of recreating it
+
+For complete rules and standards, see **CLAUDE.md**.
+
