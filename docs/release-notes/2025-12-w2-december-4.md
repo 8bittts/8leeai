@@ -10,6 +10,49 @@
 
 ---
 
+## Release Notes Migration to Canonical Format - December 15, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Migrated historical release notes from monthly format in `_docs/` to canonical weekly format matching deathnote project structure and policies.
+
+**Files Created**:
+
+**September 2025**:
+- `docs/release-notes/2025-09-w5-september.md` - Week 5 (Sept 29-30) with all entries converted to canonical format
+
+**October 2025**:
+- `docs/release-notes/2025-10-w2-october.md` - Week 2 (Oct 8-14) - Test infrastructure, slash commands, URL redirects
+- `docs/release-notes/2025-10-w3-october.md` - Week 3 (Oct 15-21) - Twitter commands, package monitoring, mobile UX
+- `docs/release-notes/2025-10-w4-october.md` - Week 4 (Oct 22-28) - Next.js 16.0.0 upgrade
+- `docs/release-notes/2025-10-w5-october.md` - Week 5 (Oct 29-31) - Package verification, portfolio expansion
+
+**Format Compliance**:
+All files follow deathnote's canonical format:
+- Headers: `# 8lee.ai Release Notes - Month Year (Week X)`
+- Status fields: `**Status**: COMPLETE` on all entries
+- Overview sections for each entry
+- Date stamps: `## Feature Name - Month Day, Year`
+- Reverse chronological order within files
+- Cross-references for multi-part files
+
+**Documentation Updates**:
+- `_docs/README.md` - Updated to mark files as archived and reference new weekly files
+- `docs/release-notes/00-RN-README.md` - Added historical file migration notes
+
+**Archive Status**:
+- Original monthly files remain in `_docs/` as historical archives
+- Files marked as archived and point to new weekly format
+- All entries converted to canonical format with proper structure
+
+**Quality Validation**:
+- BiomeJS: Zero errors
+- All files follow canonical format structure
+- Cross-references verified and working
+
+---
+
 ## Documentation Updates: Theme Differentiation - December 15, 2025
 
 **Status**: COMPLETE
@@ -20,7 +63,7 @@ Updated all documentation to reflect the differentiated minimal and accessibilit
 **Files Updated:**
 - `.claude/commands/theme.md` - Added minimal and accessibility theme descriptions, updated reset command documentation, updated status date
 - `docs/00-ROADMAP.md` - Updated last updated date to December 15, 2025
-- `docs/release-notes/2025-12-w2-2-december.md` - Updated theme file comments with accurate descriptions
+- `docs/release-notes/2025-12-w2-december-2.md` - Updated theme file comments with accurate descriptions
 
 **Documentation Changes:**
 - Added minimal theme description: "Elegant minimalist with warm off-white background, refined grays, subtle rounded corners"
