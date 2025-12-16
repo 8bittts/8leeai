@@ -6,7 +6,7 @@ A retro terminal-style portfolio experience built with modern web technologies.
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
 [![Next.js](https://img.shields.io/badge/Next.js-16.0.10-black)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19.2.1-blue)](https://react.dev)
+[![React](https://img.shields.io/badge/React-19.2.3-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC)](https://tailwindcss.com)
 [![Bun](https://img.shields.io/badge/Bun-1.3.1-fbf0df)](https://bun.sh)
 
@@ -71,11 +71,11 @@ Once loaded, visitors can use:
 |-----------|------------|---------|
 | Runtime | [Bun](https://bun.sh) | 1.3.1 |
 | Framework | [Next.js](https://nextjs.org) (App Router + Turbopack) | 16.0.10 |
-| UI | [React](https://react.dev) | 19.2.1 |
+| UI | [React](https://react.dev) | 19.2.3 |
 | Styling | [Tailwind CSS](https://tailwindcss.com) (pure utilities) | v4.1.18 |
 | Language | [TypeScript](https://www.typescriptlang.org) (strict + 4 ultra-strict flags) | 5.9.3 |
-| Code Quality | [Biome](https://biomejs.dev) (100+ error rules) | 2.3.8 |
-| AI/ML | [Vercel AI SDK](https://sdk.vercel.ai) | 5.0.112 |
+| Code Quality | [Biome](https://biomejs.dev) (100+ error rules) | 2.3.9 |
+| AI/ML | [Vercel AI SDK](https://sdk.vercel.ai) | 5.0.114 |
 | Email | [Resend](https://resend.com) | 6.6.0 |
 | Testing | Bun native with happy-dom | - |
 | Analytics | [Vercel Analytics](https://vercel.com/analytics) + Speed Insights | 1.6.1 |
