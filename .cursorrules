@@ -16,9 +16,9 @@
 
 **Quality Checks:** Run `/check` command or `bunx tsc --noEmit && bunx biome check --write . && bun test`
 
-**Design System:** Run `/design` for 11-point compliance audit (see README.md)
+**Design System:** Run `/design` for 9-point compliance audit (see README.md)
 
-**Styling:** Tailwind v4 utilities only, shadcn/ui components, zero inline styles, zero custom classes
+**Styling:** Tailwind v4 utilities only, zero inline styles, zero custom classes
 
 **Testing:** Focus on user intent and business logic, not implementation details
 

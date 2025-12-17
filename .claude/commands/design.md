@@ -6,63 +6,53 @@ Comprehensive design implementation review using ultrathink mode.
 
 ## Review Checklist
 
-Launch parallel agents to analyze the codebase for each of these 11 areas:
+Launch parallel agents to analyze the codebase for each of these 9 areas:
 
-### 1. Pure shadcn
-- Verify all shadcn/ui components in `components/ui/` are unmodified from official versions
-- Check for unauthorized customizations to base components
-- Ensure standard patterns preserved (cn() usage, variant patterns, data-slot attributes)
-
-### 2. Pure Tailwind v4
+### 1. Pure Tailwind v4
 - Confirm all styling uses Tailwind v4 syntax and conventions
 - Flag any v3 legacy patterns (`@tailwind` directives, old config patterns)
 - Check `globals.css` uses `@import "tailwindcss"` and `@theme inline`
 
-### 3. Zero inline styles
+### 2. Zero inline styles
 - Search for any `style={}` or `style=""` attributes in all TSX/JSX files
 - All styling must be via Tailwind classes only
 - Exception: truly dynamic values that cannot be Tailwind classes
 
-### 4. Zero custom components
-- Verify components use shadcn/ui primitives or standard HTML with Tailwind
-- Flag any custom-built UI components that should use shadcn
-- Canvas/animation components that cannot use shadcn are acceptable
-
-### 5. Zero custom classes
+### 3. Zero custom classes
 - Check `globals.css` for any custom CSS class definitions
 - No custom CSS class definitions allowed except necessary animations
 - Verify no CSS modules exist
 
-### 6. Zero hardcoded values
+### 4. Zero hardcoded values
 - No hardcoded colors (hex, rgb, hsl) in TSX files
 - No hardcoded pixel values that should use Tailwind scale
 - All values must use Tailwind's design tokens
 - Exception: Canvas animation constants, email templates, SVG attributes
 
-### 7. Zero duplicate design styles
+### 5. Zero duplicate design styles
 - Check for repeated className patterns that should be extracted
 - Identify inconsistent styling of similar components
 - Look for duplicated component logic across files
 
-### 8. Zero style conflicts
+### 6. Zero style conflicts
 - Look for conflicting Tailwind classes (e.g., `hidden flex`, `w-full w-1/2`)
 - Check for responsive breakpoint contradictions
 - Identify padding/margin override issues
 
-### 9. Zero unused/orphaned styles
+### 7. Zero unused/orphaned styles
 - Find CSS variables defined but never used
 - Check for classes referenced that don't exist
 - **BE SUPER CAREFUL** - this is a production codebase
 - Only flag with HIGH confidence, ask before removing
 
-### 10. Full WCAG/ARIA coverage
+### 8. Full WCAG/ARIA coverage
 - Verify all interactive elements have visible focus indicators
 - Check for proper aria-label, aria-hidden, role attributes
 - Verify color contrast ratios meet AA standards
 - Ensure all form inputs have associated labels
 - Check keyboard navigation and focus order
 
-### 11. Normalized patterns
+### 9. Normalized patterns
 - Typography: consistent font sizes, weights, line heights across similar elements
 - Sizing: consistent component dimensions (input heights, button sizes)
 - Spacing: consistent padding, margins, gaps in similar contexts

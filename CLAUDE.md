@@ -63,7 +63,7 @@ type: Brief description
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
-- **Design**: Run `/design` for 11-point compliance audit (see README.md for full checklist)
+- **Design**: Run `/design` for 9-point compliance audit (see README.md for full checklist)
 - **Experiments**: See `app/experiments/_docs/` for guidelines
 
 ## Tech Stack

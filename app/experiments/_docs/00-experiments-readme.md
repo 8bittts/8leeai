@@ -10,7 +10,7 @@ Isolated proof-of-concept projects live in `/app/experiments/`. Each experiment 
    - `layout.tsx` - Experiment-specific layout
    - `not-found.tsx` - Custom 404
 3. Prefix all files with `{name}-` (e.g., `demo-types.ts`, `demo-utils.ts`)
-4. No imports from main app code (except `globals.css` and `@/components/ui`)
+4. No imports from main app code (except `globals.css`)
 
 ## Directory Structure
 

@@ -12,7 +12,6 @@ The theme system allows complete visual transformation of the application. Each 
 
 **User Access:**
 - Terminal command only: `$: theme` or `$: theme <name>`
-- UI switcher button: REMOVED (preserved in `components/theme-switcher.tsx` for future use)
 - Clear/reset command (`$: clear`, `$: reset`, Ctrl+L, Cmd+K): Resets theme to terminal
 
 ## Usage
@@ -61,14 +60,6 @@ Each theme provides:
 - Font configuration
 - Animation definitions
 - Component style overrides
-
-## Re-enabling UI Switcher
-
-The floating theme switcher button is preserved but not rendered. To re-enable:
-
-1. Edit `app/page.tsx`
-2. Uncomment the ThemeSwitcher import and component
-3. Or see instructions in `components/theme-switcher.tsx`
 
 ## Notes
 

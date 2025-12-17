@@ -4,6 +4,56 @@
 
 ---
 
+## Dependency and Component Cleanup - December 17, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Removed all unused dependencies and shadcn UI components left over from deleted experiments. Updated design system from 11-point to 9-point checklist (removed shadcn-specific rules).
+
+**Dependencies Removed (11 packages):**
+- `@ai-sdk/openai` - AI SDK for OpenAI (experiments)
+- `ai` - Vercel AI SDK core (experiments)
+- `@vercel/edge-config` - Edge config storage (experiments)
+- `resend` - Email sending (contact forms)
+- `@radix-ui/react-checkbox` - Radix checkbox (shadcn)
+- `@radix-ui/react-label` - Radix label (shadcn)
+- `@radix-ui/react-progress` - Radix progress (shadcn)
+- `@radix-ui/react-separator` - Radix separator (shadcn)
+- `@radix-ui/react-slot` - Radix slot (shadcn)
+- `class-variance-authority` - CVA utility (shadcn)
+- `lucide-react` - Icons (shadcn)
+
+**Files Deleted (10 files):**
+- `components/ui/badge.tsx`
+- `components/ui/button.tsx`
+- `components/ui/card.tsx`
+- `components/ui/checkbox.tsx`
+- `components/ui/input.tsx`
+- `components/ui/label.tsx`
+- `components/ui/progress.tsx`
+- `components/ui/separator.tsx`
+- `components/theme-switcher.tsx`
+- `components/ui/` directory (empty)
+
+**Documentation Updated:**
+- README.md: Design system 11-point -> 9-point, removed shadcn references
+- CLAUDE.md: Design checklist 11-point -> 9-point
+- .cursorrules: Removed shadcn references, updated design checklist
+- .claude/commands/design.md: Rewrote for 9-point checklist
+- .claude/commands/theme.md: Removed ThemeSwitcher references
+- app/experiments/_docs/00-experiments-readme.md: Removed `@/components/ui` reference
+- app/page.tsx: Removed ThemeSwitcher comments
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings (54 files)
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful (2 routes)
+- Dependencies: 18 -> 7 (61% reduction)
+
+---
+
 ## Experiments Removal - December 17, 2025
 
 **Status**: COMPLETE
