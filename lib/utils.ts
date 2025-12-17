@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx"
 import React from "react"
 import { twMerge } from "tailwind-merge"
 
-/** shadcn/ui class name utility - merges Tailwind classes intelligently */
+/** Tailwind class name utility - merges classes intelligently */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }

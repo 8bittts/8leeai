@@ -4,6 +4,28 @@
 
 ---
 
+## Final Cleanup Pass - December 17, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Final cleanup pass to remove all remaining stale references from the codebase after experiments and shadcn removal.
+
+**Files Deleted:**
+- `components.json` - shadcn configuration file (no longer needed)
+
+**Files Updated:**
+- `lib/utils.ts`: Updated comment from "shadcn/ui class name utility" to "Tailwind class name utility"
+- `README.md`: Removed AI SDK and Resend from tech stack table (packages were deleted)
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings (54 files)
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful (2 routes)
+
+---
+
 ## Dependency and Component Cleanup - December 17, 2025
 
 **Status**: COMPLETE
@@ -24,7 +46,7 @@ Removed all unused dependencies and shadcn UI components left over from deleted 
 - `class-variance-authority` - CVA utility (shadcn)
 - `lucide-react` - Icons (shadcn)
 
-**Files Deleted (10 files):**
+**Files Deleted (11 files):**
 - `components/ui/badge.tsx`
 - `components/ui/button.tsx`
 - `components/ui/card.tsx`
@@ -35,15 +57,17 @@ Removed all unused dependencies and shadcn UI components left over from deleted 
 - `components/ui/separator.tsx`
 - `components/theme-switcher.tsx`
 - `components/ui/` directory (empty)
+- `components.json` - shadcn configuration
 
 **Documentation Updated:**
-- README.md: Design system 11-point -> 9-point, removed shadcn references
+- README.md: Design system 11-point -> 9-point, removed shadcn and AI SDK/Resend references
 - CLAUDE.md: Design checklist 11-point -> 9-point
 - .cursorrules: Removed shadcn references, updated design checklist
 - .claude/commands/design.md: Rewrote for 9-point checklist
 - .claude/commands/theme.md: Removed ThemeSwitcher references
 - app/experiments/_docs/00-experiments-readme.md: Removed `@/components/ui` reference
 - app/page.tsx: Removed ThemeSwitcher comments
+- lib/utils.ts: Updated cn() comment
 
 **Quality Validation:**
 - TypeScript: Zero errors
@@ -71,7 +95,7 @@ Removed all experiments (Zendesk, Intercom, Figmoo) from the codebase. Kept only
 - `app/experiments/figmoo/` - Frictionless website builder
 
 **Documentation Kept:**
-- `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` - Protocol for future experiments
+- `app/experiments/_docs/00-experiments-readme.md` - Simplified experiment guidelines
 
 **Main App Cleanup:**
 - `lib/utils.ts`: Removed `zendesk` and `zen` commands
@@ -84,7 +108,7 @@ Removed all experiments (Zendesk, Intercom, Figmoo) from the codebase. Kept only
 - `scripts/test-contact-forms.ts`: Deleted test script
 - `components/command-prompt.tsx`: Removed zendesk/zen URLs from link handler
 - `proxy.ts`: Removed experiment names from comment
-- `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md`: Removed specific experiment names from examples
+- `app/experiments/_docs/`: Consolidated protocol into simplified readme
 
 **Quality Validation:**
 - TypeScript: Zero errors
@@ -194,7 +218,7 @@ Completely overhauled cursor rules to eliminate stale content and contradictions
 - **README.md** - Architecture, design system, tech stack (source of truth)
 - **docs/00-ROADMAP.md** - Active TODOs and future work (ONLY place for plans)
 - **docs/release-notes/** - Weekly development logs
-- **app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md** - Experiment standards
+- **app/experiments/_docs/00-experiments-readme.md** - Experiment guidelines
 
 **Key Principles:**
 - Prefer simple solutions using existing patterns

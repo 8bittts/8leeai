@@ -74,8 +74,6 @@ Once loaded, visitors can use:
 | Styling | [Tailwind CSS](https://tailwindcss.com) (pure utilities) | v4.1.18 |
 | Language | [TypeScript](https://www.typescriptlang.org) (strict + 4 ultra-strict flags) | 5.9.3 |
 | Code Quality | [Biome](https://biomejs.dev) (100+ error rules) | 2.3.9 |
-| AI/ML | [Vercel AI SDK](https://sdk.vercel.ai) | 5.0.114 |
-| Email | [Resend](https://resend.com) | 6.6.0 |
 | Testing | Bun native with happy-dom | - |
 | Analytics | [Vercel Analytics](https://vercel.com/analytics) + Speed Insights | 1.6.1 |
 | Deployment | [Vercel](https://vercel.com) (death-note team, Pro) | - |
