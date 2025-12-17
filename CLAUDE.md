@@ -18,7 +18,6 @@ bun run check    # Biome lint/format
 Prefer CLI over web interfaces:
 - **Vercel**: Always use `--scope death-note` flag
 - **GitHub**: Use `gh` for issues/PRs
-- **Supabase**: Use `supabase` CLI
 
 ## Workflow
 
@@ -65,7 +64,7 @@ type: Brief description
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
 - **Design**: Run `/design` for 11-point compliance audit (see README.md for full checklist)
-- **Experiments**: Follow protocol in `app/experiments/_docs/`
+- **Experiments**: See `app/experiments/_docs/` for guidelines
 
 ## Tech Stack
 
