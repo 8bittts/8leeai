@@ -95,7 +95,7 @@ Every experiment MUST have documentation in `/app/experiments/_docs/`:
 
 **Two Styling Approaches:**
 
-**A. Terminal-Themed (Inherit from Root)** - Intercom, Zendesk
+**A. Terminal-Themed (Inherit from Root)**
 
 For experiments that should match the main 8lee.ai terminal aesthetic:
 
@@ -110,7 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 - All UI uses green terminal styling
 - Zero custom CSS overrides needed
 
-**B. Independent Styling** - Figmoo
+**B. Independent Styling**
 
 For experiments that need completely different branding:
 

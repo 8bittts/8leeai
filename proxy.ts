@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Legacy URL redirect strategy: Redirect semantic-looking 404s to homepage
-  // Skip redirect for homepage, Next.js internals, API routes, and experiments (zendesk/intercom)
+  // Skip redirect for homepage, Next.js internals, API routes, and experiments
   const isHomepage = pathname === "/"
   const isNextInternal = pathname.startsWith("/_next") || pathname.startsWith("/__next")
   const isApiRoute = pathname.startsWith("/api")

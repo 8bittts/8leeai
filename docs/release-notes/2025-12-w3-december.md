@@ -28,13 +28,19 @@ Removed all experiments (Zendesk, Intercom, Figmoo) from the codebase. Kept only
 - `package.json`: Removed `@intercom/messenger-js-sdk` dependency, `test:zendesk` script
 - `lib/api-security.ts`: Removed Zendesk/Intercom API from CSP allowlist
 - `app/globals.css`: Removed Figmoo brand colors
-- `README.md`: Removed Experimental Features section
+- `README.md`: Removed Experimental Features section, Figmoo from color contrast table, updated test counts
+- `app/api/contact/intercom/`: Deleted contact API route
+- `app/api/contact/zendesk/`: Deleted contact API route
+- `scripts/test-contact-forms.ts`: Deleted test script
+- `components/command-prompt.tsx`: Removed zendesk/zen URLs from link handler
+- `proxy.ts`: Removed experiment names from comment
+- `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md`: Removed specific experiment names from examples
 
 **Quality Validation:**
 - TypeScript: Zero errors
-- Biome: Zero warnings
+- Biome: Zero warnings (63 files checked)
 - Tests: 32 tests passing (main app tests)
-- Build: Successful (5 routes down from 25)
+- Build: Successful (3 routes down from 25)
 
 ---
 

@@ -124,12 +124,11 @@ Run `/design` slash command to audit. All code must pass:
 | Theme | Background | Secondary Text | Minimum Contrast |
 |-------|------------|----------------|------------------|
 | Terminal | Black (`#000`) | `text-green-700` | 4.5:1+ |
-| Figmoo | Light (`#faf7f4`) | `text-gray-600` | 4.5:1+ |
 | Placeholders | Any | `placeholder:text-gray-500` | 4.5:1+ |
 
 ### Testing
 
-**Coverage**: 96 tests, 297 assertions across 12 files
+**Coverage**: 32 tests, 100 assertions across 4 files
 
 ```bash
 bun test              # Run all tests
