@@ -10,16 +10,8 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
-# testing
-/coverage
-
 # next.js
 /.next/
-/out/
-
-# production
-/build
-/dist
 
 # misc
 .DS_Store
