@@ -4,6 +4,40 @@
 
 ---
 
+## Experiments Removal - December 17, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Removed all experiments (Zendesk, Intercom, Figmoo) from the codebase. Kept only the experiments protocol documentation for future reference.
+
+**Files Deleted:**
+- 148 files across 3 experiment directories
+- ~36,470 lines of code removed
+
+**Directories Removed:**
+- `app/experiments/zendesk/` - AI-powered ticket intelligence
+- `app/experiments/intercom/` - AI-powered conversation intelligence
+- `app/experiments/figmoo/` - Frictionless website builder
+
+**Documentation Kept:**
+- `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` - Protocol for future experiments
+
+**Main App Cleanup:**
+- `lib/utils.ts`: Removed `zendesk` and `zen` commands
+- `package.json`: Removed `@intercom/messenger-js-sdk` dependency, `test:zendesk` script
+- `lib/api-security.ts`: Removed Zendesk/Intercom API from CSP allowlist
+- `app/globals.css`: Removed Figmoo brand colors
+- `README.md`: Removed Experimental Features section
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings
+- Tests: 32 tests passing (main app tests)
+- Build: Successful (5 routes down from 25)
+
+---
+
 ## Package Updates - December 17, 2025
 
 **Status**: COMPLETE

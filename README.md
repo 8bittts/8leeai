@@ -185,20 +185,6 @@ bun run test:watch    # Watch mode
 
 ---
 
-## Experimental Features
-
-Isolated proof-of-concept projects in `/app/experiments/`:
-
-| Experiment | Purpose | Access |
-|------------|---------|--------|
-| Zendesk | AI-powered ticket intelligence | Hidden: `zendesk` command |
-| Intercom | AI-powered conversation intelligence | Hidden: `intercom` command |
-| Figmoo | Frictionless website builder | `/experiments/figmoo` |
-
-All experiments are 100% isolated from the main portfolio. See `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` for standards.
-
----
-
 ## Version History
 
 - **Current (November 2025+)**: Weekly notes in [docs/release-notes/](docs/release-notes/)
