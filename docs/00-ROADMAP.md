@@ -51,4 +51,4 @@ $: clear / reset      # Reset terminal and theme
 - **Release Notes:** `docs/release-notes/` - Weekly development logs
 - **Theme Architecture:** `docs/release-notes/2025-12-w2-2-december.md`
 - **Theme Implementation:** `docs/release-notes/2025-12-w2-3-december.md`
-- **Experiments Protocol:** `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md`
+- **Experiments:** `app/experiments/_docs/00-experiments-readme.md`

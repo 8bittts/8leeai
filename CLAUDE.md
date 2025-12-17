@@ -53,7 +53,7 @@ type: Brief description
 | Security headers | `proxy.ts` |
 | Project roadmap | `docs/00-ROADMAP.md` |
 | Theme system | `lib/themes/` |
-| Experiments protocol | `app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md` |
+| Experiments | `app/experiments/_docs/00-experiments-readme.md` |
 | Release notes | `docs/release-notes/` |
 
 ## Coding Rules

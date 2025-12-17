@@ -3,7 +3,7 @@
  * Uses Tailwind's animate-pulse (2s fade cycle: 100% → 50% → 100% opacity)
  */
 interface CursorProps {
-  /** Color variant: 'theme' uses current theme primary, 'green' for terminal experiments, 'contrast' for light backgrounds */
+  /** Color variant: 'theme' uses current theme primary, 'green' for terminal style, 'contrast' for light backgrounds */
   variant?: "theme" | "green" | "contrast"
 }
 

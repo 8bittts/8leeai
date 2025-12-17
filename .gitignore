@@ -62,10 +62,3 @@ Thumbs.db
 
 # Docs
 CLAUDE.md
-
-# Archived Experimental Projects (Discontinued)
-# These projects are no longer under active development
-# but remain in production for reference/access via hidden commands
-/app/experiments/zendesk/
-/app/experiments/intercom/
-/app/experiments/figmoo/

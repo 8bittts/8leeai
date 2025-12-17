@@ -58,5 +58,5 @@ Comprehensive audit of all project documentation using ultrathink mode.
 - `/docs/00-ROADMAP.md`
 - `/docs/release-notes/00-RN-README.md`
 - `/.claude/commands/README.md`
-- `/app/experiments/_docs/00-EXPERIMENTS-PROTOCOL.md`
+- `/app/experiments/_docs/00-experiments-readme.md`
 - `/_docs/README.md`
