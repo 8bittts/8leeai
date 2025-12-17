@@ -14,7 +14,7 @@ export function generateCSP(): string {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
-    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com https://api.zendesk.com https://api.intercom.io",
+    "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com",
     "media-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

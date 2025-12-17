@@ -155,9 +155,6 @@ export const VALID_COMMANDS = [
   "stats",
   // Theme switcher
   "theme",
-  // Experiments portal access
-  "zendesk",
-  "zen",
 ] as const
 
 export type Command = (typeof VALID_COMMANDS)[number]
@@ -217,7 +214,4 @@ export const COMMAND_ALIASES: Record<string, string> = {
   stats: "portfolio statistics",
   // Theme switcher
   theme: "theme switcher",
-  // Experiments portal access
-  zendesk: "Zendesk Portal",
-  zen: "Zendesk Portal",
 } as const
