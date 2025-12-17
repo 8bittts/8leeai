@@ -52,7 +52,7 @@ type: Brief description
 | Security headers | `proxy.ts` |
 | Project roadmap | `docs/00-ROADMAP.md` |
 | Theme system | `lib/themes/` |
-| Experiments | `app/experiments/_docs/00-experiments-readme.md` |
+| Demos | `app/demos/_docs/00-demos-readme.md` |
 | Release notes | `docs/release-notes/` |
 
 ## Coding Rules
@@ -64,7 +64,7 @@ type: Brief description
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
 - **Design**: Run `/design` for 9-point compliance audit (see README.md for full checklist)
-- **Experiments**: See `app/experiments/_docs/` for guidelines
+- **Demos**: See `app/demos/_docs/` for guidelines
 
 ## Tech Stack
 

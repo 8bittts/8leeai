@@ -1,13 +1,13 @@
-# Experiments
+# Demos
 
-Isolated proof-of-concept projects live in `/app/experiments/`. Each experiment is 100% isolated from the main application and can be safely deleted without affecting anything else.
+Isolated proof-of-concept projects live in `/app/demos/`. Each demo is 100% isolated from the main application and can be safely deleted without affecting anything else.
 
-## Creating an Experiment
+## Creating a Demo
 
-1. Create directory: `/app/experiments/{name}/`
+1. Create directory: `/app/demos/{name}/`
 2. Add required files:
    - `page.tsx` - Entry point
-   - `layout.tsx` - Experiment-specific layout
+   - `layout.tsx` - Demo-specific layout
    - `not-found.tsx` - Custom 404
 3. Prefix all files with `{name}-` (e.g., `demo-types.ts`, `demo-utils.ts`)
 4. No imports from main app code (except `globals.css`)
@@ -15,7 +15,7 @@ Isolated proof-of-concept projects live in `/app/experiments/`. Each experiment 
 ## Directory Structure
 
 ```
-app/experiments/{name}/
+app/demos/{name}/
 ├── page.tsx
 ├── layout.tsx
 ├── not-found.tsx
@@ -30,7 +30,7 @@ app/experiments/{name}/
 
 ## Deletion Checklist
 
-1. Delete directory: `rm -rf app/experiments/{name}`
+1. Delete directory: `rm -rf app/demos/{name}`
 2. Check for references: `grep -r "{name}" . --include="*.ts" --include="*.tsx"`
 3. Remove any entries in:
    - `proxy.ts` (CSP allowlists)
@@ -40,4 +40,4 @@ app/experiments/{name}/
 
 ## Current Status
 
-No active experiments.
+No active demos.

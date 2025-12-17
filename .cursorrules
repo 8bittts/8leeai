@@ -8,7 +8,7 @@
 - **README.md** - Architecture, design system, tech stack (source of truth)
 - **docs/00-ROADMAP.md** - Active TODOs and future work (ONLY place for plans)
 - **docs/release-notes/** - Weekly development logs
-- **app/experiments/_docs/00-experiments-readme.md** - Experiments guide
+- **app/demos/_docs/00-demos-readme.md** - Demos guide
 
 ## Quick Reference
 

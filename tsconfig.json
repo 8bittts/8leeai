@@ -44,6 +44,6 @@
     "**/*.test.tsx",
     "tests/**/*",
     "scripts/**/*",
-    "app/experiments/**/*"
+    "app/demos/**/*"
   ]
 }

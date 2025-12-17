@@ -4,6 +4,34 @@
 
 ---
 
+## Experiments to Demos Rename - December 17, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Renamed "experiments" to "demos" throughout the codebase for clearer terminology.
+
+**Directory Renamed:**
+- `app/experiments/` -> `app/demos/`
+- `app/experiments/_docs/00-experiments-readme.md` -> `app/demos/_docs/00-demos-readme.md`
+
+**Files Updated:**
+- `proxy.ts`: `isExperiment` -> `isDemo`, `/experiments` -> `/demos`
+- `tsconfig.json`: Updated exclude path
+- `.cursorrules`: Updated documentation hierarchy reference
+- `.claude/commands/docs.md`: Updated file reference
+- `docs/00-ROADMAP.md`: Updated documentation reference
+- `CLAUDE.md`: Updated key files table and coding rules
+- `README.md`: Updated project structure
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings (53 files)
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful (2 routes)
+
+---
+
 ## Final Cleanup Pass - December 17, 2025
 
 **Status**: COMPLETE

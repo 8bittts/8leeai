@@ -138,8 +138,8 @@ bun run test:watch    # Watch mode
 8leeai/
 ├── app/                              # Next.js app router
 │   ├── api/                          # API routes
-│   ├── experiments/                  # Isolated experimental features
-│   │   └── _docs/                    # Experiment documentation
+│   ├── demos/                        # Isolated demo features
+│   │   └── _docs/                    # Demo documentation
 │   ├── layout.tsx                    # Root layout
 │   ├── page.tsx                      # Main terminal page
 │   └── not-found.tsx                 # Custom 404
