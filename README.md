@@ -26,8 +26,7 @@ An interactive portfolio website that simulates a classic DOS terminal. Visitors
 
 **Business Value:**
 - Unique portfolio format that demonstrates technical creativity
-- Self-contained experimental demos for stakeholder presentations
-- Production-grade code quality (96 tests, 297 assertions)
+- Production-grade code quality (32 tests, 100 assertions)
 
 ---
 
