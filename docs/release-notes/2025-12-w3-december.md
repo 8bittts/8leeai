@@ -4,6 +4,39 @@
 
 ---
 
+## Package Updates - December 17, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Updated 2 packages: @ai-sdk/openai patch update and @types/node major version update. Also updated Bun version references in documentation.
+
+**Packages Updated:**
+
+| Package | Previous | Updated |
+|---------|----------|---------|
+| @ai-sdk/openai | 2.0.87 | 2.0.88 |
+| @types/node | 24.10.4 | 25.0.3 |
+
+**Notes:**
+- `@ai-sdk/openai`: Patch update within semver range
+- `@types/node`: Major version update (v24 -> v25) - Node.js type definitions
+
+**Security Audit:**
+- `bun audit`: No vulnerabilities found
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings
+- Tests: 92 tests, 294 assertions passing
+- Build: Successful (25 routes generated)
+
+**Documentation Updated:**
+- CLAUDE.md: Bun version 1.3.1 -> 1.3.3
+- README.md: Bun badge and version references 1.3.1 -> 1.3.3
+
+---
+
 ## Package Updates - December 16, 2025
 
 **Status**: COMPLETE

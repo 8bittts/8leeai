@@ -8,7 +8,7 @@ A retro terminal-style portfolio experience built with modern web technologies.
 [![Next.js](https://img.shields.io/badge/Next.js-16.0.10-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.3-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC)](https://tailwindcss.com)
-[![Bun](https://img.shields.io/badge/Bun-1.3.1-fbf0df)](https://bun.sh)
+[![Bun](https://img.shields.io/badge/Bun-1.3.3-fbf0df)](https://bun.sh)
 
 ---
 
@@ -33,7 +33,7 @@ An interactive portfolio website that simulates a classic DOS terminal. Visitors
 
 ## Quick Start
 
-**This project uses [Bun](https://bun.sh) v1.3.1+ exclusively** - Do NOT use npm, yarn, or pnpm.
+**This project uses [Bun](https://bun.sh) v1.3.3+ exclusively** - Do NOT use npm, yarn, or pnpm.
 
 ```bash
 git clone https://github.com/8bittts/8leeai.git
@@ -69,7 +69,7 @@ Once loaded, visitors can use:
 
 | Component | Technology | Version |
 |-----------|------------|---------|
-| Runtime | [Bun](https://bun.sh) | 1.3.1 |
+| Runtime | [Bun](https://bun.sh) | 1.3.3 |
 | Framework | [Next.js](https://nextjs.org) (App Router + Turbopack) | 16.0.10 |
 | UI | [React](https://react.dev) | 19.2.3 |
 | Styling | [Tailwind CSS](https://tailwindcss.com) (pure utilities) | v4.1.18 |

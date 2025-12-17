@@ -4,7 +4,7 @@ Technical reference for Claude Code. See [README.md](README.md) for architecture
 
 ## Bun Only
 
-This project uses **Bun 1.3.1** exclusively. Never use npm/yarn/pnpm.
+This project uses **Bun 1.3.3** exclusively. Never use npm/yarn/pnpm.
 
 ```bash
 bun run dev      # Development (port 1333, Turbopack)
