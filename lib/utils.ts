@@ -3,7 +3,7 @@ import React from "react"
 import { twMerge } from "tailwind-merge"
 
 /** Tailwind class name utility - merges classes intelligently */
-export function cn(...inputs: ClassValue[]) {
+function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
@@ -157,7 +157,7 @@ export const VALID_COMMANDS = [
   "theme",
 ] as const
 
-export type Command = (typeof VALID_COMMANDS)[number]
+type Command = (typeof VALID_COMMANDS)[number]
 
 /**
  * Type guard to check if a string is a valid command
@@ -165,20 +165,6 @@ export type Command = (typeof VALID_COMMANDS)[number]
 export function isValidCommand(cmd: string): cmd is Command {
   return (VALID_COMMANDS as readonly string[]).includes(cmd)
 }
-
-// Formatted command list for display (groups aliases with main commands)
-export const COMMAND_DISPLAY_LIST = [
-  "email (contact, hello, reach)",
-  "help",
-  "education (ed, resume, cv, about, bio)",
-  "volunteer (vol)",
-  "github",
-  "wellfound",
-  "linkedin (li)",
-  "x",
-  "social",
-  "clear",
-] as const
 
 // Command aliases for better status message feedback
 export const COMMAND_ALIASES: Record<string, string> = {

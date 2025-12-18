@@ -4,6 +4,77 @@
 
 ---
 
+## Dead Code Cleanup and Knip Integration - December 18, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Added knip for dead code detection and cleaned up all unused exports across the codebase.
+
+**Knip Integration:**
+- Installed `knip@5.75.1` as devDependency
+- Created `knip.json` configuration with entry points and exclusions
+- Updated `/ship` command with dead code quality gate
+- Updated `/check` command to include knip
+- Added dead code prevention rules to CLAUDE.md
+
+**Dead Code Cleaned:**
+- `isAllowedOrigin` - removed export (internal only)
+- `ALLOWED_ORIGINS` - removed export (internal only)
+- `cn` - removed export (only used by focusRing)
+- `COMMAND_DISPLAY_LIST` - deleted (unused)
+- `themes` - removed export (internal only)
+- `ThemeColors/ContextValue/Definition/Fonts` re-exports - removed from index.ts
+- `ThemeColors` interface - removed export (internal)
+- `Command` type - removed export (internal)
+
+**Files Modified:**
+- `lib/api-security.ts` - removed exports from internal functions
+- `lib/utils.ts` - removed cn export, deleted COMMAND_DISPLAY_LIST
+- `lib/themes/index.ts` - removed themes export, cleaned re-exports
+- `lib/themes/types.ts` - removed ThemeColors export
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings (54 files)
+- Knip: Zero unused files/exports
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful
+
+---
+
+## Package Updates - December 18, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Updated Biome to 2.3.10.
+
+**Packages Updated:**
+
+| Package | Previous | Updated |
+|---------|----------|---------|
+| @biomejs/biome | 2.3.9 | 2.3.10 |
+
+**Configuration Changes:**
+- Migrated biome.json schema from 2.3.9 to 2.3.10
+
+**Security Audit:**
+- `bun audit`: No vulnerabilities found
+
+**Quality Validation:**
+- TypeScript: Zero errors
+- Biome: Zero warnings
+- Knip: Zero unused files
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful
+
+**Documentation Updated:**
+- CLAUDE.md: Biome 2.3.9 -> 2.3.10
+- README.md: Tech stack table Biome 2.3.9 -> 2.3.10
+
+---
+
 ## Experiments to Demos Rename - December 17, 2025
 
 **Status**: COMPLETE

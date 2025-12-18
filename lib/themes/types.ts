@@ -26,7 +26,7 @@ export type ThemeId =
   | "sunset"
   | "forest"
 
-export interface ThemeColors {
+interface ThemeColors {
   /** Main background color */
   background: string
   /** Primary text color */

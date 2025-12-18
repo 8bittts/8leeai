@@ -73,7 +73,7 @@ Once loaded, visitors can use:
 | UI | [React](https://react.dev) | 19.2.3 |
 | Styling | [Tailwind CSS](https://tailwindcss.com) (pure utilities) | v4.1.18 |
 | Language | [TypeScript](https://www.typescriptlang.org) (strict + 4 ultra-strict flags) | 5.9.3 |
-| Code Quality | [Biome](https://biomejs.dev) (100+ error rules) | 2.3.9 |
+| Code Quality | [Biome](https://biomejs.dev) (100+ error rules) | 2.3.10 |
 | Testing | Bun native with happy-dom | - |
 | Analytics | [Vercel Analytics](https://vercel.com/analytics) + Speed Insights | 1.6.1 |
 | Deployment | [Vercel](https://vercel.com) (death-note team, Pro) | - |

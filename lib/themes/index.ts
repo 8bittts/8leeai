@@ -34,7 +34,7 @@ import { vaporwaveTheme } from "./theme-vaporwave"
 import type { ThemeDefinition, ThemeId } from "./types"
 
 /** All available themes */
-export const themes: Record<ThemeId, ThemeDefinition> = {
+const themes: Record<ThemeId, ThemeDefinition> = {
   // Core
   terminal: terminalTheme,
   "8bit": eightBitTheme,
@@ -76,5 +76,5 @@ export function isValidThemeId(id: string): id is ThemeId {
 /** localStorage key for theme persistence */
 export const THEME_STORAGE_KEY = "8lee-theme"
 
-// Re-export types
-export type { ThemeColors, ThemeContextValue, ThemeDefinition, ThemeFonts, ThemeId } from "./types"
+// Re-export ThemeId (other types available via direct import from ./types)
+export type { ThemeId } from "./types"

@@ -29,7 +29,7 @@ export function generateCSP(): string {
 /**
  * Allowed origins for CORS requests
  */
-export const ALLOWED_ORIGINS = [
+const ALLOWED_ORIGINS = [
   "https://8lee.ai",
   "https://www.8lee.ai",
   "https://8bit.io",
@@ -61,7 +61,7 @@ export const ALLOWED_ORIGINS = [
 /**
  * Checks if an origin is allowed for CORS requests
  */
-export function isAllowedOrigin(origin: string | null): boolean {
+function isAllowedOrigin(origin: string | null): boolean {
   if (!origin) return false
   return ALLOWED_ORIGINS.includes(origin as (typeof ALLOWED_ORIGINS)[number])
 }
