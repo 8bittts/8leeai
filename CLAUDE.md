@@ -21,7 +21,7 @@ Prefer CLI over web interfaces:
 
 ## Workflow
 
-**Pre-commit:** `bun run check && bun test`
+**Pre-commit:** `bun run check && bun test && bunx knip`
 
 **Git commits:** No Claude attribution or co-authorship tags.
 
@@ -35,10 +35,10 @@ type: Brief description
 
 | Command | Purpose |
 |---------|---------|
-| `/check` | Quality checks (TypeScript, Biome, tests) |
-| `/ship` | Quality check + commit + push |
+| `/check` | Quality checks (TypeScript, Biome, tests, dead code) |
+| `/ship` | Quality check + dead code + commit + push |
 | `/push` | Fix issues, update release notes (1800 word split threshold), push |
-| `/design` | Comprehensive design review (11-point checklist) |
+| `/design` | Comprehensive design review (9-point checklist) |
 | `/theme` | Global theme switcher |
 | `/update` | Package update workflow |
 | `/docs` | Documentation audit and consolidation |
@@ -65,6 +65,7 @@ type: Brief description
 - **Docs**: No emojis in any markdown files
 - **Design**: Run `/design` for 9-point compliance audit (see README.md for full checklist)
 - **Demos**: See `app/demos/_docs/` for guidelines
+- **Dead Code**: Never write "future use" utilities. Wire them up in the same commit. Run `bunx knip` before shipping. Delete files with 0 imports.
 
 ## Tech Stack
 
