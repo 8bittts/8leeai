@@ -42,6 +42,7 @@ type: Brief description
 | `/theme` | Global theme switcher |
 | `/update` | Package update workflow |
 | `/docs` | Documentation audit and consolidation |
+| `/vercel` | Comprehensive Vercel review via CLI |
 
 ## Key Files
 

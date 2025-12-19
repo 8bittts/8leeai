@@ -1,6 +1,6 @@
 # Slash Commands
 
-Custom commands for Claude Code. Type `/commandname` to execute.
+Custom commands for Cursor. Type `/commandname` to execute.
 
 | Command | Purpose |
 |---------|---------|
@@ -20,3 +20,4 @@ Each command is defined in its own `.md` file in this directory.
 1. Create `commandname.md` in this directory
 2. Write clear step-by-step instructions
 3. Use with `/commandname`
+
