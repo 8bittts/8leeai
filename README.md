@@ -5,7 +5,7 @@ A retro terminal-style portfolio experience built with modern web technologies.
 **Live Demo**: [www.8lee.ai](https://8lee.ai)
 
 [![Version](https://img.shields.io/badge/version-v1.0-green.svg)](https://github.com/8bittts/8leeai/releases)
-[![Next.js](https://img.shields.io/badge/Next.js-16.0.10-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.0-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.3-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC)](https://tailwindcss.com)
 [![Bun](https://img.shields.io/badge/Bun-1.3.3-fbf0df)](https://bun.sh)
@@ -69,7 +69,7 @@ Once loaded, visitors can use:
 | Component | Technology | Version |
 |-----------|------------|---------|
 | Runtime | [Bun](https://bun.sh) | 1.3.3 |
-| Framework | [Next.js](https://nextjs.org) (App Router + Turbopack) | 16.0.10 |
+| Framework | [Next.js](https://nextjs.org) (App Router + Turbopack) | 16.1.0 |
 | UI | [React](https://react.dev) | 19.2.3 |
 | Styling | [Tailwind CSS](https://tailwindcss.com) (pure utilities) | v4.1.18 |
 | Language | [TypeScript](https://www.typescriptlang.org) (strict + 4 ultra-strict flags) | 5.9.3 |

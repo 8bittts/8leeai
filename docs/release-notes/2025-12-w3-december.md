@@ -4,6 +4,40 @@
 
 ---
 
+## Package Updates - December 19, 2025
+
+**Status**: COMPLETE
+
+**Overview**:
+Updated Next.js to 16.1.0 and knip to 5.75.2. All quality gates passed with zero errors or warnings.
+
+**Packages Updated:**
+
+| Package | Previous | Updated |
+|---------|----------|---------|
+| next | 16.0.10 | 16.1.0 |
+| knip (dev) | 5.75.1 | 5.75.2 |
+
+**Update Method:**
+- Both packages updated within semver range using `bun update`
+- Next.js: Minor version update (16.0.10 -> 16.1.0)
+- knip: Patch version update (5.75.1 -> 5.75.2)
+
+**Security Audit:**
+- `bun audit`: No vulnerabilities found
+
+**Quality Validation:**
+- TypeScript: Zero errors (`bunx tsc --noEmit`)
+- Biome: Zero warnings (`bun run check` - 54 files checked)
+- Tests: 32 tests, 100 assertions passing
+- Build: Successful (Next.js 16.1.0 with Turbopack)
+
+**Documentation Updated:**
+- CLAUDE.md: Next.js 16.0.10 -> 16.1.0 in tech stack section
+- README.md: Next.js badge and tech stack table 16.0.10 -> 16.1.0
+
+---
+
 ## Dead Code Cleanup and Knip Integration - December 18, 2025
 
 **Status**: COMPLETE
