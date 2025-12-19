@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": "nextjs"
 }
