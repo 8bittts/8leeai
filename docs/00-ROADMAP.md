@@ -13,7 +13,7 @@ The portfolio is feature-complete with:
 - 16 visual themes via terminal `theme` command
 - DOS-style boot sequence, typewriter effects, command-line interface
 - Full WCAG 2.1 AA compliance
-- 96 tests, 297 assertions
+- 32 tests, 100 assertions
 
 ---
 
