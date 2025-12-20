@@ -5,15 +5,15 @@
 
 /**
  * Generates Content Security Policy header value
- * Restricts resource loading, allows Vercel analytics/live and third-party APIs
+ * Restricts resource loading, allows Vercel analytics/live, Google Fonts, and third-party APIs
  */
 export function generateCSP(): string {
   const cspDirectives = [
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
-    "style-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob: https:",
-    "font-src 'self' data:",
+    "font-src 'self' data: https://fonts.gstatic.com",
     "connect-src 'self' https://vercel.live wss://ws.vercel.live https://vitals.vercel-insights.com",
     "media-src 'self' blob:",
     "object-src 'none'",
