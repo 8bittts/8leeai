@@ -3,7 +3,7 @@
   "entry": ["app/**/*.{ts,tsx}", "lib/**/*.ts", "tests/setup.ts"],
   "project": ["**/*.{ts,tsx}"],
   "ignore": ["**/*.d.ts"],
-  "ignoreDependencies": ["@biomejs/biome", "tailwindcss", "tw-animate-css", "postcss-load-config"],
+  "ignoreDependencies": ["tailwindcss", "tw-animate-css", "postcss-load-config"],
   "ignoreBinaries": ["lsof"],
   "exclude": ["exports", "types"]
 }
