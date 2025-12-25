@@ -37,7 +37,7 @@ type: Brief description
 |---------|---------|
 | `/check` | Quality checks (TypeScript, Biome, tests, dead code) |
 | `/ship` | Quality check + dead code + commit + push |
-| `/push` | Fix issues, update release notes (1800 word split threshold), push |
+| `/push` | Fix issues and push to main |
 | `/design` | Comprehensive design review (9-point checklist) |
 | `/theme` | Global theme switcher |
 | `/update` | Package update workflow |
@@ -54,7 +54,6 @@ type: Brief description
 | Project roadmap | `docs/00-ROADMAP.md` |
 | Theme system | `lib/themes/` |
 | Demos | `app/demos/_docs/00-demos-readme.md` |
-| Release notes | `docs/release-notes/` |
 
 ## Coding Rules
 
@@ -79,4 +78,3 @@ See [README.md#tech-stack](README.md#tech-stack) for complete stack with version
 | **CLAUDE.md** | Technical canonical for Claude Code (this file) |
 | **README.md** | Architecture, design system, tech stack (source of truth) |
 | **docs/00-ROADMAP.md** | Active TODOs and future work (only place for plans) |
-| **docs/release-notes/** | Weekly development logs |

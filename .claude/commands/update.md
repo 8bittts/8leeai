@@ -16,14 +16,7 @@ Run the package update workflow:
    - proxy.ts - check for version-locked imports
    - vercel.json - build commands and framework versions
    - Any config files with hardcoded versions
-10. Update release notes in `docs/release-notes/`:
-   - Find the current week's file (e.g., `2025-12-w1-december.md`)
-   - Add comprehensive entry with packages updated, quality validation results
-   - Follow split week protocol: if file exceeds 1,000-1,200 lines, split into parts
-     - Naming: `YYYY-MM-wN-month-P.md` (e.g., `2025-12-w1-december-2.md`)
-     - Add cross-references at top of each part file
-   - Entries in reverse chronological order (newest first)
-11. Commit with message "chore: update [package-names]" (NO Claude attribution) and push to main
+10. Commit with message "chore: update [package-names]" (NO Claude attribution) and push to main
 
 Quality gates (all must pass before commit):
 - TypeScript: 0 errors
@@ -31,4 +24,3 @@ Quality gates (all must pass before commit):
 - Tests: all passing
 - Build: successful
 - Version consistency: all docs match package.json
-- Release notes: updated with comprehensive entry

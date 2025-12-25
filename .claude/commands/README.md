@@ -6,7 +6,7 @@ Custom commands for Claude Code. Type `/commandname` to execute.
 |---------|---------|
 | `/check` | Quality checks (TypeScript, Biome, tests) |
 | `/ship` | Quality check + commit + push |
-| `/push` | Fix issues, update release notes, push |
+| `/push` | Fix issues and push to main |
 | `/design` | Design system audit (9-point checklist) |
 | `/theme` | Global theme switcher |
 | `/update` | Package update workflow |

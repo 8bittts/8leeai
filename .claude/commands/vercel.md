@@ -76,7 +76,6 @@ Complete Vercel deployment review and validation workflow via CLI.
 - Ensure all Vercel configuration changes are documented
 - Update CLAUDE.md if new patterns or requirements discovered
 - Update README.md if architecture or deployment process changed
-- Add entry to release notes documenting Vercel review and fixes
 
 ## Vercel CLI Commands Reference
 
@@ -99,4 +98,3 @@ All must pass before completion:
 - 100% Bun adoption verified
 - Deployment successful with clean logs
 - Documentation updated
-

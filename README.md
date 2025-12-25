@@ -151,9 +151,7 @@ bun run test:watch    # Watch mode
 │   └── themes/                       # Theme definitions
 ├── tests/                            # Test files
 ├── docs/                             # Documentation
-│   ├── 00-ROADMAP.md                 # Active roadmap and TODOs
-│   └── release-notes/                # Weekly release notes
-├── _docs/                            # Historical documentation
+│   └── 00-ROADMAP.md                 # Active roadmap and TODOs
 ├── .claude/commands/                 # Slash commands for Claude Code
 └── proxy.ts                          # Security headers (CSP, CORS, HSTS)
 ```
@@ -181,8 +179,7 @@ bun run test:watch    # Watch mode
 
 ## Version History
 
-- **Current (November 2025+)**: Weekly notes in [docs/release-notes/](docs/release-notes/)
-- **Historical**: Monthly notes in [_docs/](_docs/)
+See git commit history for detailed changes.
 
 ---
 

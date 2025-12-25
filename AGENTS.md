@@ -5,7 +5,7 @@
 - `components/` and `hooks/`: Reusable UI and custom hooks (state stays in `TerminalContainer`).
 - `lib/`: Shared utilities, portfolio data (`lib/data.ts`), and themes (`lib/themes/`).
 - `public/`: Static assets and robots/metadata.
-- `docs/` and `_docs/`: Roadmap and release notes.
+- `docs/`: Roadmap.
 - `tests/`: colocated unit tests (happy-dom) mirroring source folders.
 - `proxy.ts`: Centralized security headers (CSP, CORS, HSTS, X-Robots-Tag).
 

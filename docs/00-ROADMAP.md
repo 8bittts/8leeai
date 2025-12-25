@@ -48,7 +48,5 @@ $: clear / reset      # Reset terminal and theme
 
 ## Documentation
 
-- **Release Notes:** `docs/release-notes/` - Weekly development logs
-- **Theme Architecture:** `docs/release-notes/2025-12-w2-2-december.md`
-- **Theme Implementation:** `docs/release-notes/2025-12-w2-3-december.md`
 - **Demos:** `app/demos/_docs/00-demos-readme.md`
+- **History:** See git log for detailed change history
