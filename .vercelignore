@@ -1,0 +1,8 @@
+# Exclude from Vercel deployments
+tests/
+*.test.ts
+*.test.tsx
+.claude/
+.cursor/
+docs/
+AGENTS.md
