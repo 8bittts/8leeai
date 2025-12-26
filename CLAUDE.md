@@ -63,6 +63,7 @@ type: Brief description
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
+- **Release Notes**: Never create release note .md files. Git commit history serves as the changelog.
 - **Design**: Run `/design` for 9-point compliance audit (see README.md for full checklist)
 - **Demos**: See `app/demos/_docs/` for guidelines
 - **Dead Code**: Never write "future use" utilities. Wire them up in the same commit. Run `bunx knip` before shipping. Delete files with 0 imports.

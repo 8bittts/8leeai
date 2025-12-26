@@ -7,7 +7,6 @@
 - **CLAUDE.md** - Technical canonical (commands, workflow, coding rules, references)
 - **README.md** - Architecture, design system, tech stack (source of truth)
 - **docs/00-ROADMAP.md** - Active TODOs and future work (ONLY place for plans)
-- **docs/release-notes/** - Weekly development logs
 - **app/demos/_docs/00-demos-readme.md** - Demos guide
 
 ## Quick Reference
@@ -22,7 +21,7 @@
 
 **Testing:** Focus on user intent and business logic, not implementation details
 
-**Documentation:** No emojis in markdown files. See release notes protocol for content rules.
+**Documentation:** No emojis in markdown files. Never create release note files (use git history).
 
 ## Core Principles
 
