@@ -14,21 +14,29 @@ import { eightBitTheme } from "./theme-8bit"
 // Tier 3: Experimental
 import { accessibilityTheme } from "./theme-accessibility"
 import { brutalistTheme } from "./theme-brutalist"
+// Tier 4: Editor Classics
+import { catppuccinTheme } from "./theme-catppuccin"
 import { christmasTheme } from "./theme-christmas"
 import { cyberpunkTheme } from "./theme-cyberpunk"
+import { draculaTheme } from "./theme-dracula"
 import { forestTheme } from "./theme-forest"
 // Tier 1: Fun and Playful
 import { gameboyTheme } from "./theme-gameboy"
+import { gruvboxTheme } from "./theme-gruvbox"
 // Tier 2: Seasonal/Event
 import { halloweenTheme } from "./theme-halloween"
 import { matrixTheme } from "./theme-matrix"
 import { minimalTheme } from "./theme-minimal"
+import { monokaiTheme } from "./theme-monokai"
+import { nordTheme } from "./theme-nord"
 import { oceanTheme } from "./theme-ocean"
 import { paperTheme } from "./theme-paper"
+import { solarizedTheme } from "./theme-solarized"
 import { sunsetTheme } from "./theme-sunset"
 import { synthwaveTheme } from "./theme-synthwave"
 // Core themes (always available)
 import { terminalTheme } from "./theme-terminal"
+import { tokyoNightTheme } from "./theme-tokyo-night"
 import { vaporwaveTheme } from "./theme-vaporwave"
 
 import type { ThemeDefinition, ThemeId } from "./types"
@@ -55,6 +63,14 @@ const themes: Record<ThemeId, ThemeDefinition> = {
   ocean: oceanTheme,
   sunset: sunsetTheme,
   forest: forestTheme,
+  // Tier 4: Editor Classics
+  nord: nordTheme,
+  dracula: draculaTheme,
+  monokai: monokaiTheme,
+  solarized: solarizedTheme,
+  catppuccin: catppuccinTheme,
+  gruvbox: gruvboxTheme,
+  "tokyo-night": tokyoNightTheme,
 }
 
 /** Array of all theme definitions */

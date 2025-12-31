@@ -14,12 +14,12 @@ A retro terminal-style portfolio experience built with modern web technologies.
 
 ## Executive Summary
 
-An interactive portfolio website that simulates a classic DOS terminal. Visitors type commands to explore projects, education, and experience. Features 16 visual themes, 64+ projects, and full keyboard navigation.
+An interactive portfolio website that simulates a classic DOS terminal. Visitors type commands to explore projects, education, and experience. Features 23 visual themes, 64+ projects, and full keyboard navigation.
 
 **Key Capabilities:**
 - Terminal simulation with authentic boot sequence
 - 64 projects, 5 education entries, 6 volunteer roles
-- 16 switchable visual themes via `theme` command
+- 23 switchable visual themes via `theme` command
 - Mobile-optimized with Matrix background effect
 - WCAG 2.1 AA accessibility compliant
 - Triple-layer anti-crawling protection (ultra-private mode)
@@ -91,7 +91,7 @@ Once loaded, visitors can use:
 
 **Data Layer:** Portfolio data in `lib/data.ts`. Links use `openExternalLink()` for security.
 
-**Themes:** 16 themes in `lib/themes/` with self-contained preset system.
+**Themes:** 23 themes in `lib/themes/` with self-contained preset system.
 
 **Utilities:**
 - `cn()` - Tailwind class name merger

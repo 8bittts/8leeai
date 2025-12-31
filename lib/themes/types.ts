@@ -25,6 +25,14 @@ export type ThemeId =
   | "ocean"
   | "sunset"
   | "forest"
+  // Tier 4: Editor Classics
+  | "nord"
+  | "dracula"
+  | "monokai"
+  | "solarized"
+  | "catppuccin"
+  | "gruvbox"
+  | "tokyo-night"
 
 interface ThemeColors {
   /** Main background color */
