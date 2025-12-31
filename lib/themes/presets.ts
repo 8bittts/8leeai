@@ -17,7 +17,7 @@ import type { ThemeAnimation, ThemeBorders, ThemeFonts, ThemeShadows } from "./t
 // FONT PRESETS
 // ============================================
 
-/** Monospace terminal fonts - for Terminal, Halloween, Christmas, Matrix */
+/** Monospace terminal fonts - for Terminal, Halloween, Christmas, Matrix, and Editor Classics (Nord, Dracula, Monokai, Solarized, Catppuccin, Gruvbox, Tokyo Night) */
 export const FONTS_MONO: ThemeFonts = {
   primary: "var(--font-mono), ui-monospace, monospace",
   mono: "var(--font-mono), ui-monospace, monospace",
@@ -68,21 +68,21 @@ export const BORDERS_SHARP: ThemeBorders = {
   radius: "0",
 }
 
-/** Subtle minimal borders - for Paper, Terminal */
+/** Subtle minimal borders - for Paper, Terminal, Nord, Dracula, Monokai, Solarized */
 export const BORDERS_SUBTLE: ThemeBorders = {
   width: "1px",
   style: "solid",
   radius: "0.25rem",
 }
 
-/** Standard rounded borders - for seasonal and nature themes */
+/** Standard rounded borders - for seasonal, nature themes, and Gruvbox */
 export const BORDERS_ROUNDED: ThemeBorders = {
   width: "2px",
   style: "solid",
   radius: "0.25rem",
 }
 
-/** Medium rounded borders - for Ocean, Vaporwave */
+/** Medium rounded borders - for Ocean, Vaporwave, Catppuccin, Tokyo Night */
 export const BORDERS_MEDIUM: ThemeBorders = {
   width: "2px",
   style: "solid",
@@ -107,7 +107,7 @@ export const SHADOWS_NONE: ThemeShadows = {
   active: "none",
 }
 
-/** Soft depth shadows - for Paper, nature themes */
+/** Soft depth shadows - for Paper, nature themes, and Editor Classics */
 export const createSoftShadows = (color: string): ThemeShadows => ({
   default: `0 4px 12px ${color}`,
   hover: `0 8px 24px ${color}`,
@@ -157,21 +157,21 @@ export const ANIMATION_NONE: ThemeAnimation = {
   stepped: false,
 }
 
-/** Quick snappy animations - for Minimal, Matrix */
+/** Quick snappy animations - for Minimal, Matrix, Monokai */
 export const ANIMATION_QUICK: ThemeAnimation = {
   duration: "100ms",
   timing: "ease-out",
   stepped: false,
 }
 
-/** Standard smooth animations - for seasonal themes */
+/** Standard smooth animations - for seasonal themes, Nord, Dracula, Solarized, Gruvbox */
 export const ANIMATION_SMOOTH: ThemeAnimation = {
   duration: "200ms",
   timing: "ease-in-out",
   stepped: false,
 }
 
-/** Flowing elegant animations - for nature/neon themes */
+/** Flowing elegant animations - for nature/neon themes, Catppuccin, Tokyo Night */
 export const ANIMATION_FLOWING: ThemeAnimation = {
   duration: "300ms",
   timing: "cubic-bezier(0.4, 0, 0.2, 1)",
