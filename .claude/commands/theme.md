@@ -18,13 +18,40 @@ The theme system allows complete visual transformation of the application. Each 
 
 ### List Available Themes
 
-If user runs `/theme` without arguments, respond with:
+If user runs `/theme` without arguments, respond with available themes from the theme registry.
 
-**Available Themes:**
+**Core Themes:**
 - **terminal** (default) - Classic green-on-black DOS terminal aesthetic
-- **8bit** - Retro 8-bit gaming style with pixel fonts (Press Start 2P)
-- **minimal** - Elegant minimalist with warm off-white background, refined grays, subtle rounded corners
-- **accessibility** - Maximum contrast (21:1) with blue accents, no animations, large fonts, screen reader optimized
+- **8bit** - Retro 8-bit gaming style with pixel fonts
+
+**Fun and Playful:**
+- **gameboy** - Nintendo Game Boy inspired
+- **paper** - Clean paper-like aesthetic
+- **vaporwave** - 80s/90s retro aesthetic
+- **cyberpunk** - Neon-lit dystopian future
+
+**Seasonal/Event:**
+- **halloween** - Spooky orange and purple
+- **christmas** - Festive red and green
+- **matrix** - Digital rain aesthetic
+- **synthwave** - 80s synth neon
+
+**Experimental:**
+- **accessibility** - Maximum contrast, no animations, screen reader optimized
+- **minimal** - Clean minimalist design
+- **brutalist** - Raw, chunky 90s web aesthetic
+- **ocean** - Calm blue ocean tones
+- **sunset** - Warm gradient colors
+- **forest** - Natural green palette
+
+**Editor Classics:**
+- **nord** - Arctic, north-bluish color palette
+- **dracula** - Dark theme with purple accents
+- **monokai** - Sublime Text inspired
+- **solarized** - Precision colors for light/dark
+- **catppuccin** - Pastel color palette
+- **gruvbox** - Retro groove colors
+- **tokyo-night** - Clean dark Tokyo aesthetic
 
 ### Terminal Commands
 
@@ -49,10 +76,10 @@ Themes are defined in `lib/themes/` with this structure:
 
 ```
 lib/themes/
-├── index.ts           # Theme registry
+├── index.ts           # Theme registry and exports
 ├── types.ts           # TypeScript interfaces
-├── theme-terminal.ts  # Default terminal theme
-├── theme-8bit.ts      # 8-bit retro theme
+├── presets.ts         # Shared font, border, shadow, animation presets
+├── theme-*.ts         # Individual theme definitions (23 themes)
 ```
 
 Each theme provides:
