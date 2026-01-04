@@ -1,43 +1,19 @@
 # Demos
 
-Isolated proof-of-concept projects live in `/app/demos/`. Each demo is 100% isolated from the main application and can be safely deleted without affecting anything else.
+Isolated proof-of-concept projects live in `/app/demos/`. Each demo is 100% isolated from the main app and can be safely deleted.
 
 ## Creating a Demo
 
-1. Create directory: `/app/demos/{name}/`
-2. Add required files:
-   - `page.tsx` - Entry point
-   - `layout.tsx` - Demo-specific layout
-   - `not-found.tsx` - Custom 404
-3. Prefix all files with `{name}-` (e.g., `demo-types.ts`, `demo-utils.ts`)
-4. No imports from main app code (except `globals.css`)
+1. Create `/app/demos/{name}/` with `page.tsx`, `layout.tsx`, `not-found.tsx`
+2. Prefix all files with `{name}-` (e.g., `demo-utils.ts`)
+3. No imports from main app code (except `globals.css`)
 
-## Directory Structure
+## Deleting a Demo
 
-```
-app/demos/{name}/
-├── page.tsx
-├── layout.tsx
-├── not-found.tsx
-├── components/
-│   └── {name}-*.tsx
-├── lib/
-│   └── {name}-*.ts
-├── api/                # If needed
-│   └── */route.ts
-└── scripts/            # If needed
-```
+1. `rm -rf app/demos/{name}`
+2. Check `proxy.ts`, `package.json`, `globals.css` for references
+3. `bun run check && bun test && bun run build`
 
-## Deletion Checklist
-
-1. Delete directory: `rm -rf app/demos/{name}`
-2. Check for references: `grep -r "{name}" . --include="*.ts" --include="*.tsx"`
-3. Remove any entries in:
-   - `proxy.ts` (CSP allowlists)
-   - `package.json` (dependencies)
-   - `globals.css` (animations)
-4. Run: `bun run check && bun test && bun run build`
-
-## Current Status
+## Status
 
 No active demos.

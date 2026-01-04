@@ -64,7 +64,6 @@ Project-specific commands in `.claude/commands/`:
 | Portfolio data | `lib/data.ts` |
 | Utilities/commands | `lib/utils.ts` |
 | Security headers | `proxy.ts` |
-| Project roadmap | `docs/00-ROADMAP.md` |
 | Theme system | `lib/themes/` |
 | Demos | `app/demos/_docs/00-demos-readme.md` |
 
@@ -77,18 +76,25 @@ Project-specific commands in `.claude/commands/`:
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
 - **Release Notes**: Never create release note .md files. Git commit history serves as the changelog.
-- **Design**: Run `/design` for 9-point compliance audit (see README.md for full checklist)
+- **Design**: Run `/design` for 9-point compliance audit
 - **Demos**: See `app/demos/_docs/` for guidelines
 - **Dead Code**: Never write "future use" utilities. Wire them up in the same commit. Run `bunx knip` before shipping. Delete files with 0 imports.
 
 ## Tech Stack
 
-See [README.md#tech-stack](README.md#tech-stack) for complete stack with versions.
+| Component | Technology |
+|-----------|------------|
+| Runtime | Bun 1.3.5 |
+| Framework | Next.js 16.1.1 (App Router + Turbopack) |
+| UI | React 19.2.3 |
+| Styling | Tailwind CSS v4.1.18 |
+| Language | TypeScript 5.9.3 (strict) |
+| Linting | Biome 2.3.11 |
+| Deployment | Vercel (death-note team) |
 
 ## Documentation Hierarchy
 
 | Document | Purpose |
 |----------|---------|
-| **CLAUDE.md** | Technical canonical for Claude Code (this file) |
-| **README.md** | Architecture, design system, tech stack (source of truth) |
-| **docs/00-ROADMAP.md** | Active TODOs and future work (only place for plans) |
+| **CLAUDE.md** | Technical reference for Claude Code (this file) |
+| **README.md** | User-facing overview and quick start |
