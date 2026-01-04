@@ -36,8 +36,8 @@
 
   /* Terminal container glow */
   --terminal-glow:
-    0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3), 0 0 60px
-    rgba(34, 197, 94, 0.15);
+    0 -10px 40px -5px rgba(34, 197, 94, 0.3), 0 10px 40px -5px rgba(34, 197, 94, 0.3),
+    0 0 60px rgba(34, 197, 94, 0.15);
 
   /* Theme animation */
   --theme-duration: 150ms;
