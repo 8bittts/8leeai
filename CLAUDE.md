@@ -31,18 +31,31 @@ type: Brief description
 - Details if needed
 ```
 
-## Slash Commands
+## Global Commands
+
+Common slash commands available across all projects via `~/.claude/commands/`:
 
 | Command | Purpose |
 |---------|---------|
-| `/check` | Quality checks (TypeScript, Biome, tests, dead code) |
-| `/ship` | Quality check + dead code + commit + push |
-| `/push` | Fix issues and push to main |
-| `/design` | Comprehensive design review (9-point checklist) |
-| `/theme` | Global theme switcher |
+| `/dev` | Start development server |
+| `/build` | Production build with cache clear |
+| `/check` | Quick quality check (lint + types) |
+| `/ship` | Surgical commit + push |
+| `/ship-all` | YOLO commit + push all files |
 | `/update` | Package update workflow |
-| `/docs` | Documentation audit and consolidation |
-| `/vercel` | Comprehensive Vercel review via CLI |
+| `/vercel` | Vercel deployment audit |
+| `/docs` | Documentation audit |
+| `/design` | Design review |
+| `/fix` | Auto-fix lint/format issues |
+
+## Project Commands
+
+Project-specific commands in `.claude/commands/`:
+
+| Command | Purpose |
+|---------|---------|
+| `/push` | Fix issues and push to main |
+| `/theme` | Global theme switcher |
 
 ## Key Files
 
