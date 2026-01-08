@@ -105,7 +105,7 @@ export function TerminalContainer() {
 
         {/* Desktop: Small top-right logo with slow pulsing animation (4s cycle) */}
         <div
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-theme-primary text-xs font-mono hidden md:block z-20 animate-logo-pulse"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 text-theme-primary text-xs font-mono hidden md:block z-20 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite]"
           role="img"
           aria-label="Eight Lee logo"
         >

@@ -18,6 +18,16 @@ export function focusRing(...inputs: ClassValue[]): string {
   )
 }
 
+const INTERACTIVE_BASE = "transition-colors duration-150"
+
+export function interactiveLink(...inputs: ClassValue[]): string {
+  return focusRing(INTERACTIVE_BASE, ...inputs)
+}
+
+export function interactiveButton(...inputs: ClassValue[]): string {
+  return focusRing(INTERACTIVE_BASE, ...inputs)
+}
+
 /** Formats array index to zero-padded display number (0 → "01") */
 export function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0")
@@ -114,90 +124,9 @@ export const ANIMATION_DELAYS = {
 } as const
 
 export const DATA_OFFSETS = {
-  projects: { start: 1, end: 64 },
-  education: { start: 65, end: 69 },
-  volunteer: { start: 70, end: 75 },
+  projects: { start: 1, end: 65 },
+  education: { start: 66, end: 70 },
+  volunteer: { start: 71, end: 76 },
 } as const
 
 export const PROJECTS_PER_PAGE = 15
-
-// Valid terminal commands with strict typing
-export const VALID_COMMANDS = [
-  "email",
-  "help",
-  "education",
-  "ed",
-  "volunteer",
-  "vol",
-  "github",
-  "wellfound",
-  "linkedin",
-  "li",
-  "x",
-  "twitter",
-  "random",
-  "clear",
-  "reset",
-  "contact",
-  // Natural language aliases
-  "resume",
-  "cv",
-  "about",
-  "bio",
-  "reach",
-  "hello",
-  "social",
-  // Easter egg commands
-  "whoami",
-  "uname",
-  "date",
-  "echo",
-  "stats",
-  // Theme switcher
-  "theme",
-] as const
-
-type Command = (typeof VALID_COMMANDS)[number]
-
-/**
- * Type guard to check if a string is a valid command
- */
-export function isValidCommand(cmd: string): cmd is Command {
-  return (VALID_COMMANDS as readonly string[]).includes(cmd)
-}
-
-// Command aliases for better status message feedback
-export const COMMAND_ALIASES: Record<string, string> = {
-  li: "LinkedIn",
-  linkedin: "LinkedIn",
-  ed: "Education",
-  education: "Education",
-  vol: "Volunteer",
-  volunteer: "Volunteer",
-  x: "X/Twitter",
-  twitter: "X/Twitter",
-  github: "GitHub",
-  wellfound: "Wellfound",
-  email: "email",
-  help: "help",
-  clear: "clear",
-  reset: "clear",
-  random: "random project",
-  contact: "contact email",
-  // Natural language aliases
-  resume: "Education",
-  cv: "Education",
-  about: "Education",
-  bio: "Education",
-  reach: "contact email",
-  hello: "contact email",
-  social: "social links",
-  // Easter egg commands
-  whoami: "user info",
-  uname: "system info",
-  date: "current date/time",
-  echo: "echo text",
-  stats: "portfolio statistics",
-  // Theme switcher
-  theme: "theme switcher",
-} as const

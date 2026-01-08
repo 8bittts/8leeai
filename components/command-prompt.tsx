@@ -2,18 +2,25 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
+import { Section } from "@/components/section"
 import { ThemeGridSection } from "@/components/theme-grid-section"
 import { useTheme } from "@/hooks/use-theme"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
-import { education, projects, volunteer } from "@/lib/data"
+import {
+  COMMAND_HELP_LINES,
+  type CommandDefinition,
+  type CommandPanel,
+  resolveCommand,
+  VALID_COMMANDS,
+} from "@/lib/commands"
+import { education, type PortfolioItem, projects, volunteer } from "@/lib/data"
 import { isValidThemeId, type ThemeId } from "@/lib/themes"
 import {
-  COMMAND_ALIASES,
   DATA_OFFSETS,
-  focusRing,
+  interactiveButton,
+  interactiveLink,
   openExternalLink,
   PROJECTS_PER_PAGE,
-  VALID_COMMANDS,
 } from "@/lib/utils"
 
 interface CommandPromptProps {
@@ -31,6 +38,8 @@ export interface CommandPromptRef {
   focus: () => void
 }
 
+type ActivePanel = { type: CommandPanel } | { type: "output"; content: string } | null
+
 export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
   function CommandPromptComponent(
     {
@@ -45,12 +54,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
     },
     ref
   ) {
-    const [showEducation, setShowEducation] = useState(false)
-    const [showVolunteer, setShowVolunteer] = useState(false)
-    const [showThemes, setShowThemes] = useState(false)
-    const [showEmail, setShowEmail] = useState(false)
-    const [showHelp, setShowHelp] = useState(false)
-    const [displayContent, setDisplayContent] = useState("")
+    const [activePanel, setActivePanel] = useState<ActivePanel>(null)
     const [statusMessage, setStatusMessage] = useState("")
     const inputRef = useRef<HTMLInputElement>(null)
     const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
@@ -62,17 +66,24 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       inputRef.current?.focus()
     }, [])
 
-    const hideAllSections = () => {
-      setShowEducation(false)
-      setShowVolunteer(false)
-      setShowThemes(false)
-      setShowEmail(false)
-      setShowHelp(false)
-      setDisplayContent("")
+    const clearPanels = () => {
+      setActivePanel(null)
+    }
+
+    const showPanel = (panel: CommandPanel, status: string) => {
+      setActivePanel({ type: panel })
+      setStatusMessage(status)
+      setCommand("")
+    }
+
+    const showOutput = (content: string, status: string) => {
+      setActivePanel(content ? { type: "output", content } : null)
+      setStatusMessage(status)
+      setCommand("")
     }
 
     const handleRandomCommand = () => {
-      const projectsWithUrls = projects.filter((p) => p.url && p.url.trim() !== "")
+      const projectsWithUrls = projects.filter((project) => project.url?.trim())
       if (projectsWithUrls.length > 0) {
         const randomProject = projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
         if (randomProject) {
@@ -84,121 +95,51 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
       setCommand("")
     }
 
-    const handleSectionCommand = (cmdLower: string) => {
-      if (cmdLower === "education" || cmdLower === "ed") {
-        hideAllSections()
-        setShowEducation(true)
-        setCommand("")
-        setStatusMessage(`${COMMAND_ALIASES[cmdLower]} section displayed`)
-        return true
-      }
-      if (cmdLower === "volunteer" || cmdLower === "vol") {
-        hideAllSections()
-        setShowVolunteer(true)
-        setCommand("")
-        setStatusMessage(`${COMMAND_ALIASES[cmdLower]} experience section displayed`)
-        return true
-      }
-      return false
-    }
-
-    const handleTerminalCommand = (cmdLower: string) => {
-      if (cmdLower === "clear" || cmdLower === "reset") {
-        hideAllSections()
-        clearToStart()
-        setStatusMessage("Terminal cleared")
-        return true
-      }
-      if (cmdLower === "email") {
-        hideAllSections()
-        setShowEmail(true)
-        setCommand("")
-        setStatusMessage("Contact email displayed")
-        return true
-      }
-      if (cmdLower === "help") {
-        hideAllSections()
-        setShowHelp(true)
-        setCommand("")
-        setStatusMessage("Available commands displayed")
-        return true
-      }
-      if (cmdLower === "random") {
-        handleRandomCommand()
-        return true
-      }
-      return false
-    }
-
-    const handleSocialCommand = () => {
-      hideAllSections()
-      setShowHelp(true)
-      setCommand("")
-      setStatusMessage("Social and professional links displayed")
-    }
-
-    // Theme command helper - switch theme
-    const switchTheme = (themeArg: string) => {
+    const switchTheme = (themeArg: ThemeId) => {
       const theme = availableThemes.find((t) => t.id === themeArg)
       if (themeArg === currentTheme) {
-        setDisplayContent(`Theme: ${themeArg} (already active)\n${theme?.description || ""}`)
-        setStatusMessage(`${themeArg} theme already active`)
-      } else {
-        setTheme(themeArg as ThemeId)
-        setDisplayContent(`Theme switched to: ${themeArg}\n${theme?.description || ""}`)
-        setStatusMessage(`Switched to ${themeArg} theme`)
-      }
-    }
-
-    // Theme command handler - shows grid section like volunteer/education
-    const handleThemeCommand = (cmdLower: string): boolean => {
-      // Show theme grid when typing "theme" or "/theme"
-      if (cmdLower === "theme" || cmdLower === "themes") {
-        hideAllSections()
-        setShowThemes(true)
-        setCommand("")
-        setStatusMessage("Available themes displayed")
-        return true
-      }
-
-      // Handle "theme <name>" syntax
-      if (cmdLower.startsWith("theme ")) {
-        hideAllSections()
-        const themeArg = cmdLower.slice(6).trim()
-        if (isValidThemeId(themeArg)) switchTheme(themeArg)
-        else {
-          setDisplayContent(`Unknown theme: ${themeArg}\nType 'theme' for available themes.`)
-          setStatusMessage("Unknown theme")
-        }
-        setCommand("")
-        return true
-      }
-
-      // Allow bare theme names when theme list is visible (e.g., just "terminal")
-      if (showThemes && isValidThemeId(cmdLower)) {
-        switchTheme(cmdLower)
-        setShowThemes(false)
-        setCommand("")
-        return true
-      }
-
-      return false
-    }
-
-    // System info commands (whoami, uname, date)
-    const handleSystemInfoCommands = (cmdLower: string): boolean => {
-      if (cmdLower === "whoami") {
-        hideAllSections()
-        setDisplayContent(
-          "You're exploring Eight Lee's portfolio terminal.\nType 'help' to see what I can do!"
+        showOutput(
+          `Theme: ${themeArg} (already active)\n${theme?.description || ""}`,
+          `${themeArg} theme already active`
         )
-        setCommand("")
-        setStatusMessage("User info displayed")
-        return true
+      } else {
+        setTheme(themeArg)
+        showOutput(
+          `Theme switched to: ${themeArg}\n${theme?.description || ""}`,
+          `Switched to ${themeArg} theme`
+        )
+      }
+    }
+
+    const handleThemeCommand = (args: string) => {
+      if (!args) {
+        showPanel("themes", "Available themes displayed")
+        return
       }
 
-      if (cmdLower === "uname") {
-        hideAllSections()
+      const themeArg = args.toLowerCase()
+      if (isValidThemeId(themeArg)) {
+        switchTheme(themeArg)
+      } else {
+        showOutput(
+          `Unknown theme: ${themeArg}\nType 'theme' for available themes.`,
+          "Unknown theme"
+        )
+      }
+    }
+
+    const handleSystemCommand = (id: string) => {
+      clearPanels()
+
+      if (id === "whoami") {
+        showOutput(
+          "You're exploring Eight Lee's portfolio terminal.\nType 'help' to see what I can do!",
+          "User info displayed"
+        )
+        return
+      }
+
+      if (id === "uname") {
         const birthYear = 1982
         const birthMonth = 10
         const birthDay = 9
@@ -207,45 +148,22 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         const birthdayThisYear = new Date(year, birthMonth, birthDay)
         const hasHadBirthday = now >= birthdayThisYear
         const age = year - birthYear - (hasHadBirthday ? 0 : 1)
-        setDisplayContent(
-          `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0`
+
+        showOutput(
+          `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0`,
+          "System info displayed"
         )
-        setCommand("")
-        setStatusMessage("System info displayed")
-        return true
+        return
       }
 
-      if (cmdLower === "date") {
-        hideAllSections()
-        setDisplayContent(new Date().toString())
-        setCommand("")
-        setStatusMessage("Current date/time displayed")
-        return true
+      if (id === "date") {
+        showOutput(new Date().toString(), "Current date/time displayed")
+        return
       }
 
-      return false
-    }
-
-    // Easter egg command handlers
-    const handleEasterEggCommands = (cmd: string): boolean => {
-      const cmdLower = cmd.toLowerCase()
-
-      if (handleThemeCommand(cmdLower)) return true
-      if (handleSystemInfoCommands(cmdLower)) return true
-
-      if (cmdLower.startsWith("echo ")) {
-        hideAllSections()
-        const text = cmd.slice(5)
-        setDisplayContent(text || "")
-        setCommand("")
-        setStatusMessage("Echo")
-        return true
-      }
-
-      if (cmdLower === "stats") {
-        hideAllSections()
+      if (id === "stats") {
         const totalCommands = VALID_COMMANDS.length
-        setDisplayContent(
+        showOutput(
           `Portfolio Statistics
 ${"═".repeat(50)}
 Total Projects:        ${projects.length}
@@ -256,53 +174,10 @@ Technologies:          React, Next.js, TypeScript, AI/ML,
                       Tailwind CSS, Bun, Node.js, Python
 Years Active:          20+ years
 Latest Project:        ${projects[0]?.name || "N/A"}
-Focus Areas:           AI/ML, Full-Stack Web, Systems`
+Focus Areas:           AI/ML, Full-Stack Web, Systems`,
+          "Portfolio statistics displayed"
         )
-        setCommand("")
-        setStatusMessage("Portfolio statistics displayed")
-        return true
       }
-
-      return false
-    }
-
-    // Map command aliases to their canonical forms
-    const normalizeCommand = (cmd: string): string => {
-      const cmdLower = cmd.toLowerCase()
-      if (
-        cmdLower === "resume" ||
-        cmdLower === "cv" ||
-        cmdLower === "about" ||
-        cmdLower === "bio"
-      ) {
-        return "education"
-      }
-      if (cmdLower === "contact" || cmdLower === "reach" || cmdLower === "hello") {
-        return "email"
-      }
-      return cmdLower
-    }
-
-    const handleExternalLinkCommand = (cmdLower: string) => {
-      const links = {
-        github: "https://github.com/8bittts/8leeai",
-        wellfound: "https://wellfound.com/u/eightlee",
-        linkedin: "https://www.linkedin.com/in/8lee/",
-        li: "https://www.linkedin.com/in/8lee/",
-        x: "https://twitter.com/8bit",
-        twitter: "https://twitter.com/8bit",
-      } as const
-
-      type LinkKey = keyof typeof links
-      const isValidLinkKey = (key: string): key is LinkKey => key in links
-
-      if (isValidLinkKey(cmdLower)) {
-        openExternalLink(links[cmdLower])
-        setCommand("")
-        setStatusMessage(`Opening ${COMMAND_ALIASES[cmdLower] || cmdLower} in new tab`)
-        return true
-      }
-      return false
     }
 
     const handleEmptyCommand = () => {
@@ -319,7 +194,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
     const openNumberedItem = (
       number: number,
       offset: number,
-      items: ReadonlyArray<{ readonly url: string; readonly [key: string]: unknown }>
+      items: ReadonlyArray<PortfolioItem>
     ) => {
       const index = number - offset
       const item = items[index]
@@ -346,47 +221,123 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
       setCommand("")
     }
 
-    const handleUnrecognizedCommand = (cmd: string) => {
-      if (cmd === "") {
-        handleEmptyCommand()
-      } else if (/^\d+$/.test(cmd)) {
-        handleNumericCommand(cmd)
-      } else {
-        triggerFlash()
-        setCommand("")
-        setStatusMessage("")
+    const handleUnknownCommand = () => {
+      triggerFlash()
+      setCommand("")
+      setStatusMessage("")
+    }
+
+    const handleThemeResolved = (args: string) => {
+      clearPanels()
+      handleThemeCommand(args)
+    }
+
+    const handleEchoResolved = (args: string) => {
+      clearPanels()
+      showOutput(args, "Echo")
+    }
+
+    const handlePanelResolved = (resolved: CommandDefinition) => {
+      if (!(resolved.panel && resolved.status)) {
+        handleUnknownCommand()
+        return
       }
+
+      clearPanels()
+      showPanel(resolved.panel, resolved.status)
+    }
+
+    const handleLinkResolved = (resolved: CommandDefinition) => {
+      if (!resolved.url) {
+        handleUnknownCommand()
+        return
+      }
+
+      openExternalLink(resolved.url)
+      setCommand("")
+      setStatusMessage(`Opening ${resolved.label} in new tab`)
+    }
+
+    const handleClearResolved = (resolved: CommandDefinition) => {
+      clearPanels()
+      clearToStart()
+      setStatusMessage(resolved.status ?? "Terminal cleared")
+      setCommand("")
+    }
+
+    const handleResolvedCommand = (cmdKey: string, args: string) => {
+      const resolved = resolveCommand(cmdKey)
+
+      if (!resolved) {
+        handleUnknownCommand()
+        return
+      }
+
+      switch (resolved.kind) {
+        case "theme":
+          handleThemeResolved(args)
+          return
+        case "echo":
+          handleEchoResolved(args)
+          return
+        case "system":
+          handleSystemCommand(resolved.id)
+          return
+        case "panel":
+          handlePanelResolved(resolved)
+          return
+        case "link":
+          handleLinkResolved(resolved)
+          return
+        case "clear":
+          handleClearResolved(resolved)
+          return
+        case "random":
+          handleRandomCommand()
+          return
+        default:
+          handleUnknownCommand()
+      }
+    }
+
+    const handleThemeShortcut = (cmdKey: string) => {
+      if (activePanel?.type === "themes" && isValidThemeId(cmdKey)) {
+        switchTheme(cmdKey)
+        return true
+      }
+
+      return false
+    }
+
+    const handleTextCommand = (rawCommand: string) => {
+      const head = rawCommand.split(/\s+/)[0] ?? ""
+      const cmdKey = head.toLowerCase()
+      const args = rawCommand.slice(head.length).trim()
+
+      if (handleThemeShortcut(cmdKey)) return
+
+      handleResolvedCommand(cmdKey, args)
     }
 
     const handleCommand = (e: React.KeyboardEvent) => {
       if (e.key !== "Enter") return
 
       // Strip leading slash to support slash command syntax (e.g., "/education", "/github")
-      const cmd = command.trim().replace(/^\//, "")
-      const cmdLower = normalizeCommand(cmd)
+      const rawCommand = command.trim().replace(/^\//, "")
 
-      // Handle easter egg commands first (uses original cmd for echo to preserve case)
-      if (handleEasterEggCommands(cmd)) {
+      if (rawCommand === "") {
+        handleEmptyCommand()
         suppressVirtualKeyboard()
         return
       }
 
-      // Handle social command separately (shows help with social links)
-      if (cmdLower === "social") {
-        handleSocialCommand()
+      if (/^\d+$/.test(rawCommand)) {
+        handleNumericCommand(rawCommand)
         suppressVirtualKeyboard()
         return
       }
 
-      const handled =
-        handleSectionCommand(cmdLower) ||
-        handleTerminalCommand(cmdLower) ||
-        handleExternalLinkCommand(cmdLower)
-
-      if (!handled) {
-        handleUnrecognizedCommand(cmd)
-      }
-
+      handleTextCommand(rawCommand)
       suppressVirtualKeyboard()
     }
 
@@ -397,52 +348,37 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
       },
     }))
 
+    const outputContent = activePanel?.type === "output" ? activePanel.content : ""
+
     return (
       <>
         {/* Help Section */}
-        {showHelp && (
-          <section className="mb-8" aria-label="Available Commands">
-            <h2 className="text-xl font-bold mb-4">Available Commands</h2>
+        {activePanel?.type === "help" && (
+          <Section title="Available Commands" ariaLabel="Available Commands">
             <div className="text-sm space-y-1">
-              <p>• enter · Load more projects (15 per page)</p>
-              <p>• email (contact, hello, reach) · Email address</p>
-              <p>• help · Show this help screen</p>
-              <p>• education (ed, resume, cv, about, bio) · Education background</p>
-              <p>• volunteer (vol) · Volunteer experience</p>
-              <p>• github · Link to this project</p>
-              <p>• wellfound · Wellfound profile</p>
-              <p>• linkedin (li) · LinkedIn profile</p>
-              <p>• twitter/x · X/Twitter profile</p>
-              <p>• social · Show all social links</p>
-              <p>• random · Open a random project</p>
-              <p>• clear (reset) · Reset terminal</p>
-              <p>• whoami · User info</p>
-              <p>• uname · System info</p>
-              <p>• date · Current date/time</p>
-              <p>• echo [text] · Echo text back</p>
-              <p>• stats · Portfolio statistics</p>
-              <p>• theme · Browse and switch visual themes</p>
+              {COMMAND_HELP_LINES.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
             </div>
-          </section>
+          </Section>
         )}
 
         {/* Email Section */}
-        {showEmail && (
-          <section className="mb-8" aria-label="Contact Email">
-            <h2 className="text-xl font-bold mb-4">Contact</h2>
+        {activePanel?.type === "email" && (
+          <Section title="Contact" ariaLabel="Contact Email">
             <div className="text-sm">
               <a
                 href="mailto:jleekun@gmail.com"
-                className={focusRing("hover:text-theme-accent transition-colors underline")}
+                className={interactiveLink("hover:text-theme-accent underline")}
               >
                 jleekun@gmail.com
               </a>
             </div>
-          </section>
+          </Section>
         )}
 
         {/* Education Section */}
-        {showEducation && (
+        {activePanel?.type === "education" && (
           <DataGridSection
             title="Education"
             items={education}
@@ -452,7 +388,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
         )}
 
         {/* Volunteer Section */}
-        {showVolunteer && (
+        {activePanel?.type === "volunteer" && (
           <DataGridSection
             title="Volunteer Experience"
             items={volunteer}
@@ -462,13 +398,13 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
         )}
 
         {/* Theme Selection Section */}
-        {showThemes && <ThemeGridSection />}
+        {activePanel?.type === "themes" && <ThemeGridSection />}
 
         {/* Easter Egg / Command Output */}
-        {displayContent && (
-          <section className="mb-8" aria-label="Command Output">
-            <div className="text-sm whitespace-pre-wrap">{displayContent}</div>
-          </section>
+        {outputContent && (
+          <Section ariaLabel="Command Output">
+            <div className="text-sm whitespace-pre-wrap">{outputContent}</div>
+          </Section>
         )}
 
         {/* Command Prompt */}
@@ -482,7 +418,9 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`
               id="terminal-input"
               type="text"
               inputMode="text"
-              className="flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none focus:ring-2 focus:ring-theme-primary focus:ring-offset-2 focus:ring-offset-theme-bg rounded-sm"
+              className={interactiveButton(
+                "flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none"
+              )}
               placeholder='Hit "return" for more projects, "help" for all commands'
               value={command}
               onChange={(e) => setCommand(e.target.value)}

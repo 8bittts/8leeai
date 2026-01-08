@@ -1,7 +1,14 @@
 "use client"
 
 import { createContext, useCallback, useEffect, useMemo, useState } from "react"
-import { DEFAULT_THEME, getTheme, isValidThemeId, THEME_STORAGE_KEY, themeList } from "@/lib/themes"
+import {
+  DEFAULT_THEME,
+  getTheme,
+  getThemeStyleTags,
+  isValidThemeId,
+  THEME_STORAGE_KEY,
+  themeList,
+} from "@/lib/themes"
 import type { ThemeContextValue, ThemeId } from "@/lib/themes/types"
 
 /** Theme context - null when accessed outside provider */
@@ -41,6 +48,13 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
 
     // Set data-theme attribute for CSS selectors
     document.documentElement.setAttribute("data-theme", currentTheme)
+
+    const themeStyles = getThemeStyleTags(currentTheme)
+    if (themeStyles.length > 0) {
+      document.documentElement.setAttribute("data-theme-style", themeStyles.join(" "))
+    } else {
+      document.documentElement.removeAttribute("data-theme-style")
+    }
 
     // Apply CSS custom properties
     const root = document.documentElement

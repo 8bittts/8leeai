@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from "next"
-import { IBM_Plex_Mono, Press_Start_2P } from "next/font/google"
+import { IBM_Plex_Mono, IBM_Plex_Sans, Press_Start_2P } from "next/font/google"
 import { ThemeProvider } from "@/contexts/theme-context"
 import "./globals.css"
 
@@ -15,6 +15,13 @@ const pressStart2P = Press_Start_2P({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-8bit",
+  display: "swap",
+})
+
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ["400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
 })
 
@@ -104,7 +111,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`h-full ${ibmPlexMono.variable} ${pressStart2P.variable}`}>
+    <html
+      lang="en"
+      className={`h-full ${ibmPlexMono.variable} ${pressStart2P.variable} ${ibmPlexSans.variable}`}
+    >
       <body className="h-full bg-theme-bg text-theme-fg font-[family-name:var(--theme-font-primary)] antialiased transition-colors duration-0">
         <ThemeProvider>
           <a

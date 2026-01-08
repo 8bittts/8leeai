@@ -1,3 +1,5 @@
+import { GridList } from "@/components/grid-list"
+import { Section } from "@/components/section"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { formatIndexWithOffset } from "@/lib/utils"
 
@@ -10,7 +12,7 @@ interface DataGridSectionProps {
   items: ReadonlyArray<{
     readonly id: string
     readonly name: string
-    readonly url: string
+    readonly url?: string
     readonly linkWord?: string
   }>
   startOffset: number
@@ -19,9 +21,8 @@ interface DataGridSectionProps {
 
 export function DataGridSection({ title, items, startOffset, ariaLabel }: DataGridSectionProps) {
   return (
-    <section className="mb-8 animate-fadeIn" aria-label={ariaLabel}>
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
+    <Section title={title} ariaLabel={ariaLabel} animate={true}>
+      <GridList>
         {items.map((item, index) => (
           <div key={item.id} className="flex">
             <span className="mr-3 text-theme-muted">
@@ -34,7 +35,7 @@ export function DataGridSection({ title, items, startOffset, ariaLabel }: DataGr
             )}
           </div>
         ))}
-      </div>
-    </section>
+      </GridList>
+    </Section>
   )
 }

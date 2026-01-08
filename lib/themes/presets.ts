@@ -27,7 +27,7 @@ export const FONTS_MONO: ThemeFonts = {
 
 /** Sans-serif modern fonts - for Ocean, Forest, Sunset */
 export const FONTS_SANS: ThemeFonts = {
-  primary: "var(--font-geist-sans), system-ui, sans-serif",
+  primary: "var(--font-sans), system-ui, sans-serif",
   mono: "var(--font-mono), ui-monospace, monospace",
   sizeBase: "1rem",
   lineHeight: "1.6",
@@ -51,8 +51,8 @@ export const FONTS_ACCESSIBILITY: ThemeFonts = {
 
 /** Pixel fonts for retro themes - for 8bit, Gameboy */
 export const FONTS_PIXEL: ThemeFonts = {
-  primary: "var(--font-geist-mono), 'Courier New', monospace",
-  mono: "var(--font-geist-mono), 'Courier New', monospace",
+  primary: "var(--font-8bit), 'Press Start 2P', monospace",
+  mono: "var(--font-8bit), 'Press Start 2P', monospace",
   sizeBase: "0.875rem",
   lineHeight: "1.6",
 }

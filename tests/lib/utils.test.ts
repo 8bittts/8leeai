@@ -3,12 +3,12 @@
  */
 import { describe, expect, test } from "bun:test"
 import type { createElement } from "react"
+import { isValidCommand } from "../../lib/commands"
 import {
   DATA_OFFSETS,
   formatIndex,
   isMalformedUrl,
   isSemanticUrl,
-  isValidCommand,
   openExternalLink,
   renderTextWithUnderlinedWord,
 } from "../../lib/utils"

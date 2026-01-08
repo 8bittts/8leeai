@@ -1,4 +1,4 @@
-import { focusRing, openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
+import { interactiveLink, openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
 
 /**
  * Secure external link component with window.opener protection
@@ -27,10 +27,7 @@ export function SecureExternalLink({
         e.preventDefault()
         openExternalLink(url)
       }}
-      className={focusRing(
-        "hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150",
-        className
-      )}
+      className={interactiveLink("hover:text-theme-accent hover:bg-theme-primary/10", className)}
       aria-label={`${name} (opens in new tab)`}
     >
       {renderTextWithUnderlinedWord(name, linkWord)}

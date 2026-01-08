@@ -13,7 +13,7 @@ A retro terminal-style portfolio experience built with modern web technologies.
 
 ## Overview
 
-Interactive portfolio simulating a classic DOS terminal. Visitors type commands to explore 64 projects, 5 education entries, and 6 volunteer roles. Features 23 visual themes, full keyboard navigation, and WCAG 2.1 AA compliance.
+Interactive portfolio simulating a classic DOS terminal. Visitors type commands to explore 65 projects, 5 education entries, and 6 volunteer roles. Features 23 visual themes, full keyboard navigation, and WCAG 2.1 AA compliance.
 
 ---
 
@@ -35,7 +35,7 @@ Open [http://localhost:1333](http://localhost:1333)
 ## Contributor Guide
 
 For repository-specific workflows, testing expectations, and coding conventions, see
-[AGENTS.md](AGENTS.md).
+[AGENTS.md](AGENTS.md). Planning and TODOs live in [todos.md](todos.md).
 
 ---
 
@@ -43,9 +43,9 @@ For repository-specific workflows, testing expectations, and coding conventions,
 
 | Command | Action |
 |---------|--------|
-| `1-64` | Open project by number |
-| `65-69` | Education items |
-| `70-75` | Volunteer experience |
+| `1-65` | Open project by number |
+| `66-70` | Education items |
+| `71-76` | Volunteer experience |
 | `help` | Show all commands |
 | `theme` / `theme [name]` | List or switch themes |
 | `random` | Open random project |

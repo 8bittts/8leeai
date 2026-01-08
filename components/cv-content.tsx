@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Cursor } from "@/components/cursor"
+import { GridList } from "@/components/grid-list"
+import { Section } from "@/components/section"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, focusRing, formatIndex } from "@/lib/utils"
+import { ANIMATION_DELAYS, formatIndex, interactiveButton } from "@/lib/utils"
 
 const summaryText =
   "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
@@ -47,8 +49,8 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {!isTyping && (
             <button
               type="button"
-              className={focusRing(
-                "underline hover:text-theme-accent hover:bg-theme-primary/10 transition-all duration-150 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
+              className={interactiveButton(
+                "underline hover:text-theme-accent hover:bg-theme-primary/10 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
               )}
               onClick={() => setCommand?.("email")}
               aria-label="Show contact email"
@@ -62,11 +64,13 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
       </section>
 
       {showProjects && (
-        <section aria-label="Projects" className="animate-fadeIn">
-          <h2 className="text-xl font-bold mb-4">
-            Projects ({visibleProjects} of {projects.length})
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
+        <Section
+          title={`Projects (${visibleProjects} of ${projects.length})`}
+          ariaLabel="Projects"
+          animate={true}
+          className="mb-0"
+        >
+          <GridList>
             {projects.slice(0, visibleProjects).map((project, index) => (
               <div key={project.id} className="flex">
                 <span className="mr-3 text-theme-muted">{formatIndex(index)}.</span>
@@ -82,9 +86,9 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
                 )}
               </div>
             ))}
-          </div>
+          </GridList>
           <div ref={projectsEndRef} />
-        </section>
+        </Section>
       )}
     </article>
   )

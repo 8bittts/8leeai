@@ -143,47 +143,21 @@
 }
 
 /* ============================================
-   MAIN SITE ANIMATIONS (Terminal theme)
+   RETRO THEME SHARED STYLES
+   Applied when data-theme-style includes "retro"
    ============================================ */
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 300ms ease-in;
-}
-
-@keyframes logoPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-logo-pulse {
-  animation: logoPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+[data-theme-style~="retro"] {
+  /* Force pixel-perfect rendering */
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
 }
 
 /* ============================================
    8-BIT THEME SPECIFIC STYLES
    Applied when data-theme="8bit"
    ============================================ */
-
-[data-theme="8bit"] {
-  /* Force pixel-perfect rendering */
-  image-rendering: pixelated;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: unset;
-}
 
 /* 8-bit typography adjustments */
 [data-theme="8bit"] h1,
@@ -257,12 +231,7 @@
    CSS that can't be expressed in the definition
    ============================================ */
 
-/* Gameboy: LCD pixel-perfect rendering */
-[data-theme="gameboy"] {
-  image-rendering: pixelated;
-  -webkit-font-smoothing: none;
-  -moz-osx-font-smoothing: unset;
-}
+/* Gameboy uses retro shared styles */
 
 /* Brutalist: 90s web link underlines */
 [data-theme="brutalist"] a {
@@ -280,8 +249,8 @@
   outline-offset: 2px !important;
 }
 
-/* Matrix: Green glow cursor */
-[data-theme="matrix"] ::selection {
+/* Neon themes: high-contrast selection */
+[data-theme-style~="neon"] ::selection {
   background: var(--theme-primary);
   color: var(--theme-bg);
 }
@@ -291,22 +260,13 @@
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-fadeIn,
-  .animate-logo-pulse {
-    animation: none;
+  .animate-in,
+  .animate-pulse,
+  [class*="animate-["] {
+    animation: none !important;
   }
 
-  [data-theme="8bit"] *,
-  [data-theme="gameboy"] *,
-  [data-theme="matrix"] *,
-  [data-theme="synthwave"] *,
-  [data-theme="cyberpunk"] *,
-  [data-theme="vaporwave"] *,
-  [data-theme="halloween"] *,
-  [data-theme="christmas"] *,
-  [data-theme="ocean"] *,
-  [data-theme="sunset"] *,
-  [data-theme="forest"] * {
+  [data-theme-style~="motion-heavy"] * {
     transition: none !important;
   }
 }

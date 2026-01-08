@@ -1,5 +1,7 @@
+import { GridList } from "@/components/grid-list"
+import { Section } from "@/components/section"
 import { useTheme } from "@/hooks/use-theme"
-import { focusRing } from "@/lib/utils"
+import { interactiveButton } from "@/lib/utils"
 
 /**
  * Theme Grid Section
@@ -11,12 +13,11 @@ export function ThemeGridSection() {
   const { currentTheme, availableThemes, setTheme } = useTheme()
 
   return (
-    <section className="mb-8 animate-fadeIn" aria-label="Available Themes">
-      <h2 className="text-xl font-bold mb-4">Available Themes</h2>
+    <Section title="Available Themes" ariaLabel="Available Themes" animate={true}>
       <p className="text-sm text-green-500 mb-4">
         Type a theme name to switch (e.g., &quot;terminal&quot;, &quot;gameboy&quot;)
       </p>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
+      <GridList>
         {availableThemes.map((theme) => {
           const isActive = theme.id === currentTheme
           return (
@@ -24,8 +25,8 @@ export function ThemeGridSection() {
               <button
                 type="button"
                 onClick={() => setTheme(theme.id)}
-                className={focusRing(
-                  `text-left hover:text-theme-accent transition-colors ${isActive ? "text-theme-accent" : ""}`
+                className={interactiveButton(
+                  `text-left hover:text-theme-accent ${isActive ? "text-theme-accent" : ""}`
                 )}
                 aria-pressed={isActive}
                 aria-label={`${theme.name} theme${isActive ? " (active)" : ""}`}
@@ -40,7 +41,7 @@ export function ThemeGridSection() {
             </div>
           )
         })}
-      </div>
-    </section>
+      </GridList>
+    </Section>
   )
 }

@@ -1,9 +1,20 @@
-export const projects = [
+export interface PortfolioItem {
+  id: string
+  name: string
+  url?: string
+  linkWord?: string
+}
+
+export const projects: ReadonlyArray<PortfolioItem> = [
   {
     id: "yen-chat",
     name: "YEN.chat • Personal Terminal Experience",
-    url: "",
-    linkWord: "",
+    url: "https://yen.chat",
+  },
+  {
+    id: "particularly",
+    name: "Particular.ly • Good Web Diagnostics",
+    url: "https://particular.ly",
   },
   {
     id: "deathnote",
@@ -14,26 +25,18 @@ export const projects = [
   {
     id: "shibuyaaa",
     name: "Shibuyaaa • Mobile Music Creation App",
-    url: "",
-    linkWord: "",
   },
   {
     id: "cascading-ai",
     name: "Cascading AI (YC23) • AI-native Loan Origination Platform",
-    url: "",
-    linkWord: "",
   },
   {
     id: "valkyrie-ai",
     name: "Valkyrie AI • LLMs + Knowledge Graphs for the DoD",
-    url: "",
-    linkWord: "",
   },
   {
     id: "influur",
     name: "Influur • Enterprise Marketing AI Platform",
-    url: "",
-    linkWord: "",
   },
   {
     id: "dotearth",
@@ -116,8 +119,6 @@ export const projects = [
   {
     id: "youtube",
     name: "YouTube Vlog • Every. Single. Day.",
-    url: "",
-    linkWord: "",
   },
   {
     id: "blog",
@@ -146,32 +147,22 @@ export const projects = [
   {
     id: "learn-capital",
     name: "Learn Capital • Advisor & Technical Diligence",
-    url: "",
-    linkWord: "",
   },
   {
     id: "projector",
     name: "Projector • Mobile Notifications & Analytics",
-    url: "",
-    linkWord: "",
   },
   {
     id: "geneva-capital",
     name: "Geneva Capital • Fundraising Advisor",
-    url: "",
-    linkWord: "",
   },
   {
     id: "zesty",
     name: "Zesty (YC14) • COO and PeopleOps",
-    url: "",
-    linkWord: "",
   },
   {
     id: "assembly",
     name: "Assembly (YC13) • COO and Product",
-    url: "",
-    linkWord: "",
   },
   {
     id: "iron-yard",
@@ -218,8 +209,6 @@ export const projects = [
   {
     id: "boosterthon",
     name: "BoosterThon • CTO & Special Projects",
-    url: "",
-    linkWord: "",
   },
   {
     id: "blogcheck",
@@ -296,96 +285,66 @@ export const projects = [
   {
     id: "lords-church",
     name: "Lord's Church • Youth Pastor",
-    url: "",
-    linkWord: "",
   },
   {
     id: "life-multimedia",
     name: "Life Multimedia • Web Design Agency",
-    url: "",
-    linkWord: "",
   },
   {
     id: "starbucks",
     name: "Starbucks • Part-Time Barista",
-    url: "",
-    linkWord: "",
   },
   {
     id: "fedex",
     name: "FedEx/Kinkos • Copier & Paper Boy",
-    url: "",
-    linkWord: "",
   },
   {
     id: "patient-care",
     name: "Patient Care Technologies • Network Engineer",
-    url: "",
-    linkWord: "",
   },
   {
     id: "internap",
     name: "Internap • NOC Engineer (CCNA/CCDA)",
-    url: "",
-    linkWord: "",
   },
   {
     id: "georgia-tech",
     name: "Georgia Tech • Various Tech & Teaching Roles",
-    url: "",
-    linkWord: "",
   },
   {
     id: "johnson-johnson",
     name: "Johnson & Johnson • Web Tools for Acuvue.com",
-    url: "",
-    linkWord: "",
   },
   {
     id: "publix",
     name: "Publix • Bag Boy",
-    url: "",
-    linkWord: "",
   },
   {
     id: "josephs-pizza",
     name: "Joseph's Pizza • Cashier & Waiter",
-    url: "",
-    linkWord: "",
   },
   {
     id: "js-computer",
     name: "JS Computer Repair • Fixed Home Computers",
-    url: "",
-    linkWord: "",
   },
   {
     id: "boars-head",
     name: "Boar's Head Deli • Prep & Serve Meat",
-    url: "",
-    linkWord: "",
   },
   {
     id: "pakmail",
     name: "PakMail • Cashier & Packager",
-    url: "",
-    linkWord: "",
   },
   {
     id: "panera",
     name: "Panera Bread • Prep Cook & Dishwasher",
-    url: "",
-    linkWord: "",
   },
   {
     id: "melkior",
     name: "Melkior Design • 1st Company! HTML & Flash Games",
-    url: "",
-    linkWord: "",
   },
-] as const
+]
 
-export const education = [
+export const education: ReadonlyArray<PortfolioItem> = [
   {
     id: "dallas-seminary",
     name: "Dallas Seminary • Masters in Education & Biblical Studies",
@@ -413,17 +372,13 @@ export const education = [
   {
     id: "asij",
     name: "American School in Japan • Where I Fell in Love with the Internet",
-    url: "",
-    linkWord: "",
   },
-] as const
+]
 
-export const volunteer = [
+export const volunteer: ReadonlyArray<PortfolioItem> = [
   {
     id: "mentor-blue",
     name: "Mentor, Blue Startups • Helping Entrepreneurs Win",
-    url: "",
-    linkWord: "",
   },
   {
     id: "coach-uh",
@@ -440,19 +395,13 @@ export const volunteer = [
   {
     id: "youth-pastor",
     name: "Youth Pastor • Preached & mentored 50+ Community",
-    url: "",
-    linkWord: "",
   },
   {
     id: "tek-styles",
     name: "TEK Styles • Hip-Hop and Breakdance Instructor",
-    url: "",
-    linkWord: "",
   },
   {
     id: "defy-ventures",
     name: "Defy Ventures • Coach for Entrepreneurs in Training",
-    url: "",
-    linkWord: "",
   },
-] as const
+]

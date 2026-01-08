@@ -92,5 +92,6 @@ export function isValidThemeId(id: string): id is ThemeId {
 /** localStorage key for theme persistence */
 export const THEME_STORAGE_KEY = "8lee-theme"
 
+export { getThemeStyleTags, THEME_STYLE_TAGS } from "./styles"
 // Re-export ThemeId (other types available via direct import from ./types)
 export type { ThemeId } from "./types"
