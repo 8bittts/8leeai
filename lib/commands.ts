@@ -106,6 +106,7 @@ const COMMAND_DEFINITIONS: CommandDefinition[] = [
     kind: "panel",
     panel: "help",
     status: "Social and professional links displayed",
+    showInHelp: false,
   },
   {
     id: "random",
@@ -126,12 +127,14 @@ const COMMAND_DEFINITIONS: CommandDefinition[] = [
     label: "user info",
     help: "User info",
     kind: "system",
+    showInHelp: false,
   },
   {
     id: "uname",
     label: "system info",
     help: "System info",
     kind: "system",
+    showInHelp: false,
   },
   {
     id: "date",
@@ -145,12 +148,14 @@ const COMMAND_DEFINITIONS: CommandDefinition[] = [
     help: "Echo text back",
     display: "echo [text]",
     kind: "echo",
+    showInHelp: false,
   },
   {
     id: "stats",
     label: "portfolio statistics",
     help: "Portfolio statistics",
     kind: "system",
+    showInHelp: false,
   },
   {
     id: "theme",
