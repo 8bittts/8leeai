@@ -1,23 +1,24 @@
 # CLAUDE.md
 
-Technical reference for Claude Code. See [README.md](README.md) for architecture and design system.
+Technical reference for Claude Code and contributors. See [README.md](README.md) for overview.
 
-## Bun Only
+## Commands
 
 This project uses **Bun 1.3.5** exclusively. Never use npm/yarn/pnpm.
 
 ```bash
-bun run dev      # Development (port 1333, Turbopack)
-bun run build    # Production build
-bun test         # Run tests
-bun run check    # Biome lint/format
+bun install          # Install dependencies
+bun run dev          # Development server (localhost:1333)
+bun run dev:clean    # Clean dev (deeper cache clear)
+bun run build        # Production build
+bun run start        # Production server
+bun test             # Run tests
+bun test --watch     # Watch mode
+bun run lint         # Biome lint
+bun run format       # Biome format
+bun run check        # Lint + format (auto-fix)
+bunx knip            # Find dead code
 ```
-
-## CLI Tools
-
-Prefer CLI over web interfaces:
-- **Vercel**: Always use `--scope death-note` flag
-- **GitHub**: Use `gh` for issues/PRs
 
 ## Workflow
 
@@ -30,6 +31,12 @@ type: Brief description
 
 - Details if needed
 ```
+
+## CLI Tools
+
+Prefer CLI over web interfaces:
+- **Vercel**: Always use `--scope death-note` flag
+- **GitHub**: Use `gh` for issues/PRs
 
 ## Global Commands
 
@@ -57,29 +64,48 @@ Project-specific commands in `.claude/commands/`:
 | `/push` | Fix issues and push to main |
 | `/theme` | Global theme switcher |
 
+## Project Structure
+
+| Directory | Purpose |
+|-----------|---------|
+| `app/` | Next.js App Router routes/layouts |
+| `components/` | Shared UI components |
+| `contexts/` | React contexts |
+| `hooks/` | Custom React hooks |
+| `lib/` | Data and utilities |
+| `lib/themes/` | Theme definitions (23 themes) |
+| `public/` | Static assets |
+| `tests/` | Bun test suite |
+
 ## Key Files
 
 | Purpose | Location |
 |---------|----------|
 | Portfolio data | `lib/data.ts` |
-| Utilities/commands | `lib/utils.ts` |
+| Utilities | `lib/utils.ts` |
+| Commands | `lib/commands.ts` |
 | Security headers | `proxy.ts` |
-| Theme system | `lib/themes/` |
-| Demos | `app/demos/_docs/00-demos-readme.md` |
+| Test setup | `tests/setup.ts` |
+| Dead code config | `knip.json` |
 
 ## Coding Rules
 
-- **Documentation**: Use Context7 MCP to validate library documentation
 - **Styling**: Tailwind utilities only, zero custom CSS
 - **State**: React hooks only, no external libraries
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)
-- **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
-- **Docs**: No emojis in any markdown files
-- **Planning**: Track all TODOs and feature planning in `todos.md` at the repo root
-- **Release Notes**: Never create release note .md files. Git commit history serves as the changelog.
+- **Focus**: Use `focusRing()` utility for WCAG-compliant focus indicators
+- **Formatting**: Biome enforces 2-space indent, LF, 100-char lines, double quotes
+- **Docs**: No emojis in markdown; validate with Context7 MCP
+- **Planning**: Track TODOs in `todos.md`; git history is the changelog
+- **Dead Code**: Run `bunx knip` before shipping; delete unused files
 - **Design**: Run `/design` for 9-point compliance audit
-- **Demos**: See `app/demos/_docs/` for guidelines
-- **Dead Code**: Never write "future use" utilities. Wire them up in the same commit. Run `bunx knip` before shipping. Delete files with 0 imports.
+- **Demos**: See `app/demos/_docs/` for isolation guidelines
+
+## Testing
+
+- **Framework**: Bun test runner + React Testing Library + happy-dom
+- **Location**: `tests/**/*.test.ts` or `*.test.tsx`
+- **Scope**: Add tests for behavior changes in hooks, utilities, components
 
 ## Tech Stack
 
@@ -93,10 +119,10 @@ Project-specific commands in `.claude/commands/`:
 | Linting | Biome 2.3.11 |
 | Deployment | Vercel (death-note team) |
 
-## Documentation Hierarchy
+## Documentation
 
 | Document | Purpose |
 |----------|---------|
-| **AGENTS.md** | Repository guidelines for contributors |
-| **CLAUDE.md** | Technical reference for Claude Code (this file) |
 | **README.md** | User-facing overview and quick start |
+| **CLAUDE.md** | Technical reference (this file) |
+| **todos.md** | Planning and task tracking |

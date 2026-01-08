@@ -32,10 +32,9 @@ Open [http://localhost:1333](http://localhost:1333)
 
 ---
 
-## Contributor Guide
+## Contributing
 
-For repository-specific workflows, testing expectations, and coding conventions, see
-[AGENTS.md](AGENTS.md). Planning and TODOs live in [todos.md](todos.md).
+See [CLAUDE.md](CLAUDE.md) for workflows, coding conventions, and technical reference. Planning lives in [todos.md](todos.md).
 
 ---
 

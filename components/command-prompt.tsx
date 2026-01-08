@@ -150,7 +150,7 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
         const age = year - birthYear - (hasHadBirthday ? 0 : 1)
 
         showOutput(
-          `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.0.3 + React 19.2.0`,
+          `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.1 + React 19.2`,
           "System info displayed"
         )
         return

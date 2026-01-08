@@ -14,7 +14,7 @@ export function ThemeGridSection() {
 
   return (
     <Section title="Available Themes" ariaLabel="Available Themes" animate={true}>
-      <p className="text-sm text-green-500 mb-4">
+      <p className="text-sm text-theme-muted mb-4">
         Type a theme name to switch (e.g., &quot;terminal&quot;, &quot;gameboy&quot;)
       </p>
       <GridList>
