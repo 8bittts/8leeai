@@ -75,6 +75,7 @@ Project-specific commands in `.claude/commands/`:
 - **Links**: Use `openExternalLink()` from utils (never direct `window.open`)
 - **Focus States**: Use `focusRing()` utility from utils for consistent WCAG-compliant focus indicators
 - **Docs**: No emojis in any markdown files
+- **Planning**: Track all TODOs and feature planning in `todos.md` at the repo root
 - **Release Notes**: Never create release note .md files. Git commit history serves as the changelog.
 - **Design**: Run `/design` for 9-point compliance audit
 - **Demos**: See `app/demos/_docs/` for guidelines
@@ -96,5 +97,6 @@ Project-specific commands in `.claude/commands/`:
 
 | Document | Purpose |
 |----------|---------|
+| **AGENTS.md** | Repository guidelines for contributors |
 | **CLAUDE.md** | Technical reference for Claude Code (this file) |
 | **README.md** | User-facing overview and quick start |

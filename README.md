@@ -32,6 +32,13 @@ Open [http://localhost:1333](http://localhost:1333)
 
 ---
 
+## Contributor Guide
+
+For repository-specific workflows, testing expectations, and coding conventions, see
+[AGENTS.md](AGENTS.md).
+
+---
+
 ## Terminal Commands
 
 | Command | Action |
