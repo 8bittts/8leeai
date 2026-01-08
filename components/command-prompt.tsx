@@ -421,7 +421,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`,
               className={interactiveButton(
                 "flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none"
               )}
-              placeholder='Hit "return" for more projects, "help" for all commands'
+              placeholder="'Return' for more projects, 'help' for commands. {•̃_•̃}"
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={handleCommand}
@@ -432,7 +432,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`,
             />
           </form>
           <p id="command-instructions" className="text-xs text-theme-muted mt-2">
-            Commands: email, help, clear
+            Commands: email | help | clear
           </p>
         </nav>
 
