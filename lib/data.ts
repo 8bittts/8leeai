@@ -10,11 +10,13 @@ export const projects: ReadonlyArray<PortfolioItem> = [
     id: "yen-chat",
     name: "YEN.chat • Personal Terminal Experience",
     url: "https://yen.chat",
+    linkWord: "Terminal",
   },
   {
     id: "particularly",
     name: "Particular.ly • Good Web Diagnostics",
     url: "https://particular.ly",
+    linkWord: "Diagnostics",
   },
   {
     id: "deathnote",
