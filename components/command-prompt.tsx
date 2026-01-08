@@ -432,7 +432,7 @@ Focus Areas:           AI/ML, Full-Stack Web, Systems`,
             />
           </form>
           <p id="command-instructions" className="text-xs text-theme-muted mt-2">
-            Commands: email, help, clear, reset
+            Commands: email, help, clear
           </p>
         </nav>
 
