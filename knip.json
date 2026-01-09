@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["app/**/*.{ts,tsx}", "lib/**/*.ts", "tests/setup.ts"],
+  "entry": ["app/**/*.{ts,tsx}", "lib/**/*.ts"],
   "project": ["**/*.{ts,tsx}"],
   "ignore": ["**/*.d.ts"],
   "ignoreDependencies": ["tailwindcss", "tw-animate-css", "postcss-load-config"],

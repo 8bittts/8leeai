@@ -34,7 +34,7 @@ Open [http://localhost:1333](http://localhost:1333)
 
 ## Contributing
 
-See [CLAUDE.md](CLAUDE.md) for workflows, coding conventions, and technical reference. Planning lives in [todos.md](todos.md).
+See [CLAUDE.md](CLAUDE.md) for workflows, coding conventions, and technical reference. Planning lives in [todos.md](todos.md). No tests - production is the test.
 
 ---
 

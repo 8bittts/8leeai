@@ -12,8 +12,6 @@ bun run dev          # Development server (localhost:1333)
 bun run dev:clean    # Clean dev (deeper cache clear)
 bun run build        # Production build
 bun run start        # Production server
-bun test             # Run tests
-bun test --watch     # Watch mode
 bun run lint         # Biome lint
 bun run format       # Biome format
 bun run check        # Lint + format (auto-fix)
@@ -22,7 +20,7 @@ bunx knip            # Find dead code
 
 ## Workflow
 
-**Pre-commit:** `bun run check && bun test && bunx knip`
+**Pre-commit:** `bun run check && bunx knip`
 
 **Git commits:** No Claude attribution or co-authorship tags.
 
@@ -75,7 +73,6 @@ Project-specific commands in `.claude/commands/`:
 | `lib/` | Data and utilities |
 | `lib/themes/` | Theme definitions (23 themes) |
 | `public/` | Static assets |
-| `tests/` | Bun test suite |
 
 ## Key Files
 
@@ -85,7 +82,6 @@ Project-specific commands in `.claude/commands/`:
 | Utilities | `lib/utils.ts` |
 | Commands | `lib/commands.ts` |
 | Security headers | `proxy.ts` |
-| Test setup | `tests/setup.ts` |
 | Dead code config | `knip.json` |
 
 ## Coding Rules
@@ -100,12 +96,7 @@ Project-specific commands in `.claude/commands/`:
 - **Dead Code**: Run `bunx knip` before shipping; delete unused files
 - **Design**: Run `/design` for 9-point compliance audit
 - **Demos**: See `app/demos/_docs/` for isolation guidelines
-
-## Testing
-
-- **Framework**: Bun test runner + React Testing Library + happy-dom
-- **Location**: `tests/**/*.test.ts` or `*.test.tsx`
-- **Scope**: Add tests for behavior changes in hooks, utilities, components
+- **Tests**: No tests. Production is the test. Only add if explicitly requested.
 
 ## Tech Stack
 
