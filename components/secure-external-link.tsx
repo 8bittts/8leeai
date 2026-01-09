@@ -1,4 +1,4 @@
-import { interactiveLink, openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
+import { interactive, openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
 
 /**
  * Secure external link component with window.opener protection
@@ -27,7 +27,7 @@ export function SecureExternalLink({
         e.preventDefault()
         openExternalLink(url)
       }}
-      className={interactiveLink("hover:text-theme-accent hover:bg-theme-primary/10", className)}
+      className={interactive("hover:text-theme-accent hover:bg-theme-primary/10", className)}
       aria-label={`${name} (opens in new tab)`}
     >
       {renderTextWithUnderlinedWord(name, linkWord)}

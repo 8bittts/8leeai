@@ -1,7 +1,7 @@
 import { GridList } from "@/components/grid-list"
 import { Section } from "@/components/section"
 import { useTheme } from "@/hooks/use-theme"
-import { interactiveButton } from "@/lib/utils"
+import { interactive } from "@/lib/utils"
 
 /**
  * Theme Grid Section
@@ -25,7 +25,7 @@ export function ThemeGridSection() {
               <button
                 type="button"
                 onClick={() => setTheme(theme.id)}
-                className={interactiveButton(
+                className={interactive(
                   `text-left hover:text-theme-accent ${isActive ? "text-theme-accent" : ""}`
                 )}
                 aria-pressed={isActive}

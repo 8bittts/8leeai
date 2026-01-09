@@ -7,7 +7,7 @@ import { Section } from "@/components/section"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, formatIndex, interactiveButton } from "@/lib/utils"
+import { ANIMATION_DELAYS, formatIndex, interactive } from "@/lib/utils"
 
 const summaryText =
   "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
@@ -49,7 +49,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {!isTyping && (
             <button
               type="button"
-              className={interactiveButton(
+              className={interactive(
                 "underline hover:text-theme-accent hover:bg-theme-primary/10 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
               )}
               onClick={() => setCommand?.("email")}

@@ -3,31 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
+import { calculateAgeInYears } from "@/lib/age"
 import { ANIMATION_DELAYS } from "@/lib/utils"
 
 interface BootSequenceProps {
   onComplete: () => void
-}
-
-const BIRTH_YEAR = 1982
-const BIRTH_MONTH = 10 // November (0-indexed)
-const BIRTH_DAY = 9
-
-const calculateAgeInYears = (date: Date): number => {
-  const year = date.getFullYear()
-  const birthdayThisYear = new Date(year, BIRTH_MONTH, BIRTH_DAY)
-  const hasHadBirthday = date >= birthdayThisYear
-
-  const baseAge = year - BIRTH_YEAR - (hasHadBirthday ? 0 : 1)
-  const lastBirthdayYear = hasHadBirthday ? year : year - 1
-  const lastBirthday = new Date(lastBirthdayYear, BIRTH_MONTH, BIRTH_DAY)
-  const nextBirthday = new Date(lastBirthdayYear + 1, BIRTH_MONTH, BIRTH_DAY)
-
-  const elapsed = date.getTime() - lastBirthday.getTime()
-  const span = nextBirthday.getTime() - lastBirthday.getTime()
-  const progress = Math.min(Math.max(elapsed / span, 0), 1)
-
-  return baseAge + progress
 }
 
 export function BootSequence({ onComplete }: BootSequenceProps) {

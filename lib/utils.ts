@@ -20,11 +20,8 @@ export function focusRing(...inputs: ClassValue[]): string {
 
 const INTERACTIVE_BASE = "transition-colors duration-150"
 
-export function interactiveLink(...inputs: ClassValue[]): string {
-  return focusRing(INTERACTIVE_BASE, ...inputs)
-}
-
-export function interactiveButton(...inputs: ClassValue[]): string {
+/** Interactive element utility with focus ring and color transition */
+export function interactive(...inputs: ClassValue[]): string {
   return focusRing(INTERACTIVE_BASE, ...inputs)
 }
 
