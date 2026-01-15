@@ -2,6 +2,8 @@
 
 A retro terminal-style portfolio experience built with modern web technologies.
 
+**Version 1.0.1** - January 2026
+
 **Live Demo**: [www.8lee.ai](https://8lee.ai)
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.2-black)](https://nextjs.org)
