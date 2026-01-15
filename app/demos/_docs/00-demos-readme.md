@@ -12,7 +12,7 @@ Isolated proof-of-concept projects live in `/app/demos/`. Each demo is 100% isol
 
 1. `rm -rf app/demos/{name}`
 2. Check `proxy.ts`, `package.json`, `globals.css` for references
-3. `bun run check && bun test && bun run build`
+3. `bun run check && bun run build`
 
 ## Status
 

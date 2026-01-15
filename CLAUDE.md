@@ -103,7 +103,7 @@ Project-specific commands in `.claude/commands/`:
 | Component | Technology |
 |-----------|------------|
 | Runtime | Bun 1.3.5 |
-| Framework | Next.js 16.1.1 (App Router + Turbopack) |
+| Framework | Next.js 16.1.2 (App Router + Turbopack) |
 | UI | React 19.2.3 |
 | Styling | Tailwind CSS v4.1.18 |
 | Language | TypeScript 5.9.3 (strict) |
