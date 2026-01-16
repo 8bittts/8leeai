@@ -8,7 +8,7 @@ export interface PortfolioItem {
 export const projects: ReadonlyArray<PortfolioItem> = [
   {
     id: "yen-chat",
-    name: "YEN.chat • Personal Terminal Experience",
+    name: "YEN.chat • Modern macOS Terminal",
     url: "https://yen.chat",
     linkWord: "Terminal",
   },
