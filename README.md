@@ -6,7 +6,7 @@ A retro terminal-style portfolio experience built with modern web technologies.
 
 **Live Demo**: [www.8lee.ai](https://8lee.ai)
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.1.2-black)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.3-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.3-blue)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC)](https://tailwindcss.com)
 [![Bun](https://img.shields.io/badge/Bun-1.3.5-fbf0df)](https://bun.sh)
