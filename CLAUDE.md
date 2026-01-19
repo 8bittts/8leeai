@@ -4,7 +4,7 @@ Technical reference for Claude Code and contributors. See [README.md](README.md)
 
 ## Commands
 
-This project uses **Bun 1.3.5** exclusively. Never use npm/yarn/pnpm.
+This project uses **Bun 1.3.6** exclusively. Never use npm/yarn/pnpm.
 
 ```bash
 bun install          # Install dependencies
@@ -102,7 +102,7 @@ Project-specific commands in `.claude/commands/`:
 
 | Component | Technology |
 |-----------|------------|
-| Runtime | Bun 1.3.5 |
+| Runtime | Bun 1.3.6 |
 | Framework | Next.js 16.1.3 (App Router + Turbopack) |
 | UI | React 19.2.3 |
 | Styling | Tailwind CSS v4.1.18 |
