@@ -3,8 +3,8 @@ import type { ActivePanelState } from "@/hooks/use-active-panel"
 import { useTheme } from "@/hooks/use-theme"
 import { getSystemCommandOutput } from "@/lib/command-handlers"
 import { type CommandDefinition, resolveCommand } from "@/lib/commands"
-import { education, type PortfolioItem, projects, volunteer } from "@/lib/data"
-import { isValidThemeId, type ThemeId } from "@/lib/themes"
+import { education, type PortfolioItem, projects, projectsWithUrls, volunteer } from "@/lib/data"
+import { getTheme, isValidThemeId, type ThemeId } from "@/lib/themes"
 import { DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 interface CommandRouterProps {
@@ -31,25 +31,26 @@ export function useCommandRouter({
   suppressVirtualKeyboard,
 }: CommandRouterProps) {
   const { showPanel, showOutput, clearPanels, setStatusMessage, activePanel } = panelState
-  const { currentTheme, setTheme, availableThemes } = useTheme()
+  const { currentTheme, setTheme } = useTheme()
 
   const switchTheme = useCallback(
     (themeArg: ThemeId) => {
-      const theme = availableThemes.find((t) => t.id === themeArg)
+      // O(1) lookup via Record instead of O(n) array.find()
+      const theme = getTheme(themeArg)
       if (themeArg === currentTheme) {
         showOutput(
-          `Theme: ${themeArg} (already active)\n${theme?.description || ""}`,
+          `Theme: ${themeArg} (already active)\n${theme.description}`,
           `${themeArg} theme already active`
         )
       } else {
         setTheme(themeArg)
         showOutput(
-          `Theme switched to: ${themeArg}\n${theme?.description || ""}`,
+          `Theme switched to: ${themeArg}\n${theme.description}`,
           `Switched to ${themeArg} theme`
         )
       }
     },
-    [availableThemes, currentTheme, setTheme, showOutput]
+    [currentTheme, setTheme, showOutput]
   )
 
   const handleThemeCommand = useCallback(
@@ -84,7 +85,7 @@ export function useCommandRouter({
   )
 
   const handleRandomCommand = useCallback(() => {
-    const projectsWithUrls = projects.filter((project) => project.url?.trim())
+    // Use pre-filtered array (computed once at module load)
     if (projectsWithUrls.length > 0) {
       const randomProject = projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
       if (randomProject) {

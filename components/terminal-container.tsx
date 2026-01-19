@@ -20,9 +20,8 @@ export function TerminalContainer() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioPlayedRef = useRef(false)
 
+  // Cleanup audio on unmount
   useEffect(() => {
-    audioRef.current = new Audio("/cj.m4a")
-    audioRef.current.volume = 0.02
     return () => {
       if (audioRef.current) {
         audioRef.current.pause()
@@ -33,12 +32,15 @@ export function TerminalContainer() {
 
   const handleBootComplete = () => {
     setBootComplete(true)
-    // Play audio on boot-to-content transition
-    if (!audioPlayedRef.current && audioRef.current) {
-      audioRef.current.play().catch(() => {
+    // Defer audio creation to first user interaction (not on mount)
+    if (!audioPlayedRef.current) {
+      audioPlayedRef.current = true
+      const audio = new Audio("/cj.m4a")
+      audio.volume = 0.02
+      audioRef.current = audio
+      audio.play().catch(() => {
         // Intentionally empty - audio is optional enhancement
       })
-      audioPlayedRef.current = true
     }
   }
 

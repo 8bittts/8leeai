@@ -56,36 +56,30 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
       document.documentElement.removeAttribute("data-theme-style")
     }
 
-    // Apply CSS custom properties
+    // Apply CSS custom properties in single batch (avoids 20+ reflows)
     const root = document.documentElement
-    root.style.setProperty("--theme-bg", theme.colors.background)
-    root.style.setProperty("--theme-fg", theme.colors.foreground)
-    root.style.setProperty("--theme-primary", theme.colors.primary)
-    root.style.setProperty("--theme-secondary", theme.colors.secondary)
-    root.style.setProperty("--theme-accent", theme.colors.accent)
-    root.style.setProperty("--theme-muted", theme.colors.muted)
-    root.style.setProperty("--theme-border", theme.colors.border)
-    root.style.setProperty("--theme-error", theme.colors.error)
-
-    // Typography
-    root.style.setProperty("--theme-font-primary", theme.fonts.primary)
-    root.style.setProperty("--theme-font-mono", theme.fonts.mono)
-    root.style.setProperty("--theme-font-size", theme.fonts.sizeBase)
-    root.style.setProperty("--theme-line-height", theme.fonts.lineHeight)
-
-    // Borders
-    root.style.setProperty("--theme-border-width", theme.borders.width)
-    root.style.setProperty("--theme-border-style", theme.borders.style)
-    root.style.setProperty("--theme-border-radius", theme.borders.radius)
-
-    // Shadows
-    root.style.setProperty("--theme-shadow", theme.shadows.default)
-    root.style.setProperty("--theme-shadow-hover", theme.shadows.hover)
-    root.style.setProperty("--theme-shadow-active", theme.shadows.active)
-
-    // Animation
-    root.style.setProperty("--theme-duration", theme.animation.duration)
-    root.style.setProperty("--theme-timing", theme.animation.timing)
+    root.style.cssText = `
+      --theme-bg: ${theme.colors.background};
+      --theme-fg: ${theme.colors.foreground};
+      --theme-primary: ${theme.colors.primary};
+      --theme-secondary: ${theme.colors.secondary};
+      --theme-accent: ${theme.colors.accent};
+      --theme-muted: ${theme.colors.muted};
+      --theme-border: ${theme.colors.border};
+      --theme-error: ${theme.colors.error};
+      --theme-font-primary: ${theme.fonts.primary};
+      --theme-font-mono: ${theme.fonts.mono};
+      --theme-font-size: ${theme.fonts.sizeBase};
+      --theme-line-height: ${theme.fonts.lineHeight};
+      --theme-border-width: ${theme.borders.width};
+      --theme-border-style: ${theme.borders.style};
+      --theme-border-radius: ${theme.borders.radius};
+      --theme-shadow: ${theme.shadows.default};
+      --theme-shadow-hover: ${theme.shadows.hover};
+      --theme-shadow-active: ${theme.shadows.active};
+      --theme-duration: ${theme.animation.duration};
+      --theme-timing: ${theme.animation.timing};
+    `
   }, [currentTheme, isHydrated])
 
   // Theme setter with localStorage persistence

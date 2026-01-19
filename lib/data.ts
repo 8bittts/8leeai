@@ -377,6 +377,11 @@ export const education: ReadonlyArray<PortfolioItem> = [
   },
 ]
 
+/** Pre-filtered projects with URLs (computed once at module load) */
+export const projectsWithUrls: ReadonlyArray<PortfolioItem> = projects.filter((project) =>
+  project.url?.trim()
+)
+
 export const volunteer: ReadonlyArray<PortfolioItem> = [
   {
     id: "mentor-blue",
