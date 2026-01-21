@@ -34,7 +34,7 @@ mkdir -p ~/.zsh/cache
 | OS | macOS 26.2 (Darwin 25.2.0) |
 | Architecture | ARM64 (Apple Silicon) |
 | Shell | zsh 5.9 |
-| Terminal | [YEN.app](https://yen.chat) |
+| Terminal | [YEN](https://yen.chat) |
 | Package Manager | Homebrew 5.0.10 |
 
 ## Runtimes
@@ -330,7 +330,7 @@ success_symbol = "[>](green)"
 error_symbol = "[>](red)"
 ```
 
-### YEN.app Terminal Config
+### YEN Terminal Config
 
 Config location: `~/.config/yen/config`
 

@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <sub>Developed with <a href="https://yen.chat">YEN.app</a> - the personal terminal experience</sub>
+  <sub>Developed with <a href="https://yen.chat">YEN</a> - the personal terminal experience</sub>
 </p>
 
 ---
@@ -198,10 +198,10 @@ For development workflows and coding conventions, check the project's internal d
 <h3 align="center">Built with YEN</h3>
 
 <p align="center">
-  <a href="https://yen.chat">YEN.app</a> is a personal terminal experience that makes command-line work beautiful.<br/>
+  <a href="https://yen.chat">YEN</a> is a personal terminal experience that makes command-line work beautiful.<br/>
   Fast, customizable, and designed for developers who live in the terminal.<br/>
   <br/>
-  <a href="https://yen.chat"><img src="https://img.shields.io/badge/Download-YEN.app-ff5100?style=for-the-badge" alt="Download YEN" /></a>
+  <a href="https://yen.chat"><img src="https://img.shields.io/badge/Download-YEN-ff5100?style=for-the-badge" alt="Download YEN" /></a>
 </p>
 
 ---
