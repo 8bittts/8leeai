@@ -5,3 +5,5 @@ tests/
 .claude/
 .cursor/
 docs/
+CLAUDE.md
+zshrc.md
