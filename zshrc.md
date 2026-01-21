@@ -19,7 +19,7 @@ brew install \
 
 # 3. Copy ~/.zshrc from this document
 # 4. Copy ~/.config/starship.toml from this document
-# 5. Copy ~/.config/ghostty/config from this document (YEN.app uses Ghostty config)
+# 5. Copy YEN terminal config to ~/.config/yen/
 # 6. Initialize tools
 atuin init
 mkdir -p ~/.zsh/cache
@@ -34,7 +34,7 @@ mkdir -p ~/.zsh/cache
 | OS | macOS 26.2 (Darwin 25.2.0) |
 | Architecture | ARM64 (Apple Silicon) |
 | Shell | zsh 5.9 |
-| Terminal | [YEN.app](https://yen.chat) (Ghostty-based) |
+| Terminal | [YEN.app](https://yen.chat) |
 | Package Manager | Homebrew 5.0.10 |
 
 ## Runtimes
@@ -330,9 +330,9 @@ success_symbol = "[>](green)"
 error_symbol = "[>](red)"
 ```
 
-### ~/.config/ghostty/config (YEN.app Terminal)
+### YEN.app Terminal Config
 
-YEN.app (https://yen.chat) uses Ghostty under the hood. Config location: `~/.config/ghostty/config`
+Config location: `~/.config/yen/config`
 
 ```ini
 # YEN Default Branding Styles
@@ -480,7 +480,7 @@ brew tap homebrew/cask-fonts
 brew install font-jetbrains-mono-nerd-font
 ```
 
-Then set it in YEN/Ghostty config (`~/.config/ghostty/config`):
+Then set it in YEN config:
 ```ini
 font-family = JetBrainsMono Nerd Font
 ```
