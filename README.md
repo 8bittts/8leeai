@@ -159,6 +159,30 @@ public/        Static assets
 
 ---
 
+## Theme Examples
+
+<p align="center">
+  <img src="public/theme-ex-1.png" alt="Theme Example 1" width="100%" />
+</p>
+
+<p align="center">
+  <img src="public/theme-ex-2.png" alt="Theme Example 2" width="100%" />
+</p>
+
+<p align="center">
+  <img src="public/theme-ex-3.png" alt="Theme Example 3" width="100%" />
+</p>
+
+<p align="center">
+  <img src="public/theme-ex-4.png" alt="Theme Example 4" width="100%" />
+</p>
+
+<p align="center">
+  <img src="public/theme-ex-5.png" alt="Theme Example 5" width="100%" />
+</p>
+
+---
+
 ## Contributing
 
 This is a personal portfolio template. Fork it, make it yours. If you build something cool, I'd love to see it.
@@ -168,7 +192,7 @@ For development workflows and coding conventions, check the project's internal d
 ---
 
 <p align="center">
-  <img src="public/yen.png" alt="YEN Terminal" width="600" />
+  <img src="public/yen.png" alt="YEN Terminal" width="100%" />
 </p>
 
 <h3 align="center">Built with YEN</h3>
