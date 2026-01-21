@@ -1,60 +1,188 @@
-# Retro Terminal Homepage
+<p align="center">
+  <img src="public/readme-md.png" alt="8lee.ai Terminal Portfolio" width="100%" />
+</p>
 
-A retro terminal-style portfolio experience built with modern web technologies.
+<h1 align="center">Retro Terminal Portfolio</h1>
 
-**Version 1.0.1** - January 2026
+<p align="center">
+  <strong>A nostalgic DOS-style terminal experience for the modern web.</strong><br/>
+  Built for developers, designers, and creators who want a portfolio that stands out.
+</p>
 
-**Live Demo**: [www.8lee.ai](https://8lee.ai)
+<p align="center">
+  <a href="https://8lee.ai"><img src="https://img.shields.io/badge/Live_Demo-8lee.ai-00ff00?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
+  <a href="#quick-start"><img src="https://img.shields.io/badge/Get_Started-5_min_setup-ff5100?style=for-the-badge" alt="Quick Start" /></a>
+</p>
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.1.3-black)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19.2.3-blue)](https://react.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC)](https://tailwindcss.com)
-[![Bun](https://img.shields.io/badge/Bun-1.3.6-fbf0df)](https://bun.sh)
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16.1.3-black?style=flat-square&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Bun-1.3.6-fbf0df?style=flat-square&logo=bun" alt="Bun" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
+</p>
+
+<p align="center">
+  <sub>Developed with <a href="https://yen.chat">YEN.app</a> - the personal terminal experience</sub>
+</p>
 
 ---
 
-## Overview
+## Why This Exists
 
-Interactive portfolio simulating a classic DOS terminal. Visitors type commands to explore 65 projects, 5 education entries, and 6 volunteer roles. Features 23 visual themes, full keyboard navigation, and WCAG 2.1 AA compliance.
+Most portfolios look the same. This one doesn't.
+
+Visitors interact with your work through a **command-line interface** - typing commands, exploring projects, and discovering your story like they're hacking into a retro mainframe. It's memorable, it's fun, and it showcases your personality.
+
+### What You Get
+
+- **65+ project slots** - Showcase your entire body of work
+- **23 color themes** - From classic green phosphor to synthwave pink
+- **Full keyboard navigation** - Arrow keys, tab completion, shortcuts
+- **WCAG 2.1 AA accessible** - Screen reader friendly
+- **Mobile responsive** - Works everywhere
+- **Blazing fast** - Static generation, zero client-side data fetching
 
 ---
 
 ## Quick Start
 
-**Requires [Bun](https://bun.sh) v1.3.6+** (not npm/yarn/pnpm)
+**Requires [Bun](https://bun.sh) v1.3.6+**
 
 ```bash
+# Clone the repo
 git clone https://github.com/8bittts/8leeai.git
 cd 8leeai
+
+# Install dependencies
 bun install
+
+# Start development server
 bun run dev
 ```
 
-Open [http://localhost:1333](http://localhost:1333)
+Open [http://localhost:1333](http://localhost:1333) and start customizing.
 
 ---
 
-## Contributing
+## Make It Yours
 
-See [CLAUDE.md](CLAUDE.md) for workflows, coding conventions, and technical reference. Planning lives in [todos.md](todos.md). No tests - production is the test.
+### 1. Update Your Data
+
+Edit `lib/data.ts` to add your projects, education, and experience:
+
+```typescript
+export const projects = [
+  {
+    id: 1,
+    title: "Your Project Name",
+    description: "What it does and why it matters",
+    url: "https://yourproject.com",
+    tags: ["React", "TypeScript", "AI"]
+  },
+  // Add up to 65 projects
+];
+```
+
+### 2. Customize Themes
+
+23 themes included in `lib/themes/`. Create your own or modify existing ones:
+
+| Theme | Vibe |
+|-------|------|
+| `default` | Classic green terminal |
+| `amber` | Warm vintage CRT |
+| `synthwave` | 80s neon purple/pink |
+| `nord` | Cool arctic blues |
+| `dracula` | Dark with purple accents |
+| `solarized` | Easy on the eyes |
+
+Switch themes with the `theme` command or `theme [name]`.
+
+### 3. Deploy
+
+```bash
+# Build for production
+bun run build
+
+# Deploy to Vercel (recommended)
+vercel --prod
+```
 
 ---
 
 ## Terminal Commands
 
-| Command | Action |
-|---------|--------|
+Your visitors can use these commands:
+
+| Command | What It Does |
+|---------|--------------|
 | `1-65` | Open project by number |
-| `66-70` | Education items |
-| `71-76` | Volunteer experience |
+| `66-70` | View education |
+| `71-76` | See volunteer work |
 | `help` | Show all commands |
-| `theme` / `theme [name]` | List or switch themes |
-| `random` | Open random project |
-| `email` / `contact` | Contact info |
-| `clear` / `Ctrl+L` | Reset terminal |
+| `theme` | List available themes |
+| `theme [name]` | Switch to a theme |
+| `random` | Surprise me with a project |
+| `email` | Get contact info |
+| `clear` | Reset the terminal |
+| `Ctrl+L` | Quick clear shortcut |
 
 ---
 
-## License
+## Tech Stack
 
-MIT
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router + Turbopack) |
+| UI | React 19 |
+| Styling | Tailwind CSS v4 |
+| Language | TypeScript 5.9 (strict mode) |
+| Runtime | Bun 1.3.6 |
+| Linting | Biome |
+| Deployment | Vercel |
+
+---
+
+## Project Structure
+
+```
+app/           Next.js App Router pages and layouts
+components/    Reusable UI components
+lib/
+  data.ts      Your portfolio content
+  themes/      23 color theme definitions
+  commands.ts  Terminal command logic
+  utils.ts     Helper functions
+public/        Static assets
+```
+
+---
+
+## Contributing
+
+This is a personal portfolio template. Fork it, make it yours. If you build something cool, I'd love to see it.
+
+For development workflows and coding conventions, check the project's internal docs.
+
+---
+
+<p align="center">
+  <img src="public/yen.png" alt="YEN Terminal" width="600" />
+</p>
+
+<h3 align="center">Built with YEN</h3>
+
+<p align="center">
+  <a href="https://yen.chat">YEN.app</a> is a personal terminal experience that makes command-line work beautiful.<br/>
+  Fast, customizable, and designed for developers who live in the terminal.<br/>
+  <br/>
+  <a href="https://yen.chat"><img src="https://img.shields.io/badge/Download-YEN.app-ff5100?style=for-the-badge" alt="Download YEN" /></a>
+</p>
+
+---
+
+<p align="center">
+  <strong>MIT License</strong><br/>
+  <sub>Use it, modify it, ship it.</sub>
+</p>
