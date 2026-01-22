@@ -181,6 +181,10 @@ public/        Static assets
   <img src="public/theme-ex-5.png" alt="Theme Example 5" width="100%" />
 </p>
 
+<p align="center">
+  <img src="public/theme-ex-6.png" alt="Theme Example 6" width="100%" />
+</p>
+
 ---
 
 ## Contributing
