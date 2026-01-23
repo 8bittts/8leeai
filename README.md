@@ -72,13 +72,12 @@ Open [http://localhost:1333](http://localhost:1333) and start customizing.
 Edit `lib/data.ts` to add your projects, education, and experience:
 
 ```typescript
-export const projects = [
+export const projects: ReadonlyArray<PortfolioItem> = [
   {
-    id: 1,
-    title: "Your Project Name",
-    description: "What it does and why it matters",
-    url: "https://yourproject.com",
-    tags: ["React", "TypeScript", "AI"]
+    id: "my-project",
+    name: "My Project - Short Description",
+    url: "https://myproject.com",
+    linkWord: "Project",  // clickable word in the listing
   },
   // Add up to 65 projects
 ];
