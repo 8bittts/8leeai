@@ -125,7 +125,7 @@ export function TerminalContainer() {
 
       <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {!bootComplete && <BootSequence onComplete={handleBootComplete} />}
-        {bootComplete && <CVContent visibleProjects={visibleProjects} />}
+        {bootComplete && <CVContent visibleProjects={visibleProjects} setCommand={setCommand} />}
       </main>
 
       {bootComplete && (
