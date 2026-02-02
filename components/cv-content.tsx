@@ -14,10 +14,9 @@ const summaryText =
 
 interface CVContentProps {
   visibleProjects: number
-  setCommand?: (command: string) => void
 }
 
-export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
+export function CVContent({ visibleProjects }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
   const [showProjects, setShowProjects] = useState(false)
 
@@ -47,18 +46,29 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
         <p className="text-sm leading-relaxed max-w-4xl">
           {displayedText}
           {!isTyping && (
-            <button
-              type="button"
-              className={interactive(
-                "underline hover:text-theme-accent hover:bg-theme-primary/10 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
-              )}
-              onClick={() => setCommand?.("email")}
-              aria-label="Show contact email"
-            >
-              chat
-            </button>
+            <>
+              <a
+                href="mailto:jleekun@gmail.com"
+                className={interactive(
+                  "underline hover:text-theme-accent hover:bg-theme-primary/10"
+                )}
+              >
+                chat
+              </a>
+              {" (or "}
+              <a
+                href="https://www.linkedin.com/in/8lee/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={interactive(
+                  "underline hover:text-theme-accent hover:bg-theme-primary/10"
+                )}
+              >
+                LinkedIn
+              </a>
+              {")."}
+            </>
           )}
-          {!isTyping && "."}
           {isTyping && <Cursor />}
         </p>
       </section>
