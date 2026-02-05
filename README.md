@@ -192,6 +192,10 @@ This is a personal portfolio template. Fork it, make it yours. If you build some
 
 For development workflows and coding conventions, check the project's internal docs.
 
+## Claude Code Integration
+
+This project uses Claude Code with global rules from `~/.claude/CLAUDE.md`. Project-specific rules are in `CLAUDE.md`.
+
 ---
 
 <p align="center">
