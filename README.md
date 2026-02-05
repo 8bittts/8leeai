@@ -196,6 +196,8 @@ For development workflows and coding conventions, check the project's internal d
 
 This project uses Claude Code with global rules from `~/.claude/CLAUDE.md`. Project-specific rules are in `CLAUDE.md`.
 
+Global configuration backup (for recovery on new computers) is maintained in the [deathnote project](https://github.com/8bittts/deathnote) at `claude-global.md`.
+
 ---
 
 <p align="center">
