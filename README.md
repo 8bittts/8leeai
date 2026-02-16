@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/Next.js-16.1.6-black?style=flat-square&logo=next.js" alt="Next.js" />
   <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Bun-1.3.6-fbf0df?style=flat-square&logo=bun" alt="Bun" />
+  <img src="https://img.shields.io/badge/Bun-1.3.9-fbf0df?style=flat-square&logo=bun" alt="Bun" />
   <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
 </p>
 
@@ -36,7 +36,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 ### What You Get
 
-- **65+ project slots** - Showcase your entire body of work
+- **66+ project slots** - Showcase your entire body of work
 - **23 color themes** - From classic green phosphor to synthwave pink
 - **Full keyboard navigation** - Arrow keys, tab completion, shortcuts
 - **WCAG 2.1 AA accessible** - Screen reader friendly
@@ -47,7 +47,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 ## Quick Start
 
-**Requires [Bun](https://bun.sh) v1.3.6+**
+**Requires [Bun](https://bun.sh) v1.3.9+**
 
 ```bash
 # Clone the repo
@@ -79,7 +79,7 @@ export const projects: ReadonlyArray<PortfolioItem> = [
     url: "https://myproject.com",
     linkWord: "Project",  // clickable word in the listing
   },
-  // Add up to 65 projects
+  // Add as many projects as you want
 ];
 ```
 
@@ -116,9 +116,9 @@ Your visitors can use these commands:
 
 | Command | What It Does |
 |---------|--------------|
-| `1-65` | Open project by number |
-| `66-70` | View education |
-| `71-76` | See volunteer work |
+| `1-66` | Open project by number |
+| `67-71` | View education |
+| `72-77` | See volunteer work |
 | `help` | Show all commands |
 | `theme` | List available themes |
 | `theme [name]` | Switch to a theme |
@@ -137,7 +137,7 @@ Your visitors can use these commands:
 | UI | React 19 |
 | Styling | Tailwind CSS v4 |
 | Language | TypeScript 5.9 (strict mode) |
-| Runtime | Bun 1.3.6 |
+| Runtime | Bun 1.3.9 |
 | Linting | Biome |
 | Deployment | Vercel |
 
