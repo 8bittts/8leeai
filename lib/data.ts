@@ -25,6 +25,12 @@ export const projects: ReadonlyArray<PortfolioItem> = [
     linkWord: "Digital",
   },
   {
+    id: "altoax",
+    name: "AltoaX • Enterprise ESG Accounting Platform",
+    url: "https://altoax.com",
+    linkWord: "Enterprise",
+  },
+  {
     id: "shibuyaaa",
     name: "Shibuyaaa • Mobile Music Creation App",
   },
