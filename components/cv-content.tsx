@@ -58,18 +58,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
               >
                 chat
               </button>
-              {" (or "}
-              <a
-                href="https://www.linkedin.com/in/8lee/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={interactive(
-                  "underline hover:text-theme-accent hover:bg-theme-primary/10"
-                )}
-              >
-                LinkedIn
-              </a>
-              {")."}
+              {"."}
             </>
           )}
           {isTyping && <Cursor />}
