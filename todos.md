@@ -63,8 +63,19 @@ All TODOs and feature planning live in this file.
 
 ## Feature Planning
 
-### Refactor & Cleanup Plan (Draft)
+### Refactor & Cleanup Plan (Reviewed)
 
-1. Stabilize command routing by deriving offsets from data lengths and updating docs/help text.
-2. Extract pure command parsing/routing helpers and add smoke tests for key command paths.
-3. Apply cleanup pass for theme style updates, timer lifecycle safety, and minor security/header hygiene.
+1. Stabilize command routing by deriving offsets from data lengths and exposing one shared range source for UI, routing, and docs.
+2. Extract pure command parsing/routing helpers and add smoke tests around numeric routing, aliases, and unknown commands.
+3. Apply infrastructure cleanup pass (theme style application, timer lifecycle safety, CSP/CORS/header hygiene).
+4. Run full validation (`bun run lint`, `bun run build`, `bunx knip`) and verify terminal behavior on desktop + mobile.
+
+### Plan Gaps & Edge Cases (Added After Review)
+
+- Ensure derived offsets handle empty arrays (0 projects, 0 education, 0 volunteer) without NaN/invalid ranges.
+- Cover numeric edge cases: leading zeros (`01`), out-of-range numbers, and boundary values at section transitions.
+- Keep command display/range text synced with runtime behavior to prevent README/help drift.
+- Verify `random` command behavior when `projectsWithUrls` is empty.
+- Confirm theme update refactor does not remove unrelated inline styles on `documentElement`.
+- Ensure timeout cleanup prevents state updates after unmount during rapid route/theme changes.
+- Re-check accessibility interactions after refactors (keyboard shortcuts, focus, screen-reader status messages).
