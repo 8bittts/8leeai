@@ -168,7 +168,6 @@ Available via `~/.claude/commands/`:
 | `/team` | 8-member agent team review (UI, arch, security, simplification, docs, marketing, devil's advocate, macOS/iOS) |
 | `/team-mac` | 8-member macOS engineering squad (architect, 20yr engineer, designer, docs, Ghostty specialist, pipeline, GTM, devil's advocate) |
 | `/react-YOLO` | Vercel's React/Next.js performance best practices (40+ rules, 8 categories) |
-| `/substack` | Draft newsletter post in 8Lee's voice (Building DeathNote / Digital Onigiri) |
 | `/today` | Daily summary of Claude Code usage (token counts, work themes, artefacts) |
 
 ---
@@ -948,82 +947,6 @@ Comprehensive performance optimization guide for React and Next.js applications,
 [NOTE] Full document is ~2,400 lines. Source: Vercel Engineering React Best Practices guide. The complete content is in ~/.claude/commands/react-YOLO.md.
 ```
 
-### substack.md
-
-```markdown
-# Substack Newsletter Draft
-
-Draft a newsletter post in 8Lee's distinctive voice by reviewing recent updates and crafting a cohesive narrative.
-
----
-
-## Publications
-
-| Newsletter | Archive | Focus |
-|------------|---------|-------|
-| Building DeathNote | https://www.ded.ai/archive | Digital legacy platform updates |
-| Digital Onigiri | https://yenchat.substack.com | YEN terminal app development |
-
----
-
-## Voice Characteristics
-
-**Tone**: Casual, conversational, self-aware. Blend technical candor with philosophical reflection. Dry humor without being forced.
-
-**Opening**: Always start with "Hey folks," or "Hey friends," — never formal greetings.
-
-**Sentences**: Short and punchy, alternating with longer explanations. Accessible without being condescending.
-
-**Perspective**: Treats readers as intelligent peers. Admits mistakes openly. Connects small technical work to bigger themes.
-
-**Humor**: Self-deprecating, dry. Reference "really bad dad jokes" energy. Keep mood light even with serious topics.
-
-**Closing**: Always end with "Talk soon," followed by "— Eight" on a new line. Sometimes add a P.S. with a casual afterthought.
-
-**Philosophy**: The best software aims to become "hardware" — technology that doesn't have to change. Small improvements compound. Quality is table stakes.
-
----
-
-## Structure Template
-
-**Title:** [Thematic statement about the work]
-**Subtitle:** Or: [Alternate framing / philosophical hook]
-
-Hey folks,
-
-[Opening paragraph: Set context. What's been happening? Why does it matter?]
-
-## [Category 1-4: Features, Under the Hood, UX, Looking Ahead]
-
-## By the Numbers (optional)
-
-[Closing reflection connecting work to broader theme]
-
-Talk soon,
-
-— Eight
-
----
-
-## Process
-
-1. Fetch the archive (WebFetch archive URL)
-2. Gather updates (git log since last post)
-3. Categorize (Features, Under the Hood, UX, Security, Cleanup, Looking Ahead)
-4. Draft following voice checklist
-5. Review: Opens "Hey folks,", no corporate language, dry humor, admits mistakes, closes "Talk soon, — Eight"
-
----
-
-## Anti-Patterns
-
-- Don't use corporate buzzwords (leverage, synergy, ecosystem)
-- Don't oversell or hype features
-- Don't promise timelines
-- Don't use emojis
-- Don't skip the human story behind technical changes
-```
-
 ### today.md
 
 ```markdown
@@ -1768,7 +1691,7 @@ Per-project memory files stored at `~/.claude/projects/{project-path}/memory/MEM
 - After `14-vendor.sh` succeeds, trust its output (overlay status, branding checks). Go straight to the summary.
 - When running `git diff` on file paths that start with `.` or contain `-`, always use `--` separator: `git diff -- path/to/file`
 - The only post-vendor verification needed: `git diff --stat` and `git diff -- yen-terminal/.ghostty-baseline yen-terminal/VENDOR_INFO.txt`
-- **Branding checks (31) don't catch Swift compilation errors.** After Ghostty vendor updates, Swift concurrency issues may only surface at build time (`/zip` Step 5). Be ready to fix `@MainActor` annotations in overlay files and rebuild.
+- **Branding checks (34) don't catch Swift compilation errors.** After Ghostty vendor updates, Swift concurrency issues may only surface at build time (`/zip` Step 5). Be ready to fix `@MainActor` annotations in overlay files and rebuild.
 
 ## CLI Registration — MANDATORY for New Commands
 - Every app binary in `Resources/bin/` MUST be registered in the `yen` CLI
