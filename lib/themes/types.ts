@@ -41,31 +41,19 @@ interface ThemeColors {
   foreground: string
   /** Primary accent color (buttons, links) */
   primary: string
-  /** Secondary accent color */
-  secondary: string
   /** Tertiary/highlight color */
   accent: string
   /** Muted/secondary text color */
   muted: string
   /** Border color */
   border: string
-  /** Success state color */
-  success: string
   /** Error state color */
   error: string
-  /** Warning state color */
-  warning: string
 }
 
 export interface ThemeFonts {
   /** Primary font family for body text */
   primary: string
-  /** Monospace font for code/terminal */
-  mono: string
-  /** Base font size */
-  sizeBase: string
-  /** Line height multiplier */
-  lineHeight: string
 }
 
 export interface ThemeBorders {
@@ -73,26 +61,11 @@ export interface ThemeBorders {
   width: string
   /** Border style (solid, dashed, etc.) */
   style: string
-  /** Border radius */
-  radius: string
 }
 
 export interface ThemeShadows {
-  /** Default shadow */
-  default: string
   /** Hover state shadow */
   hover: string
-  /** Active/pressed shadow */
-  active: string
-}
-
-export interface ThemeAnimation {
-  /** Transition duration */
-  duration: string
-  /** Transition timing function */
-  timing: string
-  /** Whether to use stepped animations */
-  stepped: boolean
 }
 
 export interface ThemeDefinition {
@@ -110,8 +83,6 @@ export interface ThemeDefinition {
   borders: ThemeBorders
   /** Shadow settings */
   shadows: ThemeShadows
-  /** Animation settings */
-  animation: ThemeAnimation
   /** Optional metadata */
   metadata?: {
     author?: string

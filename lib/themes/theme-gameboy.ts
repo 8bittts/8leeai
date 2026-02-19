@@ -1,4 +1,4 @@
-import { ANIMATION_INSTANT, BORDERS_SHARP, createOffsetShadows, FONTS_PIXEL } from "./presets"
+import { BORDERS_SHARP, createOffsetShadows, FONTS_PIXEL } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -22,19 +22,15 @@ export const gameboyTheme: ThemeDefinition = {
     background: "#9bbc0f", // Lightest green - LCD background
     foreground: "#0f380f", // Darkest green - text/pixels
     primary: "#306230", // Dark green - primary interactive elements
-    secondary: "#8bac0f", // Light green - secondary elements
     accent: "#0f380f", // Darkest green - accents
     muted: "#306230", // Dark green - muted text
     border: "#0f380f", // Darkest green - borders
-    success: "#306230", // Dark green - success state
     error: "#0f380f", // Darkest green - error state
-    warning: "#306230", // Dark green - warning state
   },
 
   fonts: FONTS_PIXEL,
   borders: BORDERS_SHARP,
   shadows: createOffsetShadows("#306230"),
-  animation: ANIMATION_INSTANT,
 
   metadata: {
     author: "Eight Lee",

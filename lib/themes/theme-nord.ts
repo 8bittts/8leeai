@@ -1,4 +1,4 @@
-import { ANIMATION_SMOOTH, BORDERS_SUBTLE, createSoftShadows, FONTS_MONO } from "./presets"
+import { BORDERS_SUBTLE, createSoftShadows, FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,19 +16,15 @@ export const nordTheme: ThemeDefinition = {
     background: "#2e3440", // Polar Night
     foreground: "#eceff4", // Snow Storm
     primary: "#88c0d0", // Frost - arctic water
-    secondary: "#81a1c1", // Frost - ice
     accent: "#5e81ac", // Frost - deep arctic
     muted: "#4c566a", // Polar Night lighter
     border: "#4c566a", // Polar Night lighter
-    success: "#a3be8c", // Aurora - green
     error: "#bf616a", // Aurora - red
-    warning: "#ebcb8b", // Aurora - yellow
   },
 
   fonts: FONTS_MONO,
   borders: BORDERS_SUBTLE,
   shadows: createSoftShadows("rgba(136, 192, 208, 0.15)"),
-  animation: ANIMATION_SMOOTH,
 
   metadata: {
     author: "Eight Lee",

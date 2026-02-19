@@ -1,4 +1,4 @@
-import { ANIMATION_SMOOTH, BORDERS_ROUNDED, createGlowShadows, FONTS_MONO } from "./presets"
+import { BORDERS_ROUNDED, createGlowShadows, FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,19 +16,15 @@ export const halloweenTheme: ThemeDefinition = {
     background: "#1a1a1a",
     foreground: "#ff6600", // Orange
     primary: "#ff6600", // Orange
-    secondary: "#8b008b", // Dark purple
     accent: "#ff8c00", // Bright orange
     muted: "#8b008b", // Dark purple
     border: "#ff6600", // Orange
-    success: "#ff6600",
     error: "#cc0000",
-    warning: "#ff8c00",
   },
 
   fonts: FONTS_MONO,
   borders: BORDERS_ROUNDED,
   shadows: createGlowShadows("rgba(255, 102, 0, 0.3)", "rgba(139, 0, 139, 0.25)"),
-  animation: ANIMATION_SMOOTH,
 
   metadata: {
     author: "Eight Lee",

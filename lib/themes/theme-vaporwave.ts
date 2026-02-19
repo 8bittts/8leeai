@@ -1,4 +1,4 @@
-import { ANIMATION_FLOWING, BORDERS_MEDIUM, FONTS_SANS } from "./presets"
+import { BORDERS_MEDIUM, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,13 +16,10 @@ export const vaporwaveTheme: ThemeDefinition = {
     background: "#1a1a2e",
     foreground: "#ff71ce",
     primary: "#ff71ce",
-    secondary: "#01cdfe",
     accent: "#05ffa1",
     muted: "#b967ff",
     border: "#01cdfe",
-    success: "#05ffa1",
     error: "#ff006e",
-    warning: "#ffb627",
   },
 
   fonts: FONTS_SANS,
@@ -30,12 +27,8 @@ export const vaporwaveTheme: ThemeDefinition = {
 
   // Vaporwave uses unique multi-color glow shadows
   shadows: {
-    default: "0 4px 20px rgba(255, 113, 206, 0.15)",
     hover: "0 8px 30px rgba(1, 205, 254, 0.3), 0 0 20px rgba(255, 113, 206, 0.2)",
-    active: "0 2px 10px rgba(5, 255, 161, 0.4)",
   },
-
-  animation: ANIMATION_FLOWING,
 
   metadata: {
     author: "Eight Lee",

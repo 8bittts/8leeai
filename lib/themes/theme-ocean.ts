@@ -1,4 +1,4 @@
-import { ANIMATION_FLOWING, BORDERS_MEDIUM, createSoftShadows, FONTS_SANS } from "./presets"
+import { BORDERS_MEDIUM, createSoftShadows, FONTS_SANS } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,19 +16,15 @@ export const oceanTheme: ThemeDefinition = {
     background: "#03045e",
     foreground: "#90e0ef",
     primary: "#0077b6",
-    secondary: "#023e8a",
     accent: "#48cae4",
     muted: "#0096c7",
     border: "#0077b6",
-    success: "#48cae4",
     error: "#ef4444",
-    warning: "#fbbf24",
   },
 
   fonts: FONTS_SANS,
   borders: BORDERS_MEDIUM,
   shadows: createSoftShadows("rgba(0, 119, 182, 0.2)"),
-  animation: ANIMATION_FLOWING,
 
   metadata: {
     author: "Eight Lee",

@@ -1,4 +1,4 @@
-import { ANIMATION_QUICK, BORDERS_SUBTLE, createSoftShadows, FONTS_MONO } from "./presets"
+import { BORDERS_SUBTLE, createSoftShadows, FONTS_MONO } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -16,19 +16,15 @@ export const monokaiTheme: ThemeDefinition = {
     background: "#272822", // Background
     foreground: "#f8f8f2", // Foreground
     primary: "#f92672", // Pink/Red
-    secondary: "#a6e22e", // Green
     accent: "#66d9ef", // Cyan
     muted: "#75715e", // Comment
     border: "#49483e", // Line highlight
-    success: "#a6e22e", // Green
     error: "#f92672", // Pink/Red
-    warning: "#fd971f", // Orange
   },
 
   fonts: FONTS_MONO,
   borders: BORDERS_SUBTLE,
   shadows: createSoftShadows("rgba(249, 38, 114, 0.15)"),
-  animation: ANIMATION_QUICK,
 
   metadata: {
     author: "Eight Lee",

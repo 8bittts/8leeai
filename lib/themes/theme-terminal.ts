@@ -16,13 +16,10 @@ export const terminalTheme: ThemeDefinition = {
     background: "#000000",
     foreground: "#22c55e", // green-500
     primary: "#22c55e", // green-500
-    secondary: "#15803d", // green-700
     accent: "#4ade80", // green-400
     muted: "#15803d", // green-700
     border: "#22c55e", // green-500
-    success: "#22c55e",
     error: "#ef4444",
-    warning: "#eab308",
   },
 
   fonts: FONTS_MONO,
@@ -30,19 +27,10 @@ export const terminalTheme: ThemeDefinition = {
   borders: {
     width: "1px",
     style: "solid",
-    radius: "0.125rem",
   },
 
   shadows: {
-    default: "none",
     hover: "0 0 10px rgba(34, 197, 94, 0.3)",
-    active: "0 0 5px rgba(34, 197, 94, 0.5)",
-  },
-
-  animation: {
-    duration: "150ms",
-    timing: "ease-in-out",
-    stepped: false,
   },
 
   metadata: {

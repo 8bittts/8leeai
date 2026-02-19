@@ -16,13 +16,10 @@ export const matrixTheme: ThemeDefinition = {
     background: "#000000",
     foreground: "#00ff00", // Bright matrix green
     primary: "#00ff00", // Bright matrix green
-    secondary: "#00cc00", // Darker green
     accent: "#39ff14", // Neon green
     muted: "#008800", // Muted green
     border: "#00ff00", // Bright matrix green
-    success: "#00ff00",
     error: "#ff0000",
-    warning: "#ffff00",
   },
 
   fonts: FONTS_MONO,
@@ -30,16 +27,9 @@ export const matrixTheme: ThemeDefinition = {
   borders: {
     width: "1px",
     style: "solid",
-    radius: "0",
   },
 
   shadows: createGlowShadows("rgba(0, 255, 0, 0.3)"),
-
-  animation: {
-    duration: "200ms",
-    timing: "ease-out",
-    stepped: false,
-  },
 
   metadata: {
     author: "Eight Lee",

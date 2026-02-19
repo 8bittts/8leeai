@@ -51,6 +51,7 @@ yarn-error.log*
 # AI assistant configs
 .claude/commands/
 CLAUDE.md
+AGENTS.md
 
 # OS
 Thumbs.db

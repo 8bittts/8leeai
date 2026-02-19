@@ -16,13 +16,10 @@ export const forestTheme: ThemeDefinition = {
     background: "#081c15",
     foreground: "#b7e4c7",
     primary: "#40916c",
-    secondary: "#2d6a4f",
     accent: "#52b788",
     muted: "#74c69d",
     border: "#40916c",
-    success: "#52b788",
     error: "#ef4444",
-    warning: "#f77f00",
   },
 
   fonts: FONTS_SANS,
@@ -30,16 +27,9 @@ export const forestTheme: ThemeDefinition = {
   borders: {
     width: "2px",
     style: "solid",
-    radius: "0.375rem",
   },
 
   shadows: createSoftShadows("rgba(29, 53, 87, 0.2)"),
-
-  animation: {
-    duration: "250ms",
-    timing: "cubic-bezier(0.4, 0, 0.2, 1)",
-    stepped: false,
-  },
 
   metadata: {
     author: "Eight Lee",

@@ -1,4 +1,4 @@
-import { ANIMATION_QUICK, BORDERS_SUBTLE, FONTS_SYSTEM, SHADOWS_NONE } from "./presets"
+import { BORDERS_SUBTLE, FONTS_SYSTEM, SHADOWS_NONE } from "./presets"
 import type { ThemeDefinition } from "./types"
 
 /**
@@ -17,13 +17,10 @@ export const minimalTheme: ThemeDefinition = {
     background: "#fafafa", // Warm off-white
     foreground: "#2d2d2d", // Soft charcoal
     primary: "#2d2d2d", // Soft charcoal
-    secondary: "#5a5a5a", // Medium gray
     accent: "#404040", // Darker gray for emphasis
     muted: "#8a8a8a", // Light gray (WCAG: 4.6:1 contrast)
     border: "#e0e0e0", // Subtle border (WCAG: 3:1 for UI)
-    success: "#2d2d2d",
     error: "#2d2d2d",
-    warning: "#2d2d2d",
   },
 
   fonts: FONTS_SYSTEM,
@@ -31,7 +28,6 @@ export const minimalTheme: ThemeDefinition = {
   borders: BORDERS_SUBTLE, // Subtle rounded corners for elegance
 
   shadows: SHADOWS_NONE,
-  animation: ANIMATION_QUICK,
 
   metadata: {
     author: "Eight Lee",
