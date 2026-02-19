@@ -3,74 +3,93 @@ import { NextResponse } from "next/server"
 import { generateCORSHeaders, generateCSP } from "./lib/api-security"
 import { isSemanticUrl } from "./lib/utils"
 
-export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl
+const PERMISSIONS_POLICY =
+  "camera=(), " +
+  "microphone=(), " +
+  "geolocation=(), " +
+  "payment=(), " +
+  "usb=(), " +
+  "magnetometer=(), " +
+  "gyroscope=(), " +
+  "accelerometer=(), " +
+  "autoplay=(), " +
+  "encrypted-media=(), " +
+  "picture-in-picture=(), " +
+  "display-capture=(), " +
+  "web-share=()"
 
-  // Legacy URL redirect strategy: Redirect semantic-looking 404s to homepage
-  // Skip redirect for homepage, Next.js internals, API routes, and demos
+function applySecurityHeaders(response: NextResponse): void {
+  // Ultra-private mode: Block all search engines and web crawlers.
+  response.headers.set(
+    "X-Robots-Tag",
+    "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate"
+  )
+
+  // Security: Prevent clickjacking, MIME sniffing, XSS attacks.
+  response.headers.set("X-Frame-Options", "DENY")
+  response.headers.set("X-Content-Type-Options", "nosniff")
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
+  response.headers.set("X-XSS-Protection", "1; mode=block")
+  response.headers.set("Permissions-Policy", PERMISSIONS_POLICY)
+  response.headers.set("Content-Security-Policy", generateCSP())
+
+  // HSTS: Force HTTPS for 1 year, include subdomains, enable browser preload.
+  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
+
+  // Additional hardening: Disable DNS prefetch, download execution, cross-domain policies.
+  response.headers.set("X-DNS-Prefetch-Control", "off")
+  response.headers.set("X-Download-Options", "noopen")
+  response.headers.set("X-Permitted-Cross-Domain-Policies", "none")
+}
+
+function applyCorsHeaders(response: NextResponse, request: NextRequest): void {
+  const origin = request.headers.get("origin")
+  const corsHeaders = generateCORSHeaders(origin)
+  for (const [key, value] of Object.entries(corsHeaders)) {
+    response.headers.set(key, value)
+  }
+}
+
+function shouldRedirectSemanticPath(request: NextRequest, pathname: string): boolean {
+  const isHtmlGetRequest =
+    request.method === "GET" && (request.headers.get("accept")?.includes("text/html") ?? false)
+
+  if (!isHtmlGetRequest) {
+    return false
+  }
+
   const isHomepage = pathname === "/"
   const isNextInternal = pathname.startsWith("/_next") || pathname.startsWith("/__next")
   const isApiRoute = pathname.startsWith("/api")
   const isDemo = pathname.startsWith("/demos")
   const isPublicAsset = pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|m4a|mp3|wav)$/i)
 
-  // If path looks semantic (legitimate URL slug) and isn't a known valid route, redirect to homepage
-  if (
+  return (
     !(isHomepage || isNextInternal || isApiRoute || isDemo || isPublicAsset) &&
     isSemanticUrl(pathname)
-  ) {
-    return NextResponse.redirect(new URL("/", request.url), 301)
+  )
+}
+
+export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  if (shouldRedirectSemanticPath(request, pathname)) {
+    const redirectResponse = NextResponse.redirect(new URL("/", request.url), 301)
+    applySecurityHeaders(redirectResponse)
+    applyCorsHeaders(redirectResponse, request)
+    return redirectResponse
+  }
+
+  if (request.method === "OPTIONS") {
+    const preflightResponse = new NextResponse(null, { status: 204 })
+    applySecurityHeaders(preflightResponse)
+    applyCorsHeaders(preflightResponse, request)
+    return preflightResponse
   }
 
   const response = NextResponse.next()
-
-  // Ultra-private mode: Block all search engines and web crawlers
-  response.headers.set(
-    "X-Robots-Tag",
-    "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate"
-  )
-
-  // Security: Prevent clickjacking, MIME sniffing, XSS attacks
-  response.headers.set("X-Frame-Options", "DENY")
-  response.headers.set("X-Content-Type-Options", "nosniff")
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
-  response.headers.set("X-XSS-Protection", "1; mode=block")
-
-  // Permissions Policy: Disable all browser features not needed for terminal UI
-  response.headers.set(
-    "Permissions-Policy",
-    "camera=(), " +
-      "microphone=(), " +
-      "geolocation=(), " +
-      "payment=(), " +
-      "usb=(), " +
-      "magnetometer=(), " +
-      "gyroscope=(), " +
-      "accelerometer=(), " +
-      "autoplay=(), " +
-      "encrypted-media=(), " +
-      "picture-in-picture=(), " +
-      "display-capture=(), " +
-      "web-share=()"
-  )
-
-  // CSP: Restrict resource loading, allow Vercel analytics/live and third-party APIs
-  response.headers.set("Content-Security-Policy", generateCSP())
-
-  // CORS: Allow requests from approved domains only
-  const origin = request.headers.get("origin")
-  const corsHeaders = generateCORSHeaders(origin)
-  for (const [key, value] of Object.entries(corsHeaders)) {
-    response.headers.set(key, value)
-  }
-
-  // HSTS: Force HTTPS for 1 year, include subdomains, enable browser preload
-  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
-
-  // Additional hardening: Disable DNS prefetch, download execution, cross-domain policies
-  response.headers.set("X-DNS-Prefetch-Control", "off")
-  response.headers.set("X-Download-Options", "noopen")
-  response.headers.set("X-Permitted-Cross-Domain-Policies", "none")
+  applySecurityHeaders(response)
+  applyCorsHeaders(response, request)
 
   return response
 }

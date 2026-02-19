@@ -7,8 +7,13 @@ describe("CORS origin normalization", () => {
     const canonical = "https://8lee.ai"
     const www = "https://www.8lee.ai"
 
-    expect(generateCORSHeaders(canonical)["Access-Control-Allow-Origin"]).toBe(canonical)
-    expect(generateCORSHeaders(www)["Access-Control-Allow-Origin"]).toBe(www)
+    const canonicalHeaders = generateCORSHeaders(canonical)
+    const wwwHeaders = generateCORSHeaders(www)
+
+    expect(canonicalHeaders["Access-Control-Allow-Origin"]).toBe(canonical)
+    expect(wwwHeaders["Access-Control-Allow-Origin"]).toBe(www)
+    expect(canonicalHeaders.Vary).toBe("Origin")
+    expect(wwwHeaders.Vary).toBe("Origin")
   })
 
   test("accepts configured local development origins", () => {
@@ -18,10 +23,13 @@ describe("CORS origin normalization", () => {
   })
 
   test("rejects unsupported protocol or host", () => {
-    expect(generateCORSHeaders("http://8lee.ai")["Access-Control-Allow-Origin"]).toBeUndefined()
-    expect(
-      generateCORSHeaders("https://evil.example")["Access-Control-Allow-Origin"]
-    ).toBeUndefined()
+    const insecureHeaders = generateCORSHeaders("http://8lee.ai")
+    const invalidHostHeaders = generateCORSHeaders("https://evil.example")
+
+    expect(insecureHeaders["Access-Control-Allow-Origin"]).toBeUndefined()
+    expect(invalidHostHeaders["Access-Control-Allow-Origin"]).toBeUndefined()
+    expect(insecureHeaders.Vary).toBeUndefined()
+    expect(invalidHostHeaders.Vary).toBeUndefined()
   })
 })
 

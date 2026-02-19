@@ -89,6 +89,7 @@ export function generateCORSHeaders(origin: string | null): Record<string, strin
     headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
     headers["Access-Control-Max-Age"] = "86400"
     headers["Access-Control-Allow-Credentials"] = "true"
+    headers["Vary"] = "Origin"
   }
 
   return headers

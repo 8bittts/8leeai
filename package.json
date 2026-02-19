@@ -14,7 +14,9 @@
     "lint": "bunx biome check .",
     "format": "bunx biome format --write .",
     "check": "bunx biome check --write .",
+    "test": "bun run test:smoke",
     "test:smoke": "bun test tests/smoke",
+    "check:full": "bun run lint && bun run test:smoke && bun run build && bunx knip",
     "clean": "rm -rf .next node_modules/.cache .turbo"
   },
   "dependencies": {

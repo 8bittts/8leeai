@@ -17,12 +17,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // Aggressive no-cache headers to prevent stale terminal state
+  // Keep the app shell uncached, but allow static assets to use framework defaults.
   // biome-ignore lint/suspicious/useAwait: Next.js requires async signature
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: "/",
         headers: [
           {
             key: "Cache-Control",
