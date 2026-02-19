@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { calculateAgeInYears } from "@/lib/age"
@@ -15,6 +15,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   const [showPrompt, setShowPrompt] = useState(false)
   const [waitingForInteraction, setWaitingForInteraction] = useState(false)
   const [versionLabel, setVersionLabel] = useState(() => calculateAgeInYears(new Date()).toFixed(2))
+  const promptTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Memoize boot lines to include dynamic version
   const bootLines = useMemo(
@@ -34,9 +35,14 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       setCurrentLineIndex((prev) => prev + 1)
     } else {
       // Show prompt and wait for user interaction
-      setTimeout(() => {
+      if (promptTimeoutRef.current !== null) {
+        clearTimeout(promptTimeoutRef.current)
+      }
+
+      promptTimeoutRef.current = setTimeout(() => {
         setShowPrompt(true)
         setWaitingForInteraction(true)
+        promptTimeoutRef.current = null
       }, ANIMATION_DELAYS.bootPrompt)
     }
   }, [currentLineIndex, bootLines.length])
@@ -57,6 +63,14 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     const intervalId = window.setInterval(updateVersionLabel, 60 * 60 * 1000)
     return () => {
       window.clearInterval(intervalId)
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (promptTimeoutRef.current !== null) {
+        clearTimeout(promptTimeoutRef.current)
+      }
     }
   }, [])
 

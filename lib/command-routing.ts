@@ -64,7 +64,8 @@ export function resolveNumericCommand(
 export function pickRandomProjectNumber(
   projectsWithUrls: ReadonlyArray<PortfolioItem>,
   allProjects: ReadonlyArray<PortfolioItem>,
-  random: () => number = Math.random
+  random: () => number = Math.random,
+  projectNumberById?: ReadonlyMap<string, number>
 ): number | null {
   if (projectsWithUrls.length === 0) {
     return null
@@ -74,6 +75,10 @@ export function pickRandomProjectNumber(
   const randomProject = projectsWithUrls[randomIndex]
   if (!randomProject) {
     return null
+  }
+
+  if (projectNumberById) {
+    return projectNumberById.get(randomProject.id) ?? null
   }
 
   const projectIndex = allProjects.findIndex((project) => project.id === randomProject.id)

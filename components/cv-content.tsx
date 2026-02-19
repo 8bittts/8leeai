@@ -19,10 +19,18 @@ interface CVContentProps {
 
 export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
+  const revealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [showProjects, setShowProjects] = useState(false)
 
   const handleTypewriterComplete = useCallback(() => {
-    setTimeout(() => setShowProjects(true), ANIMATION_DELAYS.showProjects)
+    if (revealTimeoutRef.current !== null) {
+      clearTimeout(revealTimeoutRef.current)
+    }
+
+    revealTimeoutRef.current = setTimeout(() => {
+      setShowProjects(true)
+      revealTimeoutRef.current = null
+    }, ANIMATION_DELAYS.showProjects)
   }, [])
 
   const { displayedText, isTyping } = useTypewriter({
@@ -37,6 +45,14 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
       projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }
   }, [visibleProjects])
+
+  useEffect(() => {
+    return () => {
+      if (revealTimeoutRef.current !== null) {
+        clearTimeout(revealTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <article className="space-y-8" id="main-content" aria-labelledby="page-title">

@@ -38,7 +38,7 @@ export function formatIndexWithOffset(index: number, offset: number): string {
 /** Opens URL in new tab with security: prevents window.opener exploits */
 export function openExternalLink(url: string): void {
   if (!url) return
-  const newWindow = window.open(url, "_blank")
+  const newWindow = window.open(url, "_blank", "noopener,noreferrer")
   if (newWindow) {
     newWindow.opener = null
   }

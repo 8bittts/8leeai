@@ -133,6 +133,11 @@ export const projects = data.projects
 export const education = data.education
 export const volunteer = data.volunteer
 
+/** O(1) lookup for project number by ID (1-based). */
+export const projectNumberById: ReadonlyMap<string, number> = new Map(
+  projects.map((project, index) => [project.id, index + 1])
+)
+
 /** Pre-filtered projects with URLs (computed once at module load) */
 export const projectsWithUrls: ReadonlyArray<PortfolioItem> = Object.freeze(
   projects.filter((project) => Boolean(project.url?.trim()))
