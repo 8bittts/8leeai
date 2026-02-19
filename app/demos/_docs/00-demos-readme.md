@@ -11,8 +11,8 @@ Isolated proof-of-concept projects live in `/app/demos/`. Each demo is 100% isol
 ## Deleting a Demo
 
 1. `rm -rf app/demos/{name}`
-2. Check `proxy.ts`, `package.json`, `globals.css` for references
-3. `bun run check && bun run build`
+2. Check `proxy.ts`, `package.json`, `app/globals.css` for references
+3. `bun run check:full`
 
 ## Status
 

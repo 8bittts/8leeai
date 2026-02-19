@@ -17,7 +17,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16.1.6-black?style=flat-square&logo=next.js" alt="Next.js" />
   <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind-v4.1.18-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Tailwind-v4.2.0-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Bun-1.3.9-fbf0df?style=flat-square&logo=bun" alt="Bun" />
   <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
 </p>
@@ -38,7 +38,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 - **66+ project slots** - Showcase your entire body of work
 - **23 color themes** - From classic green phosphor to synthwave pink
-- **Full keyboard navigation** - Arrow keys, tab completion, shortcuts
+- **Terminal-style command UX** - Enter-to-load, numeric navigation, and clear shortcuts
 - **WCAG 2.1 AA accessible** - Screen reader friendly
 - **Mobile responsive** - Works everywhere
 - **Blazing fast** - Static generation, zero client-side data fetching
@@ -72,32 +72,37 @@ Open [http://localhost:1333](http://localhost:1333) and start customizing.
 
 ### 1. Update Your Data
 
-Edit `lib/data.ts` to add your projects, education, and experience:
+Edit `lib/data/portfolio.json` to add your projects, education, and experience:
 
-```typescript
-export const projects: ReadonlyArray<PortfolioItem> = [
-  {
-    id: "my-project",
-    name: "My Project - Short Description",
-    url: "https://myproject.com",
-    linkWord: "Project",  // clickable word in the listing
-  },
-  // Add as many projects as you want
-];
+```json
+{
+  "projects": [
+    {
+      "id": "my-project",
+      "name": "My Project - Short Description",
+      "url": "https://myproject.com",
+      "linkWord": "Project"
+    }
+  ],
+  "education": [],
+  "volunteer": []
+}
 ```
+
+`lib/data.ts` validates this dataset at runtime and exports typed sections for the app.
 
 ### 2. Customize Themes
 
-23 themes included in `lib/themes/`. Create your own or modify existing ones:
+23 themes are included in `lib/themes/`. Create your own or modify existing ones:
 
 | Theme | Vibe |
 |-------|------|
-| `default` | Classic green terminal |
-| `amber` | Warm vintage CRT |
-| `synthwave` | 80s neon purple/pink |
+| `terminal` | Classic green terminal |
+| `8bit` | Retro pixel gaming |
+| `synthwave` | 80s neon pink/cyan |
 | `nord` | Cool arctic blues |
-| `dracula` | Dark with purple accents |
-| `solarized` | Easy on the eyes |
+| `dracula` | Dark with vivid accents |
+| `solarized` | Balanced, low-eye-strain contrast |
 
 Switch themes with the `theme` command or `theme [name]`.
 
@@ -122,14 +127,29 @@ Your visitors can use these commands:
 | `[project #]` | Open a project by number from the Projects list |
 | `[education #]` | Open an education entry by number from the Education section |
 | `[volunteer #]` | Open a volunteer entry by number from the Volunteer section |
-| `help` | Show all commands |
-| `theme` | List available themes |
-| `theme [name]` | Switch to a theme |
-| `random` | Surprise me with a project |
-| `email` | Get contact info |
+| `help` | Show all available commands |
+| `email` | Show contact email |
+| `education` | Show education section |
+| `volunteer` | Show volunteer section |
+| `github` | Open GitHub project link |
+| `wellfound` | Open Wellfound profile |
+| `linkedin` | Open LinkedIn profile |
+| `twitter` | Open X/Twitter profile |
+| `random` | Open a random project |
+| `theme` | List themes or switch theme |
+| `date` | Show current date/time |
 | `clear` | Reset the terminal |
 | `Ctrl+L` | Quick clear shortcut |
 | `Cmd+K` | Quick clear shortcut (macOS) |
+
+Common aliases:
+- `themes` → `theme`
+- `reset` → `clear`
+- `contact`, `hello`, `reach` → `email`
+- `ed`, `resume`, `cv`, `about`, `bio` → `education`
+- `vol` → `volunteer`
+- `li` → `linkedin`
+- `x` → `twitter`
 
 ---
 
@@ -151,14 +171,15 @@ Your visitors can use these commands:
 ## Project Structure
 
 ```
-app/           Next.js App Router pages and layouts
-components/    Reusable UI components
+app/                    Next.js App Router pages and layouts
+components/             Reusable UI components
 lib/
-  data.ts      Your portfolio content
-  themes/      23 color theme definitions
-  commands.ts  Terminal command logic
-  utils.ts     Helper functions
-public/        Static assets
+  data.ts               Typed dataset validation + exports
+  data/portfolio.json   Portfolio content source of truth
+  themes/               23 color theme definitions
+  commands.ts           Terminal command definitions
+  utils.ts              Helper functions
+public/                 Static assets
 ```
 
 ---
@@ -206,10 +227,16 @@ For development workflows and coding conventions, check the project's internal d
   - `app/globals.css` default token definition
   - `contexts/theme-context.tsx` runtime token assignment
 - Theme style tags are centralized in `lib/themes/styles.ts` (`retro`, `neon`, `motion-heavy`).
+- Theme schema is intentionally lean:
+  - `colors`: `background`, `foreground`, `primary`, `accent`, `muted`, `border`, `error`
+  - `fonts`: `primary`
+  - `borders`: `width`, `style`
+  - `shadows`: `hover`
 
 ## Claude Code Integration
 
-This project uses Claude Code with global rules from `~/.claude/CLAUDE.md`. Project-specific rules are in `CLAUDE.md`.
+This project uses Claude Code with global rules from `~/.claude/CLAUDE.md`.
+If present locally, project-specific assistant notes may live in `CLAUDE.md` (often gitignored).
 
 Global configuration backup (for recovery on new computers) is maintained in the [deathnote project](https://github.com/8bittts/deathnote) at `claude-global.md`.
 
