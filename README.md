@@ -116,9 +116,9 @@ Your visitors can use these commands:
 
 | Command | What It Does |
 |---------|--------------|
-| `1-66` | Open project by number |
-| `67-71` | View education |
-| `72-77` | See volunteer work |
+| `[project #]` | Open a project by number from the Projects list |
+| `[education #]` | Open an education entry by number from the Education section |
+| `[volunteer #]` | Open a volunteer entry by number from the Volunteer section |
 | `help` | Show all commands |
 | `theme` | List available themes |
 | `theme [name]` | Switch to a theme |

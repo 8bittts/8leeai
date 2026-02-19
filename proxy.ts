@@ -27,7 +27,7 @@ export function proxy(request: NextRequest) {
   // Ultra-private mode: Block all search engines and web crawlers
   response.headers.set(
     "X-Robots-Tag",
-    "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate, noimageindex"
+    "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate"
   )
 
   // Security: Prevent clickjacking, MIME sniffing, XSS attacks

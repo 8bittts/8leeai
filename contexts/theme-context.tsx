@@ -56,30 +56,34 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
       document.documentElement.removeAttribute("data-theme-style")
     }
 
-    // Apply CSS custom properties in single batch (avoids 20+ reflows)
+    // Apply theme CSS custom properties without clobbering unrelated inline styles.
     const root = document.documentElement
-    root.style.cssText = `
-      --theme-bg: ${theme.colors.background};
-      --theme-fg: ${theme.colors.foreground};
-      --theme-primary: ${theme.colors.primary};
-      --theme-secondary: ${theme.colors.secondary};
-      --theme-accent: ${theme.colors.accent};
-      --theme-muted: ${theme.colors.muted};
-      --theme-border: ${theme.colors.border};
-      --theme-error: ${theme.colors.error};
-      --theme-font-primary: ${theme.fonts.primary};
-      --theme-font-mono: ${theme.fonts.mono};
-      --theme-font-size: ${theme.fonts.sizeBase};
-      --theme-line-height: ${theme.fonts.lineHeight};
-      --theme-border-width: ${theme.borders.width};
-      --theme-border-style: ${theme.borders.style};
-      --theme-border-radius: ${theme.borders.radius};
-      --theme-shadow: ${theme.shadows.default};
-      --theme-shadow-hover: ${theme.shadows.hover};
-      --theme-shadow-active: ${theme.shadows.active};
-      --theme-duration: ${theme.animation.duration};
-      --theme-timing: ${theme.animation.timing};
-    `
+    const themeVariables: Record<string, string> = {
+      "--theme-bg": theme.colors.background,
+      "--theme-fg": theme.colors.foreground,
+      "--theme-primary": theme.colors.primary,
+      "--theme-secondary": theme.colors.secondary,
+      "--theme-accent": theme.colors.accent,
+      "--theme-muted": theme.colors.muted,
+      "--theme-border": theme.colors.border,
+      "--theme-error": theme.colors.error,
+      "--theme-font-primary": theme.fonts.primary,
+      "--theme-font-mono": theme.fonts.mono,
+      "--theme-font-size": theme.fonts.sizeBase,
+      "--theme-line-height": theme.fonts.lineHeight,
+      "--theme-border-width": theme.borders.width,
+      "--theme-border-style": theme.borders.style,
+      "--theme-border-radius": theme.borders.radius,
+      "--theme-shadow": theme.shadows.default,
+      "--theme-shadow-hover": theme.shadows.hover,
+      "--theme-shadow-active": theme.shadows.active,
+      "--theme-duration": theme.animation.duration,
+      "--theme-timing": theme.animation.timing,
+    }
+
+    for (const [variable, variableValue] of Object.entries(themeVariables)) {
+      root.style.setProperty(variable, variableValue)
+    }
   }, [currentTheme, isHydrated])
 
   // Theme setter with localStorage persistence

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
 interface GridListProps {
   children: ReactNode
@@ -6,9 +7,9 @@ interface GridListProps {
 }
 
 export function GridList({ children, className = "" }: GridListProps) {
-  const classes = ["grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm", className]
-    .filter(Boolean)
-    .join(" ")
-
-  return <div className={classes}>{children}</div>
+  return (
+    <div className={cn("grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm", className)}>
+      {children}
+    </div>
+  )
 }

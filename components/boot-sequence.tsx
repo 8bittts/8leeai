@@ -79,8 +79,20 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     }
   }, [waitingForInteraction, onComplete])
 
-  // Track all completed lines for display
-  const completedLines = bootLines.slice(0, currentLineIndex + 1)
+  const renderGroupLines = (group: number) =>
+    bootLines.map((line, lineIndex) => {
+      if (line.group !== group || lineIndex > currentLineIndex) {
+        return null
+      }
+
+      const isCurrent = lineIndex === currentLineIndex
+      return (
+        <p key={line.text}>
+          {isCurrent ? displayedText : line.text}
+          {isCurrent && isTyping && <Cursor />}
+        </p>
+      )
+    })
 
   return (
     <div
@@ -89,35 +101,9 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       aria-live="polite"
       aria-label="Boot sequence"
     >
-      <div className="mb-4 space-y-1">
-        {completedLines
-          .filter((line) => line.group === 1)
-          .map((line) => {
-            const lineIndex = bootLines.indexOf(line)
-            const isCurrent = lineIndex === currentLineIndex
-            return (
-              <p key={line.text}>
-                {isCurrent ? displayedText : line.text}
-                {isCurrent && isTyping && <Cursor />}
-              </p>
-            )
-          })}
-      </div>
+      <div className="mb-4 space-y-1">{renderGroupLines(1)}</div>
 
-      <div className="mb-4 space-y-1">
-        {completedLines
-          .filter((line) => line.group === 2)
-          .map((line) => {
-            const lineIndex = bootLines.indexOf(line)
-            const isCurrent = lineIndex === currentLineIndex
-            return (
-              <p key={line.text}>
-                {isCurrent ? displayedText : line.text}
-                {isCurrent && isTyping && <Cursor />}
-              </p>
-            )
-          })}
-      </div>
+      <div className="mb-4 space-y-1">{renderGroupLines(2)}</div>
 
       {showPrompt && (
         <div className="flex items-center" aria-label="Command prompt">

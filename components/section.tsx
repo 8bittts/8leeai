@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
 interface SectionProps {
   title?: ReactNode
@@ -20,12 +21,12 @@ export function Section({
   children,
 }: SectionProps) {
   const HeadingTag = headingLevel
-  const classes = ["mb-8", animate ? "animate-in fade-in duration-300" : "", className]
-    .filter(Boolean)
-    .join(" ")
 
   return (
-    <section className={classes} aria-label={ariaLabel}>
+    <section
+      className={cn("mb-8", animate && "animate-in fade-in duration-300", className)}
+      aria-label={ariaLabel}
+    >
       {title !== undefined && title !== null && (
         <HeadingTag className={headingClassName}>{title}</HeadingTag>
       )}

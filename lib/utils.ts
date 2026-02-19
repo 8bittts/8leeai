@@ -3,7 +3,7 @@ import React from "react"
 import { twMerge } from "tailwind-merge"
 
 /** Tailwind class name utility - merges classes intelligently */
-function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
@@ -54,7 +54,9 @@ export function renderTextWithUnderlinedWord(name: string, linkWord?: string): R
     return name
   }
 
-  return name.split(new RegExp(`(${linkWord})`, "i")).map((part, i) => {
+  const escapedLinkWord = linkWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+
+  return name.split(new RegExp(`(${escapedLinkWord})`, "i")).map((part, i) => {
     const isMatch = part.toLowerCase() === linkWord.toLowerCase()
     return React.createElement(
       "span",
@@ -118,12 +120,6 @@ export const ANIMATION_DELAYS = {
   typewriter: 8,
   showProjects: 500,
   bootPrompt: 500,
-} as const
-
-export const DATA_OFFSETS = {
-  projects: { start: 1, end: 65 },
-  education: { start: 66, end: 70 },
-  volunteer: { start: 71, end: 76 },
 } as const
 
 export const PROJECTS_PER_PAGE = 15

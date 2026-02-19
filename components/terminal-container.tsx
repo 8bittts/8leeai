@@ -19,10 +19,20 @@ export function TerminalContainer() {
   const commandPromptRef = useRef<CommandPromptRef>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioPlayedRef = useRef(false)
+  const bootResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Cleanup audio on unmount
+  // Cleanup audio/timers on unmount.
   useEffect(() => {
     return () => {
+      if (bootResetTimeoutRef.current !== null) {
+        clearTimeout(bootResetTimeoutRef.current)
+      }
+
+      if (flashTimeoutRef.current !== null) {
+        clearTimeout(flashTimeoutRef.current)
+      }
+
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current = null
@@ -53,15 +63,29 @@ export function TerminalContainer() {
     setVisibleProjects(PROJECTS_PER_PAGE)
     setCommand("")
     resetTheme() // Reset to terminal theme on clear
-    setTimeout(() => setBootComplete(true), 100)
+
+    if (bootResetTimeoutRef.current !== null) {
+      clearTimeout(bootResetTimeoutRef.current)
+    }
+
+    bootResetTimeoutRef.current = setTimeout(() => {
+      setBootComplete(true)
+      bootResetTimeoutRef.current = null
+    }, 100)
   }, [resetTheme])
 
   const triggerFlash = useCallback(() => {
     setIsFlashing(true)
     setErrorMessage("Invalid command")
-    setTimeout(() => {
+
+    if (flashTimeoutRef.current !== null) {
+      clearTimeout(flashTimeoutRef.current)
+    }
+
+    flashTimeoutRef.current = setTimeout(() => {
       setIsFlashing(false)
       setErrorMessage("")
+      flashTimeoutRef.current = null
     }, 150)
   }, [])
 

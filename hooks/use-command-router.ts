@@ -1,11 +1,18 @@
 import { useCallback } from "react"
-import type { ActivePanelState } from "@/hooks/use-active-panel"
 import { useTheme } from "@/hooks/use-theme"
 import { getSystemCommandOutput } from "@/lib/command-handlers"
+import {
+  isNumericCommand,
+  normalizeCommand,
+  parseTextCommand,
+  pickRandomProjectNumber,
+  resolveNumericCommand,
+} from "@/lib/command-routing"
 import { type CommandDefinition, resolveCommand } from "@/lib/commands"
-import { education, type PortfolioItem, projects, projectsWithUrls, volunteer } from "@/lib/data"
+import { DATA_OFFSETS, education, projects, projectsWithUrls, volunteer } from "@/lib/data"
 import { getTheme, isValidThemeId, type ThemeId } from "@/lib/themes"
-import { DATA_OFFSETS, openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
+import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
+import type { ActivePanelState } from "./use-active-panel"
 
 interface CommandRouterProps {
   panelState: ActivePanelState
@@ -33,22 +40,33 @@ export function useCommandRouter({
   const { showPanel, showOutput, clearPanels, setStatusMessage, activePanel } = panelState
   const { currentTheme, setTheme } = useTheme()
 
+  const resetInput = useCallback(() => {
+    setCommand("")
+  }, [setCommand])
+
+  const handleUnknownCommand = useCallback(() => {
+    triggerFlash()
+    setStatusMessage("")
+    resetInput()
+  }, [triggerFlash, setStatusMessage, resetInput])
+
   const switchTheme = useCallback(
-    (themeArg: ThemeId) => {
-      // O(1) lookup via Record instead of O(n) array.find()
-      const theme = getTheme(themeArg)
-      if (themeArg === currentTheme) {
+    (themeId: ThemeId) => {
+      const theme = getTheme(themeId)
+
+      if (themeId === currentTheme) {
         showOutput(
-          `Theme: ${themeArg} (already active)\n${theme.description}`,
-          `${themeArg} theme already active`
+          `Theme: ${themeId} (already active)\n${theme.description}`,
+          `${themeId} theme already active`
         )
-      } else {
-        setTheme(themeArg)
-        showOutput(
-          `Theme switched to: ${themeArg}\n${theme.description}`,
-          `Switched to ${themeArg} theme`
-        )
+        return
       }
+
+      setTheme(themeId)
+      showOutput(
+        `Theme switched to: ${themeId}\n${theme.description}`,
+        `Switched to ${themeId} theme`
+      )
     },
     [currentTheme, setTheme, showOutput]
   )
@@ -60,15 +78,13 @@ export function useCommandRouter({
         return
       }
 
-      const themeArg = args.toLowerCase()
-      if (isValidThemeId(themeArg)) {
-        switchTheme(themeArg)
-      } else {
-        showOutput(
-          `Unknown theme: ${themeArg}\nType 'theme' for available themes.`,
-          "Unknown theme"
-        )
+      const themeId = args.toLowerCase()
+      if (isValidThemeId(themeId)) {
+        switchTheme(themeId)
+        return
       }
+
+      showOutput(`Unknown theme: ${themeId}\nType 'theme' for available themes.`, "Unknown theme")
     },
     [showPanel, showOutput, switchTheme]
   )
@@ -85,17 +101,18 @@ export function useCommandRouter({
   )
 
   const handleRandomCommand = useCallback(() => {
-    // Use pre-filtered array (computed once at module load)
-    if (projectsWithUrls.length > 0) {
-      const randomProject = projectsWithUrls[Math.floor(Math.random() * projectsWithUrls.length)]
-      if (randomProject) {
-        const projectNumber = projects.findIndex((p) => p.id === randomProject.id) + 1
-        openProject(projectNumber)
-        setStatusMessage(`Opening random project ${projectNumber} in new tab`)
-      }
+    const projectNumber = pickRandomProjectNumber(projectsWithUrls, projects)
+
+    if (projectNumber === null) {
+      setStatusMessage("No projects with links available")
+      resetInput()
+      return
     }
-    setCommand("")
-  }, [openProject, setStatusMessage, setCommand])
+
+    openProject(projectNumber)
+    setStatusMessage(`Opening random project ${projectNumber} in new tab`)
+    resetInput()
+  }, [openProject, setStatusMessage, resetInput])
 
   const handleEmptyCommand = useCallback(() => {
     if (visibleProjects < totalProjects) {
@@ -105,46 +122,89 @@ export function useCommandRouter({
     } else {
       setStatusMessage("All projects loaded")
     }
-    setCommand("")
-  }, [visibleProjects, totalProjects, showMoreProjects, setStatusMessage, setCommand])
+
+    resetInput()
+  }, [visibleProjects, totalProjects, showMoreProjects, setStatusMessage, resetInput])
 
   const openNumberedItem = useCallback(
-    (number: number, offset: number, items: ReadonlyArray<PortfolioItem>) => {
-      const index = number - offset
-      const item = items[index]
-      if (item?.url) {
-        openExternalLink(item.url)
-        setStatusMessage(`Opening entry ${number} in new tab`)
+    (number: number, url: string | undefined) => {
+      if (!url) {
+        setStatusMessage("Selected entry has no external link")
+        return
       }
+
+      openExternalLink(url)
+      setStatusMessage(`Opening entry ${number} in new tab`)
     },
     [setStatusMessage]
   )
 
   const handleNumericCommand = useCallback(
-    (cmd: string) => {
-      const number = Number.parseInt(cmd, 10)
+    (normalized: string) => {
+      const number = Number.parseInt(normalized, 10)
+      const match = resolveNumericCommand(number, DATA_OFFSETS)
 
-      if (number >= DATA_OFFSETS.projects.start && number <= DATA_OFFSETS.projects.end) {
+      if (!match) {
+        handleUnknownCommand()
+        return
+      }
+
+      if (match.section === "projects") {
         openProject(number)
         setStatusMessage(`Opening project ${number} in new tab`)
-      } else if (number >= DATA_OFFSETS.education.start && number <= DATA_OFFSETS.education.end) {
-        openNumberedItem(number, DATA_OFFSETS.education.start, education)
-      } else if (number >= DATA_OFFSETS.volunteer.start && number <= DATA_OFFSETS.volunteer.end) {
-        openNumberedItem(number, DATA_OFFSETS.volunteer.start, volunteer)
-      } else {
-        triggerFlash()
-        setStatusMessage("")
+        resetInput()
+        return
       }
-      setCommand("")
+
+      if (match.section === "education") {
+        openNumberedItem(number, education[match.index]?.url)
+        resetInput()
+        return
+      }
+
+      openNumberedItem(number, volunteer[match.index]?.url)
+      resetInput()
     },
-    [openProject, openNumberedItem, triggerFlash, setStatusMessage, setCommand]
+    [handleUnknownCommand, openProject, setStatusMessage, openNumberedItem, resetInput]
   )
 
-  const handleUnknownCommand = useCallback(() => {
-    triggerFlash()
-    setCommand("")
-    setStatusMessage("")
-  }, [triggerFlash, setCommand, setStatusMessage])
+  const handlePanelResolved = useCallback(
+    (def: CommandDefinition): boolean => {
+      if (!(def.panel && def.status)) {
+        return false
+      }
+
+      clearPanels()
+      showPanel(def.panel, def.status)
+      resetInput()
+      return true
+    },
+    [clearPanels, showPanel, resetInput]
+  )
+
+  const handleLinkResolved = useCallback(
+    (def: CommandDefinition): boolean => {
+      if (!def.url) {
+        return false
+      }
+
+      openExternalLink(def.url)
+      setStatusMessage(`Opening ${def.label} in new tab`)
+      resetInput()
+      return true
+    },
+    [setStatusMessage, resetInput]
+  )
+
+  const handleClearResolved = useCallback(
+    (def: CommandDefinition) => {
+      clearPanels()
+      clearToStart()
+      setStatusMessage(def.status ?? "Terminal cleared")
+      resetInput()
+    },
+    [clearPanels, clearToStart, setStatusMessage, resetInput]
+  )
 
   const handleResolvedCommand = useCallback(
     (cmdKey: string, args: string) => {
@@ -155,54 +215,35 @@ export function useCommandRouter({
         return
       }
 
-      const handlePanelResolved = (def: CommandDefinition) => {
-        if (!(def.panel && def.status)) {
-          handleUnknownCommand()
-          return
-        }
-        clearPanels()
-        showPanel(def.panel, def.status)
-      }
-
-      const handleLinkResolved = (def: CommandDefinition) => {
-        if (!def.url) {
-          handleUnknownCommand()
-          return
-        }
-        openExternalLink(def.url)
-        setCommand("")
-        setStatusMessage(`Opening ${def.label} in new tab`)
-      }
-
-      const handleClearResolved = (def: CommandDefinition) => {
-        clearPanels()
-        clearToStart()
-        setStatusMessage(def.status ?? "Terminal cleared")
-        setCommand("")
-      }
-
       switch (resolved.kind) {
         case "theme":
           clearPanels()
           handleThemeCommand(args)
-          setCommand("")
+          resetInput()
           return
         case "echo":
           clearPanels()
           showOutput(args, "Echo")
-          setCommand("")
+          resetInput()
           return
         case "system":
           handleSystemCommand(resolved.id)
-          setCommand("")
+          resetInput()
           return
-        case "panel":
-          handlePanelResolved(resolved)
-          setCommand("")
+        case "panel": {
+          const wasHandled = handlePanelResolved(resolved)
+          if (!wasHandled) {
+            handleUnknownCommand()
+          }
           return
-        case "link":
-          handleLinkResolved(resolved)
+        }
+        case "link": {
+          const wasHandled = handleLinkResolved(resolved)
+          if (!wasHandled) {
+            handleUnknownCommand()
+          }
           return
+        }
         case "clear":
           handleClearResolved(resolved)
           return
@@ -216,14 +257,14 @@ export function useCommandRouter({
     [
       handleUnknownCommand,
       clearPanels,
-      showPanel,
       showOutput,
       handleThemeCommand,
       handleSystemCommand,
+      handlePanelResolved,
+      handleLinkResolved,
+      handleClearResolved,
       handleRandomCommand,
-      clearToStart,
-      setStatusMessage,
-      setCommand,
+      resetInput,
     ]
   )
 
@@ -231,47 +272,44 @@ export function useCommandRouter({
     (cmdKey: string) => {
       if (activePanel?.type === "themes" && isValidThemeId(cmdKey)) {
         switchTheme(cmdKey)
+        resetInput()
         return true
       }
       return false
     },
-    [activePanel, switchTheme]
+    [activePanel, switchTheme, resetInput]
   )
 
   const handleTextCommand = useCallback(
-    (rawCommand: string) => {
-      const head = rawCommand.split(/\s+/)[0] ?? ""
-      const cmdKey = head.toLowerCase()
-      const args = rawCommand.slice(head.length).trim()
+    (normalized: string) => {
+      const { key, args } = parseTextCommand(normalized)
 
-      if (handleThemeShortcut(cmdKey)) {
-        setCommand("")
+      if (handleThemeShortcut(key)) {
         return
       }
 
-      handleResolvedCommand(cmdKey, args)
+      handleResolvedCommand(key, args)
     },
-    [handleThemeShortcut, handleResolvedCommand, setCommand]
+    [handleThemeShortcut, handleResolvedCommand]
   )
 
   const handleCommand = useCallback(
     (rawCommand: string) => {
-      // Strip leading slash to support slash command syntax (e.g., "/education", "/github")
-      const normalizedCommand = rawCommand.trim().replace(/^\//, "")
+      const normalized = normalizeCommand(rawCommand)
 
-      if (normalizedCommand === "") {
+      if (normalized === "") {
         handleEmptyCommand()
         suppressVirtualKeyboard()
         return
       }
 
-      if (/^\d+$/.test(normalizedCommand)) {
-        handleNumericCommand(normalizedCommand)
+      if (isNumericCommand(normalized)) {
+        handleNumericCommand(normalized)
         suppressVirtualKeyboard()
         return
       }
 
-      handleTextCommand(normalizedCommand)
+      handleTextCommand(normalized)
       suppressVirtualKeyboard()
     },
     [handleEmptyCommand, handleNumericCommand, handleTextCommand, suppressVirtualKeyboard]

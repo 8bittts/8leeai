@@ -7,7 +7,7 @@ import { Section } from "@/components/section"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, formatIndex, interactive } from "@/lib/utils"
+import { ANIMATION_DELAYS, formatIndex, interactive, PROJECTS_PER_PAGE } from "@/lib/utils"
 
 const summaryText =
   "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
@@ -32,7 +32,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   })
 
   useEffect(() => {
-    if (visibleProjects > 15) {
+    if (visibleProjects > PROJECTS_PER_PAGE) {
       // Center alignment prevents last project from being cut off at screen edge (especially helpful on mobile)
       projectsEndRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }

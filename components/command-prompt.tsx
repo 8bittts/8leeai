@@ -8,8 +8,8 @@ import { useActivePanel } from "@/hooks/use-active-panel"
 import { useCommandRouter } from "@/hooks/use-command-router"
 import { useVirtualKeyboardSuppression } from "@/hooks/use-virtual-keyboard-suppression"
 import { COMMAND_HELP_LINES } from "@/lib/commands"
-import { education, volunteer } from "@/lib/data"
-import { DATA_OFFSETS, interactive } from "@/lib/utils"
+import { DATA_OFFSETS, education, volunteer } from "@/lib/data"
+import { interactive } from "@/lib/utils"
 
 interface CommandPromptProps {
   showMoreProjects: () => void
