@@ -117,7 +117,7 @@ export function isSemanticUrl(pathname: string): boolean {
 }
 
 export const ANIMATION_DELAYS = {
-  typewriter: 8,
+  typewriter: 15,
   showProjects: 500,
   bootPrompt: 500,
 } as const

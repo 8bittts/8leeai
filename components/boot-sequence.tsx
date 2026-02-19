@@ -50,6 +50,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
   const { displayedText, isTyping } = useTypewriter({
     text: currentLine?.text ?? "",
     speed: ANIMATION_DELAYS.typewriter,
+    respectReducedMotion: false,
     onComplete: handleLineComplete,
   })
 

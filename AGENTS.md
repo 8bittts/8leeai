@@ -22,6 +22,8 @@
 - `bun run lint`: Run Biome checks.
 - `bun run format`: Apply Biome formatting.
 - `bun run check`: Run Biome with safe auto-fixes.
+- `bun run test:smoke`: Run maintained smoke tests.
+- `bun run check:full`: Run lint, smoke tests, build, and knip in one command.
 - `bunx knip`: Detect unused files/exports.
 
 ## Coding Style & Naming Conventions
@@ -32,8 +34,8 @@
 - For detailed conventions (including Tailwind-first styling and link/focus utilities), defer to `CLAUDE.md`.
 
 ## Testing Guidelines
-- No automated test framework is currently maintained in this repository.
-- Minimum validation before merge: `bun run check && bun run build && bunx knip`.
+- Smoke tests are maintained in `tests/smoke/` (routing/security/utils coverage).
+- Minimum validation before merge: `bun run check:full`.
 - For UI/interaction changes, manually verify terminal flows (`help`, `theme`, numeric navigation) on desktop and mobile.
 
 ## Commit & Pull Request Guidelines

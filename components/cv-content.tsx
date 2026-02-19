@@ -36,6 +36,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   const { displayedText, isTyping } = useTypewriter({
     text: summaryText,
     speed: ANIMATION_DELAYS.typewriter,
+    respectReducedMotion: false,
     onComplete: handleTypewriterComplete,
   })
 

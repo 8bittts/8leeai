@@ -59,6 +59,9 @@ bun install
 
 # Start development server
 bun run dev
+
+# Run full validation suite
+bun run check:full
 ```
 
 Open [http://localhost:1333](http://localhost:1333) and start customizing.
@@ -126,6 +129,7 @@ Your visitors can use these commands:
 | `email` | Get contact info |
 | `clear` | Reset the terminal |
 | `Ctrl+L` | Quick clear shortcut |
+| `Cmd+K` | Quick clear shortcut (macOS) |
 
 ---
 
@@ -139,6 +143,7 @@ Your visitors can use these commands:
 | Language | TypeScript 5.9 (strict mode) |
 | Runtime | Bun 1.3.9 |
 | Linting | Biome |
+| Tests | Bun smoke tests (`tests/smoke`) |
 | Deployment | Vercel |
 
 ---
@@ -191,6 +196,16 @@ public/        Static assets
 This is a personal portfolio template. Fork it, make it yours. If you build something cool, I'd love to see it.
 
 For development workflows and coding conventions, check the project's internal docs.
+
+### Maintenance Notes (Feb 2026 Refactor)
+
+- `useTypewriter()` now supports `respectReducedMotion` (default: `true`).
+- Main UX surfaces (`boot`, CV summary, and 404) explicitly set `respectReducedMotion: false`.
+- Typewriter speed is centralized in `ANIMATION_DELAYS.typewriter` (`lib/utils.ts`).
+- Theme CSS variables are intentionally minimal; when adding a new token, wire both:
+  - `app/globals.css` default token definition
+  - `contexts/theme-context.tsx` runtime token assignment
+- Theme style tags are centralized in `lib/themes/styles.ts` (`retro`, `neon`, `motion-heavy`).
 
 ## Claude Code Integration
 

@@ -17,12 +17,14 @@ export default function NotFound() {
   const heading = useTypewriter({
     text: "404",
     speed: ANIMATION_DELAYS.typewriter,
+    respectReducedMotion: false,
     onComplete: useCallback(() => setShowSubtext(true), []),
   })
 
   const subtext = useTypewriter({
     text: showSubtext ? "Wrong warp pipe. You have 1 continue left." : "",
     speed: ANIMATION_DELAYS.typewriter,
+    respectReducedMotion: false,
   })
 
   useEffect(() => {

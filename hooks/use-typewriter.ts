@@ -5,12 +5,14 @@ interface UseTypewriterOptions {
   text: string
   speed?: number
   onComplete?: () => void
+  respectReducedMotion?: boolean
 }
 
 export function useTypewriter({
   text,
   speed = ANIMATION_DELAYS.typewriter,
   onComplete,
+  respectReducedMotion = true,
 }: UseTypewriterOptions) {
   const [displayedText, setDisplayedText] = useState("")
   const [isTyping, setIsTyping] = useState(true)
@@ -29,7 +31,7 @@ export function useTypewriter({
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    if (prefersReducedMotion) {
+    if (respectReducedMotion && prefersReducedMotion) {
       setDisplayedText(text)
       setIsTyping(false)
       onCompleteRef.current?.()
@@ -60,7 +62,7 @@ export function useTypewriter({
         intervalRef.current = null
       }
     }
-  }, [text, speed])
+  }, [text, speed, respectReducedMotion])
 
   return { displayedText, isTyping }
 }
