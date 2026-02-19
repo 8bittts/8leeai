@@ -1,5 +1,10 @@
 # Repository Guidelines
 
+## Source of Truth
+- `CLAUDE.md` is the canonical contributor guide for workflows, coding rules, and operational policy.
+- This file is a quick-start summary for external agents/contributors; keep it concise and avoid rule duplication.
+- If guidance conflicts, follow `CLAUDE.md` and update this file only as a short pointer.
+
 ## Project Structure & Module Organization
 - `app/`: Next.js App Router entry points (`layout.tsx`, `page.tsx`, `not-found.tsx`). Demo notes live in `app/demos/_docs/`.
 - `components/`: Reusable terminal UI components.
@@ -24,7 +29,7 @@
 - Formatting (Biome): 2-space indent, LF line endings, 100-char line width, double quotes, trailing commas `es5`.
 - Imports: use `@/*` alias where it improves readability.
 - Naming patterns: kebab-case files (`terminal-container.tsx`), hook files prefixed with `use-`, theme modules as `theme-*.ts`.
-- Follow project rules in `CLAUDE.md` (for example, Tailwind utility-first styling and `openExternalLink()` for external links).
+- For detailed conventions (including Tailwind-first styling and link/focus utilities), defer to `CLAUDE.md`.
 
 ## Testing Guidelines
 - No automated test framework is currently maintained in this repository.
@@ -35,4 +40,4 @@
 - Commit subject format: `type: brief description` (examples: `chore: update packages`, `docs: refresh README`).
 - Keep commits focused and avoid mixing unrelated changes.
 - PRs should include: change summary, linked issue (if applicable), commands run for validation, and screenshots/GIFs for visual changes.
-- If `lib/data.ts` changes project ordering/content, sync related profile README content per `CLAUDE.md`.
+- If `lib/data.ts` changes project ordering/content, follow the sync workflow in `CLAUDE.md`.
