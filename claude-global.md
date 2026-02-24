@@ -146,7 +146,7 @@ Available via `~/.claude/commands/`:
 | `/substack` | Draft newsletter post in 8Lee's voice (Building DeathNote / Digital Onigiri) |
 | `/today` | Daily summary of Claude Code usage (token counts, work themes, artefacts) |
 | `/codex` | Delegate task to OpenAI Codex CLI headless (`codex exec --model gpt-5.3-codex --yolo`) |
-| `/cursor` | Delegate task to Cursor Agent CLI headless (`agent -p --force --model composer-1.5`) |
+| `/cursor` | Delegate task to Cursor Agent CLI headless (`agent -p --yolo --trust --approve-mcps --model composer-1.5 --output-format stream-json --stream-partial-output`) |
 
 ---
 
