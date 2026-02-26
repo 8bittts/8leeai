@@ -89,7 +89,20 @@ bunx <cmd>           # Run binary
 
 **No Dates in CLAUDE.md:** Use git history for temporal tracking.
 
-**Library Documentation:** Use Context7 MCP to validate current documentation about software libraries before implementing.
+**Library Documentation:** Use Context7 MCP to validate current documentation about software libraries before implementing. Use Apple Docs MCP for Apple/macOS/iOS framework documentation, WWDC sessions, and platform API references.
+
+---
+
+## MCP Servers (Global)
+
+Globally configured MCP servers available in all projects:
+
+| Server | Package | Purpose |
+|--------|---------|---------|
+| `context7` | Plugin (official) | Library/framework documentation lookup |
+| `apple-docs` | `@kimsungwhee/apple-docs-mcp` | Apple Developer Documentation, WWDC sessions/transcripts, framework symbols, platform compatibility. 15 tools, 1,260+ bundled WWDC sessions with zero-latency offline access. |
+
+**Apple Docs MCP Usage:** Prefer `apple-docs` over web searches for Apple platform questions — it has structured API search (`search_framework_symbols`), inheritance/conformance discovery (`get_related_apis`), platform version compatibility (`get_platform_compatibility`), WWDC video transcripts (`get_wwdc_video_details`), and sample code browsing (`get_sample_code`).
 
 ---
 
