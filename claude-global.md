@@ -80,6 +80,8 @@ bunx <cmd>           # Run binary
 
 **Global Backup Sync:** `claude-global.md` is maintained in 3 repos with 1:1:1 parity: `deathnote`, `yenchat`, and `8leeai`. When updating, sync all 3 copies and `/ship` each repo.
 
+**Global Commands Backup Sync:** `~/.claude/commands/` is backed up to `claude-commands/` in the same 3 repos (`deathnote`, `yenchat`, `8leeai`) with 1:1:1 parity. When any global command is added, removed, or modified, immediately copy the updated file(s) to all 3 repos and `/ship` each.
+
 **No Emojis:** Use text markers in documentation:
 - `[YES]` / `[NO]` instead of checkmarks
 - `[WARNING]` / `[CRITICAL]` / `[NOTE]` for callouts
