@@ -184,10 +184,6 @@ export const VALID_COMMANDS = COMMAND_DEFINITIONS.filter(
   (command) => command.includeInCommands !== false
 ).flatMap((command) => commandKeys(command))
 
-export const COMMAND_ALIASES = Object.fromEntries(
-  COMMAND_DEFINITIONS.flatMap((command) => commandKeys(command).map((key) => [key, command.label]))
-)
-
 const COMMAND_LOOKUP = new Map(
   COMMAND_DEFINITIONS.filter((command) => command.includeInCommands !== false).flatMap((command) =>
     commandKeys(command).map((key) => [key, command])
@@ -196,8 +192,4 @@ const COMMAND_LOOKUP = new Map(
 
 export function resolveCommand(key: string): CommandDefinition | undefined {
   return COMMAND_LOOKUP.get(key)
-}
-
-export function isValidCommand(cmd: string): boolean {
-  return COMMAND_LOOKUP.has(cmd)
 }
