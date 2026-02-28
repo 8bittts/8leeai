@@ -218,30 +218,6 @@ This is a personal portfolio template. Fork it, make it yours. If you build some
 
 For development workflows and coding conventions, check the project's internal docs.
 
-### Maintenance Notes (Feb 2026 Refactor)
-
-- `useTypewriter()` now supports `respectReducedMotion` (default: `true`).
-- Main UX surfaces (`boot`, CV summary, and 404) explicitly set `respectReducedMotion: false`.
-- Typewriter speed is centralized in `ANIMATION_DELAYS.typewriter` (`lib/utils.ts`).
-- Theme CSS variables are intentionally minimal; when adding a new token, wire both:
-  - `app/globals.css` default token definition
-  - `contexts/theme-context.tsx` runtime token assignment
-- Theme style tags are centralized in `lib/themes/styles.ts` (`retro`, `neon`, `motion-heavy`).
-- Theme schema is intentionally lean:
-  - `colors`: `background`, `foreground`, `primary`, `accent`, `muted`, `border`, `error`
-  - `fonts`: `primary`
-  - `borders`: `width`, `style`
-  - `shadows`: `hover`
-
-## Claude Code Integration
-
-This project uses Claude Code with global rules from `~/.claude/CLAUDE.md`.
-If present locally, project-specific assistant notes may live in `CLAUDE.md` (often gitignored).
-
-Global configuration backup (for recovery on new computers) is maintained in the [deathnote project](https://github.com/8bittts/deathnote) at `claude-global.md`.
-
----
-
 <p align="center">
   <img src="public/yen.png" alt="YEN Terminal" width="100%" />
 </p>
