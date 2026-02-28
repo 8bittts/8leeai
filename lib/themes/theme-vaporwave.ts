@@ -31,7 +31,7 @@ export const vaporwaveTheme: ThemeDefinition = {
   },
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "80s/90s vaporwave aesthetic, Miami nights, retro nostalgia",
   },

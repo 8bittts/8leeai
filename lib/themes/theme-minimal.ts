@@ -30,7 +30,7 @@ export const minimalTheme: ThemeDefinition = {
   shadows: SHADOWS_NONE,
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Swiss design and modern minimalism",
   },

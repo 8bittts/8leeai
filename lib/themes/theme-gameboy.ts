@@ -33,7 +33,7 @@ export const gameboyTheme: ThemeDefinition = {
   shadows: createOffsetShadows("#306230"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Nintendo Game Boy DMG-01 LCD display",
   },

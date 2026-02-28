@@ -30,7 +30,7 @@ export const brutalistTheme: ThemeDefinition = {
   shadows: createOffsetShadows("#000000"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "1990s web design and brutalist architecture",
   },

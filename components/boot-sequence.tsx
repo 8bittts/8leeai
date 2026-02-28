@@ -22,7 +22,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     () => [
       { text: `MS-DOS v${versionLabel}`, group: 1 },
       { text: "(C) 1982, 1983 Saddington, Inc.", group: 1 },
-      { text: "Eight Lee • Systems & Engineering", group: 2 },
+      { text: "8LEE • Systems & Engineering", group: 2 },
       { text: "Booting CJ in the Shell...", group: 2 },
     ],
     [versionLabel]

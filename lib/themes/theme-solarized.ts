@@ -27,7 +27,7 @@ export const solarizedTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(38, 139, 210, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Solarized by Ethan Schoonover",
   },

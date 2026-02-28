@@ -27,7 +27,7 @@ export const gruvboxTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(254, 128, 25, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Gruvbox by Pavel Pertsev",
   },

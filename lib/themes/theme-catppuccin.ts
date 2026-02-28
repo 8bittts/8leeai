@@ -27,7 +27,7 @@ export const catppuccinTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(203, 166, 247, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Catppuccin Mocha palette",
   },

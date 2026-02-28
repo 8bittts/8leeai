@@ -9,7 +9,7 @@ export interface CommandOutput {
 
 export function handleWhoami(): CommandOutput {
   return {
-    content: "You're exploring Eight Lee's portfolio terminal.\nType 'help' to see what I can do!",
+    content: "You're exploring 8LEE's portfolio terminal.\nType 'help' to see what I can do!",
     status: "User info displayed",
   }
 }

@@ -27,7 +27,7 @@ export const monokaiTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(249, 38, 114, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Monokai by Wimer Hazenberg",
   },

@@ -27,7 +27,7 @@ export const oceanTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(0, 119, 182, 0.2)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Underwater depths and ocean calm",
   },

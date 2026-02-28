@@ -26,20 +26,20 @@ const ibmPlexSans = IBM_Plex_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Eight Lee • Build Great Products",
+  title: "8LEE • Build Great Products",
   description:
     "20+ year engineering veteran and award-winning product designer. Lover of systems, speed, and all my 3 kids and (sub)agents equally. And CJ, I love you more than God. And JP.",
   keywords: [
-    "Eight Lee",
+    "8LEE",
     "product design",
     "engineering",
     "software development",
     "startup",
     "technology",
   ],
-  authors: [{ name: "Eight Lee" }],
-  creator: "Eight Lee",
-  publisher: "Eight Lee",
+  authors: [{ name: "8LEE" }],
+  creator: "8LEE",
+  publisher: "8LEE",
   metadataBase: new URL("https://8lee.ai"),
   alternates: {
     canonical: "/",
@@ -48,22 +48,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://8lee.ai",
-    title: "Eight Lee • Build Great Products",
+    title: "8LEE • Build Great Products",
     description:
       "20+ year engineering veteran and award-winning product designer. Lover of systems, speed, and all my 3 kids and (sub)agents equally.",
-    siteName: "Eight Lee",
+    siteName: "8LEE",
     images: [
       {
         url: "/8-social.jpeg",
         width: 1200,
         height: 630,
-        alt: "Eight Lee",
+        alt: "8LEE",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eight Lee • Build Great Products",
+    title: "8LEE • Build Great Products",
     description: "20+ year engineering veteran and award-winning product designer.",
     creator: "@8BIT",
     images: ["/8-social.jpeg"],
@@ -88,20 +88,15 @@ export const metadata: Metadata = {
   },
   manifest: "/favicon/site.webmanifest",
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+      index: true,
+      follow: true,
       "max-video-preview": -1,
-      "max-image-preview": "none",
+      "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  other: {
-    "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp",
   },
 }
 
@@ -117,6 +112,22 @@ export default function RootLayout({
     >
       <body className="h-full bg-theme-bg text-theme-fg font-[family-name:var(--theme-font-primary)] antialiased transition-colors duration-0">
         <ThemeProvider>
+          <script
+            type="application/ld+json"
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: static JSON-LD
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                name: "8LEE",
+                url: "https://8lee.ai",
+                jobTitle: "Engineering Veteran & Product Designer",
+                description: "20+ year engineering veteran and award-winning product designer.",
+                sameAs: ["https://x.com/8BIT"],
+                image: "https://8lee.ai/8-social.jpeg",
+              }),
+            }}
+          />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-theme-bg focus:text-theme-fg focus:px-4 focus:py-2 focus:border focus:border-theme-border"

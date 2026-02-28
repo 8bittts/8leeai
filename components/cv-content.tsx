@@ -59,7 +59,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
     <article className="space-y-8" id="main-content" aria-labelledby="page-title">
       <section aria-label="Summary and Overview — Sep 29, 2025 — I love you more than God, CJ. My everything. And JP.">
         <h1 id="page-title" className="text-3xl font-bold mb-4">
-          Eight Lee • Build Great Products
+          8LEE • Build Great Products
         </h1>
         <p className="text-sm leading-relaxed max-w-4xl">
           {displayedText}

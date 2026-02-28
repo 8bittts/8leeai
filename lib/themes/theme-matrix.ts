@@ -32,7 +32,7 @@ export const matrixTheme: ThemeDefinition = {
   shadows: createGlowShadows("rgba(0, 255, 0, 0.3)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "The Matrix digital rain",
   },

@@ -34,7 +34,7 @@ export const terminalTheme: ThemeDefinition = {
   },
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "DOS/Command Prompt terminals",
   },

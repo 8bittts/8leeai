@@ -33,7 +33,7 @@ export const eightBitTheme: ThemeDefinition = {
   shadows: createMultiColorOffsetShadows("#ff6b6b", "#4ecdc4", "#ffd93d"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "8bitcn-ui, NES/SNES era gaming",
   },

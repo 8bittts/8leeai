@@ -32,7 +32,7 @@ export const cyberpunkTheme: ThemeDefinition = {
   },
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Blade Runner, Cyberpunk 2077, neon-lit dystopian futures",
   },

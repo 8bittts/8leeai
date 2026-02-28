@@ -19,12 +19,6 @@ const PERMISSIONS_POLICY =
   "web-share=()"
 
 function applySecurityHeaders(response: NextResponse): void {
-  // Ultra-private mode: Block all search engines and web crawlers.
-  response.headers.set(
-    "X-Robots-Tag",
-    "noindex, nofollow, noarchive, nosnippet, noimageindex, noodp, notranslate"
-  )
-
   // Security: Prevent clickjacking, MIME sniffing, XSS attacks.
   response.headers.set("X-Frame-Options", "DENY")
   response.headers.set("X-Content-Type-Options", "nosniff")

@@ -32,7 +32,7 @@ export const sunsetTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(255, 123, 0, 0.2)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Golden hour sunset gradients",
   },

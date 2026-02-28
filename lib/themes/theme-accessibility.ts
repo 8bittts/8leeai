@@ -29,7 +29,7 @@ export const accessibilityTheme: ThemeDefinition = {
   shadows: SHADOWS_NONE,
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "WCAG AAA compliance and screen reader optimization",
   },

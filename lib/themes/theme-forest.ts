@@ -32,7 +32,7 @@ export const forestTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(29, 53, 87, 0.2)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Ancient forests and natural growth",
   },

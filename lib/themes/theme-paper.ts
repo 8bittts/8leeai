@@ -35,7 +35,7 @@ export const paperTheme: ThemeDefinition = {
   },
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Academic papers, printed documents, classic typography",
   },

@@ -27,7 +27,7 @@ export const nordTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(136, 192, 208, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Nord color palette by Arctic Ice Studio",
   },

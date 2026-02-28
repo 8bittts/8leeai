@@ -27,7 +27,7 @@ export const draculaTheme: ThemeDefinition = {
   shadows: createSoftShadows("rgba(189, 147, 249, 0.15)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Dracula theme by Zeno Rocha",
   },

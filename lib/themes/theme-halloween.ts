@@ -27,7 +27,7 @@ export const halloweenTheme: ThemeDefinition = {
   shadows: createGlowShadows("rgba(255, 102, 0, 0.3)", "rgba(139, 0, 139, 0.25)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Spooky season vibes with orange pumpkins and purple night skies",
   },

@@ -27,7 +27,7 @@ export const christmasTheme: ThemeDefinition = {
   shadows: createGlowShadows("rgba(255, 215, 0, 0.2)", "rgba(196, 30, 58, 0.3)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "Warm holiday festivities with classic Christmas colors and golden lights",
   },

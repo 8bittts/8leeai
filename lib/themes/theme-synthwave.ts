@@ -27,7 +27,7 @@ export const synthwaveTheme: ThemeDefinition = {
   shadows: createGlowShadows("rgba(255, 41, 117, 0.35)", "rgba(0, 255, 249, 0.25)"),
 
   metadata: {
-    author: "Eight Lee",
+    author: "8LEE",
     version: "1.0.0",
     inspiration: "80s synthwave and retro futurism",
   },
