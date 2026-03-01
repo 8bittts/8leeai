@@ -26,7 +26,21 @@ basename "$(git symbolic-ref refs/remotes/origin/HEAD)"
 
 Use the detected branch name for push (fallback to `main` if detection fails).
 
-### 1. Detect Available Updates
+### 1. Sync packageManager Field
+
+Check the locally installed bun version and compare to the `packageManager` field in `package.json`:
+
+```bash
+bun --version
+```
+
+- If `package.json` has no `packageManager` field: add `"packageManager": "bun@{VERSION}"`
+- If the field exists but the version is behind the local bun: update it to match
+- If already current: no change needed
+
+This step runs regardless of whether dependency updates exist.
+
+### 2. Detect Available Updates
 
 ```bash
 bunx npm-check-updates
@@ -34,10 +48,11 @@ bunx npm-check-updates
 
 **IMPORTANT:** Ignore the `bun` entry in ncu output — this is the `packageManager` field, not a real dependency.
 
-- If no real dependency updates: report "no-updates" (restore stash if applicable) and stop
+- If no real dependency updates AND no packageManager change from step 1: report "no-updates" (restore stash if applicable) and stop
 - If updates exist: proceed to breaking change review
+- If only packageManager changed: skip to step 4 (apply + quality gates)
 
-### 2. Breaking Change Review
+### 3. Breaking Change Review
 
 For every package with a **major version bump** (e.g., 2.x.x -> 3.x.x):
 
@@ -48,9 +63,9 @@ For every package with a **major version bump** (e.g., 2.x.x -> 3.x.x):
 
 **Decision gate:**
 - If ANY major version bumps exist: **STOP and present findings to the user**. List each major bump with its breaking changes. Wait for explicit approval before proceeding.
-- If only minor/patch updates: proceed automatically to step 3.
+- If only minor/patch updates: proceed automatically to step 4.
 
-### 3. Apply Updates
+### 4. Apply Updates
 
 Force ALL updates (major + minor + patch) to latest versions:
 
@@ -59,9 +74,7 @@ bunx npm-check-updates -u --reject bun
 bun install
 ```
 
-The `--reject bun` flag skips the packageManager field.
-
-**Verify `packageManager` field is current:** Check `package.json` for the `"packageManager"` field. If its version is behind the locally installed bun version (`bun --version`), update it to match. ncu sometimes reverts this field to an older version from a cached state.
+The `--reject bun` flag skips the packageManager field (already handled in step 1).
 
 **Biome config migration:** If `@biomejs/biome` was updated, run `bunx biome migrate --write` to update the `biome.json` schema version. Stage `biome.json` alongside other changes.
 
@@ -73,7 +86,7 @@ git diff --stat
 
 If no files changed, report "no-updates" and stop (restore stash if applicable).
 
-### 4. Quality Gates
+### 5. Quality Gates
 
 All must pass:
 
@@ -89,7 +102,7 @@ If the project has knip configured (check for `knip.json` or `knip` in package.j
 bunx knip
 ```
 
-### 5. On Failure: Auto-Fix Then Retry
+### 6. On Failure: Auto-Fix Then Retry
 
 If quality gates fail, try Biome auto-fix:
 
@@ -108,11 +121,11 @@ Restore stash if applicable: `git stash pop`
 
 Report the specific error and stop.
 
-### 6. Version Consistency
+### 7. Version Consistency
 
 Read CLAUDE.md and README.md in the project (if they exist). If they contain tech stack version numbers that changed due to updates, edit them to match package.json.
 
-### 7. Commit and Push
+### 8. Commit and Push
 
 Only stage files actually changed by the update process:
 
@@ -154,6 +167,6 @@ COMMIT: (hash, or "n/a")
 - knip runs when configured to catch dead code after updates
 - Version docs (CLAUDE.md, README.md) are updated when package versions change
 - Branch name is auto-detected (fallback to main)
-- The `packageManager` field in package.json can drift behind the installed bun version — always verify and update it
+- The `packageManager` field is synced with the locally installed bun version every run — not just when ncu reports updates
 - When Biome is updated, `biome.json` schema version must be migrated with `bunx biome migrate --write`
 - Stage `biome.json` alongside `package.json` and `bun.lock` when it changes
