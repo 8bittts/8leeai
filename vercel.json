@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "if echo \"$VERCEL_GIT_COMMIT_MESSAGE\" | grep -q '\\[deploy\\]'; then exit 1; fi",
   "cleanUrls": true,
   "trailingSlash": false,
   "regions": ["iad1"],
