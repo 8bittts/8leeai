@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: generateCSP(),
           },
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache",
+          },
         ],
       },
     ]

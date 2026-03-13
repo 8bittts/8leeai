@@ -28,6 +28,21 @@
 
 ---
 
+## Privacy by Default
+
+This project is hardened against indexing, scraping, and AI training at every layer:
+
+- **robots.txt** blocks all crawlers (`Disallow: /` for `*`)
+- **HTML meta tags** set `noindex`, `nofollow`, `noarchive`, `nosnippet`, `noimageindex`, `nocache`
+- **X-Robots-Tag HTTP header** enforces the same directives server-side on every response
+- **No sitemap** is served
+- **No structured data** (JSON-LD, OpenGraph, Twitter cards) is emitted
+- **No keywords or descriptions** are exposed to search engines
+
+If you fork this project, replace all personal data in `lib/commands.ts` (social links) and `lib/api-security.ts` (CORS domains) with your own.
+
+---
+
 ## Why This Exists
 
 Most portfolios look the same. This one doesn't.
