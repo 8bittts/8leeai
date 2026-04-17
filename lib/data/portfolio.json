@@ -13,6 +13,12 @@
       "linkWord": "Animated"
     },
     {
+      "id": "dockishos",
+      "name": "DockishOS • macOS Taskbar that Organizes Windows by Space",
+      "url": "https://github.com/8bittts/dockishOS",
+      "linkWord": "Taskbar"
+    },
+    {
       "id": "particularly",
       "name": "Particular.ly • Good Web Diagnostics",
       "url": "https://particular.ly",
