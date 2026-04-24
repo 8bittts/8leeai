@@ -25,7 +25,8 @@ export function CVContent({ visibleProjects }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
   const revealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [showProjects, setShowProjects] = useState(false)
-  const summaryText = `Product engineer and designer building AI-native products, macOS tools, and durable software systems across ${projects.length} shipped projects. We should `
+  const summaryText =
+    "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
 
   const handleTypewriterComplete = useCallback(() => {
     if (revealTimeoutRef.current !== null) {

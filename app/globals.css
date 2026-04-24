@@ -48,6 +48,10 @@
 }
 
 @layer base {
+  html {
+    font-size: 125%;
+  }
+
   * {
     border-color: var(--theme-border);
     outline-color: color-mix(in oklch, var(--theme-primary) 50%, transparent);
