@@ -21,7 +21,7 @@ export function ThemeGridSection() {
         {availableThemes.map((theme) => {
           const isActive = theme.id === currentTheme
           return (
-            <div key={theme.id} className="flex items-start">
+            <div key={theme.id} className="terminal-project-row flex min-w-0 items-start">
               <button
                 type="button"
                 onClick={() => setTheme(theme.id)}

@@ -48,10 +48,10 @@ yarn-error.log*
 *.swo
 *~
 
-# AI assistant configs
+# AI assistant local runtime state
 .claude/commands/
-CLAUDE.md
-AGENTS.md
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
 claude-global.md
 
 # OS

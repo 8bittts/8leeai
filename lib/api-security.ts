@@ -3,6 +3,8 @@
  * Provides CSP generation, CORS configuration, and security headers.
  */
 
+export const ROBOTS_DIRECTIVES = "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache"
+
 /**
  * Generates Content Security Policy header value.
  * Restricts resource loading, allows Vercel analytics/live, Google Fonts, and third-party APIs.

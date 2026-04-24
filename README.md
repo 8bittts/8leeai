@@ -15,11 +15,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16.1.6-black?style=flat-square&logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind-v4.2.1-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Bun-1.3.9-fbf0df?style=flat-square&logo=bun" alt="Bun" />
-  <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Next.js-16.2.4-black?style=flat-square&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19.2.5-61DAFB?style=flat-square&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind-v4.2.4-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Bun-1.3.13-fbf0df?style=flat-square&logo=bun" alt="Bun" />
+  <img src="https://img.shields.io/badge/TypeScript-6.0.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
 </p>
 
 <p align="center">
@@ -30,14 +30,17 @@
 
 ## Privacy by Default
 
-This project is hardened against indexing, scraping, and AI training at every layer:
+This project is public by direct URL but intentionally non-indexable. Search engines, AI crawlers, snippets, archives, and image indexing are blocked at every app layer:
 
 - **robots.txt** blocks all crawlers (`Disallow: /` for `*`)
 - **HTML meta tags** set `noindex`, `nofollow`, `noarchive`, `nosnippet`, `noimageindex`, `nocache`
 - **X-Robots-Tag HTTP header** enforces the same directives server-side on every response
+- **Next root headers** repeat the same `X-Robots-Tag` on `/`
 - **No sitemap** is served
 - **No structured data** (JSON-LD, OpenGraph, Twitter cards) is emitted
-- **No keywords or descriptions** are exposed to search engines
+- **No keywords or meta descriptions** are exposed to search engines
+
+See [`docs/01-privacy-indexing.md`](docs/01-privacy-indexing.md) before changing metadata, routing, middleware, headers, public assets, or deployment config.
 
 If you fork this project, replace all personal data in `lib/commands.ts` (social links) and `lib/api-security.ts` (CORS domains) with your own.
 
@@ -51,7 +54,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 ### What You Get
 
-- **66+ project slots** - Showcase your entire body of work
+- **68 project slots** - Showcase your entire body of work
 - **23 color themes** - From classic green phosphor to synthwave pink
 - **Terminal-style command UX** - Enter-to-load, numeric navigation, and clear shortcuts
 - **WCAG 2.1 AA accessible** - Screen reader friendly
@@ -62,7 +65,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 ## Quick Start
 
-**Requires [Bun](https://bun.sh) v1.3.9+**
+**Requires [Bun](https://bun.sh) v1.3.13+**
 
 ```bash
 # Clone the repo
@@ -128,7 +131,7 @@ Switch themes with the `theme` command or `theme [name]`.
 bun run build
 
 # Deploy to Vercel (recommended)
-vercel --prod
+vercel --prod --scope death-note
 ```
 
 ---
@@ -172,14 +175,14 @@ Common aliases:
 
 | Layer | Technology |
 |-------|------------|
-| Framework | Next.js 16 (App Router + Turbopack) |
-| UI | React 19 |
-| Styling | Tailwind CSS v4 |
-| Language | TypeScript 5.9 (strict mode) |
-| Runtime | Bun 1.3.9 |
-| Linting | Biome |
+| Framework | Next.js 16.2.4 (App Router + Turbopack) |
+| UI | React 19.2.5 |
+| Styling | Tailwind CSS 4.2.4 |
+| Language | TypeScript 6.0.3 (strict mode) |
+| Runtime | Bun 1.3.13 |
+| Linting | Biome 2.4.13 |
 | Tests | Bun smoke tests (`tests/smoke`) |
-| Deployment | Vercel |
+| Deployment | Vercel (`death-note` scope) |
 
 ---
 
@@ -188,6 +191,7 @@ Common aliases:
 ```
 app/                    Next.js App Router pages and layouts
 components/             Reusable UI components
+docs/                   Backlog, privacy/indexing policy, and operator notes
 lib/
   data.ts               Typed dataset validation + exports
   data/portfolio.json   Portfolio content source of truth

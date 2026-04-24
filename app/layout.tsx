@@ -27,7 +27,6 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: "8LEE",
-  description: "8LEE",
   metadataBase: new URL("https://8lee.ai"),
   icons: {
     icon: [

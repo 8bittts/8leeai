@@ -1,5 +1,5 @@
 import type { NextConfig } from "next"
-import { generateCSP } from "./lib/api-security"
+import { generateCSP, ROBOTS_DIRECTIVES } from "./lib/api-security"
 
 const nextConfig: NextConfig = {
   // Enable Turbopack for faster dev builds
@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "X-Robots-Tag",
-            value: "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache",
+            value: ROBOTS_DIRECTIVES,
           },
         ],
       },

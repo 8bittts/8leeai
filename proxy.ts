@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
-import { generateCORSHeaders, generateCSP } from "./lib/api-security"
+import { generateCORSHeaders, generateCSP, ROBOTS_DIRECTIVES } from "./lib/api-security"
 import { isSemanticUrl } from "./lib/utils"
 
 const PERMISSIONS_POLICY =
@@ -31,10 +31,7 @@ function applySecurityHeaders(response: NextResponse): void {
   response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
 
   // Anti-indexing: Tell all crawlers not to index, follow, cache, or snippet any content.
-  response.headers.set(
-    "X-Robots-Tag",
-    "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache"
-  )
+  response.headers.set("X-Robots-Tag", ROBOTS_DIRECTIVES)
 
   // Additional hardening: Disable DNS prefetch, download execution, cross-domain policies.
   response.headers.set("X-DNS-Prefetch-Control", "off")

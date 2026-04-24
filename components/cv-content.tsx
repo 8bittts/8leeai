@@ -9,9 +9,6 @@ import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
 import { ANIMATION_DELAYS, formatIndex, interactive, PROJECTS_PER_PAGE } from "@/lib/utils"
 
-const summaryText =
-  "Award-winning product engineer and designer, obsessed with systems, speed, and my 3 kids and (sub)agents equally. I love helping teams build great products! We should "
-
 interface CVContentProps {
   visibleProjects: number
   setCommand?: (command: string) => void
@@ -21,6 +18,7 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
   const revealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [showProjects, setShowProjects] = useState(false)
+  const summaryText = `Product engineer and designer building AI-native products, macOS tools, and durable software systems across ${projects.length} shipped projects. We should `
 
   const handleTypewriterComplete = useCallback(() => {
     if (revealTimeoutRef.current !== null) {
@@ -56,12 +54,18 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   }, [])
 
   return (
-    <article className="space-y-8" id="main-content" aria-labelledby="page-title">
-      <section aria-label="Summary and Overview — Sep 29, 2025 — I love you more than God, CJ. My everything. And JP.">
-        <h1 id="page-title" className="text-3xl font-bold mb-4">
-          8LEE • Build Great Products
+    <article className="space-y-10" aria-labelledby="page-title">
+      <section
+        className="terminal-hero flex min-h-[28rem] max-w-5xl flex-col justify-end pb-6 pt-10 sm:min-h-[30rem] lg:min-h-[34rem]"
+        aria-label="Summary and overview"
+      >
+        <h1 id="page-title" className="mb-5 font-bold">
+          <span className="block text-5xl leading-none sm:text-7xl lg:text-8xl">8LEE</span>
+          <span className="mt-3 block text-xl leading-tight sm:text-3xl lg:text-4xl">
+            Build great products.
+          </span>
         </h1>
-        <p className="text-sm leading-relaxed max-w-4xl">
+        <p className="max-w-3xl text-base leading-relaxed sm:text-lg">
           {displayedText}
           {!isTyping && (
             <>
@@ -80,6 +84,9 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           )}
           {isTyping && <Cursor />}
         </p>
+        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-theme-muted">
+          macOS tools · AI systems · product design · terminal-native interfaces
+        </p>
       </section>
 
       {showProjects && (
@@ -89,10 +96,10 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           animate={true}
           className="mb-0"
         >
-          <GridList>
+          <GridList className="text-[0.8125rem] sm:text-sm">
             {projects.slice(0, visibleProjects).map((project, index) => (
-              <div key={project.id} className="flex">
-                <span className="mr-3 text-theme-muted">{formatIndex(index)}.</span>
+              <div key={project.id} className="terminal-project-row flex min-w-0 items-baseline">
+                <span className="mr-3 w-8 shrink-0 text-theme-muted">{formatIndex(index)}.</span>
                 {project.url ? (
                   <SecureExternalLink
                     url={project.url}
