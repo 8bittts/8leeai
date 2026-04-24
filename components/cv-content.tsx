@@ -7,14 +7,21 @@ import { Section } from "@/components/section"
 import { SecureExternalLink } from "@/components/secure-external-link"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { projects } from "@/lib/data"
-import { ANIMATION_DELAYS, formatIndex, interactive, PROJECTS_PER_PAGE } from "@/lib/utils"
+import {
+  ANIMATION_DELAYS,
+  formatIndex,
+  interactive,
+  openExternalLink,
+  PROJECTS_PER_PAGE,
+} from "@/lib/utils"
+
+const LINKEDIN_PROFILE_URL = "https://www.linkedin.com/in/8lee/"
 
 interface CVContentProps {
   visibleProjects: number
-  setCommand?: (command: string) => void
 }
 
-export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
+export function CVContent({ visibleProjects }: CVContentProps) {
   const projectsEndRef = useRef<HTMLDivElement>(null)
   const revealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [showProjects, setShowProjects] = useState(false)
@@ -63,16 +70,21 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           {displayedText}
           {!isTyping && (
             <span className="whitespace-nowrap">
-              <button
-                type="button"
+              <a
+                href={LINKEDIN_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={interactive(
                   "underline hover:text-theme-accent hover:bg-theme-primary/10 cursor-pointer bg-transparent border-0 p-0 font-inherit text-inherit"
                 )}
-                onClick={() => setCommand?.("email")}
-                aria-label="Show contact email"
+                onClick={(event) => {
+                  event.preventDefault()
+                  openExternalLink(LINKEDIN_PROFILE_URL)
+                }}
+                aria-label="Open LinkedIn profile"
               >
                 chat.
-              </button>
+              </a>
             </span>
           )}
           {isTyping && <Cursor />}
