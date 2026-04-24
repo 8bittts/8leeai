@@ -83,8 +83,9 @@ export function CVContent({ visibleProjects }: CVContentProps) {
                 }}
                 aria-label="Open LinkedIn profile"
               >
-                chat.
+                chat
               </a>
+              {"."}
             </span>
           )}
           {isTyping && <Cursor />}
