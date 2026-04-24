@@ -137,11 +137,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
 
         {/* Command Prompt */}
         <nav className="relative z-10" aria-label="Terminal commands">
-          <form
-            className="group flex min-w-0 items-center gap-2 border-b border-theme-muted pb-2 transition-colors duration-150 focus-within:border-theme-primary"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <label htmlFor="terminal-input" className="shrink-0 text-theme-primary">
+          <form className="flex items-center gap-1" onSubmit={(e) => e.preventDefault()}>
+            <label htmlFor="terminal-input" className="text-theme-primary">
               $:
             </label>
             <input
@@ -150,9 +147,9 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               type="text"
               inputMode="text"
               className={interactive(
-                "min-w-0 flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none"
+                "flex-1 bg-transparent text-theme-primary placeholder:text-theme-muted outline-none"
               )}
-              placeholder="help | email | 01"
+              placeholder="'Return' for more projects, 'help' for commands."
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               onKeyDown={onKeyDown}
@@ -162,16 +159,8 @@ export const CommandPrompt = forwardRef<CommandPromptRef, CommandPromptProps>(
               aria-describedby="command-instructions"
             />
           </form>
-          <p id="command-instructions" className="sr-only">
-            Enter a project number, email, theme, help, or clear.
-          </p>
-          <p
-            className="mt-2 hidden flex-wrap gap-x-4 gap-y-1 text-xs text-theme-muted sm:flex"
-            aria-hidden="true"
-          >
-            <span>email</span>
-            <span>theme</span>
-            <span>clear</span>
+          <p id="command-instructions" className="mt-2 text-xs text-theme-muted">
+            Commands: email | help | clear
           </p>
         </nav>
 

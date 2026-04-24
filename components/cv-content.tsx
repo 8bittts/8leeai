@@ -54,21 +54,15 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
   }, [])
 
   return (
-    <article className="space-y-10" aria-labelledby="page-title">
-      <section
-        className="terminal-hero flex min-h-[28rem] max-w-5xl flex-col justify-end pb-6 pt-10 sm:min-h-[30rem] lg:min-h-[34rem]"
-        aria-label="Summary and overview"
-      >
-        <h1 id="page-title" className="mb-5 font-bold">
-          <span className="block text-5xl leading-none sm:text-7xl lg:text-8xl">8LEE</span>
-          <span className="mt-3 block text-xl leading-tight sm:text-3xl lg:text-4xl">
-            Build great products.
-          </span>
+    <article className="space-y-8" aria-labelledby="page-title">
+      <section aria-label="Summary and overview">
+        <h1 id="page-title" className="mb-4 text-3xl font-bold">
+          8LEE • Build Great Products
         </h1>
-        <p className="max-w-3xl text-base leading-relaxed sm:text-lg">
+        <p className="max-w-4xl text-sm leading-relaxed">
           {displayedText}
           {!isTyping && (
-            <>
+            <span className="whitespace-nowrap">
               <button
                 type="button"
                 className={interactive(
@@ -77,15 +71,11 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
                 onClick={() => setCommand?.("email")}
                 aria-label="Show contact email"
               >
-                chat
+                chat.
               </button>
-              {"."}
-            </>
+            </span>
           )}
           {isTyping && <Cursor />}
-        </p>
-        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-theme-muted">
-          macOS tools · AI systems · product design · terminal-native interfaces
         </p>
       </section>
 
@@ -96,10 +86,10 @@ export function CVContent({ visibleProjects, setCommand }: CVContentProps) {
           animate={true}
           className="mb-0"
         >
-          <GridList className="text-[0.8125rem] sm:text-sm">
+          <GridList>
             {projects.slice(0, visibleProjects).map((project, index) => (
-              <div key={project.id} className="terminal-project-row flex min-w-0 items-baseline">
-                <span className="mr-3 w-8 shrink-0 text-theme-muted">{formatIndex(index)}.</span>
+              <div key={project.id} className="flex">
+                <span className="mr-3 text-theme-muted">{formatIndex(index)}.</span>
                 {project.url ? (
                   <SecureExternalLink
                     url={project.url}

@@ -24,19 +24,14 @@ export function DataGridSection({ title, items, startOffset, ariaLabel }: DataGr
     <Section title={title} ariaLabel={ariaLabel} animate={true}>
       <GridList>
         {items.map((item, index) => (
-          <div key={item.id} className="terminal-project-row flex min-w-0 items-baseline">
-            <span className="mr-3 w-8 shrink-0 text-theme-muted">
+          <div key={item.id} className="flex">
+            <span className="mr-3 text-theme-muted">
               {formatIndexWithOffset(index, startOffset)}.
             </span>
             {item.url ? (
-              <SecureExternalLink
-                url={item.url}
-                name={item.name}
-                linkWord={item.linkWord}
-                className="truncate"
-              />
+              <SecureExternalLink url={item.url} name={item.name} linkWord={item.linkWord} />
             ) : (
-              <span className="truncate">{item.name}</span>
+              <span>{item.name}</span>
             )}
           </div>
         ))}

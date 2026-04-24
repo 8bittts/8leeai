@@ -9,14 +9,6 @@ import { useTheme } from "@/hooks/use-theme"
 import { projects } from "@/lib/data"
 import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 
-const BRAND_GLYPH = ` ░▒▓██████▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
- ░▒▓██████▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
-░▒▓█▓▒░░▒▓█▓▒░
- ░▒▓██████▓▒░  `
-
 export function TerminalContainer() {
   const { resetTheme } = useTheme()
   const [bootComplete, setBootComplete] = useState(false)
@@ -123,7 +115,7 @@ export function TerminalContainer() {
 
   return (
     <div
-      className={`terminal-shell h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse" : ""} transition-colors duration-150`}
+      className={`h-full w-full flex flex-col relative overflow-hidden ${isFlashing ? "animate-pulse" : ""} transition-colors duration-150`}
       style={
         isFlashing
           ? {
@@ -133,25 +125,32 @@ export function TerminalContainer() {
       }
     >
       {/* Background branding */}
-      <div aria-hidden="true">
+      <header>
         {/* Mobile: Matrix-style background effect */}
         <MatrixBackground />
 
-        <pre className="terminal-brand-glyph absolute top-6 right-4 z-10 hidden select-none text-theme-primary md:block lg:top-8 lg:right-8">
-          {BRAND_GLYPH}
+        {/* Desktop: Small top-right logo with slow pulsing animation (4s cycle) */}
+        <pre
+          className="absolute top-4 right-4 z-20 hidden select-none text-xs text-theme-primary animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite] sm:top-6 sm:right-6 md:block lg:top-8 lg:right-8"
+          aria-hidden="true"
+        >
+          {` ░▒▓██████▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+ ░▒▓██████▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+░▒▓█▓▒░░▒▓█▓▒░
+ ░▒▓██████▓▒░  `}
         </pre>
-        <pre className="terminal-brand-glyph absolute right-3 bottom-24 z-10 select-none text-theme-primary opacity-10 md:hidden">
-          {BRAND_GLYPH}
-        </pre>
-      </div>
+      </header>
 
-      <div className="terminal-scroll relative z-20 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {!bootComplete && <BootSequence onComplete={handleBootComplete} />}
         {bootComplete && <CVContent visibleProjects={visibleProjects} setCommand={setCommand} />}
       </div>
 
       {bootComplete && (
-        <div className="terminal-prompt-shell sticky bottom-0 z-30 shrink-0 border-t border-theme-border px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+        <div className="sticky bottom-0 bg-theme-bg px-4 pt-0 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
           <CommandPrompt
             ref={commandPromptRef}
             showMoreProjects={showMoreProjects}
