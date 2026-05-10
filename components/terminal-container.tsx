@@ -14,8 +14,11 @@ export function TerminalContainer() {
   const [bootComplete, setBootComplete] = useState(false)
   const [visibleProjects, setVisibleProjects] = useState(PROJECTS_PER_PAGE)
   const [command, setCommand] = useState("")
-  const [isFlashing, setIsFlashing] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [flash, setFlash] = useState<{ isFlashing: boolean; errorMessage: string }>({
+    isFlashing: false,
+    errorMessage: "",
+  })
+  const { isFlashing, errorMessage } = flash
   const commandPromptRef = useRef<CommandPromptRef>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioPlayedRef = useRef(false)
@@ -75,16 +78,14 @@ export function TerminalContainer() {
   }, [resetTheme])
 
   const triggerFlash = useCallback(() => {
-    setIsFlashing(true)
-    setErrorMessage("Invalid command")
+    setFlash({ isFlashing: true, errorMessage: "Invalid command" })
 
     if (flashTimeoutRef.current !== null) {
       clearTimeout(flashTimeoutRef.current)
     }
 
     flashTimeoutRef.current = setTimeout(() => {
-      setIsFlashing(false)
-      setErrorMessage("")
+      setFlash({ isFlashing: false, errorMessage: "" })
       flashTimeoutRef.current = null
     }, 150)
   }, [])

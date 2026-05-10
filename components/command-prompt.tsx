@@ -135,7 +135,7 @@ export function CommandPrompt({
 
       {/* Command Prompt */}
       <nav className="relative z-10" aria-label="Terminal commands">
-        <form className="flex items-center gap-1" onSubmit={(e) => e.preventDefault()}>
+        <div className="flex items-center gap-1">
           <label htmlFor="terminal-input" className="text-theme-primary">
             $:
           </label>
@@ -156,7 +156,7 @@ export function CommandPrompt({
             aria-label="Terminal command input"
             aria-describedby="command-instructions"
           />
-        </form>
+        </div>
         <p id="command-instructions" className="mt-2 text-xs text-theme-muted">
           Commands: email | help | clear
         </p>

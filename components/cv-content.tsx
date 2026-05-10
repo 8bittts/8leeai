@@ -71,6 +71,7 @@ export function CVContent({ visibleProjects }: CVContentProps) {
           {displayedText}
           {!isTyping && (
             <span className="whitespace-nowrap">
+              {/* react-doctor-disable-next-line react-doctor/no-prevent-default */}
               <a
                 href={LINKEDIN_PROFILE_URL}
                 target="_blank"

@@ -20,6 +20,40 @@ interface ThemeProviderProps {
   defaultTheme?: ThemeId
 }
 
+function applyThemeToDocument(id: ThemeId) {
+  if (typeof document === "undefined") return
+
+  const theme = getTheme(id)
+  const root = document.documentElement
+
+  root.setAttribute("data-theme", id)
+
+  const themeStyles = getThemeStyleTags(id)
+  if (themeStyles.length > 0) {
+    root.setAttribute("data-theme-style", themeStyles.join(" "))
+  } else {
+    root.removeAttribute("data-theme-style")
+  }
+
+  const themeVariables: Record<string, string> = {
+    "--theme-bg": theme.colors.background,
+    "--theme-fg": theme.colors.foreground,
+    "--theme-primary": theme.colors.primary,
+    "--theme-accent": theme.colors.accent,
+    "--theme-muted": theme.colors.muted,
+    "--theme-border": theme.colors.border,
+    "--theme-error": theme.colors.error,
+    "--theme-font-primary": theme.fonts.primary,
+    "--theme-border-width": theme.borders.width,
+    "--theme-border-style": theme.borders.style,
+    "--theme-shadow-hover": theme.shadows.hover,
+  }
+
+  for (const [variable, variableValue] of Object.entries(themeVariables)) {
+    root.style.setProperty(variable, variableValue)
+  }
+}
+
 /**
  * ThemeProvider
  *
@@ -27,69 +61,30 @@ interface ThemeProviderProps {
  * Handles localStorage persistence and SSR-safe initialization.
  */
 export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeProviderProps) {
-  // Initialize with default, will sync from localStorage in useEffect
   const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => defaultTheme)
   const [isHydrated, setIsHydrated] = useState(false)
 
-  // Load theme from localStorage on mount (client-side only)
+  // Hydrate from localStorage and apply DOM mutations in one pass — no effect chain.
   useEffect(() => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY)
-    if (stored && isValidThemeId(stored)) {
-      setCurrentTheme(stored)
-    }
+    const initial = stored && isValidThemeId(stored) ? stored : defaultTheme
+    applyThemeToDocument(initial)
+    setCurrentTheme(initial)
     setIsHydrated(true)
-  }, [])
+  }, [defaultTheme])
 
-  // Apply theme to document when it changes
-  useEffect(() => {
-    if (!isHydrated) return
-
-    const theme = getTheme(currentTheme)
-
-    // Set data-theme attribute for CSS selectors
-    document.documentElement.setAttribute("data-theme", currentTheme)
-
-    const themeStyles = getThemeStyleTags(currentTheme)
-    if (themeStyles.length > 0) {
-      document.documentElement.setAttribute("data-theme-style", themeStyles.join(" "))
-    } else {
-      document.documentElement.removeAttribute("data-theme-style")
-    }
-
-    // Apply theme CSS custom properties without clobbering unrelated inline styles.
-    const root = document.documentElement
-    const themeVariables: Record<string, string> = {
-      "--theme-bg": theme.colors.background,
-      "--theme-fg": theme.colors.foreground,
-      "--theme-primary": theme.colors.primary,
-      "--theme-accent": theme.colors.accent,
-      "--theme-muted": theme.colors.muted,
-      "--theme-border": theme.colors.border,
-      "--theme-error": theme.colors.error,
-      "--theme-font-primary": theme.fonts.primary,
-      "--theme-border-width": theme.borders.width,
-      "--theme-border-style": theme.borders.style,
-      "--theme-shadow-hover": theme.shadows.hover,
-    }
-
-    for (const [variable, variableValue] of Object.entries(themeVariables)) {
-      root.style.setProperty(variable, variableValue)
-    }
-  }, [currentTheme, isHydrated])
-
-  // Theme setter with localStorage persistence
   const setTheme = useCallback((id: ThemeId) => {
+    applyThemeToDocument(id)
     setCurrentTheme(id)
     localStorage.setItem(THEME_STORAGE_KEY, id)
   }, [])
 
-  // Reset to default terminal theme
   const resetTheme = useCallback(() => {
+    applyThemeToDocument(DEFAULT_THEME)
     setCurrentTheme(DEFAULT_THEME)
     localStorage.removeItem(THEME_STORAGE_KEY)
   }, [])
 
-  // Memoize context value
   const value = useMemo<ThemeContextValue>(
     () => ({
       currentTheme,
@@ -101,8 +96,6 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
     [currentTheme, setTheme, resetTheme]
   )
 
-  // Prevent flash by not rendering until hydrated
-  // Use CSS class for SSR fallback instead of inline styles
   return (
     <ThemeContext.Provider value={value}>
       <div

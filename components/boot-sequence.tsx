@@ -10,6 +10,44 @@ interface BootSequenceProps {
   onComplete: () => void
 }
 
+interface BootLine {
+  text: string
+  group: number
+}
+
+interface BootGroupLinesProps {
+  group: number
+  bootLines: BootLine[]
+  currentLineIndex: number
+  displayedText: string
+  isTyping: boolean
+}
+
+function BootGroupLines({
+  group,
+  bootLines,
+  currentLineIndex,
+  displayedText,
+  isTyping,
+}: BootGroupLinesProps) {
+  return (
+    <>
+      {bootLines.map((line, lineIndex) => {
+        if (line.group !== group || lineIndex > currentLineIndex) {
+          return null
+        }
+        const isCurrent = lineIndex === currentLineIndex
+        return (
+          <p key={line.text}>
+            {isCurrent ? displayedText : line.text}
+            {isCurrent && isTyping && <Cursor />}
+          </p>
+        )
+      })}
+    </>
+  )
+}
+
 export function BootSequence({ onComplete }: BootSequenceProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [showPrompt, setShowPrompt] = useState(false)
@@ -93,21 +131,6 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     }
   }, [showPrompt])
 
-  const renderGroupLines = (group: number) =>
-    bootLines.map((line, lineIndex) => {
-      if (line.group !== group || lineIndex > currentLineIndex) {
-        return null
-      }
-
-      const isCurrent = lineIndex === currentLineIndex
-      return (
-        <p key={line.text}>
-          {isCurrent ? displayedText : line.text}
-          {isCurrent && isTyping && <Cursor />}
-        </p>
-      )
-    })
-
   return (
     <div
       className="text-theme-primary font-mono"
@@ -115,9 +138,25 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       aria-live="polite"
       aria-label="Boot sequence"
     >
-      <div className="mb-4 space-y-1">{renderGroupLines(1)}</div>
+      <div className="mb-4 space-y-1">
+        <BootGroupLines
+          group={1}
+          bootLines={bootLines}
+          currentLineIndex={currentLineIndex}
+          displayedText={displayedText}
+          isTyping={isTyping}
+        />
+      </div>
 
-      <div className="mb-4 space-y-1">{renderGroupLines(2)}</div>
+      <div className="mb-4 space-y-1">
+        <BootGroupLines
+          group={2}
+          bootLines={bootLines}
+          currentLineIndex={currentLineIndex}
+          displayedText={displayedText}
+          isTyping={isTyping}
+        />
+      </div>
 
       {showPrompt && (
         <div className="flex items-center" aria-label="Command prompt">

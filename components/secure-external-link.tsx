@@ -1,4 +1,5 @@
-import { interactive, openExternalLink, renderTextWithUnderlinedWord } from "@/lib/utils"
+import { UnderlinedWord } from "@/components/underlined-word"
+import { interactive, openExternalLink } from "@/lib/utils"
 
 /**
  * Secure external link component with window.opener protection
@@ -19,6 +20,7 @@ export function SecureExternalLink({
   className = "",
 }: SecureExternalLinkProps) {
   return (
+    // react-doctor-disable-next-line react-doctor/no-prevent-default
     <a
       href={url}
       target="_blank"
@@ -30,7 +32,7 @@ export function SecureExternalLink({
       className={interactive("hover:text-theme-accent hover:bg-theme-primary/10", className)}
       aria-label={`${name} (opens in new tab)`}
     >
-      {renderTextWithUnderlinedWord(name, linkWord)}
+      <UnderlinedWord text={name} linkWord={linkWord} />
     </a>
   )
 }
