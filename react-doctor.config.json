@@ -1,0 +1,10 @@
+{
+  "$schema": "https://www.react.doctor/schema.json",
+  "ignore": [
+    {
+      "rule": "react-doctor/nextjs-missing-metadata",
+      "files": ["app/page.tsx"],
+      "reason": "Intentional: app/layout.tsx owns metadata for the noindex/privacy posture; app/page.tsx is a client component and cannot export metadata"
+    }
+  ]
+}

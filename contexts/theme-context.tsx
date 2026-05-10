@@ -28,7 +28,7 @@ interface ThemeProviderProps {
  */
 export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeProviderProps) {
   // Initialize with default, will sync from localStorage in useEffect
-  const [currentTheme, setCurrentTheme] = useState<ThemeId>(defaultTheme)
+  const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => defaultTheme)
   const [isHydrated, setIsHydrated] = useState(false)
 
   // Load theme from localStorage on mount (client-side only)

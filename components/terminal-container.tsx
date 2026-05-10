@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react"
 import { BootSequence } from "@/components/boot-sequence"
 import { CommandPrompt, type CommandPromptRef } from "@/components/command-prompt"
 import { CVContent } from "@/components/cv-content"
@@ -96,6 +96,8 @@ export function TerminalContainer() {
     }
   }, [])
 
+  const onClearShortcut = useEffectEvent(() => clearToStart())
+
   // Keyboard shortcuts for clear (Ctrl+L / Cmd+K)
   useEffect(() => {
     if (!bootComplete) return
@@ -105,13 +107,13 @@ export function TerminalContainer() {
       // These should work even when input is focused, just like real terminals
       if ((e.ctrlKey || e.metaKey) && (e.key === "l" || e.key === "k")) {
         e.preventDefault()
-        clearToStart()
+        onClearShortcut()
       }
     }
 
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [bootComplete, clearToStart])
+  }, [bootComplete])
 
   return (
     <div

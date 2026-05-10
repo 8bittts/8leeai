@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react"
 import { Cursor } from "@/components/cursor"
 import { useTypewriter } from "@/hooks/use-typewriter"
 import { calculateAgeInYears } from "@/lib/age"
@@ -13,7 +13,6 @@ interface BootSequenceProps {
 export function BootSequence({ onComplete }: BootSequenceProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [showPrompt, setShowPrompt] = useState(false)
-  const [waitingForInteraction, setWaitingForInteraction] = useState(false)
   const [versionLabel, setVersionLabel] = useState(() => calculateAgeInYears(new Date()).toFixed(2))
   const promptTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -41,7 +40,6 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
 
       promptTimeoutRef.current = setTimeout(() => {
         setShowPrompt(true)
-        setWaitingForInteraction(true)
         promptTimeoutRef.current = null
       }, ANIMATION_DELAYS.bootPrompt)
     }
@@ -75,16 +73,17 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     }
   }, [])
 
-  // Wait for user interaction before proceeding
+  const onInteract = useEffectEvent(() => onComplete())
+
   useEffect(() => {
-    if (!waitingForInteraction) return
+    if (!showPrompt) return
 
     const handleInteraction = () => {
-      setWaitingForInteraction(false)
-      onComplete()
+      window.removeEventListener("click", handleInteraction)
+      window.removeEventListener("keydown", handleInteraction)
+      onInteract()
     }
 
-    // Listen for any click or key press
     window.addEventListener("click", handleInteraction)
     window.addEventListener("keydown", handleInteraction)
 
@@ -92,7 +91,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
       window.removeEventListener("click", handleInteraction)
       window.removeEventListener("keydown", handleInteraction)
     }
-  }, [waitingForInteraction, onComplete])
+  }, [showPrompt])
 
   const renderGroupLines = (group: number) =>
     bootLines.map((line, lineIndex) => {
