@@ -176,18 +176,29 @@ const formatHelpLabel = (command: CommandDefinition) => {
   return `${command.id} (${aliases.join(", ")})`
 }
 
-export const COMMAND_HELP_LINES = COMMAND_DEFINITIONS.filter(
-  (command) => command.showInHelp !== false
-).map((command) => `• ${formatHelpLabel(command)} · ${command.help}`)
+export const COMMAND_HELP_LINES = COMMAND_DEFINITIONS.reduce<string[]>((lines, command) => {
+  if (command.showInHelp !== false) {
+    lines.push(`• ${formatHelpLabel(command)} · ${command.help}`)
+  }
+  return lines
+}, [])
 
-export const VALID_COMMANDS = COMMAND_DEFINITIONS.filter(
-  (command) => command.includeInCommands !== false
-).flatMap((command) => commandKeys(command))
+export const VALID_COMMANDS = COMMAND_DEFINITIONS.reduce<string[]>((keys, command) => {
+  if (command.includeInCommands !== false) {
+    keys.push(...commandKeys(command))
+  }
+  return keys
+}, [])
 
-const COMMAND_LOOKUP = new Map(
-  COMMAND_DEFINITIONS.filter((command) => command.includeInCommands !== false).flatMap((command) =>
-    commandKeys(command).map((key) => [key, command])
-  )
+const COMMAND_LOOKUP = new Map<string, CommandDefinition>(
+  COMMAND_DEFINITIONS.reduce<[string, CommandDefinition][]>((entries, command) => {
+    if (command.includeInCommands !== false) {
+      for (const key of commandKeys(command)) {
+        entries.push([key, command])
+      }
+    }
+    return entries
+  }, [])
 )
 
 export function resolveCommand(key: string): CommandDefinition | undefined {

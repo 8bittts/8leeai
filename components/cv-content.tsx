@@ -64,7 +64,7 @@ export function CVContent({ visibleProjects }: CVContentProps) {
   return (
     <article className="space-y-8" aria-labelledby="page-title">
       <section aria-label="Summary and overview">
-        <h1 id="page-title" className="mb-4 text-3xl font-bold">
+        <h1 id="page-title" className="mb-4 text-3xl font-semibold">
           8LEE • Build Great Products
         </h1>
         <p className="max-w-4xl text-sm leading-relaxed">

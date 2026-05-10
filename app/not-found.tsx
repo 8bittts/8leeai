@@ -11,7 +11,7 @@ import { ANIMATION_DELAYS } from "@/lib/utils"
  * Returns to home page on any keypress or click
  */
 export default function NotFound() {
-  const router = useRouter()
+  const { push } = useRouter()
   const [showSubtext, setShowSubtext] = useState(false)
 
   const heading = useTypewriter({
@@ -29,7 +29,7 @@ export default function NotFound() {
 
   useEffect(() => {
     const handleInteraction = () => {
-      router.push("/")
+      push("/")
     }
 
     window.addEventListener("keydown", handleInteraction)
@@ -39,7 +39,7 @@ export default function NotFound() {
       window.removeEventListener("keydown", handleInteraction)
       window.removeEventListener("click", handleInteraction)
     }
-  }, [router])
+  }, [push])
 
   return (
     <div
@@ -53,7 +53,7 @@ export default function NotFound() {
         aria-hidden="true"
       />
       <div className="relative z-10 text-center space-y-4 bg-white/10 backdrop-blur-sm px-6 py-6 mx-6 sm:px-8 sm:mx-8 lg:px-12 lg:mx-12 rounded-lg text-black max-w-4xl">
-        <h1 className="text-6xl font-bold">
+        <h1 className="text-6xl font-semibold">
           {heading.displayedText}
           {heading.isTyping && <Cursor variant="contrast" />}
         </h1>

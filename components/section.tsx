@@ -21,7 +21,9 @@ export function Section({
       className={cn("mb-8", animate && "animate-in fade-in duration-300", className)}
       aria-label={ariaLabel}
     >
-      {title !== undefined && title !== null && <h2 className="text-xl font-bold mb-4">{title}</h2>}
+      {title !== undefined && title !== null && (
+        <h2 className="text-xl font-semibold mb-4">{title}</h2>
+      )}
       {children}
     </section>
   )

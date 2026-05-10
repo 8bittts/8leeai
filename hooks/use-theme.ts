@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import { use } from "react"
 import { ThemeContext } from "@/contexts/theme-context"
 import { DEFAULT_THEME, getTheme } from "@/lib/themes"
 import type { ThemeContextValue } from "@/lib/themes/types"
@@ -25,7 +25,7 @@ import type { ThemeContextValue } from "@/lib/themes/types"
  * ```
  */
 export function useTheme(): ThemeContextValue {
-  const context = useContext(ThemeContext)
+  const context = use(ThemeContext)
 
   if (!context) {
     // Fallback for SSR or when used outside provider
