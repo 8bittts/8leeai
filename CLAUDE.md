@@ -16,11 +16,15 @@ bun run check        # Biome safe auto-fixes
 bun run test:smoke   # Maintained smoke tests
 bun run check:full   # Lint, smoke tests, build, and knip
 bunx knip            # Dead file/export check
+npx -y react-doctor@latest .            # Full AST/lint/dead-code health scan
+npx -y react-doctor@latest . --diff     # Changed-files only (regression gate)
 ```
 
 ## Workflow
 
 **Pre-commit:** `bun run check:full`
+
+**React quality gate:** `npx -y react-doctor@latest . --diff` after non-trivial component changes. The repo is graded 100/100 on `react-doctor@0.1.6` — keep it. Config lives in [react-doctor.config.json](react-doctor.config.json). The single override is `react-doctor/nextjs-missing-metadata` on `app/page.tsx` — metadata is owned by `app/layout.tsx` per the privacy/indexing policy and `app/page.tsx` is a client component (cannot export metadata).
 
 **Backlog:** Use [docs/00-todos.md](docs/00-todos.md). It is the only TODO/backlog file and must stay active-work-only.
 
@@ -70,6 +74,7 @@ type: brief description
 | Commands | `lib/commands.ts` |
 | Theme runtime CSS vars | `contexts/theme-context.tsx` |
 | Global theme/composition styles | `app/globals.css` |
+| React Doctor config | `react-doctor.config.json` |
 
 ## Privacy And Indexing
 
@@ -91,7 +96,7 @@ Validate with `bun run check:full`, `curl -I https://8lee.ai`, and `curl https:/
 - **Styling:** Tailwind-first. Theme/composition CSS belongs in `app/globals.css`.
 - **Theme tokens:** keep CSS tokens minimal and used; if adding one, update both `app/globals.css` and `contexts/theme-context.tsx`.
 - **State:** React hooks only, no unnecessary state libraries.
-- **Links:** use `openExternalLink()` from `lib/utils.ts`; do not call `window.open` directly in components.
+- **Links:** use `openExternalLink()` from `lib/utils.ts`; do not call `window.open` directly in components. External anchors keep `href` (a11y, right-click) plus `onClick={e => { e.preventDefault(); openExternalLink(url) }}` to enforce hardened `noopener` semantics. This pattern is intentional — when `react-doctor/no-prevent-default` fires on these, suppress with `{/* react-doctor-disable-next-line react-doctor/no-prevent-default */}` directly above the `<a>`.
 - **Focus:** use `focusRing()` or `interactive()` utilities for accessible focus states.
 - **Formatting:** Biome enforces 2-space indent, LF line endings, 100-character line width, double quotes, and trailing commas.
 - **Demos:** see `app/demos/_docs/00-demos-readme.md`; demos must stay isolated from the main app.
