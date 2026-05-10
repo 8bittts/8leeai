@@ -27,6 +27,8 @@
 - `bun run test:smoke`: Run maintained smoke tests.
 - `bun run check:full`: Run lint, smoke tests, build, and knip.
 - `bunx knip`: Detect unused files/exports.
+- `npx -y react-doctor@latest .`: Full React/Next.js health scan (0–100 score). Repo is graded 100/100 on `react-doctor@0.1.6` — keep it.
+- `npx -y react-doctor@latest . --diff`: Scoped to changed files; use as the regression gate after non-trivial component changes.
 
 ## Coding Style
 - TypeScript is strict.
@@ -34,7 +36,8 @@
 - Use `@/*` imports when they improve readability.
 - Use kebab-case component filenames, `use-` hook filenames, and `theme-*.ts` theme modules.
 - Styling is Tailwind-first; app-wide theme/composition CSS belongs in `app/globals.css`.
-- Use `openExternalLink()` for external links and `focusRing()`/`interactive()` for focusable UI.
+- Use `openExternalLink()` for external links and `focusRing()`/`interactive()` for focusable UI. External anchors keep `href` and use `onClick={e => { e.preventDefault(); openExternalLink(url) }}` — `react-doctor/no-prevent-default` should be suppressed with `{/* react-doctor-disable-next-line ... */}` above the `<a>` when it fires on these.
+- `react-doctor.config.json` ignores `react-doctor/nextjs-missing-metadata` on `app/page.tsx` only — metadata is owned by `app/layout.tsx` per the privacy/indexing policy.
 
 ## Privacy And Indexing
 - This site should be reachable directly but never intentionally indexable.
