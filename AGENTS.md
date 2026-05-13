@@ -53,3 +53,14 @@
 - Keep commits focused and avoid unrelated changes.
 - Deploy with Vercel using the `death-note` scope.
 - If `lib/data/portfolio.json` changes project ordering/content, verify UI numbering and any intended mirrored project lists.
+
+## graphify
+
+This repo is part of 8bittts' local agent-first graphify rollout.
+
+Rules:
+- If `graphify-out/GRAPH_REPORT.md` exists, read it before broad architecture or codebase searches.
+- If no graph exists and the task is broad, run `graphify .` first after checking `.graphifyignore` excludes secrets, generated output, dependencies, build artifacts, and private exports.
+- Keep `graphify-out/` local and gitignored unless 8bittts explicitly asks to promote graph artifacts in this repo.
+- Prefer `graphify query`, `graphify path`, or `graphify explain` for cross-module orientation, then verify with source reads, tests, and runtime evidence before making claims or edits.
+- Ask 8bittts for the Product Universe graphify setup if you need a known-good example.
