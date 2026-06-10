@@ -1,6 +1,12 @@
 {
   "projects": [
     {
+      "id": "wonderkin",
+      "name": "Wonderkin • Native macOS AI Desktop Companion",
+      "url": "https://www.kindredlabs.ai",
+      "linkWord": "Companion"
+    },
+    {
       "id": "yen-chat",
       "name": "YEN.chat • Modern macOS Terminal",
       "url": "https://yen.chat",
