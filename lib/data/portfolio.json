@@ -1,6 +1,12 @@
 {
   "projects": [
     {
+      "id": "ditto",
+      "name": "Ditto • AI-Native Dating Platform for College Students",
+      "url": "https://ditto.ai",
+      "linkWord": "Dating"
+    },
+    {
       "id": "wonderkin",
       "name": "Wonderkin • Native macOS AI Desktop Companion",
       "url": "https://www.kindredlabs.ai",
