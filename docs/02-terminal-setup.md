@@ -4,7 +4,7 @@ This file is optional operator context, not an app build contract.
 
 ## Required For This Repo
 
-- Bun `1.3.13+`
+- Bun `1.3.14+`
 - Node.js `22+`
 - Git
 - Vercel CLI access for production deploys
