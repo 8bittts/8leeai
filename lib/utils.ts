@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from "clsx"
-import React from "react"
 import { twMerge } from "tailwind-merge"
 
 /** Tailwind class name utility - merges classes intelligently */
@@ -42,31 +41,6 @@ export function openExternalLink(url: string): void {
   if (newWindow) {
     newWindow.opener = null
   }
-}
-
-/**
- * Renders text with specific word underlined based on linkWord parameter
- * Used for highlighting clickable portions of project/education/volunteer names
- * Uses React.createElement to avoid JSX syntax in .ts file
- */
-export function renderTextWithUnderlinedWord(name: string, linkWord?: string): React.ReactNode {
-  if (!linkWord || linkWord.trim() === "") {
-    return name
-  }
-
-  const escapedLinkWord = linkWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-
-  return name.split(new RegExp(`(${escapedLinkWord})`, "i")).map((part, i) => {
-    const isMatch = part.toLowerCase() === linkWord.toLowerCase()
-    return React.createElement(
-      "span",
-      {
-        key: i,
-        className: isMatch ? "underline" : undefined,
-      },
-      part
-    )
-  })
 }
 
 /**

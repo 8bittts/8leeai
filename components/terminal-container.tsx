@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react"
 import { BootSequence } from "@/components/boot-sequence"
-import { CommandPrompt, type CommandPromptRef } from "@/components/command-prompt"
+import { CommandPrompt } from "@/components/command-prompt"
 import { CVContent } from "@/components/cv-content"
 import { MatrixBackground } from "@/components/matrix-background"
 import { useTheme } from "@/hooks/use-theme"
@@ -19,7 +19,6 @@ export function TerminalContainer() {
     errorMessage: "",
   })
   const { isFlashing, errorMessage } = flash
-  const commandPromptRef = useRef<CommandPromptRef>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioPlayedRef = useRef(false)
   const bootResetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -155,7 +154,6 @@ export function TerminalContainer() {
       {bootComplete && (
         <div className="sticky bottom-0 bg-theme-bg px-4 pt-4 pb-4 sm:px-6 sm:pt-6 sm:pb-6 lg:px-8 lg:pt-8 lg:pb-8">
           <CommandPrompt
-            ref={commandPromptRef}
             showMoreProjects={showMoreProjects}
             openProject={openProject}
             clearToStart={clearToStart}

@@ -6,10 +6,6 @@ import { useCallback } from "react"
  * Simple approach: blur input on mobile to hide keyboard, user taps to show it again
  */
 export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInputElement | null>) {
-  const releaseKeyboardSuppression = useCallback(() => {
-    // No-op for compatibility - focusing is now explicit
-  }, [])
-
   const suppressVirtualKeyboard = useCallback(() => {
     const input = inputRef.current
     if (!input) return
@@ -27,6 +23,5 @@ export function useVirtualKeyboardSuppression(inputRef: React.RefObject<HTMLInpu
 
   return {
     suppressVirtualKeyboard,
-    releaseKeyboardSuppression,
   }
 }

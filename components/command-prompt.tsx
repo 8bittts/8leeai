@@ -1,6 +1,6 @@
 "use client"
 
-import { type Ref, useEffect, useImperativeHandle, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { DataGridSection } from "@/components/data-grid-section"
 import { Section } from "@/components/section"
 import { ThemeGridSection } from "@/components/theme-grid-section"
@@ -11,10 +11,6 @@ import { COMMAND_HELP_LINES } from "@/lib/commands"
 import { DATA_OFFSETS, education, volunteer } from "@/lib/data"
 import { interactive } from "@/lib/utils"
 
-export interface CommandPromptRef {
-  focus: () => void
-}
-
 interface CommandPromptProps {
   showMoreProjects: () => void
   openProject: (projectNumber: number) => void
@@ -24,7 +20,6 @@ interface CommandPromptProps {
   totalProjects: number
   command: string
   setCommand: (command: string) => void
-  ref?: Ref<CommandPromptRef>
 }
 
 export function CommandPrompt({
@@ -36,11 +31,9 @@ export function CommandPrompt({
   totalProjects,
   command,
   setCommand,
-  ref,
 }: CommandPromptProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { suppressVirtualKeyboard, releaseKeyboardSuppression } =
-    useVirtualKeyboardSuppression(inputRef)
+  const { suppressVirtualKeyboard } = useVirtualKeyboardSuppression(inputRef)
 
   const panelState = useActivePanel()
   const { activePanel, statusMessage } = panelState
@@ -66,13 +59,6 @@ export function CommandPrompt({
     if (e.key !== "Enter") return
     handleCommand(command)
   }
-
-  useImperativeHandle(ref, () => ({
-    focus: () => {
-      releaseKeyboardSuppression()
-      inputRef.current?.focus()
-    },
-  }))
 
   const outputContent = activePanel?.type === "output" ? activePanel.content : ""
 

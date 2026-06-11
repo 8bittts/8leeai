@@ -2,7 +2,6 @@ import { describe, expect, test } from "bun:test"
 import { access, readFile } from "node:fs/promises"
 import robots from "../../app/robots"
 import { generateCORSHeaders, ROBOTS_DIRECTIVES } from "../../lib/api-security"
-import { renderTextWithUnderlinedWord } from "../../lib/utils"
 import nextConfig from "../../next.config"
 
 describe("CORS origin normalization", () => {
@@ -33,13 +32,6 @@ describe("CORS origin normalization", () => {
     expect(invalidHostHeaders["Access-Control-Allow-Origin"]).toBeUndefined()
     expect(insecureHeaders.Vary).toBeUndefined()
     expect(invalidHostHeaders.Vary).toBeUndefined()
-  })
-})
-
-describe("renderTextWithUnderlinedWord", () => {
-  test("handles regex metacharacters in link words safely", () => {
-    expect(() => renderTextWithUnderlinedWord("C++ Primer", "C++")).not.toThrow()
-    expect(() => renderTextWithUnderlinedWord("(test) demo", "(test)")).not.toThrow()
   })
 })
 
