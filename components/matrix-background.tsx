@@ -27,18 +27,26 @@ export function MatrixBackground() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // Set canvas size to match container
+    // Matrix configuration
+    const fontSize = MATRIX_FONT_SIZE
+    let drops: number[] = []
+
+    // Size the canvas to the viewport and (re)build the per-column drop state.
+    // Recomputing on resize fixes blank columns after an orientation change/resize,
+    // preserving existing drop positions where the column count overlaps.
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
+
+      const columns = Math.floor(canvas.width / fontSize)
+      const nextDrops = Array(columns).fill(1)
+      for (let i = 0; i < Math.min(drops.length, columns); i++) {
+        nextDrops[i] = drops[i] ?? 1
+      }
+      drops = nextDrops
     }
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
-
-    // Matrix configuration
-    const fontSize = MATRIX_FONT_SIZE
-    const columns = Math.floor(canvas.width / fontSize)
-    const drops: number[] = Array(columns).fill(1)
 
     // Character pool: numbers, basic Latin, some symbols
     const chars =
