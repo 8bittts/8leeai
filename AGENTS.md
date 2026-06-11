@@ -16,7 +16,7 @@
 - `tests/smoke/`: Maintained smoke tests.
 
 ## Build, Test, And Development Commands
-- `bun install`: Install dependencies with Bun `1.3.13+`.
+- `bun install`: Install dependencies with Bun `1.3.14+`.
 - `bun run dev`: Start local dev server on `http://localhost:1333`.
 - `bun run dev:clean`: Deeper cleanup, then start dev server.
 - `bun run build`: Create production build.
@@ -27,7 +27,7 @@
 - `bun run test:smoke`: Run maintained smoke tests.
 - `bun run check:full`: Run lint, smoke tests, build, and knip.
 - `bunx knip`: Detect unused files/exports.
-- `npx -y react-doctor@latest .`: Full React/Next.js health scan (0–100 score). Repo is graded 100/100 on `react-doctor@0.1.6` — keep it.
+- `npx -y react-doctor@latest .`: Full React/Next.js health scan (0–100 score). Repo is graded 100/100 on `react-doctor@0.5.1` — keep it.
 - `npx -y react-doctor@latest . --diff`: Scoped to changed files; use as the regression gate after non-trivial component changes.
 
 ## Coding Style

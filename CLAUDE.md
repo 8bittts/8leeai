@@ -111,12 +111,12 @@ Validate with `bun run check:full`, `curl -I https://8lee.ai`, and `curl https:/
 
 | Component | Technology |
 |-----------|------------|
-| Runtime | Bun 1.3.13 |
-| Framework | Next.js 16.2.4 (App Router + Turbopack) |
-| UI | React 19.2.5 |
-| Styling | Tailwind CSS 4.2.4 |
+| Runtime | Bun 1.3.14 |
+| Framework | Next.js 16.2.9 (App Router + Turbopack) |
+| UI | React 19.2.7 |
+| Styling | Tailwind CSS 4.3.0 |
 | Language | TypeScript 6.0.3 (strict) |
-| Linting | Biome 2.4.13 |
+| Linting | Biome 2.4.16 |
 | Deployment | Vercel (`death-note` scope) |
 
 ## Documentation

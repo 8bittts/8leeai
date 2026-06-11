@@ -15,10 +15,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16.2.4-black?style=flat-square&logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19.2.5-61DAFB?style=flat-square&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind-v4.2.4-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Bun-1.3.13-fbf0df?style=flat-square&logo=bun" alt="Bun" />
+  <img src="https://img.shields.io/badge/Next.js-16.2.9-black?style=flat-square&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19.2.7-61DAFB?style=flat-square&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind-v4.3.0-38B2AC?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Bun-1.3.14-fbf0df?style=flat-square&logo=bun" alt="Bun" />
   <img src="https://img.shields.io/badge/TypeScript-6.0.3-3178C6?style=flat-square&logo=typescript" alt="TypeScript" />
 </p>
 
@@ -65,7 +65,7 @@ Visitors interact with your work through a **command-line interface** - typing c
 
 ## Quick Start
 
-**Requires [Bun](https://bun.sh) v1.3.13+**
+**Requires [Bun](https://bun.sh) v1.3.14+**
 
 ```bash
 # Clone the repo
@@ -175,12 +175,12 @@ Common aliases:
 
 | Layer | Technology |
 |-------|------------|
-| Framework | Next.js 16.2.4 (App Router + Turbopack) |
-| UI | React 19.2.5 |
-| Styling | Tailwind CSS 4.2.4 |
+| Framework | Next.js 16.2.9 (App Router + Turbopack) |
+| UI | React 19.2.7 |
+| Styling | Tailwind CSS 4.3.0 |
 | Language | TypeScript 6.0.3 (strict mode) |
-| Runtime | Bun 1.3.13 |
-| Linting | Biome 2.4.13 |
+| Runtime | Bun 1.3.14 |
+| Linting | Biome 2.4.16 |
 | Tests | Bun smoke tests (`tests/smoke`) |
 | Deployment | Vercel (`death-note` scope) |
 
