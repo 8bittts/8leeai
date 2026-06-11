@@ -61,7 +61,7 @@ describe("production data alignment", () => {
   })
 
   test("random-project selection works with production project map", () => {
-    const number = pickRandomProjectNumber(projectsWithUrls, projects, () => 0, projectNumberById)
+    const number = pickRandomProjectNumber(projectsWithUrls, projectNumberById, () => 0)
     expect(number).not.toBeNull()
     expect(number).toBeGreaterThanOrEqual(1)
     expect(number).toBeLessThanOrEqual(projects.length)
@@ -119,33 +119,24 @@ describe("command lookup", () => {
 
 describe("random project selection", () => {
   test("returns null when there are no URL-backed projects", () => {
-    expect(pickRandomProjectNumber([], [{ id: "a", name: "A" }])).toBeNull()
+    expect(pickRandomProjectNumber([], new Map())).toBeNull()
   })
 
-  test("returns a stable project number with deterministic random input", () => {
-    const sampleProjects = [
-      { id: "a", name: "A" },
-      { id: "b", name: "B" },
-      { id: "c", name: "C" },
-    ]
-    const sampleProjectsWithUrls = [{ id: "b", name: "B", url: "https://example.com" }]
-
-    expect(pickRandomProjectNumber(sampleProjectsWithUrls, sampleProjects, () => 0.4)).toBe(2)
-  })
-
-  test("uses precomputed project-number map when provided", () => {
-    const sampleProjects = [
-      { id: "a", name: "A" },
-      { id: "b", name: "B" },
-    ]
+  test("maps the chosen project to its number with deterministic random input", () => {
     const sampleProjectsWithUrls = [{ id: "b", name: "B", url: "https://example.com" }]
     const numberMap = new Map([
       ["a", 1],
       ["b", 2],
+      ["c", 3],
     ])
 
-    expect(
-      pickRandomProjectNumber(sampleProjectsWithUrls, sampleProjects, () => 0.1, numberMap)
-    ).toBe(2)
+    expect(pickRandomProjectNumber(sampleProjectsWithUrls, numberMap, () => 0.4)).toBe(2)
+  })
+
+  test("returns null when the chosen project is absent from the number map", () => {
+    const sampleProjectsWithUrls = [{ id: "z", name: "Z", url: "https://example.com" }]
+    const numberMap = new Map([["a", 1]])
+
+    expect(pickRandomProjectNumber(sampleProjectsWithUrls, numberMap, () => 0)).toBeNull()
   })
 })

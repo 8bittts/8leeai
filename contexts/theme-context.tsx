@@ -97,13 +97,13 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME }: ThemeP
   )
 
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext value={value}>
       <div
         data-theme={currentTheme}
         className={isHydrated ? "contents" : "contents ssr-theme-fallback"}
       >
         {children}
       </div>
-    </ThemeContext.Provider>
+    </ThemeContext>
   )
 }

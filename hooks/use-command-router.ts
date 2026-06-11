@@ -9,14 +9,7 @@ import {
   resolveNumericCommand,
 } from "@/lib/command-routing"
 import { type CommandDefinition, resolveCommand } from "@/lib/commands"
-import {
-  DATA_OFFSETS,
-  education,
-  projectNumberById,
-  projects,
-  projectsWithUrls,
-  volunteer,
-} from "@/lib/data"
+import { DATA_OFFSETS, education, projectNumberById, projectsWithUrls, volunteer } from "@/lib/data"
 import { getTheme, isValidThemeId, type ThemeId } from "@/lib/themes"
 import { openExternalLink, PROJECTS_PER_PAGE } from "@/lib/utils"
 import type { ActivePanelState } from "./use-active-panel"
@@ -108,12 +101,7 @@ export function useCommandRouter({
   )
 
   const handleRandomCommand = useCallback(() => {
-    const projectNumber = pickRandomProjectNumber(
-      projectsWithUrls,
-      projects,
-      Math.random,
-      projectNumberById
-    )
+    const projectNumber = pickRandomProjectNumber(projectsWithUrls, projectNumberById, Math.random)
 
     if (projectNumber === null) {
       setStatusMessage("No projects with links available")
