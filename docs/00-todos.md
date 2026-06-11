@@ -17,7 +17,7 @@
 ### Work TODOs
 Only this section contains active unchecked work. Parked candidates and reminders below are planning context, not active implementation tasks.
 
-_No active work. The global-audit refactor (dead-code removal, react-doctor v0.5.1 re-grade, toolchain hygiene, legacy-header removal, content accuracy, docs alignment) shipped — see git history. `autoprefixer` removal was attempted and reverted: the built-CSS diff proved removal drops `-moz-column-gap` and `-webkit` `@supports` fallbacks (non-identical output), so it stays per the REQUIRED PROOF gate._
+_No active work._
 
 ---
 ## PARKED (rejected in over-engineering review — do not implement without explicit operator approval)
@@ -32,6 +32,7 @@ Planning context only, not active work. Each was captured in the original audit 
 - **`vercel.json` `cleanUrls`/`trailingSlash` removal**: harmless if inert; verification effort exceeds value, and editing deploy config on a working site is unforced risk.
 - **Unreferenced `public/` asset pruning** (`8-social.*`, `8.*`, `8lee-*.png`, `bitcoin.pdf`, `logo-*`): external hotlinks (GitHub profile README, social embeds) cannot be exhaustively verified, and deletion is the only way these assets can break anything. They cost kilobytes sitting still.
 - **`matrix-background.tsx` resize recompute**: real (tiny) bug, but fixing it is a visible-behavior change — conflicts with the no-design-change constraint.
+- **`autoprefixer` removal** (`postcss.config.mjs` + devDependencies): attempted and reverted under the REQUIRED PROOF gate — diffing the built CSS showed removal drops `-moz-column-gap` and the `-webkit` `@supports` prefix fallbacks (non-identical output). Tailwind v4 does not fully replace it here. Do not retry without re-proving the CSS diff is byte-identical.
 
 ---
 ## REMINDERS
