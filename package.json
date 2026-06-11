@@ -7,7 +7,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "lsof -ti:1333 | xargs kill -9 2>/dev/null || true && rm -rf .next .turbo node_modules/.cache && next dev -p 1333 --turbo",
+    "dev": "lsof -ti:1333 | xargs kill -9 2>/dev/null || true && rm -rf .next .turbo node_modules/.cache && next dev -p 1333",
     "dev:clean": "rm -rf .next node_modules/.cache && bun run dev",
     "build": "rm -rf .next && next build",
     "start": "next start -p 1333",

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 import type { CommandPanel } from "@/lib/commands"
 
-export type ActivePanel = { type: CommandPanel } | { type: "output"; content: string } | null
+type ActivePanel = { type: CommandPanel } | { type: "output"; content: string } | null
 
 export interface ActivePanelState {
   activePanel: ActivePanel
