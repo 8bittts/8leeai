@@ -1,0 +1,43 @@
+{
+  "ignore": {
+    "overrides": [
+      {
+        "comment": "Metadata is owned by app/layout.tsx per the privacy/indexing policy; app/page.tsx is a client component and cannot export metadata.",
+        "files": ["app/page.tsx"],
+        "rules": ["react-doctor/nextjs-missing-metadata"]
+      },
+      {
+        "comment": "Unmount cleanups read timeout/audio refs assigned by callbacks after mount. The canonical 'copy ref.current to a local' fix captures null at mount, leaking timers and risking setState-after-unmount. False positive.",
+        "files": [
+          "components/terminal-container.tsx",
+          "components/cv-content.tsx",
+          "components/boot-sequence.tsx"
+        ],
+        "rules": ["react-doctor/exhaustive-deps"]
+      },
+      {
+        "comment": "Intentional localStorage-hydration SSR-flash guard. Deriving state from defaultTheme on hydration is the deliberate pattern; restructuring reintroduces the flash.",
+        "files": ["contexts/theme-context.tsx"],
+        "rules": [
+          "react-doctor/no-derived-state",
+          "react-doctor/no-adjust-state-on-prop-change",
+          "react-doctor/only-export-components"
+        ]
+      },
+      {
+        "comment": "Swapping div role= for <main>/<output> changes the rendered DOM element, violating the zero-design-change constraint.",
+        "files": [
+          "app/not-found.tsx",
+          "components/command-prompt.tsx",
+          "components/boot-sequence.tsx"
+        ],
+        "rules": ["react-doctor/prefer-tag-over-role"]
+      },
+      {
+        "comment": "Moving scrollIntoView out of the effect changes scroll timing (visible behavior change).",
+        "files": ["components/cv-content.tsx"],
+        "rules": ["react-doctor/no-event-handler"]
+      }
+    ]
+  }
+}

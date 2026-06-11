@@ -24,7 +24,12 @@ npx -y react-doctor@latest . --diff     # Changed-files only (regression gate)
 
 **Pre-commit:** `bun run check:full`
 
-**React quality gate:** `npx -y react-doctor@latest . --diff` after non-trivial component changes. The repo is graded 100/100 on `react-doctor@0.1.6` — keep it. Config lives in [react-doctor.config.json](react-doctor.config.json). The single override is `react-doctor/nextjs-missing-metadata` on `app/page.tsx` — metadata is owned by `app/layout.tsx` per the privacy/indexing policy and `app/page.tsx` is a client component (cannot export metadata).
+**React quality gate:** `npx -y react-doctor@latest . --diff` after non-trivial component changes. The repo is graded 100/100 on `react-doctor@0.5.1` — keep it. Config lives in [doctor.config.json](doctor.config.json) (renamed from the deprecated `react-doctor.config.json`). Every override exists because the "fix" would change rendered DOM or runtime behavior, violating the zero-design-change constraint:
+- `nextjs-missing-metadata` (`app/page.tsx`): metadata is owned by `app/layout.tsx` per the privacy/indexing policy; `app/page.tsx` is a client component and cannot export metadata.
+- `exhaustive-deps` (`terminal-container.tsx`, `cv-content.tsx`, `boot-sequence.tsx`): unmount cleanups read timeout/audio refs assigned by callbacks after mount; copying `ref.current` to a local captures `null` at mount and leaks timers. False positive.
+- `no-derived-state` / `no-adjust-state-on-prop-change` / `only-export-components` (`contexts/theme-context.tsx`): intentional localStorage-hydration SSR-flash guard.
+- `prefer-tag-over-role` (`not-found.tsx`, `command-prompt.tsx`, `boot-sequence.tsx`): swapping `div role=` for `<main>`/`<output>` changes the rendered element.
+- `no-event-handler` (`cv-content.tsx`): moving `scrollIntoView` out of the effect changes scroll timing.
 
 **Backlog:** Use [docs/00-todos.md](docs/00-todos.md). It is the only TODO/backlog file and must stay active-work-only.
 
@@ -74,7 +79,7 @@ type: brief description
 | Commands | `lib/commands.ts` |
 | Theme runtime CSS vars | `contexts/theme-context.tsx` |
 | Global theme/composition styles | `app/globals.css` |
-| React Doctor config | `react-doctor.config.json` |
+| React Doctor config | `doctor.config.json` |
 
 ## Privacy And Indexing
 

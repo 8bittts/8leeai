@@ -37,7 +37,7 @@
 - Use kebab-case component filenames, `use-` hook filenames, and `theme-*.ts` theme modules.
 - Styling is Tailwind-first; app-wide theme/composition CSS belongs in `app/globals.css`.
 - Use `openExternalLink()` for external links and `focusRing()`/`interactive()` for focusable UI. External anchors keep `href` and use `onClick={e => { e.preventDefault(); openExternalLink(url) }}` — `react-doctor/no-prevent-default` should be suppressed with `{/* react-doctor-disable-next-line ... */}` above the `<a>` when it fires on these.
-- `react-doctor.config.json` ignores `react-doctor/nextjs-missing-metadata` on `app/page.tsx` only — metadata is owned by `app/layout.tsx` per the privacy/indexing policy.
+- `doctor.config.json` suppresses findings whose "fix" would change rendered DOM or runtime behavior (e.g. `nextjs-missing-metadata` on `app/page.tsx` — metadata is owned by `app/layout.tsx` per the privacy/indexing policy). See CLAUDE.md for the full override rationale.
 
 ## Privacy And Indexing
 - This site should be reachable directly but never intentionally indexable.
