@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test"
 import { access, readFile } from "node:fs/promises"
 import robots from "../../app/robots"
-import { generateCORSHeaders, ROBOTS_DIRECTIVES } from "../../lib/api-security"
+import { generateCORSHeaders, generateCSP, ROBOTS_DIRECTIVES } from "../../lib/api-security"
+import { isMalformedUrl, isSemanticUrl } from "../../lib/utils"
 import nextConfig from "../../next.config"
 
 describe("CORS origin normalization", () => {
@@ -32,6 +33,45 @@ describe("CORS origin normalization", () => {
     expect(invalidHostHeaders["Access-Control-Allow-Origin"]).toBeUndefined()
     expect(insecureHeaders.Vary).toBeUndefined()
     expect(invalidHostHeaders.Vary).toBeUndefined()
+  })
+})
+
+describe("malformed-URL detection", () => {
+  test("flags SQL, path-traversal, CMS-probing, and suspicious-char paths", () => {
+    expect(isMalformedUrl("/select-all")).toBe(true)
+    expect(isMalformedUrl("/../etc/passwd")).toBe(true)
+    expect(isMalformedUrl("/wp-admin")).toBe(true)
+    expect(isMalformedUrl("/<script>")).toBe(true)
+  })
+
+  test("allows clean slug-style paths", () => {
+    expect(isMalformedUrl("/about-me")).toBe(false)
+    expect(isMalformedUrl("/projects/123")).toBe(false)
+  })
+})
+
+describe("semantic-URL validation", () => {
+  test("accepts lowercase slug paths within the length limit", () => {
+    expect(isSemanticUrl("/about-me")).toBe(true)
+    expect(isSemanticUrl("/projects/2024")).toBe(true)
+  })
+
+  test("rejects uppercase, oversized, unsupported-char, and malformed paths", () => {
+    expect(isSemanticUrl("/About-Me")).toBe(false)
+    expect(isSemanticUrl(`/${"a".repeat(40)}`)).toBe(false)
+    expect(isSemanticUrl("/foo_bar")).toBe(false)
+    expect(isSemanticUrl("/wp-admin")).toBe(false)
+  })
+})
+
+describe("content security policy", () => {
+  test("keeps the core hardening directives", () => {
+    const csp = generateCSP()
+    expect(csp).toContain("default-src 'self'")
+    expect(csp).toContain("object-src 'none'")
+    expect(csp).toContain("frame-ancestors 'none'")
+    expect(csp).toContain("base-uri 'self'")
+    expect(csp).toContain("upgrade-insecure-requests")
   })
 })
 
