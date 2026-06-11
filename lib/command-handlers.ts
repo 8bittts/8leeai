@@ -17,7 +17,7 @@ export function handleWhoami(): CommandOutput {
 export function handleUname(): CommandOutput {
   const age = calculateAge(new Date())
   return {
-    content: `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16.1 + React 19.2`,
+    content: `8leeOS v${age} (Terminal Edition)\nBuilt with Next.js 16 + React 19`,
     status: "System info displayed",
   }
 }
