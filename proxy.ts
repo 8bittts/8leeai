@@ -23,7 +23,6 @@ function applySecurityHeaders(response: NextResponse): void {
   response.headers.set("X-Frame-Options", "DENY")
   response.headers.set("X-Content-Type-Options", "nosniff")
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
-  response.headers.set("X-XSS-Protection", "1; mode=block")
   response.headers.set("Permissions-Policy", PERMISSIONS_POLICY)
   response.headers.set("Content-Security-Policy", generateCSP())
 
@@ -33,9 +32,8 @@ function applySecurityHeaders(response: NextResponse): void {
   // Anti-indexing: Tell all crawlers not to index, follow, cache, or snippet any content.
   response.headers.set("X-Robots-Tag", ROBOTS_DIRECTIVES)
 
-  // Additional hardening: Disable DNS prefetch, download execution, cross-domain policies.
+  // Additional hardening: Disable DNS prefetch, restrict cross-domain policies.
   response.headers.set("X-DNS-Prefetch-Control", "off")
-  response.headers.set("X-Download-Options", "noopen")
   response.headers.set("X-Permitted-Cross-Domain-Policies", "none")
 }
 

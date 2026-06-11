@@ -29,3 +29,7 @@ Expected response posture:
 ## Limits
 
 These controls are the strongest compliant-crawler posture available from the app. They cannot force non-compliant crawlers or third parties to delete content that they copied before seeing the current directives.
+
+## Notes
+
+- `proxy.ts` no longer emits the deprecated `X-XSS-Protection` (the XSS auditor is removed from all modern browsers; OWASP recommends dropping it) or `X-Download-Options` (IE-only) headers. Response-header-only change; it does not affect the anti-indexing posture above — `X-Robots-Tag` and every other directive are unchanged.
