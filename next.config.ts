@@ -17,29 +17,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // Keep the app shell uncached, but allow static assets to use framework defaults.
+  // Let the static app shell edge-cache (Vercel purges the CDN on each deploy); only the
+  // CSP + robots headers are pinned here. Dropping the no-store/Pragma/Expires override and
+  // the eager <cj.m4a> audio preload lets the HTML serve from cache and keeps the critical
+  // path from competing with a 108KB sound that is only created on boot-complete anyway.
   // biome-ignore lint/suspicious/useAwait: Next.js requires async signature
   async headers() {
     return [
       {
         source: "/",
         headers: [
-          {
-            key: "Cache-Control",
-            value: "no-cache, no-store, must-revalidate",
-          },
-          {
-            key: "Pragma",
-            value: "no-cache",
-          },
-          {
-            key: "Expires",
-            value: "0",
-          },
-          {
-            key: "Link",
-            value: "</cj.m4a>; rel=preload; as=audio",
-          },
           {
             key: "Content-Security-Policy",
             value: generateCSP(),
